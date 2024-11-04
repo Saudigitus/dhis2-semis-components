@@ -1,0 +1,42 @@
+{
+  "name": "dhis2-semis-component",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Saudigitus/dhis2-semis-component.git",
+  "author": "EdsonNhancale <edsonnhancale97@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.2",
+    "@dhis2/cli-app-scripts": "^11.7.5",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@storybook/addon-essentials": "^8.4.1",
+    "@storybook/addon-interactions": "^8.4.1",
+    "@storybook/addon-onboarding": "^8.4.1",
+    "@storybook/blocks": "^8.4.1",
+    "@storybook/react": "^8.4.1",
+    "@storybook/react-vite": "^8.4.1",
+    "@storybook/test": "^8.4.1",
+    "prop-types": "^15.8.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rollup": "^4.24.4",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "storybook": "^8.4.1",
+    "vite": "^5.4.10"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "build-lib": "rollup -c"
+  },
+  "dependencies": {
+    "@dhis2/ui": "^9.12.0"
+  }
+}
