@@ -1,6 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react";
 import icon from "../../assets/escolha.png"
 import calendar from "../../assets/attendance.png"
+import books from "../../assets/pilha-de-livros.png"
+
 
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -26,9 +28,9 @@ const meta = {
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
     args: {
         icon: calendar,
-        alignActions:"end",
-        size:'small',
-        title: "Attendance",
+        alignActions: "end",
+        contents: [{ label: "Attendances" }],
+        size: 'small',
         actions: [
             {
                 icon: <AddIcon />,
@@ -92,16 +94,40 @@ const actions: Action[] = [
 
 export const DefaultCard: Story = {
     args: {
-        title: undefined,
         icon: undefined,
-        actions: []
+        actions: undefined,
+        contents: undefined
     },
 };
 
 export const WithMoreActions: Story = {
     args: {
-        title: "Multi Actions",
+        contents: [{ label: "Multi Actions" }],
         icon: icon,
         actions: actions
+    },
+};
+
+const actions1: Action[] = [
+    {
+        onAction: () => { alert("Clicked") },
+        icon: <AddIcon />,
+        label: "New graduation"
+    },
+    {
+        onAction: () => { alert("Clicked") },
+        icon: <MenuIcon />,
+        label: "New graduation"
+    }
+]
+
+export const WithLabelAndValues: Story = {
+    args: {
+        contents: [
+            { label: "Used books", value: 15, infoMsg: "Total of books purchased this year that can still be used" },
+            { label: "Burn books", value: 10, infoMsg: "Total of books purchased this year that can still be used" },
+        ],
+        icon: books,
+        actions: actions1
     },
 };

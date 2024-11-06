@@ -8,7 +8,7 @@ import CardActions from "./components/cardActions"
 import { CardDashboardProps } from "../../types/cardDashboardProps"
 
 /** A friendly dashboard simple card with icon, title and actions*/
-const DashboardCard = ({ title, icon, actions, alignActions, size }: CardDashboardProps) => {
+const DashboardCard = ({ icon, actions, alignActions, size, contents }: CardDashboardProps) => {
 
   const getCardSize = () => {
     switch (size) {
@@ -24,7 +24,7 @@ const DashboardCard = ({ title, icon, actions, alignActions, size }: CardDashboa
       <Card className={classNames(style.cardContainer)}>
         <CardHeader icon={icon} />
         <Divider />
-        <CardBody title={title} />
+        <CardBody  contents={contents} />
         {(!actions || actions?.length > 0) && <Divider />}
         <CardActions actions={actions} align={alignActions ?? "end"} />
       </Card>

@@ -32,7 +32,6 @@
 
 .cardTitle {
     width: 100%;
-    height: 42px;
     display: flex;
     line-height: 160% !important;
     align-items: center;
@@ -45,12 +44,16 @@
     font-family: 'Roboto';
 }
 
+.cardContent {
+    display: flex;
+}
+
 .cardStatistics {
-    height: 50px;
+    min-height: 50px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     padding: 0 10px;
 }
 
@@ -60,18 +63,18 @@
     flex-direction: row;
     padding: 0 7px;
     align-items: center;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
-.alignEnd{
+.alignEnd {
     justify-content: end;
 }
 
-.alignStart{
+.alignStart {
     justify-content: start;
 }
 
-.alignCenter{
+.alignCenter {
     justify-content: center;
 }
 
@@ -82,13 +85,14 @@
 .cardStatisticsTotalValue {
     font-family: 'Roboto';
     font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
+    font-size: 17px;
+    text-align: center;
     display: flex;
     align-items: center;
     text-align: center;
     margin-right: 5px;
     letter-spacing: 0.15px;
+    font-weight: 600;
     color: rgba(0, 0, 0, 0.8);
 }
 
@@ -102,7 +106,8 @@
     justify-content: center;
 }
 
-.disabledCard .cardTitle, .disabledCard .cardTotalLabel {
+.disabledCard .cardTitle,
+.disabledCard .cardTotalLabel {
     color: #CDCECE !important;
 }
 
@@ -114,23 +119,41 @@
     pointer-events: none !important;
 }
 
-.disabledLink{
+.disabledLink {
     pointer-events: none !important;
     color: gray !important;
 }
 
-.dinamicBox{
-    width: 180px; /* Largura inicial do card */
+.layoutGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Duas colunas de igual largura */
+    gap: 16px;
+    /* Espaçamento opcional entre os itens */
 }
 
-.cardSamll{
-    width: 180px; /* Largura inicial do card */
+.layoutGrid .cardContent {
+    display: flex;
+    flex-direction: column; /* Arrange title and content vertically */
+    align-items: center; /* Center items horizontally in each column */
+    text-align: center; /* Center-aligns text */
+}
+
+.dinamicBox {
+    width: 180px;
+    /* Largura inicial do card */
+}
+
+.cardSamll {
+    width: 180px;
+    /* Largura inicial do card */
 }
 
 /* LARGE CARD */
 
-.cardLarge .cardContainer{
-    width: 330px; /* Largura inicial do card */
+.cardLarge .cardContainer {
+    width: 330px;
+    /* Largura inicial do card */
 }
 
 .cardLarge .cardHeader img {
@@ -155,13 +178,20 @@
     font-size: 2rem;
 }
 
+.cardLarge .cardStatisticsTotalValue {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-size: 32px;
+    margin-left: 65px;
+}
+
 .cardLarge .cardActions {
     min-height: 50px !important;
     display: flex;
     flex-direction: row;
     padding: 10px 7px;
     align-items: center;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
 .cardLarge .cardActions svg {
@@ -170,8 +200,16 @@
 
 /* MEDIUM CARD */
 
-.cardMedium .cardContainer{
-    width: 250px; /* Largura inicial do card */
+.cardMedium .cardContainer {
+    width: 250px;
+    /* Largura inicial do card */
+}
+
+.cardMedium .cardStatisticsTotalValue {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-size: 25px;
+    margin-left: 42px;
 }
 
 .cardMedium .cardHeader img {
@@ -202,7 +240,7 @@
     flex-direction: row;
     padding: 7px;
     align-items: center;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
 .cardMedium .cardActions svg {

@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 export type PositionProps = "start" | "center" | "end"
 export type SizeProps = "small" | "medium" | "large"
+export type ContentLayoutProps = "column" | "grid"
 
 
 
@@ -13,9 +14,15 @@ export interface Action {
     label?: string;
 }
 
+export interface ContentProps {
+    label?: string
+    value?: any
+    infoMsg?: string
+}
+
 export interface CardDashboardProps {
-    /**The card title */
-    title?: string
+    // contentLayout?: ContentLayoutProps
+    contents?: ContentProps[]
     /** The icon to be displayed on top of the card*/
     icon?: string
     /**A collections of icones with their onClick actions*/
