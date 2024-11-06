@@ -5,8 +5,18 @@ import classNames from "classnames";
 
 
 const CardActions = ({ actions, align }: { actions?: Action[], align: PositionProps }) => {
+
+    const getActionsAlignment = () => {
+        switch (align) {
+            case "start": return "alignStart";
+            case "center": return "alignCenter";
+            case "end": return "alignEnd";
+            default: return "alignStart"
+        }
+    }
+
     return (
-        <div className={classNames(style.cardActions, style[align])}>
+        <div className={classNames(style.cardActions, style[getActionsAlignment()])}>
             {
                 actions?.length === 0 ? <></> :
                     actions?.map((action) => (

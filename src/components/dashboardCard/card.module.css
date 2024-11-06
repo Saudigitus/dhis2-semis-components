@@ -9,7 +9,7 @@
 }
 
 .cardHeader {
-    height: 100px;
+    min-height: 100px;
     background-color: #FFF;
     display: flex;
     border-radius: 4px !important;
@@ -121,4 +121,90 @@
 
 .dinamicBox{
     width: 180px; /* Largura inicial do card */
+}
+
+.cardSamll{
+    width: 180px; /* Largura inicial do card */
+}
+
+/* LARGE CARD */
+
+.cardLarge .cardContainer{
+    width: 330px; /* Largura inicial do card */
+}
+
+.cardLarge .cardHeader img {
+    width: 172px;
+    height: 172px;
+}
+
+.cardLarge .cardHeader {
+    padding: 30px;
+}
+
+.cardLarge .cardStatistics {
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 10px;
+}
+
+.cardLarge .cardTitle {
+    font-size: 2rem;
+}
+
+.cardLarge .cardActions {
+    min-height: 50px !important;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 7px;
+    align-items: center;
+    flex-wrap: wrap; 
+}
+
+.cardLarge .cardActions svg {
+    font-size: 2.2rem;
+}
+
+/* MEDIUM CARD */
+
+.cardMedium .cardContainer{
+    width: 250px; /* Largura inicial do card */
+}
+
+.cardMedium .cardHeader img {
+    width: 120px;
+    height: 120px;
+}
+
+.cardMedium .cardHeader {
+    padding: 30px;
+}
+
+.cardMedium .cardStatistics {
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+}
+
+.cardMedium .cardTitle {
+    font-size: 1.5rem;
+}
+
+.cardMedium .cardActions {
+    min-height: 50px !important;
+    display: flex;
+    flex-direction: row;
+    padding: 7px;
+    align-items: center;
+    flex-wrap: wrap; 
+}
+
+.cardMedium .cardActions svg {
+    font-size: 1.6rem;
 }

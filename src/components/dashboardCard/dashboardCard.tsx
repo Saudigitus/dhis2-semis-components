@@ -8,15 +8,25 @@ import CardActions from "./components/cardActions"
 import { CardDashboardProps } from "../../types/cardDashboardProps"
 
 /** A friendly dashboard simple card with icon, title and actions*/
-const DashboardCard = ({ title, icon, actions, alignActions }: CardDashboardProps) => {
+const DashboardCard = ({ title, icon, actions, alignActions, size }: CardDashboardProps) => {
+
+  const getCardSize = () => {
+    switch (size) {
+      case "small": return "cardSamll";
+      case "medium": return "cardMedium";
+      case "large": return "cardLarge";
+      default: return "cardSmall"
+    }
+  }
+
   return (
-    <Box className={style.dinamicBox}>
+    <Box className={classNames(style.dinamicBox, style[getCardSize()])}>
       <Card className={classNames(style.cardContainer)}>
         <CardHeader icon={icon} />
         <Divider />
         <CardBody title={title} />
         {(!actions || actions?.length > 0) && <Divider />}
-        <CardActions actions={actions} align={alignActions ?? "alignEnd"} />
+        <CardActions actions={actions} align={alignActions ?? "end"} />
       </Card>
     </Box>
   )
