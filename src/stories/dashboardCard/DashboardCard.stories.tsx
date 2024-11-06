@@ -1,17 +1,17 @@
 import { Meta, StoryObj } from "@storybook/react";
-import icon from "../assets/escolha.png"
-import calendar from "../assets/attendance.png"
+import icon from "../../assets/escolha.png"
+import calendar from "../../assets/attendance.png"
 
-import { DashboardCard } from "../components";
-import { Action } from "../types/cardDashboardProps";
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import MemoryIcon from '@material-ui/icons/Memory';
 import CameraEnhanceIcon from '@material-ui/icons/CameraEnhance';
+import { DashboardCard } from "../../components";
+import { Action } from "../../types/cardDashboardProps";
 
 const meta = {
-    title: 'Components/DashboardCard',
+    title: 'Components/Dashboard Card',
     component: DashboardCard,
     parameters: {
         // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
