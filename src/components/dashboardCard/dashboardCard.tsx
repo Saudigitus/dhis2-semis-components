@@ -10,7 +10,7 @@ import { CardDashboardProps } from "../../types/cardDashboardProps"
 /** A friendly dashboard simple card with icon, title and actions*/
 const DashboardCard = ({ title, icon, actions, alignActions }: CardDashboardProps) => {
   return (
-    <Box width="180px">
+    <Box className={style.dinamicBox}>
       <Card className={classNames(style.cardContainer)}>
         <CardHeader icon={icon} />
         <Divider />

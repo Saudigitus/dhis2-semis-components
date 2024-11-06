@@ -89,7 +89,7 @@ const actions: Action[] = [
     }
 ]
 
-export const EmptyCard: Story = {
+export const DefaultCard: Story = {
     args: {
         title: undefined,
         icon: undefined,

@@ -118,3 +118,7 @@
     pointer-events: none !important;
     color: gray !important;
 }
+
+.dinamicBox{
+    width: 180px; /* Largura inicial do card */
+}
