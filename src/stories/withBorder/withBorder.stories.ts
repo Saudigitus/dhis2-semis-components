@@ -10,7 +10,7 @@ const meta = {
     tags: ['autodocs'],
     argTypes: {
         children: { description: "React component wich you want to apply padding" },
-        type: { description: "Tye of border that you with to apply to your childre, it can be top, bottom or all", options: ["top", "bottom", 'all'] }
+        type: { description: "Tye of border that you with to apply to your children, it can be top, bottom or all", options: ["top", "bottom", 'all'] }
     },
     args: { children: "helloo", type: "all" },
 } satisfies Meta<typeof WithBorder>;
