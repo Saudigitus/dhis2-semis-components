@@ -5,6 +5,7 @@ import styles from './groupform.module.css'
 import { type GroupFormProps } from "../../types/form/GroupFormProps";
 import classNames from "classnames";
 import Subtitle from "../text/Subtitle";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function GroupForm(props: GroupFormProps) {
     const { name, fields, description } = props
@@ -28,7 +29,7 @@ function GroupForm(props: GroupFormProps) {
                 }
 
 
-                <WithPadding p={"5px 10px"}>
+                <WithPadding p={"5px 5px"}>
                     {fields?.filter((x: any) => x.visible)?.map((x: any, i: number) => {
                         return (
                             <div className={classNames("row d-flex align-items-center", x.error ? styles.fieldError : x.warning ? styles.fieldWarning : styles.fieldNormal)} key={i}

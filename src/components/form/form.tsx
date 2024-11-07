@@ -1,8 +1,9 @@
 import { Form } from "react-final-form";
 import GroupForm from "../form/GroupForm";
 import { ModalActions, Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
+import { type FormProps } from "../../types/form/GroupFormProps";
 
-export default function SDCustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues }: any) {
+export default function SDCustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons }: FormProps) {
 
     const formActions = (pristine: boolean, form: any) => [
         {
@@ -32,18 +33,18 @@ export default function SDCustomForm({ formFields, style, onInputChange, onFormS
                     <>
                         <form onChange={(e: any) => { onInputChange(e) }} >
                             {
-                                formFields()?.map((field: any, i: any) =>
+                                formFields?.map((section: any, i: any) =>
                                     <GroupForm
-                                        name={field.section}
-                                        description={field.description}
+                                        name={section.name}
+                                        description={section.description}
                                         key={i}
-                                        fields={field.fields}
+                                        fields={section.fields}
                                     />
                                 )
                             }
                         </form>
 
-                        <ModalActions>
+                        {withButtons && <ModalActions>
                             <ButtonStrip end >
                                 {formActions(pristine, form).map((action: any, i) =>
                                     <Button
@@ -55,7 +56,7 @@ export default function SDCustomForm({ formFields, style, onInputChange, onFormS
                                     </Button>
                                 )}
                             </ButtonStrip>
-                        </ModalActions>
+                        </ModalActions>}
                     </>
                 )}
             </Form>

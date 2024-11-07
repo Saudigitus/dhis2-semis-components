@@ -4,10 +4,11 @@ import { useField, type FieldRenderProps } from "react-final-form";
 import ErrorIcon from '@material-ui/icons/Error';
 import styles from "./fields.module.css"
 import { AutoCompleteProps } from "../../../types/form/GenericFieldsTypes";
+import { useState } from 'react'
 
 const OptionSetAutocomplete = (props: AutoCompleteProps) => {
   const { input }: FieldRenderProps<any, HTMLElement> = useField(props.name);
-  const [cliked] = useRecoilState<boolean>(onSubmitClicked);
+  const [cliked] = useState<boolean>(false)
 
   const options = (props?.options?.optionSet?.options != null)
     ? props?.options.optionSet?.options.map((option: { value: string, label: string }) => ({
@@ -31,7 +32,7 @@ const OptionSetAutocomplete = (props: AutoCompleteProps) => {
           <TextField
             {...params}
             variant="outlined"
-            error={cliked && input.value === "" && props?.required}
+            error={!!(cliked && input.value === "" && props?.required)}
             helperText={(cliked && input.value === "" && (Boolean(props?.required))) && "Please provide a value"}
             size="small"
             InputProps={{

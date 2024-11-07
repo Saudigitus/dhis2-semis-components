@@ -7,13 +7,13 @@ import {
     createNumberRange
 } from '@dhis2/ui'
 import style from "./fields.module.css";
-import { formatToString } from '../../../utils/commons/formatToString';
 import { type FormFieldsProps } from '../../../types/form/GenericFieldsTypes';
+import { formatToString } from '../../../utils/common/formatToString';
 
 const { Field } = ReactFinalForm
 
 const lowerbound = 1
-const upperbound = 86400
+const upperbound = 100000000000000
 
 const VALIDATOR = composeValidators(
     integer,

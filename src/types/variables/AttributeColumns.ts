@@ -15,7 +15,7 @@ export enum enrollmentStatus {
 export interface CustomAttributeProps {
     id: string
     displayName: string
-    header: string
+    header?: string
     required: boolean
     name: string
     programStage?: string

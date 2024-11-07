@@ -6,4 +6,13 @@ interface GroupFormProps {
     fields: CustomAttributeProps[]
 }
 
-export type { GroupFormProps }
+interface FormProps {
+    formFields: GroupFormProps[]
+    style?: {}
+    onInputChange: (args: any) => void
+    onFormSubtmit: () => void
+    loading?: boolean
+    initialValues?: {}
+    withButtons?: boolean
+}
+export type { GroupFormProps, FormProps }
