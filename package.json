@@ -52,14 +52,15 @@
     "styled-jsx": "^5.1.6"
   },
   "dependencies": {
-    "@dhis2/ui": "^9.13.0",
     "@dhis2/app-runtime": "^3.9.4",
+    "@dhis2/ui": "^9.13.0",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/pickers": "^3.3.11",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
+    "lottie-react": "^2.4.0",
     "react-bootstrap": "^2.10.5",
     "styled-jsx": "^5.1.6"
   }
