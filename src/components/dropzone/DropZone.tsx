@@ -9,7 +9,7 @@ import classNames from "classnames";
 import FileInput from "./fileInput/fileInput";
 import { FormApi } from 'final-form';
 import { type DropZoneProps } from "../../types/dropzone/dropZoneTypes";
-import { ModalComponent } from "../modal";
+import ModalComponent from "../modal/Modal";
 
 interface IForm { }
 
