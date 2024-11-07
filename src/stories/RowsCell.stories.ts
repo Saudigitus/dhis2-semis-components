@@ -4,7 +4,7 @@ import { fn } from '@storybook/test';
 import { Button } from './Button';
 
 const meta = {
-  title: 'Table/Table',
+  title: 'Table/RowsCell',
   component: Button,
   parameters: {
     layout: 'centered',
@@ -19,29 +19,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const PrimaryEdson: Story = {
+export const PrimaryRowsCell: Story = {
   args: {
     primary: true,
-    label: 'Edson Button',
-  },
-};
-
-export const SecondaryEdson: Story = {
-  args: {
-    label: 'Edson Button',
-  },
-};
-
-export const LargeEdson: Story = {
-  args: {
-    size: 'large',
-    label: 'Edson Button',
-  },
-};
-
-export const SmallEdson: Story = {
-  args: {
-    size: 'small',
-    label: 'Edson Button',
+    label: 'RowsCell Button',
   },
 };
