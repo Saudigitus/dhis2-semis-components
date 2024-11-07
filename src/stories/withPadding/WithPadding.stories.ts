@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import WithPadding from '../../components/template/WithPadding';
 
 const meta = {
-    title: 'Example/With padding',
+    title: 'Layout/With padding',
     component: WithPadding,
     parameters: {
         layout: 'centered',

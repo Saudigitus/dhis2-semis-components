@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import InfoPage from "../../components/info/InfoPage";
 
 const meta = {
-    title: 'Example/Info page',
+    title: 'Info page/Info page',
     component: InfoPage,
     parameters: {
         layout: 'centered',

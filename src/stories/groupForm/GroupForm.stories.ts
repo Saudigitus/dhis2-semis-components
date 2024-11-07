@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
 const meta = {
-    title: 'Drop zone/Drop zone',
+    title: 'Group form/Group form',
     component: DropZone,
     parameters: {
         layout: 'centered',
