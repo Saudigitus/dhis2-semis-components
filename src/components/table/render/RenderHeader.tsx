@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             [theme.breakpoints.down('sm')]: {
                 fontSize: theme.typography.pxToRem(11),
-            }
+            },
+            borderBottomColor: "rgba(224, 224, 224, 1)"
         },
         headerCell: {
             fontSize: theme.typography.pxToRem(12),

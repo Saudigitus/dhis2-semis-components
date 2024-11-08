@@ -54,6 +54,7 @@
     border-bottom-width: 1px;
     border-bottom-style: solid;
     text-align: left;
+    border-bottom-color: rgb(224, 224, 224);
 }
 
 .tableCellHeader {
