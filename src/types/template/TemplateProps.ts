@@ -1,16 +1,12 @@
 type EnumBorderType = "all" | "bottom" | "top"
-interface WithBorderProps { 
+interface WithBorderProps {
     children?: React.ReactNode
-    type: EnumBorderType 
+    type: EnumBorderType
 }
 
 interface WithPaddingProps {
     children?: React.ReactNode
-    p?: string 
+    p?: string
 }
 
-interface TitleProps {
-    label: string
-}
-
-export type { WithBorderProps, WithPaddingProps, TitleProps}
+export type { WithBorderProps, WithPaddingProps }
