@@ -3,6 +3,8 @@ import { type Attribute } from '../generated';
 export enum VariablesTypes {
     DataElement = "dataElement",
     Attribute = "attribute",
+    Custom = "custom",
+    Default = "default",
     Attendance = "attendance"
 }
 
@@ -33,10 +35,15 @@ export interface CustomAttributeProps {
     pattern?: string
     searchable?: boolean
     error?: boolean
+    warning?:boolean
     content?: string
     key?: any
     description?: string
+    displayInFilters?: boolean
     type: VariablesTypes
+    trackedEntity?: string
+    placeholder?: string
+    unique?: boolean
     value?: string
     class?: string
     initialOptions?: any
