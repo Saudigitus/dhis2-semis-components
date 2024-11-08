@@ -59,7 +59,7 @@ const OptionSetAutocomplete = (props: AutoCompleteProps) => {
 
 function SingleSelectField(props: AutoCompleteProps) {
   return (
-    <div>
+    <div >
       <OptionSetAutocomplete {...props} name={props.name} />
     </div>
   );

@@ -22,9 +22,11 @@ interface MutlipleSelectProps {
 
 interface AutoCompleteProps {
     disabled?: boolean
-    options?: CustomAttributeProps["options"]
+    options: CustomAttributeProps["options"]
     name: string
     required?: string | boolean
+    onChange: (args: any) => void
+    style?: any
 }
 
 interface SwitchFieldProps {

@@ -36,7 +36,7 @@ function GenericFields({ attribute, disabled, valueType }: GenericFieldsComponen
       return <CheckInput {...attribute} disabled={disabled} />
 
     case Attribute.valueType.LIST as unknown as CustomAttributeProps["valueType"]:
-      return <SingleSelectField {...attribute} disabled={attribute.disabled} />;
+      return <SingleSelectField options={attribute.options} onChange={() => { }} {...attribute} disabled={attribute.disabled} />;
 
     default:
       return <span>ValueType not mapped</span>;
