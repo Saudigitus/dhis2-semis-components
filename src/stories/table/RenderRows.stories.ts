@@ -1,9 +1,9 @@
-import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns';
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-
-import RenderHeader from '../../components/table/render/RenderHeader';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-select/dist/react-select.css";
+import RenderRows from '../../components/table/render/RenderRows';
 import { Attribute } from '../../types/generated/models';
+import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns';
 
 const headerColumns = [
   {
@@ -112,53 +112,46 @@ const headerColumns = [
   }
 ]
 
+const rowsData =[
+  { fistid1: 'First Name', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' },
+  { fistid1: 'First Name', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' },
+  { fistid1: 'First Name', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' },
+  { fistid1: 'First Name', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' }
+]
+
 const meta = {
-  title: 'Table/RenderHeader',
-  component: RenderHeader,
+  title: 'Table/RenderRows',
+  component: RenderRows,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  args: {
-    rowsHeader: headerColumns,
-    order: "asc",
-    orderBy: "",
-    createSortHandler: fn(),
-    isCheckbox: false,
-    checked: false,
-    indeterminate: false,
-    onChange: fn(),
-    sortable: false
-  },
 
-} satisfies Meta<typeof RenderHeader>;
+  args: {
+    headerData: headerColumns,
+    rowsData: rowsData,
+    searchActions: false,
+    loading: false,
+    viewPortWidth: 1000,
+    isInactive: false,
+    isOwnershipOu: false,
+    showEnrollments: false,
+  },
+} satisfies Meta<typeof RenderRows>;
+
+export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Sortable: Story = {
+export const WhithoutValues: Story = {
   args: {
-    rowsHeader: headerColumns,
-    orderBy: "",
-    order: "asc",
+    headerData: headerColumns,
+    rowsData: rowsData,
+    searchActions: false,
     loading: false,
-    isCheckbox: false,
-    checked: false,
-    indeterminate: false,
-    sortable: true
+    viewPortWidth: 1000,
+    isInactive: false,
+    isOwnershipOu: false,
+    showEnrollments: false,
   },
 };
-
-export const Checkable: Story = {
-  args: {
-    rowsHeader: headerColumns,
-    orderBy: "",
-    order: "asc",
-    loading: false,
-    isCheckbox: true,
-    checked: false,
-    indeterminate: false,
-    sortable: false
-  },
-};
-
-export default meta;

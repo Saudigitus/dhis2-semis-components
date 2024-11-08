@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function RenderHeader(props: RenderHeaderProps): React.ReactElement {
-    const { rowsHeader, order, orderBy, createSortHandler, isCheckbox, checked, indeterminate, onChange, sortable } = props
+    const { rowsHeader = [], order, orderBy, createSortHandler, isCheckbox, checked, indeterminate, onChange, sortable } = props
     const classes = useStyles()
 
     const headerCells = rowsHeader?.filter(x => x.visible)?.map((column) => (

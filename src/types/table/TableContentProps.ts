@@ -50,12 +50,23 @@ interface RenderHeaderProps {
     orderBy?: string
     order?: "asc" | "desc"
     createSortHandler?: (property: string) => any
-    loading?: boolean, 
+    loading?: boolean,
     isCheckbox?: boolean
     checked?: boolean
     indeterminate?: boolean
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
     sortable: boolean
+}
+
+interface RenderRowsProps {
+    headerData?: CustomAttributeProps[]
+    rowsData: Record<string, any>[]
+    searchActions?: boolean
+    loading?: boolean
+    viewPortWidth: number
+    isInactive: boolean
+    isOwnershipOu: boolean
+    showEnrollments: boolean
 }
 
 interface EnrollmentDetailsComponentProps {
@@ -75,4 +86,4 @@ interface TableSortProps {
 type TableDataProps = Record<string, string>;
 
 
-export type { TableComponentProps, HeaderCellProps, RowProps,RowActionsType,  RowActionsProps, RenderHeaderProps, EnrollmentDetailsComponentProps, TableSortProps, TableDataProps }
+export type { TableComponentProps, HeaderCellProps, RowProps, RowActionsType, RowActionsProps, RenderHeaderProps, RenderRowsProps, EnrollmentDetailsComponentProps, TableSortProps, TableDataProps }
