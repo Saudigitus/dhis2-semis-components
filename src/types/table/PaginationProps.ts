@@ -7,7 +7,7 @@ interface PaginationProps {
     totalPerPage: number
     disablePreviousPage: boolean
     disableNextPage: boolean
-    rowsPerPages: { value: number, label: string }[]
+    rowsPerPages?: { value: number, label: string }[]
 }
 
 

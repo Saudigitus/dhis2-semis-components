@@ -19,7 +19,7 @@ function Pagination({ page, rowsPerPage, onPageChange, onRowsPerPageChange, disa
                     className={defaultClasses.textPagination}
                     value={rowsPerPage}
                     clearValueText={false}
-                    options={rowsPerPages}
+                    options={rowsPerPages ??  [{ value: 10, label: "10" }, { value: 20, label: "20" }, { value: 30, label: "30" }]}
                     clearable={false}
                     searchable={false}
                     onChange={onRowsPerPageChange}

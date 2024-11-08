@@ -5,9 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core';
 import WithBorder from '../../template/WithBorder';
 import WithPadding from '../../template/WithPadding';
+import HeaderFilters from '../components/head/HeaderFilters';
 import TableComponent from '../components/table/TableComponent';
 import Pagination from '../components/pagination/Pagination';
-import RenderRows from './RenderRows';
 
 const usetStyles = makeStyles((theme) => ({
     tableContainer: {
@@ -37,33 +37,16 @@ interface TableProps {
     columns: any,
     totalElements: number,
     loading: boolean,
-    createSortHandler: () => void,
+    createSortHandler: any,
     order: "asc" | "desc",
     orderBy: any,
-    rowsPerPages?: { value: number, label: string }[],
-    tableData: Record<string, any>[]
-    sortable: boolean,
-    isInactive: boolean,
-    isOwnershipOu: boolean,
-    showEnrollments: boolean,
-    searchActions?: any
+    rowsPerPages: any,
+    EnrollmentFilters: any,
+    ConfigTableColumns: any
 }
 
-function Table(props: TableProps): React.ReactElement {
-    const { viewPortWidth,
-        columns, totalElements,
-        loading, createSortHandler,
-        order, orderBy, rowsPerPages,
-        tableData,
-        isInactive,
-        isOwnershipOu,
-        showEnrollments,
-        sortable,
-        searchActions
-    } = props
-
-    console.log(props)
-
+function Table(props: TableProps): React.ReactElement {	
+    const { viewPortWidth, columns, totalElements, loading, createSortHandler, order, orderBy, rowsPerPages } = props
     const classes = usetStyles()
     const [page, setpage] = useState(1)
     const [pageSize, setpageSize] = useState(10)
@@ -79,8 +62,17 @@ function Table(props: TableProps): React.ReactElement {
 
     return (
         <Paper>
+            {/* <div className={classes.workingListsContainer}>
+                <h4 className={classes.h4}>Enrollments</h4>
+                <WorkingLists />
+            </div> */}
+            <WithBorder type='bottom' />
             <WithPadding>
                 <WithBorder type='all'>
+                    <HeaderFilters 
+                        EnrollmentFilters={props.EnrollmentFilters} 
+                        ConfigTableColumns={props.ConfigTableColumns} 
+                    />
                     <div
                         className={classes.tableContainer}
                     >
@@ -93,21 +85,9 @@ function Table(props: TableProps): React.ReactElement {
                                         order={order}
                                         orderBy={orderBy}
                                         rowsHeader={columns}
-                                        sortable={sortable}
+                                        sortable={true}
                                     />
                                 }
-                                {!loading && (
-                                    <RenderRows
-                                        headerData={columns}
-                                        rowsData={tableData}
-                                        loading={loading}
-                                        isInactive={isInactive}
-                                        isOwnershipOu={isOwnershipOu}
-                                        showEnrollments={showEnrollments}
-                                        searchActions={searchActions}
-                                        viewPortWidth={viewPortWidth}
-                                    />
-                                )}
 
                             </>
                         </TableComponent>
