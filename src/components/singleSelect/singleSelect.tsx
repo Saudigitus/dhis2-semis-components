@@ -3,7 +3,7 @@ import { AutoCompleteProps } from "../../types/form/GenericFieldsTypes";
 import SingleSelectField from "../genericFields/fields/SingleSelect";
 
 export default function CustomSingleSelect(props: AutoCompleteProps) {
-    const { onChange, style } = props
+    const { style } = props
 
     return (
         <div style={style} >
@@ -12,7 +12,7 @@ export default function CustomSingleSelect(props: AutoCompleteProps) {
                 initialValues={{}}
             >
                 {() => (
-                    <form onChange={(e: any) => { onChange(e) }} >
+                    <form>
                         <SingleSelectField {...props} />
                     </form>
                 )}

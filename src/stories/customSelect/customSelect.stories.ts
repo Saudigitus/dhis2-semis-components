@@ -14,9 +14,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Info_page: Story = {
+export const Auto_complete: Story = {
     args: {
-        onChange: (e) => console.log(e),
+        onChange: (e) => { console.log(e) },
         options: {
             optionSet: {
                 id: "option set id",
