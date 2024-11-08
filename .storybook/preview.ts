@@ -1,3 +1,5 @@
+import "../src/assets/style/font.css"
+import "../src/assets/style/colors.css"
 import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
