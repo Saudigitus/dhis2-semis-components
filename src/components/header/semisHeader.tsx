@@ -2,9 +2,17 @@ import { SemisHeaderProps } from "../../types/header/headerTypes"
 import HeaderItem from "./components/headerItem"
 
 const SemisHeader = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
-    const { grades, classes,academicYears } = headerItems;
+    const { grades, classes, academicYears,orgunits } = headerItems;
     return (
         <>
+            <HeaderItem headerItem={
+                {
+                    label: "School",
+                    searchInputPlaceholder: "Search for a school",
+                    valuePlaceholder: "Select a school",
+                    options: orgunits?.options
+                }
+            } />
             <HeaderItem headerItem={
                 {
                     label: "Grade",
@@ -27,7 +35,7 @@ const SemisHeader = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                         label: "Academic year",
                         valuePlaceholder: "Select a academic year",
                         options: academicYears?.options,
-                        isSeachable:false
+                        isSeachable: false
                     }
                 } />
             </div>
