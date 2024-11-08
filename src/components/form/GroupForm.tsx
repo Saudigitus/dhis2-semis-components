@@ -4,7 +4,7 @@ import GenericFields from "../genericFields/GenericFields";
 import styles from './groupform.module.css'
 import { type GroupFormProps } from "../../types/form/GroupFormProps";
 import classNames from "classnames";
-import Subtitle from "../text/Subtitle";
+import Subtitle from "../text/subtitle";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function GroupForm(props: GroupFormProps) {
