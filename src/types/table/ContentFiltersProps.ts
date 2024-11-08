@@ -1,4 +1,4 @@
-import { CustomAttributeProps } from "../variables/AttributeColumns"
+import { CustomAttributeProps } from "../variables/AttributeColumns.ts"
 
 interface ContentFilterProps {
     headers: CustomAttributeProps[]

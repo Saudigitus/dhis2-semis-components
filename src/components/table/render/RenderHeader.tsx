@@ -61,13 +61,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function RenderHeader(props: RenderHeaderProps): React.ReactElement {
-    const { rowsHeader, order, orderBy, createSortHandler, checkbox, checked, indeterminate, name, value, onChange, sortable } = props
+    const { rowsHeader, order, orderBy, createSortHandler, isCheckbox, checked, indeterminate, onChange, sortable } = props
     const classes = useStyles()
 
     const headerCells = rowsHeader?.filter(x => x.visible)?.map((column) => (
         <HeaderCell
             key={column.id}
-            className={classNames(classes.cell, classes.headerCell)}
         >
             {
                 sortable ?
@@ -96,19 +95,17 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
             <RowTable
                 className={classes.row}
             >
-                <HeaderCell
-                    className={classNames(classes.cell, classes.headerCell)}
-                >
-                    {checkbox &&
+                {isCheckbox &&
+                    <HeaderCell
+                        className={classNames(classes.cell, classes.headerCell)}
+                    >
                         <Checkbox
                             indeterminate={indeterminate}
                             checked={checked}
                             onChange={(event) => onChange && onChange(event as any)}
-                            name={name}
-                            value={value}
                         />
-                    }
-                </HeaderCell>
+                    </HeaderCell>
+                }
                 {headerCells}
             </RowTable>
         </thead>

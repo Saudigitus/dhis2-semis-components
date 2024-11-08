@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-
-import { Button } from './Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-select/dist/react-select.css";
+import { Button } from '../button/Button';
 
 const meta = {
   title: 'Table/RowsCell',

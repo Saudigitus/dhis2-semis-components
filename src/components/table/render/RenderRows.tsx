@@ -9,7 +9,7 @@ import CropOriginal from '@material-ui/icons/CropOriginal';
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import { getDisplayName } from '../../../utils/table/rows/getDisplayNameByOption';
 import { formatKeyValueTypeHeader } from '../../../utils/programRules/formatKeyValueType';
-import { Attribute } from '../../../types/generated/models';
+import { Attribute } from '../../../types/generated/models copy.ts';
 import { GetImageUrl } from '../../../utils/table/rows/getImageUrl';
 import { IconButton } from '@material-ui/core';
 import { ProgramConfigState } from '../../../schema/programSchema';

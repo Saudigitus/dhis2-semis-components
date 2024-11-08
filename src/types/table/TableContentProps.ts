@@ -1,4 +1,4 @@
-import { CustomAttributeProps } from "../variables/AttributeColumns"
+import { CustomAttributeProps } from "../variables/AttributeColumns.ts"
 
 interface TableProps {
     head: any
@@ -50,16 +50,10 @@ interface RenderHeaderProps {
     orderBy?: string
     order?: "asc" | "desc"
     createSortHandler?: (property: string) => any
-    rowsData?: any[]
     loading?: boolean, 
-    headerData?: CustomAttributeProps[]
-    searchActions?: boolean
-    onSelectTei?: (arg: any) => void
-    checkbox?: boolean
+    isCheckbox?: boolean
     checked?: boolean
     indeterminate?: boolean
-    name?: string
-    value?: string
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
     sortable: boolean
 }

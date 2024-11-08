@@ -32,7 +32,20 @@ const usetStyles = makeStyles((theme) => ({
     }
 }));
 
-function Table(props: any): React.ReactElement {	
+interface TableProps {
+    viewPortWidth: number,
+    columns: any,
+    totalElements: number,
+    loading: boolean,
+    createSortHandler: any,
+    order: "asc" | "desc",
+    orderBy: any,
+    rowsPerPages: any,
+    EnrollmentFilters: any,
+    ConfigTableColumns: any
+}
+
+function Table(props: TableProps): React.ReactElement {	
     const { viewPortWidth, columns, totalElements, loading, createSortHandler, order, orderBy, rowsPerPages } = props
     const classes = usetStyles()
     const [page, setpage] = useState(1)
