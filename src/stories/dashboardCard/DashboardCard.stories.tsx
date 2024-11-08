@@ -13,7 +13,7 @@ import { DashboardCard } from "../../components";
 import { Action } from "../../types/cardDashboardProps";
 
 const meta = {
-    title: 'Dashboard Card/Dashboard Card',
+    title: 'Card/Dashboard Card',
     component: DashboardCard,
     parameters: {
         // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
