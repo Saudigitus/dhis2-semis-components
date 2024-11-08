@@ -63,6 +63,7 @@
     "classnames": "^2.5.1",
     "lottie-react": "^2.4.0",
     "react-bootstrap": "^2.10.5",
+    "react-final-form": "^6.5.9",
     "styled-jsx": "^5.1.6"
   }
 }

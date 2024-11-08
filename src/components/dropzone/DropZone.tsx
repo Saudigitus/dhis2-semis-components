@@ -9,7 +9,9 @@ import classNames from "classnames";
 import FileInput from "./fileInput/fileInput";
 import { FormApi } from 'final-form';
 import { type DropZoneProps } from "../../types/dropzone/dropZoneTypes";
-import { ModalComponent } from "../modal";
+import ModalComponent from "../modal/Modal";
+
+interface IForm { }
 
 function DropZone(props: DropZoneProps) {
     const { onSave, accept, placeholder, hideIcon, hideLabel, height, width, dialogMode, title, buttonLabel } = props;
@@ -34,15 +36,15 @@ function DropZone(props: DropZoneProps) {
         }
     }
 
-    const modalActions = [
+    const formActions = [
         { id: "cancel", type: "reset", label: "Cancel", disabled: false, onClick: () => { setUploadedFile(undefined); setOpen(false) }, secondary: true },
         { id: "continue", label: "Continue", success: "success", disabled: !Boolean(uploadedFile), onClick: () => onSave([uploadedFile]), primary: true }
     ];
 
     function DropFile() {
         return (
-            <Form onSubmit={(e) => e.preventDefault()}>
-                {({ form }) => {
+            <Form onSubmit={(e: any) => e.preventDefault()}>
+                {({ form }: any) => {
                     formRef.current = form;
                     return <form
                         className="dropzone_box"
@@ -59,7 +61,7 @@ function DropZone(props: DropZoneProps) {
 
                         <ModalActions>
                             <ButtonStrip end >
-                                {modalActions.map((action, i) =>
+                                {formActions.map((action: any, i) =>
                                     <Button
                                         key={i}
                                         {...action}

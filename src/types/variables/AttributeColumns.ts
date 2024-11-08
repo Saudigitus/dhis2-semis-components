@@ -1,16 +1,23 @@
-import { type Attribute } from '../generated/models copy';
+import { type Attribute } from '../generated';
 
 export enum VariablesTypes {
     DataElement = "dataElement",
     Attribute = "attribute",
     Custom = "custom",
     Default = "default",
+    Attendance = "attendance"
+}
+
+export enum enrollmentStatus {
+    ACTIVE = 'ACTIVE',
+    COMPLETED = 'COMPLETED',
+    CANCELLED = 'CANCELLED'
 }
 
 export interface CustomAttributeProps {
     id: string
     displayName: string
-    header: string
+    header?: string
     required: boolean
     name: string
     programStage?: string
@@ -19,7 +26,7 @@ export interface CustomAttributeProps {
     valueType: typeof Attribute.valueType
     disabled: boolean
     visible: boolean
-    options: {
+    options?: {
         optionSet: {
             id: string
             options: OptionsProps[]
@@ -37,9 +44,17 @@ export interface CustomAttributeProps {
     trackedEntity?: string
     placeholder?: string
     unique?: boolean
+    value?: string
+    class?: string
+    initialOptions?: any
 }
 
 export interface OptionsProps {
     value: string
     label: string
+}
+
+export interface AttendanceOptionsProps {
+    code: string
+    key: string
 }
