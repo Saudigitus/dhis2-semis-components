@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./modal.module.css";
-import { ModalProps } from "../../types/modal/ModalProps";
-import { Modal, ModalTitle, ModalContent } from "@dhis2/ui";
 import classNames from "classnames";
+import styles from "./modal.module.css";
+import { ModalProps } from "../../types/modal/modalProps";
+import { Modal, ModalTitle, ModalContent } from "@dhis2/ui";
 
 function ModalComponent(props: ModalProps): React.ReactElement {
   const { open, setOpen, title, children, position = "middle", size = "large" } = props;
