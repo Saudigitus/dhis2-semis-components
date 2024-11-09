@@ -145,6 +145,17 @@ export const Group_form: Story = {
                         valueType: "LIST" as unknown as CustomAttributeProps["valueType"],
                         disabled: false,
                         visible: true,
+                        options: {
+                            optionSet: {
+                                id: "option set id",
+                                options: [
+                                    { label: "Option 1", value: "Option1" },
+                                    { label: "Option 2", value: "Option2" },
+                                    { label: "Option 3", value: "Option3" },
+                                    { label: "Option 4", value: "Option4" }
+                                ]
+                            }
+                        },
                         description: "List",
                         id: "List",
                         displayName: "List",

@@ -36,6 +36,8 @@ function DropZone(props: DropZoneProps) {
         }
     }
 
+    const handleClose = () => setOpen(false)
+
     const formActions = [
         { id: "cancel", type: "reset", label: "Cancel", disabled: false, onClick: () => { setUploadedFile(undefined); setOpen(false) }, secondary: true },
         { id: "continue", label: "Continue", success: "success", disabled: !Boolean(uploadedFile), onClick: () => onSave([uploadedFile]), primary: true }
@@ -84,7 +86,7 @@ function DropZone(props: DropZoneProps) {
                     <Button icon={<IconUpload24 />} primary onClick={() => setOpen(true)} >{buttonLabel ? buttonLabel : "Upload Files"}</Button>
                     : <DropFile />
             }
-            {open && <ModalComponent children={<DropFile />} open={open} setOpen={setOpen} title={title as unknown as string} key={"Modal-drang-&-drop"} />}
+            {open && <ModalComponent children={<DropFile />} open={open} handleClose={handleClose} title={title as unknown as string} key={"Modal-drang-&-drop"} />}
         </>
     )
 }
