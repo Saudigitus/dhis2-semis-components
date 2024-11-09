@@ -31,20 +31,6 @@ interface RowProps {
     tooltip?: boolean
 }
 
-interface RowActionsType {
-    label: string
-    onClick: (arg?: any) => void
-    icon: React.ReactNode
-    disabled: boolean
-    color?: string
-}
-interface RowActionsProps {
-    row: any
-    onSelectTei?: (arg: any) => void
-    onShowHistory?: () => void
-}
-
-
 interface RenderHeaderProps {
     rowsHeader?: CustomAttributeProps[]
     orderBy?: string
@@ -86,4 +72,4 @@ interface TableSortProps {
 type TableDataProps = Record<string, string>;
 
 
-export type { TableComponentProps, HeaderCellProps, RowProps, RowActionsType, RowActionsProps, RenderHeaderProps, RenderRowsProps, EnrollmentDetailsComponentProps, TableSortProps, TableDataProps }
+export type { TableComponentProps, HeaderCellProps, RowProps, RenderHeaderProps, RenderRowsProps, EnrollmentDetailsComponentProps, TableSortProps, TableDataProps }
