@@ -29,12 +29,12 @@ type Story = StoryObj<typeof meta>;
 
 export const IconsDisplay: Story = {
     args: {
-        type: 'icon',
+        displayType: 'icon',
     }
 }
 
 export const MenuDisplay: Story = {
     args: {
-        type: "menu",
+        displayType: "menu",
     }
 }

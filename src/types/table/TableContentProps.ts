@@ -1,4 +1,5 @@
 import { CustomAttributeProps } from "../variables/AttributeColumns.ts"
+import { RowActionsType, TableRowActionsType } from "./TableRowActionsProps.ts"
 
 interface TableProps {
     head: any
@@ -42,6 +43,7 @@ interface RenderHeaderProps {
     indeterminate?: boolean
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
     sortable: boolean
+    showRowActions?: boolean
 }
 
 interface RenderRowsProps {
@@ -53,6 +55,9 @@ interface RenderRowsProps {
     isInactive: boolean
     isOwnershipOu: boolean
     showEnrollments: boolean
+    showRowActions?: boolean
+    rowAction: RowActionsType[]
+    displayType?: TableRowActionsType
 }
 
 interface EnrollmentDetailsComponentProps {
@@ -66,10 +71,31 @@ interface TableSortProps {
     active: boolean
     direction?: 'asc' | 'desc'
     createSortHandler: (rowsPerPage: string) => void
+    className?: string
+}
+
+interface TableRenderProps {
+    viewPortWidth: number,
+    columns: any,
+    totalElements: number,
+    loading: boolean,
+    createSortHandler: () => void,
+    order: "asc" | "desc",
+    orderBy: any,
+    rowsPerPages?: { value: number, label: string }[],
+    tableData: Record<string, any>[]
+    sortable: boolean,
+    isInactive: boolean,
+    isOwnershipOu: boolean,
+    showEnrollments: boolean,
+    searchActions?: any
+    showRowActions?: boolean
+    rowAction: RowActionsType[]
+    displayType?: TableRowActionsType
 }
 
 
 type TableDataProps = Record<string, string>;
 
 
-export type { TableComponentProps, HeaderCellProps, RowProps, RenderHeaderProps, RenderRowsProps, EnrollmentDetailsComponentProps, TableSortProps, TableDataProps }
+export type { TableRenderProps, TableComponentProps, HeaderCellProps, RowProps, RenderHeaderProps, RenderRowsProps, EnrollmentDetailsComponentProps, TableSortProps, TableDataProps }
