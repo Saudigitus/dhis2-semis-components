@@ -8,6 +8,7 @@ function SortLabel(props: TableSortProps): React.ReactElement {
             active={props.active}
             direction={props.direction}
             onClick={(id: any) => { props.createSortHandler(id) }}
+            className={props.className}
         >
             {props.children}
         </TableSortLabel>

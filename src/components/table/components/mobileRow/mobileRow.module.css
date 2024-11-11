@@ -31,9 +31,8 @@
     display: flex;
     padding: 2px 18px 0 18px;
     align-items: center;
-    height: 35px !important;
+    height: 55px !important;
     justify-content: space-between;
-    /* background-color: rgba(224, 224, 224, 1) !important; */
 }
 
 .row {

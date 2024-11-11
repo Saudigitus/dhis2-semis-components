@@ -4,7 +4,7 @@ interface TableRowActionsProps {
     loading: boolean
     disabled: boolean
     actions: RowActionsType[]
-    type?: TableRowActionsType
+    displayType?: TableRowActionsType
 }
 
 interface RowActionsType {

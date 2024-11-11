@@ -8,6 +8,7 @@ import WithPadding from '../../template/WithPadding';
 import TableComponent from '../components/table/TableComponent';
 import Pagination from '../components/pagination/Pagination';
 import RenderRows from './RenderRows';
+import { TableRenderProps } from '../../../types/table/TableContentProps';
 
 const usetStyles = makeStyles((theme) => ({
     tableContainer: {
@@ -32,24 +33,7 @@ const usetStyles = makeStyles((theme) => ({
     }
 }));
 
-interface TableProps {
-    viewPortWidth: number,
-    columns: any,
-    totalElements: number,
-    loading: boolean,
-    createSortHandler: () => void,
-    order: "asc" | "desc",
-    orderBy: any,
-    rowsPerPages?: { value: number, label: string }[],
-    tableData: Record<string, any>[]
-    sortable: boolean,
-    isInactive: boolean,
-    isOwnershipOu: boolean,
-    showEnrollments: boolean,
-    searchActions?: any
-}
-
-function Table(props: TableProps): React.ReactElement {
+function Table(props: TableRenderProps): React.ReactElement {
     const { viewPortWidth,
         columns, totalElements,
         loading, createSortHandler,
@@ -59,10 +43,11 @@ function Table(props: TableProps): React.ReactElement {
         isOwnershipOu,
         showEnrollments,
         sortable,
-        searchActions
+        searchActions,
+        showRowActions,
+        rowAction,
+        displayType
     } = props
-
-    console.log(props)
 
     const classes = usetStyles()
     const [page, setpage] = useState(1)
@@ -94,6 +79,7 @@ function Table(props: TableProps): React.ReactElement {
                                         orderBy={orderBy}
                                         rowsHeader={columns}
                                         sortable={sortable}
+                                        showRowActions={showRowActions}
                                     />
                                 }
                                 {!loading && (
@@ -106,6 +92,9 @@ function Table(props: TableProps): React.ReactElement {
                                         showEnrollments={showEnrollments}
                                         searchActions={searchActions}
                                         viewPortWidth={viewPortWidth}
+                                        showRowActions={showRowActions}
+                                        rowAction={rowAction}
+                                        displayType={displayType}
                                     />
                                 )}
 
