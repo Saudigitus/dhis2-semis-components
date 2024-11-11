@@ -4,6 +4,8 @@ import { Attribute } from '../../types/generated/models';
 import Table from '../../components/table/render/Table';
 import { RowActionsType } from '../../types/table/TableRowActionsProps';
 import { IconEdit24, IconDelete24, IconCheckmarkCircle24 } from "@dhis2/ui";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-select/dist/react-select.css";
 
 const rowsActions: RowActionsType[] = [
   { icon: <IconEdit24 />, color: '#277314', label: `Edition`, disabled: true, loading: false, onClick: () => { alert("Edition") } },
