@@ -129,7 +129,14 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 header={headerData}
                                 inactive={isInactive}
                                 isOwnershipOu={isOwnershipOu}
-                                actions={null}
+                                actions={
+                                    <TableRowActions
+                                        actions={rowAction}
+                                        disabled={isInactive}
+                                        loading={loading!}
+                                        displayType={displayType}
+                                    />
+                                }
                             />
                         }
                     </>
