@@ -19,7 +19,6 @@ interface DragDropItemsProps {
     }
     handleToggle: (id: string) => void
     checkable: boolean
-    reordable: boolean
 }
 
 interface DragDropListProps {

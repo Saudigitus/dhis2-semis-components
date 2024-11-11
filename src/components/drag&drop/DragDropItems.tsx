@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import classNames from 'classnames';
 
 function DragDropItems(props: DragDropItemsProps) {
-    const { handleToggle, id, text, checkable, reordable, visible } = props;
+    const { handleToggle, id, text, checkable, visible } = props;
 
     return (
         <div key={props.id} className={classNames(id == 'all' ? styles.title : styles.container, "row d-flex")} >
@@ -13,7 +13,6 @@ function DragDropItems(props: DragDropItemsProps) {
                 {checkable ?
                     <Checkbox
                         checked={visible}
-                        tabIndex={-1}
                         onChange={() => { handleToggle(id) }}
                         label={text}
                         valid
@@ -25,7 +24,7 @@ function DragDropItems(props: DragDropItemsProps) {
                 }
             </div>
             <div className="col-12 col-md-6">
-                {(reordable && id !== 'all') && <span className={styles.iconContainer} >
+                {(id !== 'all') && <span className={styles.iconContainer} >
                     <IconReorder24 />
                 </span>}
             </div>
