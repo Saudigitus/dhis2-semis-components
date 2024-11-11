@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import DragDropList from '../../components/drag&drop/DragDropList';
 
 const meta = {
-    title: 'Drag and drop/Drag and drop',
+    title: 'Columns config/Columns config',
     component: DragDropList,
     parameters: {
         layout: 'centered',
@@ -14,7 +14,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Drag_and_drop: Story = {
+export const Columns_config: Story = {
     args: {
         listItems: [
             { id: "item1", visible: "true", header: "item 1" },
@@ -24,7 +24,10 @@ export const Drag_and_drop: Story = {
             { id: "item4", visible: "true", header: "item 5" }
         ],
         handleToggle: (e) => { console.log(e) },
-        handleUpdateListOrder: () => { },
-        width: "350px"
+        width: "350px",
+        checkable: true,
+        reordable: true,
+        title: "Table Columns",
+        style: {}
     },
 };
