@@ -5,7 +5,7 @@ import CardHeader from "./components/cardHeader"
 import { Divider } from "@material-ui/core"
 import CardBody from "./components/cardBody"
 import CardActions from "./components/cardActions"
-import { CardDashboardProps } from "../../types/cardDashboardProps"
+import { CardDashboardProps } from "../../types/cards/cardDashboardProps"
 
 /** A friendly dashboard simple card with icon, title and actions*/
 const DashboardCard = ({ icon, actions, alignActions, size, contents }: CardDashboardProps) => {
