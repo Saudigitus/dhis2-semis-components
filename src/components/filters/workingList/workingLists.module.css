@@ -1,0 +1,6 @@
+.workingListsContainer {
+    width: auto;
+    display: flex;
+    overflow: auto;
+    padding: 0.5rem;
+}
