@@ -21,13 +21,14 @@ export const Columns_config: Story = {
             { id: "item2", visible: "true", header: "item 2" },
             { id: "item3", visible: "true", header: "item 3" },
             { id: "item4", visible: "true", header: "item 4" },
-            { id: "item4", visible: "true", header: "item 5" }
+            { id: "item5", visible: "true", header: "item 5" }
         ],
         handleToggle: (e) => { console.log(e) },
         width: "350px",
         checkable: true,
         reordable: true,
         title: "Table Columns",
-        style: {}
+        style: {},
+        setListItems: () => { }
     },
 };

@@ -1,7 +1,15 @@
-.tr{
-    outline: none !important;
+.container {
+    background-color: #fff;
+    height: 45px;
+    margin: 4px 0 4px 0px;
+    border-radius: 4px;
 }
 
-.iconContainer{
+.iconContainer {
     float: right !important;
+}
+
+.title {
+    margin: 5px -10px 14px -10px;
+    font-weight: 500;
 }
