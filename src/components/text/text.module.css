@@ -1,5 +1,5 @@
 .text {
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif !important;
     font-style: normal;
 }
 

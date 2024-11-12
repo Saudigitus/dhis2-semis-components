@@ -12,6 +12,13 @@
     width: 50%;
     background-color: #E8EDF2;
     font-family: 'Roboto', sans-serif !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.paperInit span {
+    margin-top: 12px;
+    margin-left: -100px;
 }
 
 .paperInit ul li {
