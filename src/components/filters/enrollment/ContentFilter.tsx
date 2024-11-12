@@ -128,7 +128,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
     return (
         <div className={styles.container}>
             {
-                localFilters.filter(x => x.displayInFilters === true).map((colums, index) => (
+                localFilters.filter(x => x.searchable === true).map((colums, index) => (
                     <SelectButton key={index}
                         tooltipContent=''
                         title={colums.displayName}
@@ -154,7 +154,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
                 ))
             }
             <div className={styles.moreFiltersContainer}>
-                {headers?.filter((x: any) => !localFilters.includes(x) && x.displayInFilters).length > 0 &&
+                {headers?.filter((x: any) => !localFilters.includes(x) && x.searchable).length > 0 &&
                     <Button className={styles.moreFilters}
                         variant='outlined'
                         onClick={handleClick}
@@ -165,7 +165,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
                 <MenuFilters
                     anchorEl={anchorEl}
                     setAnchorEl={setAnchorEl}
-                    options={headers?.filter((x: any) => !localFilters.includes(x) && x.displayInFilters)}
+                    options={headers?.filter((x: any) => !localFilters.includes(x) && x.searchable)}
                     addSearchableHeaders={addSearchableHeaders}
                 />
             </div>

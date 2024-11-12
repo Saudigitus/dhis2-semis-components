@@ -92,6 +92,15 @@ interface TableRenderProps {
     showRowActions?: boolean
     rowAction: RowActionsType[]
     displayType?: TableRowActionsType
+    defaultFilterNumber?: number
+    filterState: {
+      dataElements: any[],
+      attributes: any[]
+    },
+    setFilterState: (args: {
+      dataElements: any[],
+      attributes: any[]
+    }) => void
 }
 
 
