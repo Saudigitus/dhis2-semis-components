@@ -48,7 +48,10 @@ function Table(props: TableRenderProps): React.ReactElement {
         searchActions,
         showRowActions,
         rowAction,
-        displayType
+        displayType,
+        filterState,
+        setFilterState,
+        defaultFilterNumber
     } = props
 
     const classes = usetStyles()
@@ -78,6 +81,9 @@ function Table(props: TableRenderProps): React.ReactElement {
                         columns={columns}
                         updateVariables={setfilteredHeaders}
                         filteredHeaders={filteredHeaders}
+                        filterState={filterState}
+                        setFilterState={setFilterState}
+                        defaultFilterNumber={defaultFilterNumber}
                     />
                     <div
                         className={classes.tableContainer}

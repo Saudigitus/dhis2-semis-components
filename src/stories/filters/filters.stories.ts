@@ -35,7 +35,7 @@ export const Filters: Story = {
                 options: undefined,
                 visible: true,
                 disabled: false,
-                searchable: false,
+                searchable: true,
                 error: false,
                 displayInFilters: true,
                 type: VariablesTypes.Attribute
@@ -51,7 +51,7 @@ export const Filters: Story = {
                 options: undefined,
                 visible: true,
                 disabled: false,
-                searchable: false,
+                searchable: true,
                 error: false,
                 displayInFilters: true,
                 type: VariablesTypes.Attribute
@@ -67,7 +67,7 @@ export const Filters: Story = {
                 options: undefined,
                 visible: true,
                 disabled: false,
-                searchable: false,
+                searchable: true,
                 error: false,
                 displayInFilters: true,
                 type: VariablesTypes.Custom
@@ -83,7 +83,7 @@ export const Filters: Story = {
                 options: undefined,
                 visible: true,
                 disabled: false,
-                searchable: false,
+                searchable: true,
                 error: false,
                 displayInFilters: true,
                 type: VariablesTypes.Custom
@@ -99,7 +99,7 @@ export const Filters: Story = {
                 options: { optionSet: { id: "sex", options: [{ label: "M", value: "m" }, { label: "M", value: "m" }] } },
                 visible: true,
                 disabled: false,
-                searchable: false,
+                searchable: true,
                 error: false,
                 displayInFilters: true,
                 type: VariablesTypes.Custom
@@ -115,7 +115,7 @@ export const Filters: Story = {
                 options: undefined,
                 visible: true,
                 disabled: false,
-                searchable: false,
+                searchable: true,
                 error: false,
                 displayInFilters: true,
                 type: VariablesTypes.Custom
@@ -131,7 +131,7 @@ export const Filters: Story = {
                 options: undefined,
                 visible: true,
                 disabled: false,
-                searchable: false,
+                searchable: true,
                 error: false,
                 displayInFilters: true,
                 type: VariablesTypes.Custom

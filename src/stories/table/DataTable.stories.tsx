@@ -38,7 +38,8 @@ const headerColumns = [
     type: VariablesTypes.Attribute,
     trackedEntity: "trackedEntity",
     placeholder: "First Name",
-    unique: false
+    unique: false,
+    searchable: true,
   },
   {
     id: "fistid2",
@@ -64,7 +65,8 @@ const headerColumns = [
     type: VariablesTypes.Attribute,
     trackedEntity: "trackedEntity",
     placeholder: "First Name",
-    unique: false
+    unique: false,
+    searchable: true,
   },
   {
     id: "fistid3",
@@ -90,7 +92,8 @@ const headerColumns = [
     type: VariablesTypes.Attribute,
     trackedEntity: "trackedEntity",
     placeholder: "First Name",
-    unique: false
+    unique: false,
+    searchable: true,
   },
   {
     id: "fistid4",
@@ -116,7 +119,8 @@ const headerColumns = [
     type: VariablesTypes.Attribute,
     trackedEntity: "trackedEntity",
     placeholder: "First Name",
-    unique: false
+    unique: false,
+    searchable: true,
   }
 ]
 
@@ -149,7 +153,10 @@ const meta = {
     showEnrollments: false,
     showRowActions: true,
     rowAction: rowsActions,
-    displayType: "icon"
+    displayType: "icon",
+    defaultFilterNumber: 3,
+    filterState: { attributes: [], dataElements: [] },
+    setFilterState: () => { },
   },
 
 } satisfies Meta<typeof Table>;
@@ -171,7 +178,10 @@ export const Loading: Story = {
     isOwnershipOu: false,
     showEnrollments: false,
     showRowActions: true,
-    rowAction: rowsActions
+    rowAction: rowsActions,
+    defaultFilterNumber: 3,
+    filterState: { attributes: [], dataElements: [] },
+    setFilterState: () => { }
   },
 };
 
