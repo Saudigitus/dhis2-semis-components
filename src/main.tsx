@@ -4,6 +4,7 @@ import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-select/dist/react-select.css";
 import App from './App.tsx'
+export * from './index';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
