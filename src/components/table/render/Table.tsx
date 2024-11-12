@@ -9,6 +9,8 @@ import TableComponent from '../components/table/TableComponent';
 import Pagination from '../components/pagination/Pagination';
 import RenderRows from './RenderRows';
 import { TableRenderProps } from '../../../types/table/TableContentProps';
+import HeaderFilters from '../components/head/HeaderFilters';
+import { CustomAttributeProps } from '../../../types/variables/AttributeColumns';
 
 const usetStyles = makeStyles((theme) => ({
     tableContainer: {
@@ -21,7 +23,7 @@ const usetStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
     },
     h4: {
-        margin: '0px',
+        margin: '10px 0px 10px 5px',
         fontSize: '22px',
         fontWeigth: '500',
         [theme.breakpoints.down('md')]: {
@@ -52,6 +54,7 @@ function Table(props: TableRenderProps): React.ReactElement {
     const classes = usetStyles()
     const [page, setpage] = useState(1)
     const [pageSize, setpageSize] = useState(10)
+    const [filteredHeaders, setfilteredHeaders] = useState<CustomAttributeProps[]>([])
 
     const onPageChange = (newPage: number) => {
         setpage(newPage)
@@ -64,8 +67,18 @@ function Table(props: TableRenderProps): React.ReactElement {
 
     return (
         <Paper>
+            <div className={classes.workingListsContainer}>
+                <h4 className={classes.h4}>Enrollments</h4>
+                <div />
+            </div>
+            <WithBorder type='bottom' />
             <WithPadding>
                 <WithBorder type='all'>
+                    <HeaderFilters
+                        columns={columns}
+                        updateVariables={setfilteredHeaders}
+                        filteredHeaders={filteredHeaders}
+                    />
                     <div
                         className={classes.tableContainer}
                     >
@@ -77,14 +90,14 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         createSortHandler={createSortHandler}
                                         order={order}
                                         orderBy={orderBy}
-                                        rowsHeader={columns}
+                                        rowsHeader={filteredHeaders.length > 0 ? filteredHeaders : columns}
                                         sortable={sortable}
                                         showRowActions={showRowActions}
                                     />
                                 }
                                 {!loading && (
                                     <RenderRows
-                                        headerData={columns}
+                                        headerData={filteredHeaders.length > 0 ? filteredHeaders : columns}
                                         rowsData={tableData}
                                         loading={loading}
                                         isInactive={isInactive}
