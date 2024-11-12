@@ -4,7 +4,7 @@ import GenericFields from "../genericFields/GenericFields";
 import styles from './groupform.module.css'
 import { type GroupFormProps } from "../../types/form/GroupFormProps";
 import classNames from "classnames";
-import Subtitle from "../text/subtitle";
+import Text from "../text/Text";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function GroupForm(props: GroupFormProps) {
@@ -15,7 +15,7 @@ function GroupForm(props: GroupFormProps) {
             <WithPadding p={name ? "16px 5px 0px 5px" : "0px"}>
                 {name ?
                     <>
-                        <Subtitle label={name} />
+                        <Text type="subtitle" label={name} />
                         {description ?
                             <>
                                 <WithPadding />
