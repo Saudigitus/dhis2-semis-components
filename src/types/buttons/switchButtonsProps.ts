@@ -53,7 +53,7 @@ interface SimpleButtonsComponentProps {
      *
      * @type {(arg: SimpleButtonType) => void}
      */
-    setSelected: (arg: SimpleButtonType) => void;
+    setSelected: (arg: SimpleButtonType | any) => void;
 
     /**
      * Auxiliary callback function triggered when an item is selected. 
