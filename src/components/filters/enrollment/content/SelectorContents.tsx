@@ -17,7 +17,7 @@ const getStyles = makeStyles((theme: Theme) =>
 
 
 function SelectorContents(props: SelectorContentsProps) {
-    const { onClose, disabledReset, colum, onQuerySubmit, disabled: disabledUpdate, value, filled } = props;
+    const { onClose, disabledReset, closeFilterSelector, colum, onQuerySubmit, disabled: disabledUpdate, value, filled } = props;
     const classes = getStyles()
 
     const handleKeyDown = (event: any) => {
@@ -26,6 +26,11 @@ function SelectorContents(props: SelectorContentsProps) {
             onQuerySubmit();
         }
     };
+
+    const onUpdate = () => {
+        closeFilterSelector(true)
+        onQuerySubmit()
+    }
 
     return (
         <form onKeyDown={handleKeyDown}>
@@ -43,7 +48,7 @@ function SelectorContents(props: SelectorContentsProps) {
                 >
                     <Button
                         primary
-                        onClick={onQuerySubmit}
+                        onClick={onUpdate}
                         disabled={disabledUpdate || !value?.replace(/\s/g, '').length}
                     >
                         {('Update')}

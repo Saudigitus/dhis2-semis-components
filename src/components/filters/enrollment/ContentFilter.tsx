@@ -1,33 +1,30 @@
-import { Button } from '@material-ui/core';
-import { useState, useEffect } from 'react';
-import MenuFilters from './MenuFilters';
-import SelectButton from "../selectButton/SelectButton";
-import { format } from 'date-fns';
-// import { HeaderFieldsState } from '../../../../../schema/headersSchema';
+import { format } from 'date-fns'
+import MenuFilters from './MenuFilters'
+import { Button } from '@material-ui/core'
+import { useState, useEffect } from 'react'
 import styles from './ContentFilter.module.css'
-import { convertArrayToObject } from '../../../utils/common/formatArrayToObject';
-import { type ContentFilterProps } from '../../../types/table/ContentFiltersProps';
-import { type CustomAttributeProps } from '../../../types/variables/AttributeColumns';
-import useViewportWidth from '../../../hooks/common/useViewPort';
+import SelectButton from "../selectButton/SelectButton"
+import useViewportWidth from '../../../hooks/common/useViewPort'
+import { convertArrayToObject } from '../../../utils/common/formatArrayToObject'
+import { type CustomAttributeProps } from '../../../types/variables/AttributeColumns'
+import { EnrollmentFilterProps } from '../../../types/filters/filtersProps'
 
+type FiltersValuesProps = Record<string, any | { endDate: string } | { startDate: string }>
 
-type FiltersValuesProps = Record<string, any | { endDate: string } | { startDate: string }>;
-
-function ContentFilter(props: ContentFilterProps) {
-    const { headers = [] } = props;
+function ContentFilter(props: EnrollmentFilterProps) {
+    const { headers = [], defaultFilterNumber = 4, filterState, setFilterState } = props;
     const [filtersValues, setfiltersValues] = useState<FiltersValuesProps>({})
     const [localFilters, setlocalFilters] = useState<CustomAttributeProps[]>([])
     const [fieldsFilled, setfieldsFilled] = useState<FiltersValuesProps>({})
     const [anchorEl, setAnchorEl] = useState(null)
     const [resetValues, setresetValues] = useState("")
-    const [headerFieldsStateValues, setHeaderFieldsState] = useState<any>({}) //HeaderFieldsState
-    const attributesQuerybuilder: any[][] = [];
-    const dataElementsQuerybuilder: any[][] = [];
+    const attributesQuerybuilder: any[][] = []
+    const dataElementsQuerybuilder: any[][] = []
     const { viewPortWidth } = useViewportWidth()
 
     useEffect(() => {
         const copyHeader = [...headers]
-        const sliceTo = viewPortWidth < 779 ? 1 : 4
+        const sliceTo = viewPortWidth < 779 ? 1 : defaultFilterNumber
         setlocalFilters(copyHeader.slice(0, sliceTo))
     }, [headers, viewPortWidth])
 
@@ -45,7 +42,7 @@ function ContentFilter(props: ContentFilterProps) {
     }
 
     const onChangeFilters = (value: any, key: string, type: string, pos: string) => {
-        let cloneHeader = { ...filtersValues, ...convertArrayToObject(headerFieldsStateValues.dataElements) }
+        let cloneHeader = { ...filtersValues, ...convertArrayToObject(filterState.dataElements) }
 
         if (type === 'DATE') {
             let date = cloneHeader[key] ?? {}
@@ -107,12 +104,12 @@ function ContentFilter(props: ContentFilterProps) {
             }
         }
         setfieldsFilled(copyHeader)
-        setHeaderFieldsState({
+        setFilterState({
             attributes: attributesQuerybuilder,
             dataElements: dataElementsQuerybuilder
         })
     }
-
+    
     const onResetFilters = (id: string) => {
         const copyHeader = { ...filtersValues }
 

@@ -1,9 +1,5 @@
 import { CustomAttributeProps } from "../variables/AttributeColumns.ts"
 
-interface ContentFilterProps {
-    headers: CustomAttributeProps[]
-}
-
 interface MenuFiltersProps {
     anchorEl: any
     setAnchorEl: (value: any) => void
@@ -20,6 +16,7 @@ interface SelectorContentsProps {
     filled: boolean | string
     onQuerySubmit: () => void
     disabled: boolean
+    closeFilterSelector: (args: boolean) => void
 }
 
 interface FilterComponentProps {
@@ -117,4 +114,4 @@ interface TooltipProps {
     ref: any
 }
 
-export type { ContentFilterProps, MenuFiltersProps, SelectorContentsProps, FilterComponentProps, DateFilterManagerProps, OptionSetProps, SelectBoxesProps, TextFilterProps, ActiveFilterButtonProps, SelectButtonProps, RenderWithAppliedFilterProps, RenderWithoutAppliedFilterProps, TooltipProps }
+export type { MenuFiltersProps, SelectorContentsProps, FilterComponentProps, DateFilterManagerProps, OptionSetProps, SelectBoxesProps, TextFilterProps, ActiveFilterButtonProps, SelectButtonProps, RenderWithAppliedFilterProps, RenderWithoutAppliedFilterProps, TooltipProps }

@@ -120,6 +120,7 @@ function SelectButton(props: SelectButtonProps) {
                                         onQuerySubmit={onQuerySubmit}
                                         disabled={disabled}
                                         disabledReset={disabledReset}
+                                        closeFilterSelector={closeFilterSelector}
                                     />
                                 </WithPadding>
                             )
