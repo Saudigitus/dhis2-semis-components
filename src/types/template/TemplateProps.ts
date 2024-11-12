@@ -8,6 +8,7 @@ interface WithBorderProps {
 interface WithPaddingProps {
     children?: React.ReactNode
     p?: string
+    style?: Object
 }
 
 export type { WithBorderProps, WithPaddingProps }

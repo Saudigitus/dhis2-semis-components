@@ -54,6 +54,7 @@
     "styled-jsx": "^5.1.6"
   },
   "dependencies": {
+    "@date-io/date-fns": "^3.0.0",
     "@dhis2/app-runtime": "^3.11.2",
     "@dhis2/ui": "^9.12.0",
     "@material-ui/core": "^4.12.4",
@@ -62,6 +63,7 @@
     "@material-ui/pickers": "^3.3.11",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
+    "date-fns": "^4.1.0",
     "lottie-react": "^2.4.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.10.5",
