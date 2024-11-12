@@ -5,7 +5,7 @@ import { SimpleButtonsComponentProps, SimpleButtonType } from "../../../../types
 import classNames from "classnames"
 
 export default function SimpleButtons(props: SimpleButtonsComponentProps): React.ReactElement {
-  const { items, selected, setSelected, onSelect } = props
+  const { items, selected, setSelected, onSelect, buttonClassName } = props
 
   const handleSelect = (item: SimpleButtonType) => {
     if (selected?.id !== item?.id) {
@@ -19,7 +19,7 @@ export default function SimpleButtons(props: SimpleButtonsComponentProps): React
       {items?.map((item) => (
         <div
           key={item?.id}
-          className={classNames(styles.simpleButton, selected?.id === item?.id ? styles["active-button"] : "")}
+          className={classNames(styles.simpleButton , selected?.id === item?.id ? styles["active-button"] : "", buttonClassName)}
           onClick={() => handleSelect(item)}
         >
           <span className={styles.simpleButtonLabel}>{item?.label}</span>

@@ -5,7 +5,7 @@ import SimpleButtons from "./components/SimpleButtons";
 
 
 
-export default function SwitchButtonView({ items, maxLinearItems, selected, setSelected, onSelect }: SimpleButtonsComponentProps): React.ReactElement {
+export default function SwitchButtonView({ items, maxLinearItems, selected, setSelected, onSelect, buttonClassName }: SimpleButtonsComponentProps): React.ReactElement {
   const maxItems = maxLinearItems ?? 3;
 
   return (
@@ -23,6 +23,7 @@ export default function SwitchButtonView({ items, maxLinearItems, selected, setS
           selected={selected}
           setSelected={setSelected}
           onSelect={onSelect}
+          buttonClassName={buttonClassName}
         />
       )}
     </div>

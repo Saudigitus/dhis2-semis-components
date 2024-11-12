@@ -89,7 +89,7 @@ export const Simple_Dropdown: Story = {
             />
         );
     },
-    args: { items: initialItems, selected: initialItems[0], setSelected: fn(), maxLinearItems: 3, onSelect: fn() },
+    args: { items: initialItems, selected: initialItems[1], setSelected: fn(), maxLinearItems: 3, onSelect: fn() },
     parameters: {
         docs: {
             description: {

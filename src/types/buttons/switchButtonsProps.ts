@@ -9,6 +9,7 @@ interface SimpleButtonsComponentProps {
     selected: SimpleButtonType | undefined
     setSelected: (arg: SimpleButtonType | any) => void
     onSelect: () => void
+    buttonClassName?: string
 }
 
 
