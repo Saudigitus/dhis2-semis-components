@@ -1,14 +1,16 @@
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DragDropItems from './DragDropItems.js';
+import { CustomAttributeProps } from '../../types/variables/AttributeColumns.js';
 
 interface DragDropListProps {
-    listItems: { id: string, label: string, visible: boolean }[]
+    listItems: CustomAttributeProps[]
     width?: string
     checkable?: boolean
     title: string
     style?: Object
-    setListItems: (args: { id: string, label: string, visible: boolean }[]) => void
+    setListItems: (args: CustomAttributeProps[]) => void
 }
+
 
 function DragDropList(props: DragDropListProps) {
     const { listItems, checkable = true, width, title, style, setListItems } = props;
@@ -64,7 +66,7 @@ function DragDropList(props: DragDropListProps) {
                             visible={listItems?.filter(x => x.visible == false)?.length == 0}
                         />
                         {
-                            listItems.map(({ id, label, visible }: any, index: number) => (
+                            listItems.map(({ id, displayName, visible }: any, index: number) => (
                                 <Draggable key={id} draggableId={id} index={index}>
                                     {(provided: any) => (
                                         <div
@@ -76,7 +78,7 @@ function DragDropList(props: DragDropListProps) {
                                             <DragDropItems
                                                 checkable={checkable}
                                                 id={id}
-                                                text={label}
+                                                text={displayName}
                                                 visible={visible}
                                                 handleToggle={handleToggle}
                                             />

@@ -73,7 +73,7 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
                         createSortHandler={createSortHandler ? createSortHandler(column.id) : undefined}
                         className={classNames(classes.cell, classes.headerCell)}
                     >
-                        {column.header}
+                        {column.displayName}
                         {orderBy === column.id
                             ? (
                                 <span className={classes.visuallyHidden}>
@@ -83,7 +83,7 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
                             : null}
                     </SortLabel>
                     :
-                    column.header
+                    column.displayName
             }
         </HeaderCell>
     ))
