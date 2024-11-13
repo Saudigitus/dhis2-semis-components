@@ -1,19 +1,9 @@
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DragDropItems from './DragDropItems.js';
-import { CustomAttributeProps } from '../../types/variables/AttributeColumns.js';
-
-interface DragDropListProps {
-    listItems: CustomAttributeProps[]
-    width?: string
-    checkable?: boolean
-    title: string
-    style?: Object
-    setListItems: (args: CustomAttributeProps[]) => void
-}
-
+import { DragDropListProps } from '../../types/drag&drop/drag&drop.js';
 
 function DragDropList(props: DragDropListProps) {
-    const { listItems, checkable = true, width, title, style, setListItems } = props;
+    const { listItems, checkable = true, width, title, setListItems } = props;
 
     const handleOnDragEnd = (result: any) => {
         if (!result.destination) return;
