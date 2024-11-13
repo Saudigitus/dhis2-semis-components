@@ -56,7 +56,7 @@ function DragDropList(props: DragDropListProps) {
                     <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        style={{ width: width, ...style, padding: "5px 20px 5px 20px", borderRadius: "4px", backgroundColor: "#E0E1DD", overflow: "auto" }}
+                        style={{ width: width, padding: "5px 20px 5px 20px", borderRadius: "4px", backgroundColor: "#fff", overflow: "auto" }}
                     >
                         <DragDropItems
                             checkable={checkable}
