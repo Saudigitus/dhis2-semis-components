@@ -1,7 +1,24 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES2021",
+    "lib": ["es2021", "dom"],
+    "moduleResolution": "node",
+    "declaration": true,
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true,
+    "strict": false,           // Desabilita todas as verificações estritas
+    "skipLibCheck": true,      // Ignora verificações de tipo em arquivos de biblioteca
+    "esModuleInterop": true,
+    "noImplicitAny": false, 
+    "outDir": "./dist",                    // Define a pasta de saída para os arquivos compilados
+    "rootDir": "./",
+    "declarationDir": "./dist/declarations",
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "node_modules",
+    "src/stories"
   ]
 }

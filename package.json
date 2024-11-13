@@ -1,8 +1,9 @@
 {
-  "name": "dhis2-semis-component",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/Saudigitus/dhis2-semis-component.git",
+  "name": "@semis/components",
+  "version": "0.0.3",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "repository": "https://github.com/Saudigitus/dhis2-semis-components.git",
   "author": "EdsonNhancale <edsonnhancale97@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -11,7 +12,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "lib": "rimraf ./dist && npx tsc"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "3.2.2",
@@ -38,11 +40,6 @@
     "eslint-plugin-storybook": "^0.11.0",
     "globals": "^15.11.0",
     "react-select": "1.3.0",
-    "rollup": "^4.24.4",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-terser": "^7.0.2",
     "storybook": "^8.4.1",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.11.0",
@@ -64,6 +61,7 @@
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
     "date-fns": "2.29.3",
+    "dhis2-semis-component": "^0.0.3",
     "lottie-react": "^2.4.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.10.5",

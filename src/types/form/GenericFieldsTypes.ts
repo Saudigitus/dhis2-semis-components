@@ -35,6 +35,7 @@ interface SwitchFieldProps {
 }
 
 interface CheckFieldProps {
+    name: string
     disabled: boolean
     required: string | boolean
 }

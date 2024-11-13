@@ -36,7 +36,7 @@ function GroupForm(props: GroupFormProps) {
                                 style={{ display: "flex" }}>
                                 <div className="col-12 col-md-6 d-flex">
                                     <Label className={styles.label}>
-                                        {x.labelName} {x.required ? " *" : ""}
+                                        {`${x.labelName}${x.required ? " *" : ""}`}
                                     </Label>
                                 </div>
                                 <div className="col-12 col-md-6">

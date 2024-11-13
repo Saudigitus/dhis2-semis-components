@@ -7,6 +7,7 @@ function CheckInput(props: CheckFieldProps) {
   return (
     <div className="d-flex">
       <Field
+        name={props.name}
         {...props}
         type="checkbox"
         component={CheckboxFieldFF}
