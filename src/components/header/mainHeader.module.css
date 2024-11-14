@@ -98,3 +98,7 @@
     max-height: calc(80vh - 50px);
     overflow-y: auto;
 }
+
+.OrganisationUnitTreeContainer{
+    padding: 10px 5px;
+}

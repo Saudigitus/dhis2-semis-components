@@ -1,35 +1,32 @@
 import { SemisHeaderProps } from "../../types/header/headerTypes"
 import HeaderItem from "./components/headerItem"
+import OrgunitTree from "./components/orgunitTree";
 
 const SemisHeader = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
-    const { grades, classes, academicYears,orgunits } = headerItems;
+    const { academicYears, orgunits, restItems = [] } = headerItems;
+
+
     return (
         <>
-            <HeaderItem headerItem={
+            {orgunits && <HeaderItem headerItem={
                 {
                     label: "School",
                     searchInputPlaceholder: "Search for a school",
                     valuePlaceholder: "Select a school",
-                    options: orgunits?.options
+                    customComponent: <OrgunitTree roots={orgunits.roots} />
                 }
-            } />
-            <HeaderItem headerItem={
-                {
-                    label: "Grade",
-                    searchInputPlaceholder: "Search for a grade",
-                    valuePlaceholder: "Select a grade",
-                    options: grades?.options
-                }
-            } />
-            <HeaderItem headerItem={
-                {
-                    label: "Class",
-                    searchInputPlaceholder: "Search for a class",
-                    valuePlaceholder: "Select a class",
-                    options: classes?.options
-                }
-            } />
-            <div style={{ marginLeft: "auto" }}>
+            } />}
+            {
+                restItems.map((header) => (
+                    <HeaderItem headerItem={{
+                        options: header.options,
+                        label: header?.dataElement?.displayName,
+                        searchInputPlaceholder: `Search for a ${header?.dataElement?.displayName}`,
+                        valuePlaceholder: `Select a ${header?.dataElement?.displayName}`,
+                    }} />
+                ))
+            }
+            {academicYears && <div style={{ marginLeft: "auto" }}>
                 <HeaderItem headerItem={
                     {
                         label: "Academic year",
@@ -38,7 +35,7 @@ const SemisHeader = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                         isSeachable: false
                     }
                 } />
-            </div>
+            </div>}
         </>
     )
 }

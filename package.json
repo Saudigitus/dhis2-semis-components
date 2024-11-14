@@ -66,6 +66,7 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.10.5",
     "react-final-form": "^6.5.9",
+    "react-query": "^3.39.3",
     "styled-jsx": "^5.1.6"
   }
 }

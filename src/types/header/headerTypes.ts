@@ -10,10 +10,9 @@ export interface OptionProps {
 }
 
 export interface SemisHeaderProps {
-    grades: { options?: OptionProps[], loader?: boolean }
-    classes: { options?: OptionProps[], loader?: boolean }
-    academicYears: { options?: OptionProps[], loader?: boolean }
-    orgunits: { options?: OptionProps[], loader?: boolean }
+    academicYears?: { dataElement: { displayName: string, id: string }, options?: OptionProps[], loader?: boolean }
+    orgunits?: { roots: string[], loader?: boolean }
+    restItems?: { dataElement: { displayName: string, id: string }, options?: OptionProps[], loader?: boolean }[]
 }
 
 export interface HeaderItemProps {
@@ -28,6 +27,7 @@ export interface HeaderItemProps {
     options?: OptionProps[]
     onSelectOption?: () => void
     align?: AlignProps
+    customComponent?: ReactNode
 }
 
 export interface MainHeaderProps {

@@ -38,9 +38,9 @@ const HeaderItem = ({ headerItem }: { headerItem: HeaderItemProps }) => {
                         {isSeachable && <div className={style.SimpleSearcInputContainer}>
                             <Input value={query} onChange={onSearch} placeholder={searchInputPlaceholder} name="input" />
                         </div>}
-                        <div className={style.ChildrenContentContainer}>
+                        {headerItem?.customComponent ?? <div className={style.ChildrenContentContainer}>
                             <MenuItemContainer onSelectOption={onSelectOption} onToggle={toggleExpand} setSelected={setSelected} options={filteredMenuItems} />
-                        </div>
+                        </div>}
                     </div>
                 </FlyoutMenu >
             }
