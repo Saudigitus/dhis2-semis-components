@@ -1,3 +1,4 @@
+import React from 'react';
 import { Paper } from '@material-ui/core'
 import styles from "./infoPage.module.css"
 import { type InfoTypes } from '../../types/info/infoPageTypes'

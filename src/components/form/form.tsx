@@ -1,3 +1,4 @@
+import React from 'react';
 import { Form } from "react-final-form";
 import GroupForm from "../form/GroupForm";
 import { ModalActions, Button, ButtonStrip, CircularLoader } from "@dhis2/ui";

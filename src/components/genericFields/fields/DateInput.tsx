@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactFinalForm, InputFieldFF, hasValue } from "@dhis2/ui";
 import { FormFieldsProps } from "../../../types/form/GenericFieldsTypes";
 
@@ -9,7 +10,7 @@ function DateInput(props: FormFieldsProps) {
       {...props}
       type="date"
       component={InputFieldFF}
-      validate={(Boolean(props.required)) && hasValue}
+      validate={props.required ? hasValue : undefined}
       disabled={props.disabled}
     />
   );

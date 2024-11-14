@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     ReactFinalForm,
     InputFieldFF,
@@ -17,7 +18,7 @@ function InputText(props: FormFieldsProps) {
         <Field
             {...props}
             component={InputFieldFF}
-            validate={(Boolean(props.required)) && VALIDATOR}
+            validate={props.required ? hasValue : undefined}
             type="text"
             required
             label={null}

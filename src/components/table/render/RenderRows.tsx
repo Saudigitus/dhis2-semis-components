@@ -4,9 +4,9 @@ import classNames from 'classnames';
 import { RenderRowsProps } from '../../../types/table/TableContentProps';
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import MobileRow from '../components/mobileRow/MobileRow';
-import RowTable from '../components/row/RowTable.tsx';
-import RowCell from '../components/row/RowCell.tsx';
-import TableRowActions from '../components/rowsActions/TableRowActions.tsx';
+import RowTable from '../components/row/RowTable';
+import RowCell from '../components/row/RowCell';
+import TableRowActions from '../components/rowsActions/TableRowActions';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

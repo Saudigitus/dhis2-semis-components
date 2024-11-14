@@ -3,6 +3,7 @@ import { ButtonProps } from "@dhis2/ui"
 interface ModalActionButtonType extends ButtonProps {
     /** Button custom color */
     color?: string
+    name?: string
 }
 
 interface ModalProps {

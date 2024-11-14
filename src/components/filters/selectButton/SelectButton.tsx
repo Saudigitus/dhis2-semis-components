@@ -1,5 +1,5 @@
 import { Popover, makeStyles } from '@material-ui/core';
-import { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import RenderWithoutAppliedFilter from './RenderWithoutAppliedFilter';
 import SelectorContents from '../enrollment/content/SelectorContents';
 import RenderWithAppliedFilter from './RenderWithAppliedFilter';

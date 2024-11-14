@@ -1,3 +1,4 @@
+import React from "react";
 import "./dropzone.css"
 import Lottie from "lottie-react";
 import { Form } from "react-final-form";

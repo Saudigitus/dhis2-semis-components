@@ -1,3 +1,4 @@
+import React from 'react';
 import { Label } from "@dhis2/ui";
 import WithPadding from "../template/WithPadding";
 import GenericFields from "../genericFields/GenericFields";

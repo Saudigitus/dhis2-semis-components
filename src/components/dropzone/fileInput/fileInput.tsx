@@ -1,3 +1,4 @@
+import React from "react";
 function FileInput(props: any) {
     const { name, setUploadedFile, accept = ".csv" } = props
 

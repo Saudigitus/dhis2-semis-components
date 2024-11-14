@@ -1,24 +1,27 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "ES2021",
-    "lib": ["es2021", "dom"],
+    "target": "es5",
+    "lib": [
+      "es2021",
+      "dom"
+    ],
     "moduleResolution": "node",
     "declaration": true,
     "jsx": "react-jsx",
-    "allowImportingTsExtensions": true,
-    "emitDeclarationOnly": true,
-    "strict": false,           // Desabilita todas as verificações estritas
-    "skipLibCheck": true,      // Ignora verificações de tipo em arquivos de biblioteca
+    "strict": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
-    "noImplicitAny": false, 
-    "outDir": "./dist",                    // Define a pasta de saída para os arquivos compilados
-    "rootDir": "./",
+    "noImplicitAny": false,
+    "outDir": "./dist",
+    "rootDir": "./src",
     "declarationDir": "./dist/declarations",
     "resolveJsonModule": true
   },
   "exclude": [
     "node_modules",
-    "src/stories"
+    "src/stories",
+    "vite.config.ts",
+    "dist"
   ]
 }

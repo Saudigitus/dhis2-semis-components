@@ -1,3 +1,4 @@
+import React from 'react';
 import DateFilterManager from './components/date/DateFilterManager';
 import TextFilter from './components/text/Text'
 import TrueOnly from './components/trueOnly/TrueOnly';

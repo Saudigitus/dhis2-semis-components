@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ReactFinalForm,
   TextAreaFieldFF,
@@ -17,7 +18,7 @@ function InputArea(props: FormFieldsProps) {
     <Field
       {...props}
       component={TextAreaFieldFF}
-      validate={Boolean(props.required) && VALIDATOR}
+      validate={props.required ? hasValue : undefined}
       type="text"
       required
       label={null}

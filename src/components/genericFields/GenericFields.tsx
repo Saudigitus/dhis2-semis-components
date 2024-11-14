@@ -1,3 +1,4 @@
+import React from 'react';
 import CheckInput from "./fields/CheckInput";
 import DateInput from "./fields/DateInput";
 import InputNumber from "./fields/InputNumber";

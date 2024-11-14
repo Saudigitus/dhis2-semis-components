@@ -1,3 +1,4 @@
+import React from 'react';
 import { Checkbox, spacersNum } from '@dhis2/ui';
 import { createStyles, type Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core';
