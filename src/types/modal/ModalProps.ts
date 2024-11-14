@@ -1,28 +1,69 @@
 import { ButtonProps } from "@dhis2/ui"
 
+/**
+ * Modal action buttons interface. It extends ButtonProps from @dhis2/ui and adds a new props as color.
+ * @interface ModalActionButtonType
+ * @typedef {ModalActionButtonType}
+ * @extends {ButtonProps}
+ */
 interface ModalActionButtonType extends ButtonProps {
-    /** Button custom color */
+    /**
+     * Custom button color. Cannot be used in the same time whit primary or secondary true as it set a new background color to the button.
+     * @type {?string}
+     */
     color?: string
 }
 
+/**
+ * Modal component interface.
+ * @interface ModalProps
+ * @typedef {ModalProps}
+ */
 interface ModalProps {
-    /** The title that appears in the modal. */
+    /**
+     * The text to display at the top of the modal.
+     * @type {string}
+     */
     title: string
-    /** The variable which controls the modal status. If true the modal is opened. */
+    /**
+     * The variable that controls the modal opening. If true, the modal is open.
+     * @type {boolean}
+     */
     open: boolean
-    /** This variable determines if the modal will be closed with click away. */
+    /**
+     * This variable controls if the modal must be closed whith mouse or keyboard event.
+     * @type {?boolean}
+     */
     isClickAway?: boolean
-    /** To set the open value to false. */
+    /**
+     * A function prop to set the open variable to false and consequenlty close the modal.
+     * @type {() => void}
+     */
     handleClose: () => void
-    /** The modal body content. */
+    /**
+     * The modal body.
+     * @type {React.ReactNode}
+     */
     children: React.ReactNode
-    /** To set modal width. Default - large.  */
+    /**
+     * This variable sets the modal width. Optional. Default is "large".
+     * @type {?("small" | "medium" | "large")}
+     */
     size?: "small" | "medium" | "large"
-    /** To set modal position on app window. Default - middle.*/
+    /**
+     * This variable sets the modal position relative to the screen. Optional. Default is "top"
+     * @type {?("top" | "middle" | "bottom")}
+     */
     position?: "top" | "middle" | "bottom",
-    /** An array of buttons props to generate action buttons in modal*/
+    /**
+     * A prop to send modal actions. Optional.
+     * @type {?ModalActionButtonType[]}
+     */
     actions?: ModalActionButtonType[]
-    /** Will be true if data to fill modal is processing*/
+    /**
+     * A variable to show a loader while modal children are processing. Must be true modal children are processing. Optional
+     * @type {?boolean}
+     */
     loading?: boolean
 }
 
