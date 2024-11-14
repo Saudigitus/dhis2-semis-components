@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import i18n from '@dhis2/d2-i18n';
 import { IconSettings24 } from '@dhis2/ui';
 import { IconButton, Tooltip } from '@material-ui/core';
 import DialogConfigColumns from './DialogConfigColumns';
@@ -29,7 +28,7 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
                 disableFocusListener
                 disableTouchListener
                 enterDelay={500}
-                title={i18n.t('Select columns')}
+                title={'Select columns'}
                 className="my-auto"
             >
                 <IconButton

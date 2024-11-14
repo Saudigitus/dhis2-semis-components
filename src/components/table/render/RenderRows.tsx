@@ -1,5 +1,4 @@
 import React from 'react'
-import i18n from '@dhis2/d2-i18n';
 import classNames from 'classnames';
 import { RenderRowsProps } from '../../../types/table/TableContentProps';
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
@@ -76,7 +75,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                     className={classNames(classes.cell, classes.bodyCell)}
                     colspan={headerData?.filter(x => x.visible)?.length as unknown as number + 1}
                 >
-                    {i18n.t('No data to display')}
+                    {'No data to display'}
                 </RowCell>
             </RowTable>
         );
