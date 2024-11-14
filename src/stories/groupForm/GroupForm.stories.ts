@@ -164,8 +164,8 @@ export const Group_form: Story = {
                 ]
             },
         ],
-        onFormSubtmit: () => { },
-        onInputChange: (e) => { alert(e.target.value) },
+        onFormSubtmit: (e) => { console.log(e) },
+        onInputChange: (e) => { console.log(e) },
         initialValues: {},
         style: { width: "900px" },
         loading: false
