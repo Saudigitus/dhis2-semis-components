@@ -1,7 +1,16 @@
-.tr{
-    outline: none !important;
+.container {
+    background-color: #fff;
+    height: 45px;
+    margin: 4px 0 4px 0px;
+    border-bottom: solid 1px #cecece;
 }
 
-.iconContainer{
+.iconContainer {
     float: right !important;
+    margin-top: 10px;
+}
+
+.title {
+    margin: 5px -10px 14px -10px;
+    font-weight: 500;
 }

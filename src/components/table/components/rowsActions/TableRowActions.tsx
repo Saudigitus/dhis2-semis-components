@@ -6,7 +6,7 @@ import { TableRowActionsProps } from '../../../../types/table/TableRowActionsPro
 
 
 export default function TableRowActions(props: TableRowActionsProps) {
-  const { type = "icon", actions, loading, disabled } = props;
+  const { displayType = "icon", actions, loading, disabled } = props;
 
   const renderMenu = (type: "icon" | "menu") => {
     switch (type) {
@@ -28,6 +28,6 @@ export default function TableRowActions(props: TableRowActionsProps) {
   }
 
   return (
-    <div className={style.rowActionsContainer}>{renderMenu(type)}</div>
+    <div className={style.rowActionsContainer}>{renderMenu(displayType)}</div>
   )
 }

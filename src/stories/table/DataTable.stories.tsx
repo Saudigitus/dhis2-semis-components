@@ -2,7 +2,16 @@ import { CustomAttributeProps, VariablesTypes } from '../../types/variables/Attr
 import type { Meta, StoryObj } from '@storybook/react';
 import { Attribute } from '../../types/generated/models';
 import Table from '../../components/table/render/Table';
-import { fn } from '@storybook/test';
+import { RowActionsType } from '../../types/table/TableRowActionsProps';
+import { IconEdit24, IconDelete24, IconCheckmarkCircle24 } from "@dhis2/ui";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-select/dist/react-select.css";
+
+const rowsActions: RowActionsType[] = [
+  { icon: <IconEdit24 />, color: '#277314', label: `Edition`, disabled: true, loading: false, onClick: () => { alert("Edition") } },
+  { icon: <IconDelete24 />, color: '#d64d4d', label: `Delete`, disabled: false, loading: false, onClick: () => { alert("Delete") } },
+  { icon: <IconCheckmarkCircle24 />, color: '#147cd7', disabled: false, loading: false, label: 'Complete', onClick: () => { alert("Complete") } }
+];
 
 const headerColumns = [
   {
@@ -29,7 +38,8 @@ const headerColumns = [
     type: VariablesTypes.Attribute,
     trackedEntity: "trackedEntity",
     placeholder: "First Name",
-    unique: false
+    unique: false,
+    searchable: true,
   },
   {
     id: "fistid2",
@@ -55,7 +65,8 @@ const headerColumns = [
     type: VariablesTypes.Attribute,
     trackedEntity: "trackedEntity",
     placeholder: "First Name",
-    unique: false
+    unique: false,
+    searchable: true,
   },
   {
     id: "fistid3",
@@ -81,7 +92,8 @@ const headerColumns = [
     type: VariablesTypes.Attribute,
     trackedEntity: "trackedEntity",
     placeholder: "First Name",
-    unique: false
+    unique: false,
+    searchable: true,
   },
   {
     id: "fistid4",
@@ -107,7 +119,8 @@ const headerColumns = [
     type: VariablesTypes.Attribute,
     trackedEntity: "trackedEntity",
     placeholder: "First Name",
-    unique: false
+    unique: false,
+    searchable: true,
   }
 ]
 
@@ -138,6 +151,12 @@ const meta = {
     isInactive: false,
     isOwnershipOu: false,
     showEnrollments: false,
+    showRowActions: true,
+    rowAction: rowsActions,
+    displayType: "icon",
+    defaultFilterNumber: 3,
+    filterState: { attributes: [], dataElements: [] },
+    setFilterState: () => { },
   },
 
 } satisfies Meta<typeof Table>;
@@ -158,6 +177,11 @@ export const Loading: Story = {
     isInactive: false,
     isOwnershipOu: false,
     showEnrollments: false,
+    showRowActions: true,
+    rowAction: rowsActions,
+    defaultFilterNumber: 3,
+    filterState: { attributes: [], dataElements: [] },
+    setFilterState: () => { }
   },
 };
 

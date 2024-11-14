@@ -6,6 +6,7 @@ import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import MobileRow from '../components/mobileRow/MobileRow';
 import RowTable from '../components/row/RowTable.tsx';
 import RowCell from '../components/row/RowCell.tsx';
+import TableRowActions from '../components/rowsActions/TableRowActions.tsx';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -64,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function RenderRows(props: RenderRowsProps): React.ReactElement {
     const classes = useStyles()
-    const { headerData, rowsData, searchActions, loading, viewPortWidth, isInactive, isOwnershipOu, showEnrollments } = props;
+    const { headerData, rowsData = [], searchActions, loading, viewPortWidth, isInactive, isOwnershipOu, showEnrollments, showRowActions, rowAction, displayType } = props;
 
     if (rowsData?.length === 0 && !loading) {
         return (
@@ -97,7 +98,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                     headerData?.filter(x => x.visible)?.map(column => (
                                         <RowCell
                                             key={column.id}
-                                            className={classNames(classes.cell, classes.bodyCell, (column.displayName == "Actions") ? classes.actionsCell : null)}
+                                            className={classNames(classes.cell, classes.bodyCell)}
                                         >
                                             <div>
                                                 {
@@ -107,6 +108,20 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                         </RowCell>
                                     ))
                                 }
+                                {
+                                    showRowActions &&
+                                    <RowCell
+                                        key={"actions"}
+                                        className={classNames(classes.cell, classes.bodyCell, classes.actionsCell)}
+                                    >
+                                        <TableRowActions
+                                            actions={rowAction}
+                                            disabled={isInactive}
+                                            loading={loading!}
+                                            displayType={displayType}
+                                        />
+                                    </RowCell>
+                                }
                             </RowTable>
                             :
                             <MobileRow
@@ -114,7 +129,14 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 header={headerData}
                                 inactive={isInactive}
                                 isOwnershipOu={isOwnershipOu}
-                                actions={null}
+                                actions={
+                                    <TableRowActions
+                                        actions={rowAction}
+                                        disabled={isInactive}
+                                        loading={loading!}
+                                        displayType={displayType}
+                                    />
+                                }
                             />
                         }
                     </>

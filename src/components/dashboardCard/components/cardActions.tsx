@@ -1,6 +1,6 @@
 import { IconButton, Tooltip } from "@material-ui/core"
 import style from "../card.module.css"
-import { Action, PositionProps } from "../../../types/cardDashboardProps";
+import { Action, PositionProps } from "../../../types/cards/cardDashboardProps";
 import classNames from "classnames";
 
 

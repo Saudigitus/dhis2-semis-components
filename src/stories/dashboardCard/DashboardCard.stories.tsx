@@ -10,7 +10,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import MemoryIcon from '@material-ui/icons/Memory';
 import CameraEnhanceIcon from '@material-ui/icons/CameraEnhance';
 import { DashboardCard } from "../../components";
-import { Action } from "../../types/cardDashboardProps";
+import { Action } from "../../types/cards/cardDashboardProps";
 
 const meta = {
     title: 'Card/Dashboard Card',

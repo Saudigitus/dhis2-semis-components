@@ -17,6 +17,7 @@ export default function SDCustomForm({ formFields, style, onInputChange, onFormS
             id: "continue",
             label: "Submit",
             success: "success",
+            type: "submit",
             disabled: (pristine || loading),
             primary: true,
             icon: loading ? <CircularLoader small /> : <></>
@@ -26,12 +27,18 @@ export default function SDCustomForm({ formFields, style, onInputChange, onFormS
     return (
         <div style={style} >
             <Form
-                onSubmit={() => onFormSubtmit}
+                onSubmit={(values: any) => { onFormSubtmit(values) }}
                 initialValues={initialValues}
             >
-                {({ pristine, form }: any) => (
+                {({ pristine, form, handleSubmit, values }: any) => (
                     <>
-                        <form onChange={(e: any) => { onInputChange(e) }} >
+                        <form
+                            onChange={(e: any) => { onInputChange(e) }}
+                            onSubmit={(e) => {
+                                e.preventDefault()
+                                handleSubmit(values)
+                            }}
+                        >
                             {
                                 formFields?.map((section: any, i: any) =>
                                     <GroupForm
@@ -42,24 +49,24 @@ export default function SDCustomForm({ formFields, style, onInputChange, onFormS
                                     />
                                 )
                             }
-                        </form>
 
-                        {withButtons && <ModalActions>
-                            <ButtonStrip end >
-                                {formActions(pristine, form).map((action: any, i) =>
-                                    <Button
-                                        key={i}
-                                        {...action}
-                                        loading={false}
-                                    >
-                                        {action.label}
-                                    </Button>
-                                )}
-                            </ButtonStrip>
-                        </ModalActions>}
+                            {withButtons && <ModalActions>
+                                <ButtonStrip end >
+                                    {formActions(pristine, form).map((action: any, i) =>
+                                        <Button
+                                            key={i}
+                                            {...action}
+                                            loading={false}
+                                        >
+                                            {action.label}
+                                        </Button>
+                                    )}
+                                </ButtonStrip>
+                            </ModalActions>}
+                        </form>
                     </>
                 )}
             </Form>
-        </div>
+        </div >
     )
 }

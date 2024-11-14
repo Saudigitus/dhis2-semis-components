@@ -8,6 +8,9 @@ import WithPadding from '../../template/WithPadding';
 import TableComponent from '../components/table/TableComponent';
 import Pagination from '../components/pagination/Pagination';
 import RenderRows from './RenderRows';
+import { TableRenderProps } from '../../../types/table/TableContentProps';
+import HeaderFilters from '../components/head/HeaderFilters';
+import { CustomAttributeProps } from '../../../types/variables/AttributeColumns';
 
 const usetStyles = makeStyles((theme) => ({
     tableContainer: {
@@ -20,7 +23,7 @@ const usetStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
     },
     h4: {
-        margin: '0px',
+        margin: '10px 0px 10px 5px',
         fontSize: '22px',
         fontWeigth: '500',
         [theme.breakpoints.down('md')]: {
@@ -32,24 +35,7 @@ const usetStyles = makeStyles((theme) => ({
     }
 }));
 
-interface TableProps {
-    viewPortWidth: number,
-    columns: any,
-    totalElements: number,
-    loading: boolean,
-    createSortHandler: () => void,
-    order: "asc" | "desc",
-    orderBy: any,
-    rowsPerPages?: { value: number, label: string }[],
-    tableData: Record<string, any>[]
-    sortable: boolean,
-    isInactive: boolean,
-    isOwnershipOu: boolean,
-    showEnrollments: boolean,
-    searchActions?: any
-}
-
-function Table(props: TableProps): React.ReactElement {
+function Table(props: TableRenderProps): React.ReactElement {
     const { viewPortWidth,
         columns, totalElements,
         loading, createSortHandler,
@@ -59,14 +45,19 @@ function Table(props: TableProps): React.ReactElement {
         isOwnershipOu,
         showEnrollments,
         sortable,
-        searchActions
+        searchActions,
+        showRowActions,
+        rowAction,
+        displayType,
+        filterState,
+        setFilterState,
+        defaultFilterNumber
     } = props
-
-    console.log(props)
 
     const classes = usetStyles()
     const [page, setpage] = useState(1)
     const [pageSize, setpageSize] = useState(10)
+    const [filteredHeaders, setfilteredHeaders] = useState<CustomAttributeProps[]>([])
 
     const onPageChange = (newPage: number) => {
         setpage(newPage)
@@ -79,8 +70,21 @@ function Table(props: TableProps): React.ReactElement {
 
     return (
         <Paper>
+            <div className={classes.workingListsContainer}>
+                <h4 className={classes.h4}>Enrollments</h4>
+                <div />
+            </div>
+            <WithBorder type='bottom' />
             <WithPadding>
                 <WithBorder type='all'>
+                    <HeaderFilters
+                        columns={columns}
+                        updateVariables={setfilteredHeaders}
+                        filteredHeaders={filteredHeaders}
+                        filterState={filterState}
+                        setFilterState={setFilterState}
+                        defaultFilterNumber={defaultFilterNumber}
+                    />
                     <div
                         className={classes.tableContainer}
                     >
@@ -92,13 +96,14 @@ function Table(props: TableProps): React.ReactElement {
                                         createSortHandler={createSortHandler}
                                         order={order}
                                         orderBy={orderBy}
-                                        rowsHeader={columns}
+                                        rowsHeader={filteredHeaders.length > 0 ? filteredHeaders : columns}
                                         sortable={sortable}
+                                        showRowActions={showRowActions}
                                     />
                                 }
                                 {!loading && (
                                     <RenderRows
-                                        headerData={columns}
+                                        headerData={filteredHeaders.length > 0 ? filteredHeaders : columns}
                                         rowsData={tableData}
                                         loading={loading}
                                         isInactive={isInactive}
@@ -106,6 +111,9 @@ function Table(props: TableProps): React.ReactElement {
                                         showEnrollments={showEnrollments}
                                         searchActions={searchActions}
                                         viewPortWidth={viewPortWidth}
+                                        showRowActions={showRowActions}
+                                        rowAction={rowAction}
+                                        displayType={displayType}
                                     />
                                 )}
 

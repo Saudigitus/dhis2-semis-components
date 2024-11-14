@@ -10,7 +10,8 @@ const meta = {
     tags: ['autodocs'],
     argTypes: {
         sections: { description: "Uma lista de secções das possiveis instruções" },
-        title: { description: "Título do card" }
+        title: { description: "Título do card" },
+        fontWeigth: { control: { type: 'radio', options: ['normal', 'bold'] } }
     },
 } satisfies Meta<typeof InfoPage>;
 
@@ -25,6 +26,7 @@ export const Info_page: Story = {
             instructions: ["Select the Organization unit you want to view data",
                 "Use global filters(Class, Grade and Academic Year)"
             ]
-        }]
+        }],
+        fontWeigth: "bold"
     },
 };

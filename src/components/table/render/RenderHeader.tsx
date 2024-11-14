@@ -11,18 +11,13 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         row: { width: "100%" },
         cell: {
-            padding: `${theme.spacing(1) / 2}px ${theme.spacing(1) * 7}px ${theme.spacing(1) /
-                2}px ${theme.spacing(1) * 3}px`,
-            '&:last-child': {
-                paddingRight: 2 * 3
-            },
             borderBottomColor: "rgba(224, 224, 224, 1)",
             [theme.breakpoints.down('md')]: {
                 padding: `${theme.spacing(1) * 1}px`,
                 '&:last-child': {
                     paddingRight: `${theme.spacing(1) * 1}px`
                 },
-                // fontSize: '13px !important',
+                fontSize: '13px !important',
             },
         },
         bodyCell: {
@@ -62,12 +57,13 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function RenderHeader(props: RenderHeaderProps): React.ReactElement {
-    const { rowsHeader = [], order, orderBy, createSortHandler, isCheckbox, checked, indeterminate, onChange, sortable } = props
+    const { rowsHeader = [], order, orderBy, createSortHandler, isCheckbox, checked, indeterminate, onChange, sortable, showRowActions } = props
     const classes = useStyles()
 
     const headerCells = rowsHeader?.filter(x => x.visible)?.map((column) => (
         <HeaderCell
             key={column.id}
+            className={classNames(classes.cell, classes.headerCell)}
         >
             {
                 sortable ?
@@ -75,8 +71,9 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
                         active={orderBy === column.id}
                         direction={orderBy === column.id ? order : 'asc'}
                         createSortHandler={createSortHandler ? createSortHandler(column.id) : undefined}
+                        className={classNames(classes.cell, classes.headerCell)}
                     >
-                        {column.header}
+                        {column.displayName}
                         {orderBy === column.id
                             ? (
                                 <span className={classes.visuallyHidden}>
@@ -86,7 +83,7 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
                             : null}
                     </SortLabel>
                     :
-                    column.header
+                    column.displayName
             }
         </HeaderCell>
     ))
@@ -107,7 +104,16 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
                         />
                     </HeaderCell>
                 }
+
                 {headerCells}
+
+                {showRowActions &&
+                    <HeaderCell
+                        className={classNames(classes.cell, classes.headerCell)}
+                    >
+                        <span>Actions</span>
+                    </HeaderCell>
+                }
             </RowTable>
         </thead>
     )
