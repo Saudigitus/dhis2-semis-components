@@ -109,7 +109,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
             dataElements: dataElementsQuerybuilder
         })
     }
-    
+
     const onResetFilters = (id: string) => {
         const copyHeader = { ...filtersValues }
 
