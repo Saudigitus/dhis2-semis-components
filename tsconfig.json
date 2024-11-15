@@ -7,6 +7,9 @@
       "dom"
     ],
     "moduleResolution": "node",
+    "paths": {
+      "*": ["node_modules/*"]
+    },
     "declaration": true,
     "jsx": "react-jsx",
     "strict": false,
@@ -14,6 +17,7 @@
     "esModuleInterop": true,
     "noImplicitAny": false,
     "outDir": "./dist",
+    "allowJs": true,
     "rootDir": "./src",
     "declarationDir": "./dist/declarations",
     "resolveJsonModule": true
@@ -22,6 +26,8 @@
     "node_modules",
     "src/stories",
     "vite.config.ts",
-    "dist"
+    "dist",
+    "eslint.config.js",
+    "eslint.config.d.ts"
   ]
 }
