@@ -1,7 +1,8 @@
 import React from "react"
 import { SimpleButtonsComponentProps } from "../../../types/buttons/switchButtonsProps";
-import SimpleDropdownButton from "./components/SimpleDropdownButton";
-import SimpleButtons from "./components/SimpleButtons";
+import SimpleDropdownButton from "./components/simpleDropdownButton";
+import SimpleButtons from "./components/simpleButtons";
+
 
 
 
