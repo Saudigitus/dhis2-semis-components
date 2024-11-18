@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import MemoryIcon from '@material-ui/icons/Memory';
 import CameraEnhanceIcon from '@material-ui/icons/CameraEnhance';
-import { DashboardCard } from "../../components";
+import DashboardCard from "../../components/dashboardCard/dashboardCard";
 import { Action } from "../../types/cards/cardDashboardProps";
 
 const meta = {

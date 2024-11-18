@@ -12,6 +12,7 @@ interface ModalActionButtonType extends ButtonProps {
      * @type {?string}
      */
     color?: string
+    name?: string
 }
 
 /**

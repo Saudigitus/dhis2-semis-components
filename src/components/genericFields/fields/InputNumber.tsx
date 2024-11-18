@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     ReactFinalForm,
     InputFieldFF,
@@ -26,7 +27,7 @@ function InputNumber(props: FormFieldsProps) {
         <Field
             {...props}
             component={InputFieldFF}
-            validate={(Boolean(props.required)) && VALIDATOR}
+            validate={props.required ? hasValue : undefined}
             type={props.type}
             format={formatToString}
             disabled={props.disabled}

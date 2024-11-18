@@ -1,3 +1,4 @@
+import React from 'react';
 import style from './tableRowActions.module.css'
 import IconActions from './components/IconActions';
 import MenuActions from './components/MenuActions';

@@ -1,5 +1,5 @@
-import { CustomAttributeProps } from "../variables/AttributeColumns.ts"
-import { RowActionsType, TableRowActionsType } from "./TableRowActionsProps.ts"
+import { CustomAttributeProps } from "../variables/AttributeColumns"
+import { RowActionsType, TableRowActionsType } from "./TableRowActionsProps"
 
 interface TableProps {
     head: any

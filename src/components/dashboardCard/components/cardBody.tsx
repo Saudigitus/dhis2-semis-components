@@ -1,3 +1,4 @@
+import React from 'react';
 import { IconButton, Tooltip } from "@material-ui/core"
 import style from "../card.module.css"
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';

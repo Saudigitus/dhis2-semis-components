@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SideBar as SideBarComponent } from '../../components/layout';
+import SideBarComponent from '../../components/layout/sidebar/SideBar';
 
 import gauge from "../../assets/images/sidebar/gauge.svg"
 import fileDocument from "../../assets/images/sidebar/file-document.svg"

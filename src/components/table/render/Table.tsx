@@ -11,6 +11,8 @@ import RenderRows from './RenderRows';
 import { TableRenderProps } from '../../../types/table/TableContentProps';
 import HeaderFilters from '../components/head/HeaderFilters';
 import { CustomAttributeProps } from '../../../types/variables/AttributeColumns';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-select/dist/react-select.css";
 
 const usetStyles = makeStyles((theme) => ({
     tableContainer: {

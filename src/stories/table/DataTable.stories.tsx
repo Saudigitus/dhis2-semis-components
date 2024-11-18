@@ -1,3 +1,4 @@
+import React from "react";
 import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Attribute } from '../../types/generated/models';

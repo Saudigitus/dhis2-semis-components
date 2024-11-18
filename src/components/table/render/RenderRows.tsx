@@ -1,12 +1,11 @@
 import React from 'react'
-import i18n from '@dhis2/d2-i18n';
 import classNames from 'classnames';
 import { RenderRowsProps } from '../../../types/table/TableContentProps';
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import MobileRow from '../components/mobileRow/MobileRow';
-import RowTable from '../components/row/RowTable.tsx';
-import RowCell from '../components/row/RowCell.tsx';
-import TableRowActions from '../components/rowsActions/TableRowActions.tsx';
+import RowTable from '../components/row/RowTable';
+import RowCell from '../components/row/RowCell';
+import TableRowActions from '../components/rowsActions/TableRowActions';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -76,7 +75,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                     className={classNames(classes.cell, classes.bodyCell)}
                     colspan={headerData?.filter(x => x.visible)?.length as unknown as number + 1}
                 >
-                    {i18n.t('No data to display')}
+                    {'No data to display'}
                 </RowCell>
             </RowTable>
         );

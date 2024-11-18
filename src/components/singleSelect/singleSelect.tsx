@@ -1,3 +1,4 @@
+import React from 'react';
 import { Form } from "react-final-form";
 import { AutoCompleteProps } from "../../types/form/GenericFieldsTypes";
 import SingleSelectField from "../genericFields/fields/SingleSelect";

@@ -1,4 +1,4 @@
-import { CustomAttributeProps } from "../variables/AttributeColumns.ts"
+import { CustomAttributeProps } from "../variables/AttributeColumns"
 
 interface MenuFiltersProps {
     anchorEl: any

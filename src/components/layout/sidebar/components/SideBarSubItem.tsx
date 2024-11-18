@@ -1,3 +1,4 @@
+import React from 'react';
 import classNames from 'classnames';
 import Badge from '../../../badge/Badge';
 import style from "../sideBar.module.css"

@@ -1,4 +1,4 @@
-import i18n from '@dhis2/d2-i18n';
+import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -38,7 +38,7 @@ function DialogSelectColumns(props: DialogSelectColumnsProps) {
                 onClose={onClose}
                 fullWidth
             >
-                <DialogTitle>{i18n.t('Columns to show in the table')}</DialogTitle>
+                <DialogTitle>{'Columns to show in the table'}</DialogTitle>
                 <DialogContent>
                     <DragDropList
                         listItems={columnsList?.length > 0 ? columnsList : headers}
@@ -48,7 +48,7 @@ function DialogSelectColumns(props: DialogSelectColumnsProps) {
                 </DialogContent>
                 <DialogActions>
                     <Button color='primary' onClick={handleSave}>
-                        {i18n.t('Save')}
+                        {'Save'}
                     </Button>
                 </DialogActions>
             </Dialog>

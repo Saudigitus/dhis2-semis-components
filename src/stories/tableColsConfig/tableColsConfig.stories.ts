@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import DragDropList from '../../components/drag&drop/DragDropList';
+import { Attribute } from '../../types/generated/models';
+import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns';
 
 const meta = {
     title: 'Columns config/Columns config',
@@ -14,19 +16,123 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const headerColumns = [
+    {
+        id: "fistid1",
+        displayName: "First Name",
+        header: "First Name",
+        required: false,
+        name: "firstName",
+        valueType: Attribute.valueType.TEXT as unknown as CustomAttributeProps["valueType"],
+        disabled: false,
+        visible: true,
+        options: {
+            optionSet: {
+                id: "optionSetId",
+                options: [
+                    {
+                        value: "option1",
+                        label: "Option 1"
+                    }
+                ]
+            }
+        },
+        labelName: "First Name",
+        type: VariablesTypes.Attribute,
+        trackedEntity: "trackedEntity",
+        placeholder: "First Name",
+        unique: false,
+        searchable: true,
+    },
+    {
+        id: "fistid2",
+        displayName: "Second Name",
+        header: "First Name",
+        required: false,
+        name: "firstName",
+        valueType: Attribute.valueType.TEXT as unknown as CustomAttributeProps["valueType"],
+        disabled: false,
+        visible: true,
+        options: {
+            optionSet: {
+                id: "optionSetId",
+                options: [
+                    {
+                        value: "option1",
+                        label: "Option 1"
+                    }
+                ]
+            }
+        },
+        labelName: "First Name",
+        type: VariablesTypes.Attribute,
+        trackedEntity: "trackedEntity",
+        placeholder: "First Name",
+        unique: false,
+        searchable: true,
+    },
+    {
+        id: "fistid3",
+        displayName: "Therd Name",
+        header: "First Name",
+        required: false,
+        name: "firstName",
+        valueType: Attribute.valueType.TEXT as unknown as CustomAttributeProps["valueType"],
+        disabled: false,
+        visible: true,
+        options: {
+            optionSet: {
+                id: "optionSetId",
+                options: [
+                    {
+                        value: "option1",
+                        label: "Option 1"
+                    }
+                ]
+            }
+        },
+        labelName: "First Name",
+        type: VariablesTypes.Attribute,
+        trackedEntity: "trackedEntity",
+        placeholder: "First Name",
+        unique: false,
+        searchable: true,
+    },
+    {
+        id: "fistid4",
+        displayName: "Fourth Name",
+        header: "First Name",
+        required: false,
+        name: "firstName",
+        valueType: Attribute.valueType.TEXT as unknown as CustomAttributeProps["valueType"],
+        disabled: false,
+        visible: true,
+        options: {
+            optionSet: {
+                id: "optionSetId",
+                options: [
+                    {
+                        value: "option1",
+                        label: "Option 1"
+                    }
+                ]
+            }
+        },
+        labelName: "First Name",
+        type: VariablesTypes.Attribute,
+        trackedEntity: "trackedEntity",
+        placeholder: "First Name",
+        unique: false,
+        searchable: true,
+    }
+]
+
 export const Columns_config: Story = {
     args: {
-        listItems: [
-            { id: "item1", visible: true, displayName: "item 1" },
-            { id: "item2", visible: true, displayName: "item 2" },
-            { id: "item3", visible: true, displayName: "item 3" },
-            { id: "item4", visible: true, displayName: "item 4" },
-            { id: "item5", visible: true, displayName: "item 5" }
-        ],
+        listItems: headerColumns,
         width: "350px",
         checkable: true,
         title: "Table Columns",
-        style: {},
         setListItems: () => { }
     },
 };

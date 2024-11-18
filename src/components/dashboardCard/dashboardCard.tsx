@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, Card } from "@dhis2/ui"
 import style from "./card.module.css"
 import classNames from "classnames"
@@ -15,7 +16,7 @@ const DashboardCard = ({ icon, actions, alignActions, size, contents }: CardDash
       case "small": return "cardSamll";
       case "medium": return "cardMedium";
       case "large": return "cardLarge";
-      default: return "cardSmall"
+      default: return "cardSmall";
     }
   }
 
