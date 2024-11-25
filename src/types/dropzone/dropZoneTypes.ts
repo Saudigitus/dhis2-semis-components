@@ -29,7 +29,7 @@ interface DropZoneProps {
      *
      * @type {?boolean}
      */
-    hideIcon?: boolean
+    hideUploadIcon?: boolean
 
     /**
      * This variable tells you whether the label ‘Drag & drop files or browse’ should be visible or not.
@@ -82,6 +82,8 @@ interface DropZoneProps {
      * @type {?string}
      */
     buttonLabel?: string
+
+    loading?: boolean
 }
 
 export type { DropZoneProps }

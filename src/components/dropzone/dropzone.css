@@ -6,6 +6,12 @@
     flex-direction: column;
 }
 
+.icon {
+    width: 100px;
+    margin: 16px;
+  }
+  
+
 .dropzone_box h4 {
     font-size: 1.1rem;
     margin-bottom: 0.6rem;
