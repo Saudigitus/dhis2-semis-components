@@ -68,6 +68,9 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.10.5",
     "react-final-form": "^6.5.9",
-    "styled-jsx": "^5.1.6"
+    "react-json-view": "^1.21.3",
+    "recoil": "^0.7.7",
+    "styled-jsx": "^5.1.6",
+    "zod": "^3.23.8"
   }
 }

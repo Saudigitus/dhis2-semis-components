@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import SwitchButtonView from "../../components/buttons/switchButtons/switchButtonsView";
 import { SimpleButtonType } from '../../types/buttons/switchButtonsProps';
 import { fn } from '@storybook/test';
+import SwitchButtonView from '../../components/buttons/switchButtons/switchButtonsView';
 
 const meta = {
     title: 'Buttons/Switch Buttons',
