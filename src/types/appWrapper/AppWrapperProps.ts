@@ -7,7 +7,7 @@ interface AppWrapperProps {
      *   const {programsValues} = useProgramsKeys() - for programs
      *   const {dataStoreValues} = useDataStoreKey() -  for data store
     */
-    dataSoteKey: string
+    dataStoreKey: string
 }
 
 export type { AppWrapperProps }

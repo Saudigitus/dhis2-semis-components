@@ -18,14 +18,14 @@ const cleanEmptyErrors = (obj: any): object => {
     return obj; // Retorna o objeto atualizado
 }
 
-const dataStoreShema = z.array(
+const dataStoreSchema = z.array(
     z.union([studentDataStoreSchema, staffDataStoreSchema])
 );
 
-type DataStoreProps = z.infer<typeof dataStoreShema>
+export type DataStoreProps = z.infer<typeof dataStoreSchema>
 
 const dataStoreSchemaValidator = (dataSoreResult: unknown) => {
-    const validationResult = dataStoreShema.safeParse(dataSoreResult);
+    const validationResult = dataStoreSchema.safeParse(dataSoreResult);
 
     if (!validationResult.success) {
         const formattedErrors = validationResult.error.format();
@@ -48,5 +48,4 @@ const DataStoreState = atom<DataStoreProps>({
     key: "data-store-state"
 })
 
-export { dataStoreShema, dataStoreSchemaValidator, DataStoreState };
-export type { DataStoreProps };
+export { dataStoreSchema, dataStoreSchemaValidator, DataStoreState };
