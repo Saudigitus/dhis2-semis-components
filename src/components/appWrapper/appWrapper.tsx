@@ -6,10 +6,10 @@ import useProgramConfig from '../../hooks/appWrapper/useProgramConfig';
 import { DataStoreProps} from '../../schemas/dataStore';
 import { AppWrapperProps } from '../../types/appWrapper/AppWrapperProps';
 
-const AppWrapper = ({ children, dataSoteKey }: AppWrapperProps) => {
+const AppWrapper = ({ children, dataStoreKey }: AppWrapperProps) => {
   const [loading, setLoading] = useState<boolean>(true)
-  const { error, validationError, getDataStore } = useDataStore(dataSoteKey);
-  const { getProgram, data: programs, error: erroProgram } = useProgramConfig()
+  const { error, validationError, getDataStore } = useDataStore(dataStoreKey);
+  const { getProgram, data: programs, error: errorProgram } = useProgramConfig()
  
   useEffect(() => {
     void getDataStore()
@@ -33,11 +33,11 @@ const AppWrapper = ({ children, dataSoteKey }: AppWrapperProps) => {
   }
 
   if (error) {
-    return (<DataStoreNotFound error={error ?? erroProgram} />)
+    return (<DataStoreNotFound error={error ?? errorProgram} />)
   }
 
-  if (erroProgram) {
-    return (<ProgramNotFound error={error ?? erroProgram} />)
+  if (errorProgram) {
+    return (<ProgramNotFound error={error ?? errorProgram} />)
   }
 
   if (validationError) {

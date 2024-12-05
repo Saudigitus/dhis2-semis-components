@@ -31,10 +31,10 @@ const useProgramConfig = () => {
   const getProgram = async (program: string) => {
     setLoading(true)
     try {
-      const reponse = await engine.query(PROGRAMQUERY(program));
-      setProgramsValues((prevState) => [...prevState, reponse?.results as any]);
-      setData(reponse?.results)
-      return reponse?.results
+      const response = await engine.query(PROGRAMQUERY(program));
+      setProgramsValues((prevState) => [...prevState, response?.results as any]);
+      setData(response?.results)
+      return response?.results
     } catch (error) {
       setError(error)
     } finally {
