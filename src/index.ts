@@ -16,7 +16,18 @@ import Table from "./components/table/render/Table"
 import WithBorder from "./components/template/WithBorder"
 import WithPadding from "./components/template/WithPadding"
 import Text from "./components/text/Text"
+import { Attribute } from "./types/generated/models"
+import { VariablesTypes, CustomAttributeProps } from "./types/variables/AttributeColumns"
+import { GroupFormProps, FormProps } from "./types/form/GroupFormProps"
 
+
+export type {
+    VariablesTypes,
+    CustomAttributeProps,
+    Attribute,
+    GroupFormProps,
+    FormProps
+}
 
 
 export {
