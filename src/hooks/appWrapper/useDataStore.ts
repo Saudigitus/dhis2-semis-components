@@ -32,7 +32,7 @@ const useDataStore = (keySpace: string) => {
         setValidationError(dataStoreSchemaValidator(response?.result) as object)
       } else {
         setData(response?.result)
-        setDataStoreValues(response?.result)
+        setDataStoreValues(response?.result as any)
       }
       return response?.result
     } catch (error) {

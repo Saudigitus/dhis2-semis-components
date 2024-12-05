@@ -32,7 +32,7 @@ const useProgramConfig = () => {
     setLoading(true)
     try {
       const reponse = await engine.query(PROGRAMQUERY(program));
-      setProgramsValues((prevState) => [...prevState, reponse?.results]);
+      setProgramsValues((prevState) => [...prevState, reponse?.results as any]);
       setData(reponse?.results)
       return reponse?.results
     } catch (error) {
