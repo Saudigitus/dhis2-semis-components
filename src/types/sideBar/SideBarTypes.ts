@@ -52,9 +52,10 @@ interface SideBarSubItemProps {
      */
     displayInMenu?: boolean
     /**
-     * @type {boolean}
+     * An important information to display aside the side bar subItem label
+     * @type {string}
      */
-    showBadge: boolean
+    badgeInfo: string
     /**
      * The side bar menu icon.
      * @type {string}
