@@ -13,15 +13,20 @@ export default function IconActions(props: RowActionsProps) {
           <Tooltip
             key={i}
             title={option.label}
-            onClick={() => { option.onClick() }}
+            disableHoverListener={(option.disabled || disabled)}
           >
-            <IconButton
-              className={style.rowActionsIcon}
-              disabled={option.disabled || disabled}
-              style={{ color: option.color, opacity: (option.disabled || disabled) ? "0.5" : "1" }}
+            <div
+              style={{ cursor: (option.disabled || disabled) ? 'not-allowed' : "pointer" }}
             >
-              {option.icon}
-            </IconButton>
+              <IconButton
+                onClick={() => { option.onClick() }}
+                className={style.rowActionsIcon}
+                disabled={option.disabled || disabled}
+                style={{ color: option.color, opacity: (option.disabled || disabled) ? "0.3" : "1" }}
+              >
+                {option.icon}
+              </IconButton>
+            </div>
           </Tooltip>
         ))
       }
