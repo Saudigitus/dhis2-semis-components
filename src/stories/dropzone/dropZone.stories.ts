@@ -15,7 +15,7 @@ const meta = {
             control: { type: "select" }, options: ['.csv', '.xlsx', '.csv,.xlsx'], description: "All known file types and if you want to allow several file types, you can combine them into a single string separated by commas, Eg: tick the last option in the select component of the control column."
         },
         placeholder: { type: "string" },
-        hideIcon: {},
+        hideUploadIcon: {},
         hideLabel: {},
         height: { description: "Fixed or relative values" },
         width: { description: "Fixed or relative values" }
@@ -27,9 +27,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Drop_Zone: Story = {
-    args: { onSave: fn(), accept: '.csv', hideIcon: false, hideLabel: false, height: "", width: "", buttonLabel: "", dialogMode: false, title: "", placeholder: "" },
+    args: { onSave: fn(), accept: '.csv,.xlsx,.pdf', hideUploadIcon: false, hideLabel: false, height: "", width: "", buttonLabel: "", dialogMode: false, title: "", placeholder: "" },
 };
 
 export const Dialog_Mode: Story = {
-    args: { onSave: fn(), accept: '.csv', hideIcon: false, hideLabel: false, height: "", width: "", buttonLabel: "", dialogMode: true, title: "", placeholder: "" },
+    args: { onSave: fn(), accept: '.csv,.xlsx,.pdf', hideUploadIcon: false, hideLabel: false, height: "", width: "", buttonLabel: "", dialogMode: true, title: "", placeholder: "" },
 };
