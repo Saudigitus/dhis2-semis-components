@@ -24,6 +24,7 @@ import useDataStoreKey from "./hooks/appWrapper/useDataStoreKey"
 import useProgramsKeys from "./hooks/appWrapper/useProgramsKeys"
 import { DataStoreProps } from "./schemas/dataStore"
 import { ProgramConfig } from "./schemas/programSchema"
+import {DataProvider} from "@dhis2/app-runtime"
 
 export type {
     VariablesTypes,

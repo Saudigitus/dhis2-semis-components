@@ -7,7 +7,7 @@ import { useSetRecoilState } from "recoil"
 const DATASTORE_QUERY = (keySpace: string) => {
   return {
     result: {
-      resource: `dataStore/${keySpace}`,
+      resource: `dataStore/semis/values`,
       params: {
         fields: "*"
       }
@@ -23,11 +23,13 @@ const useDataStore = (keySpace: string) => {
   const [validationError, setValidationError] = useState<object | null>(null)
   const setDataStoreValues = useSetRecoilState(DataStoreState)
 
+  console.log("first")
 
   const getDataStore = async () => {
     setLoading(true)
     try {
       const response = await engine.query(DATASTORE_QUERY(keySpace))
+      console.log(response,"response")
       if (typeof dataStoreSchemaValidator(response?.result) === "object") {
         setValidationError(dataStoreSchemaValidator(response?.result) as object)
       } else {
@@ -36,6 +38,7 @@ const useDataStore = (keySpace: string) => {
       }
       return response?.result
     } catch (error) {
+      console.log(error,"dhis2-semis-components")
       setError(error)
     } finally {
     }

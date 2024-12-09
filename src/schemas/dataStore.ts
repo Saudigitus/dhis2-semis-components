@@ -45,7 +45,8 @@ const dataStoreSchemaValidator = (dataSoreResult: unknown) => {
 }
 
 const DataStoreState = atom<DataStoreProps>({
-    key: "data-store-state"
+    key: "data-store-state",
+    default: []
 })
 
 export { dataStoreSchema, dataStoreSchemaValidator, DataStoreState };

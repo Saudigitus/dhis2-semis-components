@@ -3,17 +3,20 @@ import { Center, CircularLoader } from "@dhis2/ui"
 import { DataStoreNotFound, DataStoreNotValidated, ProgramNotFound } from './components/dataStoreErrors';
 import useDataStore from '../../hooks/appWrapper/useDataStore';
 import useProgramConfig from '../../hooks/appWrapper/useProgramConfig';
-import { DataStoreProps} from '../../schemas/dataStore';
+import { DataStoreProps } from '../../schemas/dataStore';
 import { AppWrapperProps } from '../../types/appWrapper/AppWrapperProps';
+import { DataProvider,useConfig } from '@dhis2/app-runtime';
+import { RecoilRoot } from 'recoil';
 
-const AppWrapper = ({ children, dataStoreKey }: AppWrapperProps) => {
+const AppWrapperRaw = ({ children, dataStoreKey }: AppWrapperProps) => {
   const [loading, setLoading] = useState<boolean>(true)
   const { error, validationError, getDataStore } = useDataStore(dataStoreKey);
   const { getProgram, data: programs, error: errorProgram } = useProgramConfig()
- 
+
   useEffect(() => {
     void getDataStore()
       .then(async (response: DataStoreProps) => {
+        console.log(response, "response app wrapper")
         for (let i = 0; i < response.length; i++) {
           await getProgram(response?.[i].program)
         }
@@ -23,6 +26,7 @@ const AppWrapper = ({ children, dataStoreKey }: AppWrapperProps) => {
       })
   }, [])
 
+  console.log(error, "Chegou aqui")
 
   if (loading) {
     return (
@@ -46,9 +50,25 @@ const AppWrapper = ({ children, dataStoreKey }: AppWrapperProps) => {
 
   return (
     <div>
-      <span>{JSON.stringify(programs)}</span>
       {children}
     </div>
   )
 }
-export { AppWrapper}
+
+
+const AppWrapper = ({ children, dataStoreKey }: AppWrapperProps) => {
+  const {baseUrl} = useConfig()
+
+  console.log(baseUrl,"dssd")
+  return (
+    <DataProvider baseUrl='http://localhost:8080'>
+      <RecoilRoot>
+        <AppWrapperRaw dataStoreKey={dataStoreKey}>
+          {children}
+        </AppWrapperRaw>
+      </RecoilRoot>
+    </DataProvider>
+  )
+}
+
+export { AppWrapper }
