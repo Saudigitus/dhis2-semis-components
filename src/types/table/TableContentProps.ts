@@ -1,3 +1,4 @@
+import { ReactElement } from "react"
 import { CustomAttributeProps } from "../variables/AttributeColumns"
 import { RowActionsType, TableRowActionsType } from "./TableRowActionsProps"
 
@@ -75,32 +76,34 @@ interface TableSortProps {
 }
 
 interface TableRenderProps {
-    viewPortWidth: number,
+    title?: string,
+    viewPortWidth?: number,
     columns: any,
     totalElements: number,
-    loading: boolean,
-    createSortHandler: () => void,
-    order: "asc" | "desc",
-    orderBy: any,
+    loading?: boolean,
+    createSortHandler?: () => void,
+    order?: "asc" | "desc",
+    orderBy?: any,
     rowsPerPages?: { value: number, label: string }[],
     tableData: Record<string, any>[]
-    sortable: boolean,
-    isInactive: boolean,
-    isOwnershipOu: boolean,
-    showEnrollments: boolean,
+    sortable?: boolean,
+    isInactive?: boolean,
+    isOwnershipOu?: boolean,
+    showEnrollments?: boolean,
     searchActions?: any
     showRowActions?: boolean
-    rowAction: RowActionsType[]
+    rowAction?: RowActionsType[]
     displayType?: TableRowActionsType
     defaultFilterNumber?: number
-    filterState: {
+    filterState?: {
       dataElements: any[],
       attributes: any[]
     },
-    setFilterState: (args: {
+    setFilterState?: (args: {
       dataElements: any[],
       attributes: any[]
-    }) => void
+    }) => void,
+    rightElements?: ReactElement
 }
 
 
