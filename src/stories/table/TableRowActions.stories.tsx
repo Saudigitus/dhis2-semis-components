@@ -6,8 +6,8 @@ import { IconEdit24, IconDelete24, IconCheckmarkCircle24 } from "@dhis2/ui";
 import TableRowActions from '../../components/table/components/rowsActions/TableRowActions';
 
 const rowsActions: RowActionsType[] = [
-    { icon: <IconEdit24 />, color: '#277314', label: `Edition`, disabled: true, loading: false, onClick: () => { alert("Edition") } },
-    { icon: <IconDelete24 />, color: '#d64d4d', label: `Delete`, disabled: false, loading: false, onClick: () => { alert("Delete") } },
+    { icon: <IconEdit24 />, color: '#277314', label: `Edition`, disabled: false, loading: false, onClick: () => { alert("Edition") } },
+    { icon: <IconDelete24 />, color: '#d64d4d', label: `Delete`, disabled: true, loading: false, onClick: () => { alert("Delete") } },
     { icon: <IconCheckmarkCircle24 />, color: '#147cd7', disabled: false, loading: false, label: 'Complete', onClick: () => { alert("Complete") } }
 ];
 
