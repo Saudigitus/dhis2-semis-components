@@ -32,27 +32,26 @@ function DialogSelectColumns(props: DialogSelectColumnsProps) {
     };
 
     return (
-        <>
-            <Dialog
-                open={!!open}
-                onClose={onClose}
-                fullWidth
-            >
-                <DialogTitle>{'Columns to show in the table'}</DialogTitle>
-                <DialogContent>
-                    <DragDropList
-                        listItems={columnsList?.length > 0 ? columnsList : headers}
-                        setListItems={setcolumnsList}
-                        title='Table Columns'
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button color='primary' onClick={handleSave}>
-                        {'Save'}
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </>
+        <Dialog
+            open={!!open}
+            onClose={onClose}
+            fullWidth
+            style={{ padding: "0px" }}
+        >
+            <DialogTitle style={{ marginLeft: "13px" }} >{i18n.t('Columns to show in the table')}</DialogTitle>
+            <DialogContent>
+                <DragDropList
+                    listItems={columnsList?.length > 0 ? columnsList : headers}
+                    setListItems={setcolumnsList}
+                    title='Table Columns'
+                />
+            </DialogContent>
+            <DialogActions style={{ marginRight: "15px" }} >
+                <Button color='primary' onClick={handleSave}>
+                    {i18n.t('Save')}
+                </Button>
+            </DialogActions>
+        </Dialog>
     )
 }
 

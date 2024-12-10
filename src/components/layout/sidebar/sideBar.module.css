@@ -1,6 +1,6 @@
 .sideBarContainer {
     border-right: 1px solid #e6e4e4;
-    height: 100%;
+    height: calc(100vh - 48px);
     width: 370px !important;
     position: relative;
     background-color: var(--secondary-colort-white);
@@ -9,7 +9,7 @@
 
 .sideBarContainerCollapsed {
     border-right: 1px solid #e6e4e4;
-    height: 100%;
+    height: calc(100vh - 48px);
     max-width: 90px;
     position: relative;
     background-color: var(--secondary-colort-white);
