@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
-import AppWrapper from "../../components/appWrapper/test/appWraperTest";
+import AppWrapper from "../../components/appWrapper/test/appWrapperTest"
+import React from 'react';
 
 const meta = {
     title: 'Wrapper/Semis Wrapper',
@@ -26,7 +27,7 @@ type Story = StoryObj<typeof meta>;
 
 export const SemisWrapper: Story = {
     args: {
-        children:<main>App</main>,
+        children:<div>App</div>,
         dataStoreKey: "celso-testing/config"
     }
 };

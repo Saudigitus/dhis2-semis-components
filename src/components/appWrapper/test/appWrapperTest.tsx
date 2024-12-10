@@ -2,7 +2,7 @@ import { Center, CircularLoader } from "@dhis2/ui"
 import { useEffect, useState } from "react"
 import { AppWrapperProps } from "../../../types/appWrapper/AppWrapperProps";
 
-const AppWrapper = ({ children, dataStoreKey }: AppWrapperProps) => {
+const AppWrapperTest = ({ children,dataStoreKey }: AppWrapperProps) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -26,4 +26,4 @@ const AppWrapper = ({ children, dataStoreKey }: AppWrapperProps) => {
     )
 }
 
-export default AppWrapper
+export default AppWrapperTest
