@@ -4,6 +4,10 @@
     border-radius: 4px !important;
 }
 
+.divider {
+    background-color: #E0E0E0 !important;
+}
+
 .carBox {
     border-radius: 4px !important;
 }
@@ -134,9 +138,12 @@
 
 .layoutGrid .cardContent {
     display: flex;
-    flex-direction: column; /* Arrange title and content vertically */
-    align-items: center; /* Center items horizontally in each column */
-    text-align: center; /* Center-aligns text */
+    flex-direction: column;
+    /* Arrange title and content vertically */
+    align-items: center;
+    /* Center items horizontally in each column */
+    text-align: center;
+    /* Center-aligns text */
 }
 
 .dinamicBox {

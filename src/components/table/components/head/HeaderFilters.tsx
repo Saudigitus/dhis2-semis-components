@@ -22,8 +22,6 @@ interface HeaderFiltersProps {
 function HeaderFilters(props: HeaderFiltersProps): React.ReactElement {
   const { updateVariables, filteredHeaders, columns, filterState, setFilterState, defaultFilterNumber } = props;
 
-  console.log(props)
-
   return (
     <div className={styles.filterContainer}>
       <EnrollmentFilters filterState={filterState} headers={columns} setFilterState={setFilterState} defaultFilterNumber={defaultFilterNumber} />
