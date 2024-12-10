@@ -38,7 +38,7 @@ function DialogSelectColumns(props: DialogSelectColumnsProps) {
             fullWidth
             style={{ padding: "0px" }}
         >
-            <DialogTitle style={{ marginLeft: "13px" }} >{i18n.t('Columns to show in the table')}</DialogTitle>
+            <DialogTitle style={{ marginLeft: "13px" }} >Columns to show in the table</DialogTitle>
             <DialogContent>
                 <DragDropList
                     listItems={columnsList?.length > 0 ? columnsList : headers}
@@ -48,7 +48,7 @@ function DialogSelectColumns(props: DialogSelectColumnsProps) {
             </DialogContent>
             <DialogActions style={{ marginRight: "15px" }} >
                 <Button color='primary' onClick={handleSave}>
-                    {i18n.t('Save')}
+                    Save
                 </Button>
             </DialogActions>
         </Dialog>
