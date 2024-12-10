@@ -24,7 +24,7 @@ function HeaderFilters(props: HeaderFiltersProps): React.ReactElement {
 
   return (
     <div className={styles.filterContainer}>
-      <EnrollmentFilters filterState={filterState} headers={columns} setFilterState={setFilterState} defaultFilterNumber={defaultFilterNumber} />
+      <EnrollmentFilters filterState={filterState}  variables={columns} setFilterState={setFilterState} defaultFilterNumber={defaultFilterNumber} />
 
       <ConfigTableColumns filteredHeaders={filteredHeaders} headers={columns} updateVariables={updateVariables} />
     </div>

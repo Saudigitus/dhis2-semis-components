@@ -1,5 +1,5 @@
 import { Popover, makeStyles } from '@material-ui/core';
-import { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import RenderWithoutAppliedFilter from './RenderWithoutAppliedFilter';
 import SelectorContents from '../enrollment/content/SelectorContents';
 import RenderWithAppliedFilter from './RenderWithAppliedFilter';
@@ -7,13 +7,13 @@ import { type SelectButtonProps } from '../../../types/table/ContentFiltersProps
 import WithPadding from '../../template/WithPadding';
 
 const POPOVER_ANCHOR_ORIGIN = {
-    vertical: 'bottom',
-    horizontal: 'left'
+    vertical: 'bottom' as 'bottom',
+    horizontal: 'left' as 'left'
 };
 
 const POPOVER_TRANSFORM_ORIGIN = {
-    vertical: 'top',
-    horizontal: 'left'
+    vertical: 'top' as 'top',
+    horizontal: 'left' as 'left'
 };
 
 const useStyles = makeStyles({

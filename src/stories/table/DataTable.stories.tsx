@@ -1,3 +1,4 @@
+import React from "react";
 import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Attribute } from '../../types/generated/models';
@@ -139,24 +140,15 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
+    title:"Enrollments",
     viewPortWidth: 1040,
     columns: headerColumns,
     totalElements: 4,
-    loading: false,
-    createSortHandler: () => { },
-    order: "asc",
-    orderBy: "fistid1",
     tableData: rowsData,
-    sortable: true,
-    isInactive: false,
-    isOwnershipOu: false,
-    showEnrollments: false,
-    showRowActions: true,
     rowAction: rowsActions,
-    displayType: "icon",
+    showRowActions: false,
     defaultFilterNumber: 3,
-    filterState: { attributes: [], dataElements: [] },
-    setFilterState: () => { },
+    rightElements: <div>Right Elements</div>
   },
 
 } satisfies Meta<typeof Table>;
@@ -165,23 +157,16 @@ type Story = StoryObj<typeof meta>;
 
 export const Loading: Story = {
   args: {
+    title:"Enrollments",
+    loading: true,
     viewPortWidth: 1040,
     columns: headerColumns,
     totalElements: 4,
-    loading: false,
-    createSortHandler: () => { },
-    order: "asc",
-    orderBy: "fistid1",
     tableData: rowsData,
-    sortable: true,
-    isInactive: false,
-    isOwnershipOu: false,
-    showEnrollments: false,
-    showRowActions: true,
     rowAction: rowsActions,
+    showRowActions: false,
     defaultFilterNumber: 3,
-    filterState: { attributes: [], dataElements: [] },
-    setFilterState: () => { }
+    rightElements: <div>Right Elements</div>
   },
 };
 

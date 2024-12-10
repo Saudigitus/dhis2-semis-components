@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { SummaryCard } from "../../components";
+import  SummaryCard  from "../../components/summaryCard/summaryCard";
 
 const meta = {
     title: 'Card/Summary Card',

@@ -1,3 +1,4 @@
+import React from 'react';
 import { SingleSelectField, SingleSelectOption } from '@dhis2/ui'
 import { SingleSelectProps } from '../../../types/form/GenericFieldsTypes'
 

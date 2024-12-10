@@ -1,21 +1,23 @@
+import React from "react";
 import "./dropzone.css"
 import Lottie from "lottie-react";
 import { Form } from "react-final-form";
 import { useState, useRef, useEffect } from "react";
 import uploadcloud from "../../assets/images/bulkImport/uploadcloud.json"
-import Excel from "../../assets/images/bulkImport/excel.svg"
-import { ModalActions, Button, ButtonStrip, IconUpload24 } from "@dhis2/ui";
+import { ModalActions, Button, ButtonStrip, IconUpload24, CircularLoader } from "@dhis2/ui";
 import classNames from "classnames";
 import FileInput from "./fileInput/fileInput";
 import { FormApi } from 'final-form';
 import { type DropZoneProps } from "../../types/dropzone/dropZoneTypes";
 import ModalComponent from "../modal/Modal";
+import { DefaultExtensionType, FileIcon, defaultStyles } from "react-file-icon";
 
 interface IForm { }
 
 function DropZone(props: DropZoneProps) {
-    const { onSave, accept, placeholder, hideIcon, hideLabel, height, width, dialogMode, title, buttonLabel } = props;
+    const { loading, onSave, accept, placeholder, hideUploadIcon, hideLabel, height, width, dialogMode, title, buttonLabel } = props;
     const [uploadedFile, setUploadedFile] = useState<any>('');
+    const [displayDetails, setdisplayDetails] = useState<{ name: string, extension: string }>({ name: "Drag & drop files or browse", extension: "" });
     const [open, setOpen] = useState<boolean>(false);
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const inputFiles = document.querySelectorAll(".dropzone_area input[type='file']");
@@ -39,8 +41,22 @@ function DropZone(props: DropZoneProps) {
     const handleClose = () => setOpen(false)
 
     const formActions = [
-        { id: "cancel", type: "reset", label: "Cancel", disabled: false, onClick: () => { setUploadedFile(undefined); setOpen(false) }, secondary: true },
-        { id: "continue", label: "Continue", success: "success", disabled: !Boolean(uploadedFile), onClick: () => onSave([uploadedFile]), primary: true }
+        {
+            id: "cancel",
+            type: "reset",
+            label: "Cancel",
+            disabled: false,
+            onClick: () => { setUploadedFile(undefined); setOpen(false) },
+            secondary: true
+        }, {
+            id: "continue",
+            label: "Continue",
+            success: "success",
+            disabled: !Boolean(uploadedFile) || loading,
+            onClick: () => onSave([uploadedFile]),
+            primary: true,
+            icon: loading ? <CircularLoader small /> : <></>
+        }
     ];
 
     function DropFile() {
@@ -54,10 +70,14 @@ function DropZone(props: DropZoneProps) {
                     >
                         <div style={height && width ? { height: height, width: width } : height ? { height: height } : width ? { width: width } : { width: "900px" }} className={classNames("dropzone_area", uploadedFile && "dropzone_area_filled_bg")}>
                             <div className="file_upload_icon">
-                                {uploadedFile ? <img src={Excel} className="mb-5 mt-5" /> : !hideIcon && <Lottie animationData={uploadcloud} loop={true} />}
+                                {uploadedFile ?
+                                    <div className="icon" >
+                                        <FileIcon extension={displayDetails.extension} {...defaultStyles[displayDetails.extension as DefaultExtensionType]} />
+                                    </div>
+                                    : !hideUploadIcon && <Lottie animationData={uploadcloud} loop={true} />}
                             </div>
-                            <FileInput accept={accept} name="uploaded-file" setUploadedFile={setUploadedFile} />
-                            {!hideLabel && <h4 className="mb-3 file-info">Drag & drop files or browse</h4>}
+                            <FileInput accept={accept} name="uploaded-file" setdisplayDetails={setdisplayDetails} setUploadedFile={setUploadedFile} />
+                            {!hideLabel && <h4 className="mb-3 file-info">{displayDetails.name}</h4>}
                             <p className="mt-3">{placeholder}</p>
                         </div>
 

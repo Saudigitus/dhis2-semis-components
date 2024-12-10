@@ -10,7 +10,6 @@ const meta = {
     },
     tags: ['autodocs'],
     argTypes: {
-        headers: {},
         defaultFilterNumber: { control: { type: "number" } }
     },
 } satisfies Meta<typeof EnrollmentFilters>;
@@ -23,7 +22,7 @@ export const Filters: Story = {
         defaultFilterNumber: 3,
         filterState: { attributes: [], dataElements: [] },
         setFilterState: () => { },
-        headers: [
+        variables: [
             {
                 id: 'age',
                 displayName: 'Age',

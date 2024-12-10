@@ -1,3 +1,4 @@
+import React from 'react';
 import { Help, MenuItem } from "@dhis2/ui"
 import AmpStoriesIcon from '@material-ui/icons/AmpStories';
 import { OptionProps } from "../../../types/header/headerTypes";

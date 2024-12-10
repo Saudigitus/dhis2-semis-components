@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { HeaderItemProps, OptionProps } from "../../../types/header/headerTypes"
 import style from "../mainHeader.module.css"
 import { DropdownButton, FlyoutMenu, Input } from "@dhis2/ui"

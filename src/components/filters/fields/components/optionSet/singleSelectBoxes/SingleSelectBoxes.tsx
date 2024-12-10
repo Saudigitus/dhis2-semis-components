@@ -1,3 +1,4 @@
+import React from 'react'
 import { Radio, spacersNum, colors } from '@dhis2/ui'
 import { makeStyles } from '@material-ui/core';
 import { type SelectBoxesProps } from '../../../../../../types/table/ContentFiltersProps';

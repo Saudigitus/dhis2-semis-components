@@ -1,3 +1,4 @@
+import React from 'react';
 import { format } from 'date-fns'
 import MenuFilters from './MenuFilters'
 import { Button } from '@material-ui/core'
@@ -109,7 +110,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
             dataElements: dataElementsQuerybuilder
         })
     }
-    
+
     const onResetFilters = (id: string) => {
         const copyHeader = { ...filtersValues }
 

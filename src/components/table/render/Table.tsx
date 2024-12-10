@@ -11,8 +11,10 @@ import RenderRows from './RenderRows';
 import { TableRenderProps } from '../../../types/table/TableContentProps';
 import HeaderFilters from '../components/head/HeaderFilters';
 import { CustomAttributeProps } from '../../../types/variables/AttributeColumns';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-select/dist/react-select.css";
 
-const usetStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     tableContainer: {
         overflowX: 'auto'
     },
@@ -36,50 +38,59 @@ const usetStyles = makeStyles((theme) => ({
 }));
 
 function Table(props: TableRenderProps): React.ReactElement {
-    const { viewPortWidth,
-        columns, totalElements,
-        loading, createSortHandler,
-        order, orderBy, rowsPerPages,
+    const {
+        title = 'Table',
+        viewPortWidth = 1040,
+        columns,
+        totalElements,
+        loading = false,
+        createSortHandler,
+        order,
+        orderBy,
+        rowsPerPages,
         tableData,
-        isInactive,
-        isOwnershipOu,
-        showEnrollments,
-        sortable,
-        searchActions,
-        showRowActions,
-        rowAction,
+        isInactive = false,
+        isOwnershipOu = false,
+        showEnrollments = false,
+        sortable = false,
+        searchActions = false,
+        showRowActions = false,
+        rowAction = [],
         displayType,
         filterState,
         setFilterState,
-        defaultFilterNumber
+        defaultFilterNumber,
+        rightElements
     } = props
 
-    const classes = usetStyles()
-    const [page, setpage] = useState(1)
-    const [pageSize, setpageSize] = useState(10)
-    const [filteredHeaders, setfilteredHeaders] = useState<CustomAttributeProps[]>([])
+    const classes = useStyles()
+    const [page, setPage] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
+    const [filteredHeaders, setFilteredHeaders] = useState<CustomAttributeProps[]>([])
 
     const onPageChange = (newPage: number) => {
-        setpage(newPage)
+        setPage(newPage)
     }
 
     const onRowsPerPageChange = (event: any) => {
-        setpageSize(parseInt(event.value, 10))
-        setpage(1)
+        setPageSize(parseInt(event.value, 10))
+        setPage(1)
     }
 
     return (
         <Paper>
             <div className={classes.workingListsContainer}>
-                <h4 className={classes.h4}>Enrollments</h4>
-                <div />
+                <h4 className={classes.h4}>{title}</h4>
+                <div >
+                    {rightElements}
+                </div>
             </div>
             <WithBorder type='bottom' />
             <WithPadding>
                 <WithBorder type='all'>
                     <HeaderFilters
                         columns={columns}
-                        updateVariables={setfilteredHeaders}
+                        updateVariables={setFilteredHeaders}
                         filteredHeaders={filteredHeaders}
                         filterState={filterState}
                         setFilterState={setFilterState}

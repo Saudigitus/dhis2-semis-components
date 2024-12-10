@@ -1,3 +1,4 @@
+import React from 'react';
 import { IconButton } from "@material-ui/core";
 import defaultClasses from '../table.module.css';
 import { IconButtonPaginationProps } from "../../../../types/table/PaginationProps";

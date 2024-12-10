@@ -1,3 +1,4 @@
+import React from 'react';
 import style from "../card.module.css"
 import defaultIcon from "../../../assets/foto.png"
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import { MainHeaderProps } from "../../types/header/headerTypes"
 import HeaderItem from "./components/headerItem"
 import style from "./mainHeader.module.css"

@@ -1,3 +1,4 @@
+import React from "react";
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { useField, type FieldRenderProps } from "react-final-form";
@@ -44,7 +45,7 @@ const OptionSetAutocomplete = (props: AutoCompleteProps) => {
           />
 
         )}
-        onChange={(_, value) => {
+        onChange={(_, value: any) => {
           input.onChange(value?.value);
           if (props.onChange) props.onChange(value)
         }}
