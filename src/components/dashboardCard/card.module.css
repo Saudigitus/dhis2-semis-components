@@ -4,8 +4,8 @@
     border-radius: 4px !important;
 }
 
-.divider {
-    background-color: #E0E0E0 !important;
+.cardContainer hr{
+    opacity: 1 !important;
 }
 
 .carBox {
