@@ -12,7 +12,7 @@ export default function SideBarItem(props: SideBarItemProps): React.ReactElement
             <SideBarItemTitle title={title} />
             <ul className={style.sideBarItemListContainer}>
                 {subItems?.filter((subItem) => subItem.displayInMenu).map((subItem, index: number) => (
-                    <SideBarSubItem appUrl={subItem.appUrl} active={subItem.active} route={subItem.route} key={index} icon={subItem.icon} label={subItem.label} badgeInfo={subItem.badgeInfo} disabled={subItem.disabled} appName={subItem.appName} />
+                    <SideBarSubItem key={index} {...subItem}/>
                 ))}
             </ul>
         </section>

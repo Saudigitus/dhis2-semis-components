@@ -1,6 +1,6 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import SideBarComponent from '../../components/layout/sidebar/SideBarStory';
-
+import SideBarComponent from '../../components/layout/sidebar/SideBar';
 import gauge from "../../assets/images/sidebar/gauge.svg"
 import fileDocument from "../../assets/images/sidebar/file-document.svg"
 import glyph from "../../assets/images/sidebar/Glyph.svg"
@@ -8,8 +8,16 @@ import listAdd from "../../assets/images/sidebar/listAdd.svg"
 import logOut from "../../assets/images/sidebar/log-out.svg"
 import userGroup from "../../assets/images/sidebar/user-group.svg"
 import home from "../../assets/images/sidebar/home.svg"
-import { SideBarItemProps } from '../../types/sideBar/SideBarTypes';
+import { SideBarItemProps, SideBarNavWrapperProps } from '../../types/sideBar/SideBarTypes';
 
+
+const Navigator = ({ children, className }: SideBarNavWrapperProps) => {
+    return (
+        <a href="#" className={className}>
+            {children}
+        </a>
+    )
+}
 
 const sideBarData: SideBarItemProps[] = [
     {
@@ -26,6 +34,7 @@ const sideBarData: SideBarItemProps[] = [
                 route: `home`,
                 appUrl: "/home",
                 active: true,
+                navWrapper: Navigator
             }
         ]
     },
@@ -43,6 +52,7 @@ const sideBarData: SideBarItemProps[] = [
                 route: `enrollment?`,
                 appUrl: "/enrollment/student",
                 active: false,
+                navWrapper: Navigator
             },
             {
                 icon: glyph,
@@ -54,6 +64,7 @@ const sideBarData: SideBarItemProps[] = [
                 route: `attendance?`,
                 appUrl: "/attendance/student",
                 active: false,
+                navWrapper: Navigator
             },
             {
                 icon: fileDocument,
@@ -65,6 +76,7 @@ const sideBarData: SideBarItemProps[] = [
                 route: `performance?`,
                 appUrl: "/performance/student",
                 active: false,
+                navWrapper: Navigator
             },
             {
                 icon: gauge,
@@ -76,6 +88,7 @@ const sideBarData: SideBarItemProps[] = [
                 route: `final-result?`,
                 appUrl: "/final-result/student",
                 active: false,
+                navWrapper: Navigator
             },
             {
                 icon: logOut,
@@ -87,6 +100,7 @@ const sideBarData: SideBarItemProps[] = [
                 route: `transfer`,
                 appUrl: "/transfer/student",
                 active: false,
+                navWrapper: Navigator
             }
         ]
     },
@@ -104,6 +118,7 @@ const sideBarData: SideBarItemProps[] = [
                 route: `enrollment`,
                 appUrl: "/enrollment/staff",
                 active: false,
+                navWrapper: Navigator
             },
             {
                 icon: glyph,
@@ -115,6 +130,7 @@ const sideBarData: SideBarItemProps[] = [
                 route: `attendance`,
                 appUrl: "/attendance/staff",
                 active: false,
+                navWrapper: Navigator
             },
             {
                 icon: logOut,
@@ -126,6 +142,7 @@ const sideBarData: SideBarItemProps[] = [
                 route: `transfer`,
                 appUrl: "/transfer/staff",
                 active: false,
+                navWrapper: Navigator
             }
         ]
     }

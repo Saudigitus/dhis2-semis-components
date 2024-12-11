@@ -1,3 +1,4 @@
+import { ReactNode } from "react"
 interface SideBarProps {
     /**
      * Defines if side bar must show icons and labels or only icons.
@@ -86,6 +87,22 @@ interface SideBarSubItemProps {
      * @type {boolean}
      */
     active: boolean
+    /**
+      * A component to wrap side bar subItems which comes with the requerid onClick action
+      * @type {JSX.Element}
+      */
+    navWrapper: (props: SideBarNavWrapperProps) => JSX.Element
+}
+
+/**
+ * Props for the `SideBarNavWrapper` component.
+ * @interface SideBarNavWrapperProps
+ * @property {ReactNode} children - The child elements to be rendered within the wrapper.
+ * @property {string} [className] - Optional CSS class name(s) to style the wrapper.
+ */
+interface SideBarNavWrapperProps {
+    children: ReactNode;
+    className?: string;
 }
 
 
@@ -101,4 +118,4 @@ interface SideBarCollapseProps {
      */
     setCollapsed: (collapsed: boolean) => void
 }
-export type { SideBarProps, SideBarItemProps, SideBarItemTitleProps, SideBarSubItemProps, SideBarCollapseProps }
+export type { SideBarProps, SideBarItemProps, SideBarItemTitleProps, SideBarSubItemProps, SideBarCollapseProps, SideBarNavWrapperProps }
