@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import GradeIcon from '@material-ui/icons/Grade';
+import React from 'react';
 import ClassIcon from '@material-ui/icons/Class';
 
 import MainHeader from '../../components/header/mainHeader';
