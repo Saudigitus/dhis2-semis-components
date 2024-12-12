@@ -33,6 +33,7 @@ const OrgUnitTreeComponent = () => {
     }
 
     const onOuChange = (event: { id: string, displayName: string, selected: any }) => {
+        console.log(event,"event")
         setSelectedOu(event);
     }
 
