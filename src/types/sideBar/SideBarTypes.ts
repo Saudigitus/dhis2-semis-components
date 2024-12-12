@@ -88,10 +88,10 @@ interface SideBarSubItemProps {
      */
     active: boolean
     /**
-      * A component to wrap side bar subItems which comes with the requerid onClick action
-      * @type {JSX.Element}
+      * The action trigged after click the module item
+      * @type {void}
       */
-    navWrapper: (props: SideBarNavWrapperProps) => JSX.Element
+    action: () => void
 }
 
 /**
