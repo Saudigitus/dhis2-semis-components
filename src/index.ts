@@ -24,7 +24,8 @@ import useDataStoreKey from "./hooks/appWrapper/useDataStoreKey"
 import useProgramsKeys from "./hooks/appWrapper/useProgramsKeys"
 import { DataStoreProps } from "./schemas/dataStore"
 import { ProgramConfig } from "./schemas/programSchema"
-import {DataProvider} from "@dhis2/app-runtime"
+import useHeaderKey from "./hooks/header/useHeaderValues"
+import SemisHeader from "./components/header/semis"
 
 export type {
     VariablesTypes,
@@ -49,6 +50,7 @@ export {
     Pagination,
     TableRowActions,
     MainHeader,
+    SemisHeader,
     InfoPage,
     ModalComponent,
     SideBar,
@@ -57,5 +59,6 @@ export {
     WithPadding,
     AppWrapper,
     useDataStoreKey,
-    useProgramsKeys
+    useProgramsKeys,
+    useHeaderKey
 }
