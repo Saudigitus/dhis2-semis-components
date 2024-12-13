@@ -23,7 +23,7 @@ const headerValuesSchema = z.object({
 export type HeaderValuesProps = z.infer<typeof headerValuesSchema>
 
 export const HeaderValuesState = atom<HeaderValuesProps>({
-    key: "data-store-state",
+    key: "header-values-state",
     default: {
         selectedAcademicYear: { label: "", value: "" },
         selectedClass: { label: "", value: "" },
