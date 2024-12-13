@@ -3,6 +3,7 @@ import { Form } from "react-final-form";
 import GroupForm from "../form/GroupForm";
 import { ModalActions, Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "../../types/form/GroupFormProps";
+import styles from './groupform.module.css'
 
 export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons }: FormProps) {
 
@@ -52,7 +53,7 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                             }
 
                             {withButtons && <ModalActions>
-                                <ButtonStrip end >
+                                <ButtonStrip end className={styles.btnStrip} >
                                     {formActions(pristine, form).map((action: any, i) =>
                                         <Button
                                             key={i}

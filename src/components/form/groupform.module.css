@@ -7,6 +7,10 @@
     line-height: 1.16667em;
 }
 
+.btnStrip {
+    margin-right: 21px !important;
+}
+
 .labelName {
     color: var(--dark-label-color);
 }
@@ -37,6 +41,10 @@
 
 .fieldWarning .content {
     color: #ff9900;
+}
+
+.label {
+    font-size: 13px !important;
 }
 
 @media screen and (max-width: 352px) {
