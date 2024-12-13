@@ -24,7 +24,7 @@ import useDataStoreKey from "./hooks/appWrapper/useDataStoreKey"
 import useProgramsKeys from "./hooks/appWrapper/useProgramsKeys"
 import { DataStoreProps } from "./schemas/dataStore"
 import { ProgramConfig } from "./schemas/programSchema"
-import Form from "./components/form/form"
+import CustomForm from "./components/form/form"
 
 export type {
     VariablesTypes,
@@ -40,7 +40,7 @@ export type {
 export {
     Table,
     SingleSelectField,
-    Form,
+    CustomForm,
     DashboardCard,
     SummaryCard,
     DropZone,
