@@ -1,6 +1,6 @@
 import DashboardCard from "./components/dashboardCard/dashboardCard"
 import DropZone from "./components/dropzone/DropZone"
-import GroupForm from "./components/form/GroupForm"
+import Form from "./components/form/form"
 import SingleSelectField from "./components/genericFields/fields/SingleSelect"
 import MainHeader from "./components/header/mainHeader"
 import InfoPage from "./components/info/InfoPage"
@@ -24,7 +24,7 @@ import useDataStoreKey from "./hooks/appWrapper/useDataStoreKey"
 import useProgramsKeys from "./hooks/appWrapper/useProgramsKeys"
 import { DataStoreProps } from "./schemas/dataStore"
 import { ProgramConfig } from "./schemas/programSchema"
-import {DataProvider} from "@dhis2/app-runtime"
+
 
 export type {
     VariablesTypes,
@@ -40,7 +40,7 @@ export type {
 export {
     Table,
     SingleSelectField,
-    GroupForm,
+    Form,
     DashboardCard,
     SummaryCard,
     DropZone,
