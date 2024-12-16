@@ -5,7 +5,7 @@ import { ModalActions, Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "../../types/form/GroupFormProps";
 import styles from './groupform.module.css'
 
-export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons }: FormProps) {
+export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel = null }: FormProps) {
 
     const formActions = (pristine: boolean, form: any) => [
         {
@@ -13,7 +13,10 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
             type: "reset",
             label: "Cancel",
             disabled: false,
-            onClick: () => { form.reset },
+            onClick: () => {
+                if (onCancel) onCancel()
+                else form.reset
+            },
             secondary: true
         }, {
             id: "continue",
