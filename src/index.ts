@@ -24,6 +24,7 @@ import useDataStoreKey from "./hooks/appWrapper/useDataStoreKey"
 import useProgramsKeys from "./hooks/appWrapper/useProgramsKeys"
 import { DataStoreProps } from "./schemas/dataStore"
 import { ProgramConfig } from "./schemas/programSchema"
+import DataExporter from "./components/bulk/bulkExport/DataExporter"
 
 
 export type {
@@ -57,5 +58,6 @@ export {
     WithPadding,
     AppWrapper,
     useDataStoreKey,
-    useProgramsKeys
+    useProgramsKeys,
+    DataExporter
 }

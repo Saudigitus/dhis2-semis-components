@@ -1,4 +1,3 @@
-import React from 'react';
 import { Checkbox, IconReorder24 } from '@dhis2/ui';
 import styles from './DragDropItems.module.css'
 import { DragDropItemsProps } from '../../types/table/ConfigColumnsProps';
