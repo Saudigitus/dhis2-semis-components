@@ -1,19 +1,33 @@
-import React from 'react'
 import { Menu, MenuItem } from '@dhis2-ui/menu'
-import { OrganisationUnitTree } from '@dhis2/ui'
+import { Help, Input, OrganisationUnitTree } from '@dhis2/ui'
+import style from "../mainHeader.module.css"
+import { useState } from 'react'
 
-export const MenuSelect = ({ values, selected, onChange }) => {
+export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholder }) => {
+    const [query, setQuery] = useState<string>("")
+
+    const filteredMenuItems: [] = query.length > 0
+        ? values.filter(item => item.label.includes(query)) || []
+        : values;
+
     return (
-        <div style={{ width: 400 }}>
+        <div style={{ width: 400 }} className={style.HeaderMenu}>
             <Menu>
-                {values.map(({ value, label }) => (
+                {isSeachable && <div className={style.SimpleSearcInputContainer} onClick={(e) => e.stopPropagation()} >
+                    <Input onChange={(event) => setQuery(event.value)} placeholder={placeholder} name="input" />
+                </div>}
+                {filteredMenuItems.length > 0 ? filteredMenuItems.map(({ value, label }) => (
                     <MenuItem
                         key={value}
                         label={label}
                         active={selected === value}
                         onClick={() => onChange({ selected: value })}
                     />
-                ))}
+                ))
+                    :
+                    <div className={style.NoOPtionArea} onClick={(e) => e.stopPropagation()}>
+                        <Help>No options</Help>
+                    </div>}
             </Menu>
         </div>
     )

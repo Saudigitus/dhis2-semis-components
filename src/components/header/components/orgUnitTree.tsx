@@ -1,6 +1,9 @@
 import { Center, CircularLoader, Help, Menu, OrganisationUnitTree } from '@dhis2/ui';
 import { useDataQuery } from '@dhis2/app-runtime'
 import React, { useState } from 'react'
+import style from "../mainHeader.module.css"
+import { Input } from '@material-ui/core';
+
 
 const ORG_UNIT_QUERY = {
     results: {
@@ -18,9 +21,11 @@ const OrgUnitTreeComponent = () => {
 
     if (error != null) {
         return (
-            <Help error>
-                Something went wrong when loading the organisation units!
-            </Help>
+            <div style={{ width: 400, minHeight: 400 }}>
+                <Help error>
+                    Something went wrong when loading the organisation units!
+                </Help>
+            </div>
         )
     }
 
@@ -33,15 +38,18 @@ const OrgUnitTreeComponent = () => {
     }
 
     const onOuChange = (event: { id: string, displayName: string, selected: any }) => {
-        console.log(event,"event")
+        console.log(event, "event")
         setSelectedOu(event);
     }
 
 
 
     return (
-        <div style={{ width: 400 }}>
+        <div style={{ width: 400, minHeight: 400 }}>
             <Menu>
+                <div className={style.SimpleSearcInputContainer} onClick={(e) => e.stopPropagation()} >
+                    <Input placeholder={"Search for a school"} name="input" />
+                </div>
                 <OrganisationUnitTree
                     roots={data?.results.organisationUnits[0].id}
                     singleSelection

@@ -25,6 +25,7 @@ import useProgramsKeys from "./hooks/appWrapper/useProgramsKeys"
 import { DataStoreProps } from "./schemas/dataStore"
 import { ProgramConfig } from "./schemas/programSchema"
 import CustomForm from "./components/form/form"
+import SemisHeader from "./components/header/semis"
 
 export type {
     VariablesTypes,
@@ -57,5 +58,6 @@ export {
     WithPadding,
     AppWrapper,
     useDataStoreKey,
-    useProgramsKeys
+    useProgramsKeys,
+    SemisHeader
 }
