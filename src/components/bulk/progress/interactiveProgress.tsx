@@ -9,7 +9,7 @@ import ModalComponent from "../../../components/modal/Modal";
 export default function ModalProgress({ progress, open, setOpen }: { progress: { prorocess: string, progress: number, buffer: number }, open: boolean, setOpen: (args: boolean) => void }) {
 
     const style = {
-        height: 360,
+        height: 340,
     };
 
     return (

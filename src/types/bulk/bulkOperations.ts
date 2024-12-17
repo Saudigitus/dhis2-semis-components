@@ -90,24 +90,6 @@ interface ExportData {
     module: "attendance" | "final-result" | "enrollment" | "performance",
 
     /**
-     * if you want to export attendace data you need to set a date range, so, this variable will
-     * 
-     * get the start date in this formtat: yyyy-MM-dd
-     *
-     * @type {?string}
-     */
-    startDate?: string
-
-    /**
-     * if you want to export attendace data you need to set a date range, so, this variable will
-     * 
-     * get the end date in this formtat: yyyy-MM-dd
-     *
-     * @type {?string}
-     */
-    endDate?: string
-
-    /**
      * Settings saved at data store
      *
      * @type {DataStoreRecord}
@@ -147,8 +129,6 @@ interface GenerateHeaders {
     programConfig: ProgramConfig
     sectionType: string
     isSchoolDay?: (date: Date) => boolean
-    startDate?: string
-    endDate?: string
     module: string
     empty: boolean
 }

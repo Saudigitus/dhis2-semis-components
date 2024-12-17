@@ -9,6 +9,7 @@ import { Attribute } from "../../types/generated/models";
 import RadioButton from "./fields/RadioButton";
 import { type GenericFieldsComponentProps } from "../../types/form/GenericFieldsTypes";
 import { CustomAttributeProps } from "../../types/variables/AttributeColumns";
+import DateRangePicker from './fields/datepicker/improvedDateRage';
 
 function GenericFields({ attribute, disabled, valueType }: GenericFieldsComponentProps) {
   switch (valueType) {
@@ -38,6 +39,9 @@ function GenericFields({ attribute, disabled, valueType }: GenericFieldsComponen
 
     case Attribute.valueType.LIST as unknown as CustomAttributeProps["valueType"]:
       return <SingleSelectField options={attribute.options} onChange={() => { }} {...attribute} disabled={attribute.disabled} />;
+
+    case 'DATE_RANGE' as unknown as CustomAttributeProps["valueType"]:
+      return <DateRangePicker disabled={disabled} name='dateRange' />
 
     default:
       return <span>ValueType not mapped</span>;

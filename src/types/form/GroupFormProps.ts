@@ -30,7 +30,7 @@ interface FormProps {
      *
      * @type {(args: any) => void}
      */
-    onInputChange: (args: any) => void
+    onInputChange?: (args: any) => void
 
     /**
      * The function that will be executed when the form is submitted, you just have 
@@ -41,7 +41,7 @@ interface FormProps {
      *
      * @type {(args: any) => void}
      */
-    onFormSubtmit: (e: any) => void
+    onFormSubtmit?: (e: any) => void
 
     /**
      * If you want to show feedback while processing the data after submitting the form,

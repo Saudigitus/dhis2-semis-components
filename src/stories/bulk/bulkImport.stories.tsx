@@ -7,7 +7,7 @@ import React from "react";
 import ProcessExport from "../../components/bulk/bulkExport/processExport";
 
 const meta = {
-    title: 'Bulk Operations/Bulk Export',
+    title: 'Bulk Operations/Bulk Import',
     component: ProcessExport,
     parameters: {
         layout: 'centered',
@@ -29,7 +29,7 @@ const dhis2Config = {
     },
 };
 
-export const Enrollment_Export: Story = {
+export const Data_Import: Story = {
     args: {
         eventFilters: [`iDSrFrrVgmX:in:2023`],
         fileName: "custom file name",

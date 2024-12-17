@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react'
 import ModalExportEmpty from "../modal/modalExport";
 import { useExportData } from "./exportData";
 import ModalProgress from "../progress/interactiveProgress";
+import { modules } from "../../../types/common/moduleTypes";
 
 export default function ProcessExport(props: ExportData) {
-    const { empty = false, orgUnitName, eventFilters, label, selectedSectionDataStore } = props
+    const { empty = false, orgUnitName, eventFilters, label, selectedSectionDataStore, module } = props
     const [open, setOpen] = useState(false)
     const [openPogress, setOpenProgress] = useState(false)
     const [progress, setProgress] = useState({ prorocess: "export", progress: 0, buffer: 0 })
@@ -27,17 +28,20 @@ export default function ProcessExport(props: ExportData) {
         <>
             <a style={{ width: "100%", cursor: "pointer", padding: "5px" }} onClick={async (e) => {
                 e.preventDefault()
-                if (empty) setOpen(true)
-                else await exportData()
-            }} >{label}</a>
+                if (empty || module === modules.attendance) setOpen(true)
+                else await exportData({})
+            }}>
+                {label}
+            </a>
 
             <ModalExportEmpty
                 selectedSectionDataStore={selectedSectionDataStore}
-                onSumit={exportData}
+                onSubmit={exportData}
                 eventFilters={eventFilters}
                 open={open}
                 orgUnitName={orgUnitName}
                 setOpen={setOpen}
+                module={module}
             />
 
             <ModalProgress

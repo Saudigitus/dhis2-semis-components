@@ -14,9 +14,7 @@ export function areParamsValid(props: ExportData) {
         selectedSectionDataStore,
         sectionType,
         orgUnitName,
-        startDate,
         eventFilters,
-        endDate
     } = props
 
     if (!fileName || !orgUnit || !module || !programConfig || !sectionType || !orgUnitName || !selectedSectionDataStore) {
@@ -30,10 +28,6 @@ export function areParamsValid(props: ExportData) {
     else if (module != modules.enrollment && stagesToExport.length === 0) {
         valid = false
         msg = "The array of stages to be exported must not be empty"
-    }
-    else if (module === modules.attendance && (!isDateFormatValid(endDate as unknown as string) || !isDateFormatValid(startDate as unknown as string))) {
-        valid = false
-        msg = "The date format is not correct, the expected date format is: yyyy-MM-dd"
     }
 
     return { valid: valid, msg: msg }

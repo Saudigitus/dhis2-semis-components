@@ -13,13 +13,12 @@ export function generateHeaders(props: GenerateHeaders) {
         sectionType,
         selectedSectionDataStore,
         withSocioEconomics,
-        isSchoolDay,
-        endDate,
-        startDate
+        isSchoolDay
     } = props
     const { getValidDaysToExport } = generateAttendanceDays({ unavailableDays: isSchoolDay as unknown as (args: Date) => boolean })
 
-    function getHeaders() {
+    function getHeaders(startDate: string, endDate: string) {
+
         let formatedHeaders: any[] = [], toGenerate: any[] = []
         const Profile = (sectionType ?? '').substring(0, 1).toUpperCase() + (sectionType ?? '').substring(1, (sectionType ?? '').length) + ' profile'
         let defaultLockedHeaders: any = [Profile, "Ids"], filters: any = {}

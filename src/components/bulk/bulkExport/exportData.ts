@@ -12,7 +12,6 @@ import { areParamsValid } from '../../../utils/common/validateRequiredParams';
 import { useGetEvents } from "../../../hooks/events/useGetEvents";
 import useShowAlerts from "../../../hooks/common/useShowAlert";
 
-
 export function useExportData(props: ExportData) {
     const {
         programConfig,
@@ -21,8 +20,6 @@ export function useExportData(props: ExportData) {
         orgUnit,
         stagesToExport,
         module,
-        endDate,
-        startDate,
         selectedSectionDataStore,
         withSocioEconomics = false,
         sectionType,
@@ -42,13 +39,12 @@ export function useExportData(props: ExportData) {
         selectedSectionDataStore,
         sectionType,
         withSocioEconomics,
-        endDate,
-        startDate,
         empty
     })
     const { msg, valid } = areParamsValid({ ...props })
 
-    async function exportData(numberOfEmptyRows = 25) {
+    async function exportData({ numberOfEmptyRows, startDate, endDate }: { startDate?: any, endDate?: any, numberOfEmptyRows?: number }) {
+
         if (!valid) {
             show({ message: `Export error: ${msg}`, type: { critical: true } })
             setTimeout(hide, 5000);
@@ -58,10 +54,9 @@ export function useExportData(props: ExportData) {
                 show({ message: `Export error: The empty variable only applies to the enrollment module!`, type: { critical: true } })
                 setTimeout(hide, 5000);
             } else {
-                
                 setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
                 let data: any = []
-                const { filters, formatedHeaders, toGenerate, defaultLockedHeaders } = getHeaders()
+                const { filters, formatedHeaders, toGenerate, defaultLockedHeaders } = getHeaders(startDate, endDate)
                 const metadata = getMetaData(programConfig, stagesToExport)
 
                 if (!empty) data = await getData()
