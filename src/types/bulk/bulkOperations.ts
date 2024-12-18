@@ -15,6 +15,11 @@ import { ProgramConfig } from "../programConfig/ProgramConfig"
  */
 interface ExportData {
     /**
+     * Error handler
+     */
+    onError: (args: string) => void
+    
+    /**
      * Base url for dhis2 data provider
      */
     baseURL: string
@@ -158,28 +163,33 @@ export enum importStrategy {
 
 interface importData {
     /**
+     * Error handler
+     */
+    onError: (args: string) => void
+
+    /**
     * Base url for dhis2 data provider
     * 
     *  @type {string}
     */
     baseURL: string
 
-     /**
-     * The label wich will appear do identify componet
-     * 
-     *  @type {string}
-     */
+    /**
+    * The label wich will appear do identify componet
+    * 
+    *  @type {string}
+    */
     label: string
 
-     /**
-     * this variable makes the system know that it will have to update
-     * 
-     * existing data using data in this file. 
-     * 
-     * it'll only work work enrollment module only
-     * 
-     *  @type {boolean}
-     */
+    /**
+    * this variable makes the system know that it will have to update
+    * 
+    * existing data using data in this file. 
+    * 
+    * it'll only work work enrollment module only
+    * 
+    *  @type {boolean}
+    */
     updating?: boolean
 
     /**

@@ -4,7 +4,7 @@ import { useGetEnrollmentData } from "../../../../hooks/enrollmentDetails/useGet
 
 export function getCommonSheetData(props: ExportData) {
     const { getEvents } = useGetEvents()
-    const { orgUnit, eventFilters = [], selectedSectionDataStore, setProgress = () => { } } = props
+    const { orgUnit, eventFilters = [], selectedSectionDataStore, setProgress = () => { }, onError } = props
     const { getEnrollmentDetails } = useGetEnrollmentData({ ...props, setProgress })
 
     async function getData() {
@@ -17,8 +17,9 @@ export function getCommonSheetData(props: ExportData) {
             skipPaging: true,
             ouMode: 'SELECTED',
             order: selectedSectionDataStore?.defaults.defaultOrder
-        }).catch(() => {
+        }).catch((error) => {
             setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
+            onError('Export Error: ' + error)
         })
 
         setProgress((prev: any) => ({ ...prev, progress: 10, buffer: 16 }))

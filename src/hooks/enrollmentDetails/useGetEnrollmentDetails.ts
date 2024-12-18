@@ -1,17 +1,14 @@
-import { useState } from 'react'
 import { useGetEvents } from '../events/useGetEvents';
 import { ExportData } from '../../types/bulk/bulkOperations';
 import { attributes, dataValues } from '../../utils/format/formatData';
 import { modules } from '../../types/common/moduleTypes';
 import { format } from 'date-fns';
 import { useGetTei } from '../tei/useGetTei';
-import useShowAlerts from '../common/useShowAlert';
 
 export function useGetEnrollmentData(props: ExportData) {
     const { getTei } = useGetTei()
     const { getEvents } = useGetEvents()
-    const { orgUnitName, orgUnit, eventFilters, withSocioEconomics, selectedSectionDataStore, module, setProgress = () => { } } = props
-    const { hide, show } = useShowAlerts()
+    const { onError, orgUnitName, orgUnit, eventFilters, withSocioEconomics, selectedSectionDataStore, module, setProgress = () => { } } = props
 
     const getEnrollmentDetails = async (events: any) => {
         const percentagem = module === modules.enrollment ? 80 : 40
@@ -78,8 +75,7 @@ export function useGetEnrollmentData(props: ExportData) {
                 })
         }
         catch (error: any) {
-            show({ message: `Export error: ${error}`, type: { critical: true } })
-            setTimeout(hide, 5000);
+            onError('Export Error: ' + error)
             setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
         }
 

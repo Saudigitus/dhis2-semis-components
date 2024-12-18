@@ -10,7 +10,6 @@ import { generateEmptyRows } from '../../../utils/common/generateData';
 import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
 import { useGetEvents } from "../../../hooks/events/useGetEvents";
-import useShowAlerts from "../../../hooks/common/useShowAlert";
 
 export function useExportData(props: ExportData) {
     const {
@@ -25,10 +24,10 @@ export function useExportData(props: ExportData) {
         sectionType,
         empty = false,
         orgUnitName,
-        setProgress = () => { }
+        setProgress = () => { },
+        onError
     } = props
-    const { hide, show } = useShowAlerts()
-    const { getData } = getCommonSheetData({ ...props, setProgress })
+    const { getData } = getCommonSheetData({ ...props, onError })
     const { getEvents } = useGetEvents()
     const { generate } = generateAndReserveIds()
     const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date) => boolean })
@@ -46,13 +45,11 @@ export function useExportData(props: ExportData) {
     async function exportData({ numberOfEmptyRows, startDate, endDate }: { startDate?: any, endDate?: any, numberOfEmptyRows?: number }) {
 
         if (!valid) {
-            show({ message: `Export error: ${msg}`, type: { critical: true } })
-            setTimeout(hide, 5000);
+            onError(`Export error: ${msg}`)
         } else {
 
             if (empty && module != modules.enrollment) {
-                show({ message: `Export error: The empty variable only applies to the enrollment module!`, type: { critical: true } })
-                setTimeout(hide, 5000);
+                onError('Export error: The empty variable only applies to the enrollment module!')
             } else {
                 setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
                 let data: any = []
@@ -96,8 +93,7 @@ export function useExportData(props: ExportData) {
                                 }))
                             }).catch((error) => {
                                 setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
-                                show({ message: `Export error: Occurred error wihile fetching data: ${error}`, type: { critical: true } })
-                                setTimeout(hide, 5000);
+                                onError(`Export error: Occurred error wihile fetching data: ${error}`)
                             })
                         }
                     }
@@ -105,8 +101,12 @@ export function useExportData(props: ExportData) {
                     let ids: any = {}
 
                     for (const idToGenerate of toGenerate) {
-                        const generatedIds = await generate(numberOfEmptyRows, idToGenerate) as unknown as any
-                        ids[idToGenerate] = generatedIds?.result?.map((x: any) => x.value)
+                        await generate(numberOfEmptyRows, idToGenerate).then((generatedIds: any) => {
+                            ids[idToGenerate] = generatedIds?.result?.map((x: any) => x.value)
+                        }).catch((error) => {
+                            onError(`Export error: ${error}`)
+                            setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
+                        })
                     }
 
                     data = generateEmptyRows(numberOfEmptyRows, formatedHeaders, ids, orgUnitName)
@@ -115,8 +115,7 @@ export function useExportData(props: ExportData) {
                 try {
                     await excelGenerator({ headers: formatedHeaders, rows: data, filters, fileName, metadata, module, empty, defaultLockedHeaders })
                 } catch (error) {
-                    show({ message: `Export error: Occurred an error while generating file!`, type: { critical: true } })
-                    setTimeout(hide, 5000);
+                    onError(`Export error: Occurred an error while generating file!`)
                 } finally {
                     setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
                 }

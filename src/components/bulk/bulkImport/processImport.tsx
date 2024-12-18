@@ -8,9 +8,9 @@ import { useEffect, useState } from "react";
 import ModalProgress from "../progress/interactiveProgress";
 
 export default function ProcessImport(props: importData) {
-    const { module, label } = props
+    const { module, label, onError } = props
     const [progress, setProgress] = useState({ prorocess: "import", progress: 0, buffer: 0 })
-    const { importData } = useImportData({ setProgress })
+    const { importData } = useImportData({ setProgress, onError })
     const UseValidation = new useValidation()
     const [open, setOpen] = useState(false)
     const [openPogress, setOpenProgress] = useState(false)
@@ -35,7 +35,7 @@ export default function ProcessImport(props: importData) {
                 void importData({ ...props, excelData: resp })
             })
             .catch((error) => {
-
+                onError('Import Error: ' + error)
             })
     }
 

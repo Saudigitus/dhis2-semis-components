@@ -5,7 +5,7 @@ import useUploadEvents from "../../../../hooks/events/useUploadEvents";
 import { splitArrayIntoChunks } from "../../../../utils/common/splitArray";
 import { importSummary } from "../../../../utils/common/getImportSummary";
 
-export function postEnrollmentData({ setStats, setProgress }: { setStats: (args: any) => void, setProgress: (rags: any) => void }) {
+export function postEnrollmentData({ setStats, setProgress, onError }: { setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { getEvents } = useGetEvents()
     const { uploadValues } = useUploadEvents()
 
@@ -59,6 +59,9 @@ export function postEnrollmentData({ setStats, setProgress }: { setStats: (args:
                     }
 
                     updateProgressF(updateProgress + 5, updateProgress, teis.length)
+                }).catch((error) => {
+                    setProgress({ progress: 110 })
+                    onError('Import Error: ' + error)
                 })
             }
         } else {
@@ -78,10 +81,14 @@ export function postEnrollmentData({ setStats, setProgress }: { setStats: (args:
         const chunks = splitArrayIntoChunks(copyData, 50);
 
         for (const chunk of chunks) {
-            const response = await uploadValues({ trackedEntities: chunk }, importMode, importStrategy.CREATE);
-            updatedStats = importSummary(response, updatedStats)
+            const response = await uploadValues({ trackedEntities: chunk }, importMode, importStrategy.CREATE).then(() => {
 
-            updateProgressF((90 + 5 - updateProgress), (90 - updateProgress), chunks.length)
+                updatedStats = importSummary(response, updatedStats)
+                updateProgressF((90 + 5 - updateProgress), (90 - updateProgress), chunks.length)
+            }).catch((error) => {
+                setProgress({ progress: 110 })
+                onError('Import Error: ' + error)
+            });
         }
 
         setStats(updatedStats)

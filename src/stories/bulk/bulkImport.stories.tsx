@@ -28,6 +28,7 @@ export const Data_Import: Story = {
         module: "enrollment",
         importMode: 'COMMIT',
         label: "Click me to open drop zone",
-        baseURL: ""
+        baseURL: "",
+        onError: (err) => { console.log(err) }
     }
 };

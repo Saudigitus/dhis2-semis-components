@@ -6,7 +6,7 @@ import { importSummary } from "../../../../utils/common/getImportSummary";
 import { ProgramConfig } from "../../../../types/programConfig/ProgramConfig";
 
 
-export function postValues({ setStats, setProgress }: { setStats: (args: any) => void, setProgress: (rags: any) => void }) {
+export function postValues({ setStats, setProgress, onError }: { setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { uploadValues } = useUploadEvents()
     const { getEvents } = useGetEvents()
     let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] }
@@ -45,6 +45,9 @@ export function postValues({ setStats, setProgress }: { setStats: (args: any) =>
                     copyData[index] = { ...copyData[index], event: event }
 
                     updateProgressF(50, 45, excelData.mapping.length * programStages.length)
+                }).catch((error) => {
+                    setProgress({ progress: 110 })
+                    onError('Import Error: ' + error)
                 })
             }
         }
@@ -52,9 +55,13 @@ export function postValues({ setStats, setProgress }: { setStats: (args: any) =>
         const chunks = splitArrayIntoChunks(copyData, 50);
 
         for (const chunk of chunks) {
-            const response = await uploadValues({ events: chunk }, importMode, importStrategy.UPDATE);
-            updatedStats = importSummary(response, updatedStats)
-            updateProgressF(50, 40, chunks.length)
+            const response = await uploadValues({ events: chunk }, importMode, importStrategy.UPDATE).then(() => {
+                updatedStats = importSummary(response, updatedStats)
+                updateProgressF(50, 40, chunks.length)
+            }).catch((error) => {
+                setProgress({ progress: 110 })
+                onError('Import Error: ' + error)
+            });
         }
 
         setStats(updatedStats)

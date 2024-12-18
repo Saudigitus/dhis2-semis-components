@@ -5,7 +5,7 @@ import { splitArrayIntoChunks } from "../../../../utils/common/splitArray"
 import useUploadEvents from "../../../../hooks/events/useUploadEvents"
 import { useGetEvents } from "../../../../hooks/events/useGetEvents"
 
-export function postAttendanceValues({ setStats, setProgress }: { setStats: (args: any) => void, setProgress: (rags: any) => void }) {
+export function postAttendanceValues({ setStats, setProgress, onError }: { setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { uploadValues } = useUploadEvents()
     const { getEvents } = useGetEvents()
     let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] }
@@ -63,6 +63,9 @@ export function postAttendanceValues({ setStats, setProgress }: { setStats: (arg
                 });
 
                 updateProgressF(40, 35, excelData.length)
+            }).catch((error) => {
+                setProgress({ progress: 110 })
+                onError('Import Error: ' + error)
             })
         }
 
@@ -70,9 +73,14 @@ export function postAttendanceValues({ setStats, setProgress }: { setStats: (arg
             const chunks = splitArrayIntoChunks(values[key], 50);
 
             for (const chunk of chunks) {
-                const response = await uploadValues({ events: chunk }, importMode, (importStrategy as unknown as any)[key]);
-                updatedStats = importSummary(response, updatedStats)
-                updateProgressF(50, 50, keys.length * chunks.length)
+                const response = await uploadValues({ events: chunk }, importMode, (importStrategy as unknown as any)[key]).then(() => {
+                    updatedStats = importSummary(response, updatedStats)
+                    updateProgressF(50, 50, keys.length * chunks.length)
+
+                }).catch((error) => {
+                    setProgress({ progress: 110 })
+                    onError('Import Error: ' + error)
+                });
             }
         }
 
