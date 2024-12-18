@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from "react-final-form";
+import { Form as FinalForm } from "react-final-form";
 import GroupForm from "../form/GroupForm";
 import { ModalActions, Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "../../types/form/GroupFormProps";
@@ -31,7 +31,7 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
 
     return (
         <div style={style} >
-            <Form
+            <FinalForm
                 onSubmit={(values: any) => { onFormSubtmit(values) }}
                 initialValues={initialValues}
             >
@@ -71,7 +71,7 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                         </form>
                     </>
                 )}
-            </Form>
+            </FinalForm>
         </div >
     )
 }

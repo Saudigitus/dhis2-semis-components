@@ -23,14 +23,14 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
     const onChangeGrade = (event) => {
         const getSelectOption = headerItems?.grades?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedGrade: getSelectOption }))
-        add(getSelectOption.value,"grade")
+        add("grade", getSelectOption.value)
         setOpenGrade(!openGrade)
     }
 
     const onChangeClass = (event) => {
         const getSelectOption = headerItems?.classes?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedClass: getSelectOption }))
-        add(getSelectOption.value,"class")
+        add("class", getSelectOption.value)
         setOpenClass(!openClass)
     }
 
@@ -41,7 +41,7 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
     const onChangeAcademicYear = (event) => {
         const getSelectOption = headerItems?.academicYears?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedAcademicYear: getSelectOption }))
-        add(getSelectOption.value,"academicYear")
+        add("academicYear", getSelectOption.value)
         setOpenAcademicYear(!openAcademicYear)
     }
 
