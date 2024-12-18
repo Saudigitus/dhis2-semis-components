@@ -1,13 +1,13 @@
 import { DataProvider } from '@dhis2/app-runtime';
-import { ExportData } from '../../../types/bulk/bulkOperations';
+import { importData } from '../../../types/bulk/bulkOperations';
+import ProcessImport from './processImport';
 
-export default function DataImporter(props: ExportData) {
+export default function DataImporter(props: importData) {
     const { baseURL } = props
 
     return (
         <DataProvider baseUrl={baseURL} >
-            <></>
-            {/* <ProcessExport {...props} /> */}
+            <ProcessImport {...props} />
         </DataProvider>
     )
 }

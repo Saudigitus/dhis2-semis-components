@@ -5,9 +5,17 @@ import useUploadEvents from "../../../../hooks/events/useUploadEvents";
 import { splitArrayIntoChunks } from "../../../../utils/common/splitArray";
 import { importSummary } from "../../../../utils/common/getImportSummary";
 
-export function postEnrollmentData({ setStats }: { setStats: (args: any) => void }) {
+export function postEnrollmentData({ setStats, setProgress }: { setStats: (args: any) => void, setProgress: (rags: any) => void }) {
     const { getEvents } = useGetEvents()
     const { uploadValues } = useUploadEvents()
+
+    function updateProgressF(buffer: number, progressParam: number, denominador: number) {
+        setProgress((progress: any) => ({
+            ...progress,
+            progress: progress.progress + (progressParam / denominador),
+            buffer: progress.buffer + (buffer / denominador)
+        }))
+    }
 
     async function postEnrollments(
         enrollments: any[],
@@ -19,7 +27,7 @@ export function postEnrollmentData({ setStats }: { setStats: (args: any) => void
         orgUnit: string
     ) {
         let copyData = [...enrollments], updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] }
-
+        const updateProgress = updating ? 40 : 0
 
         if (updating) {
             const teis = excelData.map((x: any) => {
@@ -49,6 +57,8 @@ export function postEnrollmentData({ setStats }: { setStats: (args: any) => void
                             events: [...(thisTeiEvent ? [{ ...copyData[index].events[0], event: thisTeiEvent.event }] : [])]
                         }]
                     }
+
+                    updateProgressF(updateProgress + 5, updateProgress, teis.length)
                 })
             }
         } else {
@@ -70,6 +80,8 @@ export function postEnrollmentData({ setStats }: { setStats: (args: any) => void
         for (const chunk of chunks) {
             const response = await uploadValues({ trackedEntities: chunk }, importMode, importStrategy.CREATE);
             updatedStats = importSummary(response, updatedStats)
+
+            updateProgressF((90 + 5 - updateProgress), (90 - updateProgress), chunks.length)
         }
 
         setStats(updatedStats)

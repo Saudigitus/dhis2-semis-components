@@ -144,6 +144,12 @@ interface excelProps {
     defaultLockedHeaders: string[]
 }
 
+interface excelData {
+    excelData: {
+        module: "attendance" | "final-result" | "enrollment" | "performance",
+        mapping: []
+    }
+}
 
 export enum importStrategy {
     CREATE = "CREATE_AND_UPDATE",
@@ -151,16 +157,69 @@ export enum importStrategy {
 }
 
 interface importData {
+    /**
+    * Base url for dhis2 data provider
+    * 
+    *  @type {string}
+    */
+    baseURL: string
+
+     /**
+     * The label wich will appear do identify componet
+     * 
+     *  @type {string}
+     */
+    label: string
+
+     /**
+     * this variable makes the system know that it will have to update
+     * 
+     * existing data using data in this file. 
+     * 
+     * it'll only work work enrollment module only
+     * 
+     *  @type {boolean}
+     */
     updating?: boolean
-    excelData: {
-        module: "attendance" | "final-result" | "enrollment" | "performance",
-        mapping: []
-    }
-    importMode: "VALIDATE" | "COMMIT",
+
+    /**
+     * Depending on the module, the data is exported with a focus on just one programme stage,
+     * 
+     * so this variable is intended to receive the name of the section that will contain this data.
+     *
+     * @type {string}
+     */
+    module: "attendance" | "final-result" | "enrollment" | "performance"
+
+    /**
+     * This variable makes the system know the operation to be done in the 
+     * 
+     * dhis2 api, validate to see if the data is in the correct form
+     * 
+     * or commit to save data already verified
+     * 
+     */
+    importMode: "VALIDATE" | "COMMIT"
+
+    /**
+     * The selected program definitions
+     */
     programConfig: ProgramConfig
+
+    /**
+     * The selected section type
+     */
     sectionType: string
+
+    /**
+     * Data store configuration for SEMIS
+     */
     selectedSectionDataStore: DataStoreRecord
+
+    /**
+     * the selected organization unit at header filters
+     */
     orgUnit?: string
 }
 
-export type { ExportData, GenerateHeaders, excelProps, importData }
+export type { ExportData, GenerateHeaders, excelProps, importData, excelData }

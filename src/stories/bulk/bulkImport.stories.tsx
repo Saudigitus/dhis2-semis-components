@@ -1,14 +1,11 @@
-import DataExporter from "../../components/bulk/bulkExport/DataExporter";
 import type { Meta, StoryObj } from '@storybook/react';
 import student from '../../utils/constants/student.json'
 import program from '../../utils/constants/programConfig.json'
-import { DataProvider } from "@dhis2/app-runtime";
-import React from "react";
-import ProcessExport from "../../components/bulk/bulkExport/processExport";
+import ProcessImport from '../../components/bulk/bulkImport/processImport'
 
 const meta = {
     title: 'Bulk Operations/Bulk Import',
-    component: ProcessExport,
+    component: ProcessImport,
     parameters: {
         layout: 'centered',
     },
@@ -16,37 +13,21 @@ const meta = {
     argTypes: {
     },
     args: {},
-} satisfies Meta<typeof ProcessExport>;
+} satisfies Meta<typeof ProcessImport>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const dhis2Config = {
-    baseUrl: "https://emis.dhis2.org/startracker",
-    auth: {
-        username: "dev_admin",
-        password: "Dev2023!",
-    },
-};
 
 export const Data_Import: Story = {
     args: {
-        eventFilters: [`iDSrFrrVgmX:in:2023`],
-        fileName: "custom file name",
         orgUnit: 'Shc3qNhrPAz',
-        orgUnitName: 'Albion LBS',
         programConfig: program as unknown as any,
         sectionType: 'student',
-        stagesToExport: [],
         selectedSectionDataStore: student as unknown as any,
-        label: "Click me to export",
         module: "enrollment",
+        importMode: 'COMMIT',
+        label: "Click me to open drop zone",
         baseURL: ""
-    },
-
-    render: (args) => (
-        <DataProvider config={dhis2Config}>
-            <DataExporter {...args} />
-        </DataProvider>
-    ),
+    }
 };

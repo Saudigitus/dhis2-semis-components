@@ -6,10 +6,18 @@ import { importSummary } from "../../../../utils/common/getImportSummary";
 import { ProgramConfig } from "../../../../types/programConfig/ProgramConfig";
 
 
-export function postValues({ setStats }: { setStats: (args: any) => void }) {
+export function postValues({ setStats, setProgress }: { setStats: (args: any) => void, setProgress: (rags: any) => void }) {
     const { uploadValues } = useUploadEvents()
     const { getEvents } = useGetEvents()
     let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] }
+
+    function updateProgressF(buffer: number, progressParam: number, denominador: number) {
+        setProgress((progress: any) => ({
+            ...progress,
+            progress: progress.progress + (progressParam / denominador),
+            buffer: progress.buffer + (buffer / denominador)
+        }))
+    }
 
     async function postData(
         data: any[],
@@ -35,6 +43,8 @@ export function postValues({ setStats }: { setStats: (args: any) => void }) {
                     let event = resp.find((x: any) => x.enrollment === enrollment && x.programStage == stage)?.event
                     const index = copyData.findIndex(x => x.enrollment === enrollment && x.programStage == stage)
                     copyData[index] = { ...copyData[index], event: event }
+
+                    updateProgressF(50, 45, excelData.mapping.length * programStages.length)
                 })
             }
         }
@@ -44,6 +54,7 @@ export function postValues({ setStats }: { setStats: (args: any) => void }) {
         for (const chunk of chunks) {
             const response = await uploadValues({ events: chunk }, importMode, importStrategy.UPDATE);
             updatedStats = importSummary(response, updatedStats)
+            updateProgressF(50, 40, chunks.length)
         }
 
         setStats(updatedStats)
