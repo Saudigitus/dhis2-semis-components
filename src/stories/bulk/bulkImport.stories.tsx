@@ -4,7 +4,7 @@ import program from '../../utils/constants/programConfig.json'
 import ProcessImport from '../../components/bulk/bulkImport/processImport'
 
 const meta = {
-    title: 'Bulk Operations/Bulk Import',
+    title: 'SEMIS Bulk Operations/Bulk Import',
     component: ProcessImport,
     parameters: {
         layout: 'centered',

@@ -1,6 +1,6 @@
 import { ExportData } from "../../../types/bulk/bulkOperations"
 import { useState, useEffect } from 'react'
-import ModalExportEmpty from "../modal/modalExport";
+import ModalExport from "../modal/modalExport";
 import { useExportData } from "./exportData";
 import ModalProgress from "../progress/interactiveProgress";
 import { modules } from "../../../types/common/moduleTypes";
@@ -26,7 +26,7 @@ export default function ProcessExport(props: ExportData) {
 
     return (
         <>
-            <a style={{ width: "100%", cursor: "pointer", padding: "5px" }} onClick={async (e) => {
+            <a style={{ width: "100%", cursor: "pointer", padding: "5px", fontSize: "13px" }} onClick={async (e) => {
                 e.preventDefault()
                 if (empty || module === modules.attendance) setOpen(true)
                 else await exportData({})
@@ -34,7 +34,7 @@ export default function ProcessExport(props: ExportData) {
                 {label}
             </a>
 
-            <ModalExportEmpty
+            <ModalExport
                 selectedSectionDataStore={selectedSectionDataStore}
                 onSubmit={exportData}
                 eventFilters={eventFilters}
@@ -48,6 +48,7 @@ export default function ProcessExport(props: ExportData) {
                 progress={progress}
                 open={openPogress}
                 setOpen={setOpenProgress}
+                module={module}
             />
         </>
     )

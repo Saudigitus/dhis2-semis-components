@@ -7,7 +7,7 @@ import React from "react";
 import ProcessExport from "../../components/bulk/bulkExport/processExport";
 
 const meta = {
-    title: 'Bulk Operations/Bulk Export',
+    title: 'SEMIS Bulk Operations/Bulk Export',
     component: DataExporter,
     parameters: { layout: 'centered' },
     tags: ['autodocs'],
@@ -44,6 +44,9 @@ export const Data_export: Story = {
         stagesToExport: [student["final-result"].programStage],
         label: "Click me to export data",
         module: "final-result",
+        onError(args) {
+            console.log(args)
+        },
     },
     render: renderWithProvider,
 };
@@ -55,6 +58,9 @@ export const Attendance_export: Story = {
         stagesToExport: [student.attendance.programStage],
         label: "Click me to export Attendance Data",
         module: "attendance",
+        onError(args) {
+            console.log(args)
+        },
     },
     render: renderWithProvider,
 };
@@ -67,6 +73,9 @@ export const Empty_enrollment_template: Story = {
         label: "Click me to export empty sheet",
         module: "enrollment",
         empty: true,
+        onError(args) {
+            console.log(args)
+        },
     },
     render: renderWithProvider,
 };

@@ -6,7 +6,7 @@ import upload from '../../../assets/animations/upload.json'
 import styles from '../modal/modal.module.css'
 import ModalComponent from "../../../components/modal/Modal";
 
-export default function ModalProgress({ progress, open, setOpen }: { progress: { prorocess: string, progress: number, buffer: number }, open: boolean, setOpen: (args: boolean) => void }) {
+export default function ModalProgress({ progress, open, setOpen, module }: { module: any, progress: { prorocess: string, progress: number, buffer: number }, open: boolean, setOpen: (args: boolean) => void }) {
 
     const style = {
         height: 340,
@@ -31,7 +31,7 @@ export default function ModalProgress({ progress, open, setOpen }: { progress: {
                         }
                     </div>
                     <div className={styles.loading} >
-                        <span>{progress.prorocess == 'export' ? 'Exporting' : 'Importing'}  enrollment data</span>
+                        <span>{progress.prorocess == 'export' ? 'Exporting' : 'Importing'}  {module} data</span>
                         <Lottie style={{ height: 100, marginLeft: "-40px" }} animationData={loading} loop={true} />
                     </div>
                 </div>

@@ -73,10 +73,9 @@ export function postAttendanceValues({ setStats, setProgress, onError }: { setSt
             const chunks = splitArrayIntoChunks(values[key], 50);
 
             for (const chunk of chunks) {
-                const response = await uploadValues({ events: chunk }, importMode, (importStrategy as unknown as any)[key]).then(() => {
+                await uploadValues({ events: chunk }, importMode, (importStrategy as unknown as any)[key]).then((response) => {
                     updatedStats = importSummary(response, updatedStats)
                     updateProgressF(50, 50, keys.length * chunks.length)
-
                 }).catch((error) => {
                     setProgress({ progress: 110 })
                     onError('Import Error: ' + error)

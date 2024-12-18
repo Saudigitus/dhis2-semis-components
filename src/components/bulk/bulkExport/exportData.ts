@@ -7,7 +7,6 @@ import { getCommonSheetData } from './useGetCommonData/commonData';
 import { generateFile } from './dataExporter/fileGenerator';
 import { modules } from '../../../types/common/moduleTypes';
 import { generateEmptyRows } from '../../../utils/common/generateData';
-import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
 import { useGetEvents } from "../../../hooks/events/useGetEvents";
 
@@ -29,8 +28,7 @@ export function useExportData(props: ExportData) {
     } = props
     const { getData } = getCommonSheetData({ ...props, onError })
     const { getEvents } = useGetEvents()
-    const { generate } = generateAndReserveIds()
-    const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date) => boolean })
+    const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date) => boolean, setProgress })
     const { getHeaders } = generateHeaders({
         module,
         programConfig,
@@ -100,14 +98,14 @@ export function useExportData(props: ExportData) {
                 } else if (empty && module == modules.enrollment) {
                     let ids: any = {}
 
-                    for (const idToGenerate of toGenerate) {
-                        await generate(numberOfEmptyRows, idToGenerate).then((generatedIds: any) => {
-                            ids[idToGenerate] = generatedIds?.result?.map((x: any) => x.value)
-                        }).catch((error) => {
-                            onError(`Export error: ${error}`)
-                            setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
-                        })
-                    }
+                    // for (const idToGenerate of toGenerate) {
+                    //     await generate(numberOfEmptyRows, idToGenerate).then((generatedIds: any) => {
+                    //         ids[idToGenerate] = generatedIds?.result?.map((x: any) => x.value)
+                    //     }).catch((error) => {
+                    //         onError(`Export error: ${error}`)
+                    //         setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
+                    //     })
+                    // }
 
                     data = generateEmptyRows(numberOfEmptyRows, formatedHeaders, ids, orgUnitName)
                 }
@@ -115,9 +113,8 @@ export function useExportData(props: ExportData) {
                 try {
                     await excelGenerator({ headers: formatedHeaders, rows: data, filters, fileName, metadata, module, empty, defaultLockedHeaders })
                 } catch (error) {
-                    onError(`Export error: Occurred an error while generating file!`)
-                } finally {
                     setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
+                    onError(`Export error: Occurred an error while generating file!`)
                 }
             }
         }

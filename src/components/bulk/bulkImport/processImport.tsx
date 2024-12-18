@@ -41,7 +41,7 @@ export default function ProcessImport(props: importData) {
 
     return (
         <>
-            <a style={{ width: "100%", cursor: "pointer", padding: "5px" }} onClick={(e) => {
+            <a style={{ width: "100%", cursor: "pointer", padding: "5px", fontSize: "13px" }} onClick={(e) => {
                 e.preventDefault()
                 setOpen(true)
             }}>
@@ -59,6 +59,7 @@ export default function ProcessImport(props: importData) {
                 progress={progress}
                 open={openPogress}
                 setOpen={setOpenProgress}
+                module={module}
             />
         </>
     )
