@@ -25,7 +25,7 @@ import useProgramsKeys from "./hooks/appWrapper/useProgramsKeys"
 import { DataStoreProps } from "./schemas/dataStore"
 import { ProgramConfig } from "./schemas/programSchema"
 import DataExporter from "./components/bulk/bulkExport/DataExporter"
-
+import DataImporter from "./components/bulk/bulkImport/dataImporter"
 
 export type {
     VariablesTypes,
@@ -59,5 +59,6 @@ export {
     AppWrapper,
     useDataStoreKey,
     useProgramsKeys,
-    DataExporter
+    DataExporter,
+    DataImporter
 }
