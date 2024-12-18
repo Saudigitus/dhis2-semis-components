@@ -95,6 +95,7 @@ export function useExportData(props: ExportData) {
                                     buffer: progress.buffer + (41 / data.length * stagesToExport.length)
                                 }))
                             }).catch((error) => {
+                                setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
                                 show({ message: `Export error: Occurred error wihile fetching data: ${error}`, type: { critical: true } })
                                 setTimeout(hide, 5000);
                             })
@@ -113,10 +114,11 @@ export function useExportData(props: ExportData) {
 
                 try {
                     await excelGenerator({ headers: formatedHeaders, rows: data, filters, fileName, metadata, module, empty, defaultLockedHeaders })
-                    setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
                 } catch (error) {
                     show({ message: `Export error: Occurred an error while generating file!`, type: { critical: true } })
                     setTimeout(hide, 5000);
+                } finally {
+                    setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
                 }
             }
         }

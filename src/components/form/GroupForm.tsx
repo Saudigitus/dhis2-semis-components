@@ -30,7 +30,7 @@ function GroupForm(props: GroupFormProps) {
                 }
 
 
-                <WithPadding p={"5px 5px"}>
+                <WithPadding p={"5px 12px"}>
                     {fields?.filter((x: any) => x.visible)?.map((x: any, i: number) => {
                         return (
                             <div className={classNames("row d-flex align-items-center", x.error ? styles.fieldError : x.warning ? styles.fieldWarning : styles.fieldNormal)} key={i}

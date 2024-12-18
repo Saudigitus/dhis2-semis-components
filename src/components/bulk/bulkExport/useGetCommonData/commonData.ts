@@ -17,6 +17,8 @@ export function getCommonSheetData(props: ExportData) {
             skipPaging: true,
             ouMode: 'SELECTED',
             order: selectedSectionDataStore?.defaults.defaultOrder
+        }).catch(() => {
+            setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
         })
 
         setProgress((prev: any) => ({ ...prev, progress: 10, buffer: 16 }))
