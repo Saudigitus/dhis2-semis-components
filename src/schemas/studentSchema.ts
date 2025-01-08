@@ -71,6 +71,7 @@ export const studentDataStoreSchema = z.object({
     attendance: attendanceSchema,
     defaults: defaultsSchema,
     filters: filtersSchema,
+    key: z.string(),
     "final-result": finalResultSchema,
     lastUpdate: z.string(),
     performance: performanceSchema,

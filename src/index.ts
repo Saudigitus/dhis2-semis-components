@@ -5,7 +5,6 @@ import SingleSelectField from "./components/genericFields/fields/SingleSelect"
 import MainHeader from "./components/header/mainHeader"
 import InfoPage from "./components/info/InfoPage"
 import SideBar from "./components/layout/sidebar/SideBar"
-
 import ModalComponent from "./components/modal/Modal"
 import SummaryCard from "./components/summaryCard/summaryCard"
 import Pagination from "./components/table/components/pagination/Pagination"
