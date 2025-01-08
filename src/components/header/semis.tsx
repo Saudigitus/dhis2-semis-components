@@ -1,7 +1,6 @@
 // @ts-ignore
 import { SelectorBar, SelectorBarItem } from '@dhis2/ui'
-import { useState } from 'react'
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { DataProvider } from "@dhis2/app-runtime"
 import { OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
 import { MenuSelect } from './common/common'
@@ -13,12 +12,29 @@ import { useUrlParams } from 'dhis2-semis-functions'
 
 
 const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
-    const {add,remove} = useUrlParams()
+    const { add, remove, getUrlParameter, useQuery } = useUrlParams()
     const [openGrade, setOpenGrade] = useState<boolean>(false)
     const [openClass, setOpenClass] = useState<boolean>(false)
     const [openAcademicYear, setOpenAcademicYear] = useState<boolean>(false)
     const [openOu, setOpenOu] = useState<boolean>(false)
     const [headerValues, setHeaderValues] = useRecoilState(HeaderValuesState)
+
+    const grade = getUrlParameter("grade");
+    const section = getUrlParameter("class");
+    const academicYear = getUrlParameter("academicYear");
+    const school = getUrlParameter("school");
+    const schoolName = getUrlParameter("schoolName");
+
+
+    //RETRIEVE VALUES FROM ULR AND SET TO STATE
+    useEffect(() => {
+        setHeaderValues({
+            selectedAcademicYear: headerItems?.academicYears?.options?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
+            selectedClass: headerItems?.classes?.options?.filter((option: OptionProps) => option.value === section)?.[0] as OptionProps,
+            selectedGrade: headerItems?.grades?.options?.filter((option: OptionProps) => option.value === grade)?.[0] as OptionProps,
+            selectedOu: { displayName: schoolName, id: school, selected: [] }
+        })
+    }, [useQuery()])
 
     const onChangeGrade = (event) => {
         const getSelectOption = headerItems?.grades?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
@@ -34,8 +50,11 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
         setOpenClass(!openClass)
     }
 
-    const onChangeOu = (event) => {
-        console.log(event, "event", headerValues)
+    const onChangeOu = (event: { id: string, displayName: string, selected: any }) => {
+        setHeaderValues(prevState => ({ ...prevState, selectedOu: event }))
+        add("school", event.id)
+        add("schoolName", event.displayName)
+        setOpenOu(!openOu)
     }
 
     const onChangeAcademicYear = (event) => {
@@ -46,25 +65,41 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
     }
 
     return (
-        <SelectorBar className={style.HeaderContainer} additionalContent={
+        <SelectorBar className={style.HeaderContainer}
+            additionalContent={
+                <SelectorBarItem
+                    label="Academic year"
+                    value={academicYear ?? headerValues?.selectedAcademicYear?.value}
+                    noValueMessage="Select a acamic year"
+                    open={openAcademicYear}
+                    setOpen={() => setOpenAcademicYear(!openAcademicYear)}
+                >
+                    <MenuSelect placeholder="" isSeachable={false} values={headerItems.academicYears.options} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
+                </SelectorBarItem>
+            }
+        >
             <SelectorBarItem
-                label="Academic year"
-                value={headerValues?.selectedAcademicYear?.value}
-                noValueMessage="Select a acamic year"
-                open={openAcademicYear}
-                setOpen={() => setOpenAcademicYear(!openAcademicYear)}
-            >
-                <MenuSelect placeholder="" isSeachable={false} values={headerItems.academicYears.options} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
-            </SelectorBarItem>
-        }>
-            <SelectorBarItem
+                value={schoolName ?? headerValues?.selectedOu?.displayName}
+                onClearSelectionClick={() => {
+                    setHeaderValues({
+                        selectedAcademicYear: { label: "", value: "" },
+                        selectedClass: { label: "", value: "" },
+                        selectedGrade: { label: "", value: "" },
+                        selectedOu: { displayName: "", id: "", selected: [] },
+                    })
+                    remove("class")
+                    remove("grade")
+                    remove("school")
+                    remove("schoolName")
+
+                }}
                 label="School"
                 noValueMessage="Select a school"
                 open={openOu}
                 setOpen={() => setOpenOu(!openOu)}
             >
                 <DataProvider baseUrl='http://localhost:8080'>
-                    <OrgUnitTreeComponent />
+                    <OrgUnitTreeComponent selectedOu={headerValues?.selectedOu} onChange={onChangeOu} />
                 </DataProvider>
             </SelectorBarItem>
             <SelectorBarItem
@@ -73,7 +108,7 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                     remove("grade")
                 }}
                 label="Grade"
-                value={headerValues?.selectedGrade?.value}
+                value={grade ?? headerValues?.selectedGrade?.value}
                 noValueMessage="Select a grade"
                 open={openGrade}
                 setOpen={() => setOpenGrade(!openGrade)}
@@ -87,7 +122,7 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
 
                 }}
                 label="Class/Section"
-                value={headerValues?.selectedClass?.value}
+                value={section ?? headerValues?.selectedClass?.value}
                 noValueMessage="Select a class"
                 open={openClass}
                 setOpen={() => setOpenClass(!openClass)}

@@ -1,8 +1,7 @@
-import { Center, CircularLoader, Help, Menu, OrganisationUnitTree } from '@dhis2/ui';
+import { Center, CircularLoader, Help, Input, Menu, OrganisationUnitTree } from '@dhis2/ui';
 import { useDataQuery } from '@dhis2/app-runtime'
 import React, { useState } from 'react'
 import style from "../mainHeader.module.css"
-import { Input } from '@material-ui/core';
 
 
 const ORG_UNIT_QUERY = {
@@ -14,14 +13,13 @@ const ORG_UNIT_QUERY = {
     }
 }
 
-const OrgUnitTreeComponent = () => {
-    const [selectedOu, setSelectedOu] = useState<{ id: string, displayName: string, selected: any }>()
+const OrgUnitTreeComponent = ({ onChange, selectedOu }) => {
     const { loading, data, error } = useDataQuery<{ results: { organisationUnits: [{ id: string, displayName: string }] } }>(ORG_UNIT_QUERY, {
     })
 
     if (error != null) {
         return (
-            <div style={{ width: 400, minHeight: 400 }}>
+            <div onClick={(e) => e.stopPropagation()} style={{ width: 400, minHeight: 400 }}>
                 <Help error>
                     Something went wrong when loading the organisation units!
                 </Help>
@@ -37,25 +35,27 @@ const OrgUnitTreeComponent = () => {
         )
     }
 
-    const onOuChange = (event: { id: string, displayName: string, selected: any }) => {
-        console.log(event, "event")
-        setSelectedOu(event);
-    }
+    // const onOuChange = (event: { id: string, displayName: string, selected: any }) => {
+    //     console.log(event, "event")
+    //     setSelectedOu(event);
+    // }
 
 
 
     return (
-        <div style={{ width: 400, minHeight: 400 }}>
+        <div style={{ width: 400, minHeight: 400 }} onClick={(e) => e.stopPropagation()}>
             <Menu>
-                <div className={style.SimpleSearcInputContainer} onClick={(e) => e.stopPropagation()} >
-                    <Input placeholder={"Search for a school"} name="input" />
+                <div onClick={(e) => e.stopPropagation()}>
+                    <div className={style.SimpleSearcInputContainer} >
+                        <Input placeholder={"Search for a school"} name="input" />
+                    </div>
+                    <OrganisationUnitTree
+                        roots={data?.results.organisationUnits[0].id}
+                        singleSelection
+                        selected={selectedOu?.selected}
+                        onChange={onChange}
+                    />
                 </div>
-                <OrganisationUnitTree
-                    roots={data?.results.organisationUnits[0].id}
-                    singleSelection
-                    selected={selectedOu?.selected}
-                    onChange={onOuChange}
-                />
             </Menu>
         </div>
     );

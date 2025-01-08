@@ -15,8 +15,9 @@ const headerValuesSchema = z.object({
         value: z.string()
     }),
     selectedOu: z.object({
-        label: z.string(),
-        value: z.string()
+        id: z.string(),
+        displayName: z.string(),
+        selected: z.array(z.string())
     })
 })
 
@@ -27,7 +28,7 @@ export const HeaderValuesState = atom<HeaderValuesProps>({
     default: {
         selectedAcademicYear: { label: "", value: "" },
         selectedClass: { label: "", value: "" },
-        selectedOu: { label: "", value: "" },
+        selectedOu: { id: "", displayName: "", selected: [] },
         selectedGrade: { label: "", value: "" },
     }
 })
