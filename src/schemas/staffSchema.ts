@@ -56,12 +56,25 @@ const transferSchema = z.object({
     statusOptions: z.array(transferStatusOptionSchema)
 });
 
+const finalResultSchema = z.object({
+    programStage: z.string(),
+    status: z.string()
+});
+
+const performanceSchema = z.object({
+    programStages: z.array(z.object({
+        programStage: z.string()
+    }))
+});
+
 export const staffDataStoreSchema = z.object({
     attendance: attendanceSchema,
     defaults: defaultsSchema,
     filters: filtersSchema,
     key: z.string(),
+    "final-result": finalResultSchema,
     lastUpdate: z.string(),
+    performance: performanceSchema,
     program: z.string(),
     registration: registrationSchema,
     "socio-economics": socioEconomicsSchema,
