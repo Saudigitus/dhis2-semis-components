@@ -1,6 +1,7 @@
 import { ReactElement } from "react"
 import { CustomAttributeProps } from "../variables/AttributeColumns"
 import { RowActionsType, TableRowActionsType } from "./TableRowActionsProps"
+import { ProgramConfig } from "../programConfig/ProgramConfig"
 
 interface TableProps {
     head: any
@@ -59,6 +60,7 @@ interface RenderRowsProps {
     showRowActions?: boolean
     rowAction: RowActionsType[]
     displayType?: TableRowActionsType
+    programConfig: ProgramConfig
 }
 
 interface EnrollmentDetailsComponentProps {
@@ -96,14 +98,15 @@ interface TableRenderProps {
     displayType?: TableRowActionsType
     defaultFilterNumber?: number
     filterState?: {
-      dataElements: any[],
-      attributes: any[]
+        dataElements: any[],
+        attributes: any[]
     },
     setFilterState?: (args: {
-      dataElements: any[],
-      attributes: any[]
+        dataElements: any[],
+        attributes: any[]
     }) => void,
     rightElements?: ReactElement
+    programConfig: ProgramConfig
 }
 
 

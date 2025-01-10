@@ -6,6 +6,7 @@ import MobileRow from '../components/mobileRow/MobileRow';
 import RowTable from '../components/row/RowTable';
 import RowCell from '../components/row/RowCell';
 import TableRowActions from '../components/rowsActions/TableRowActions';
+import { getDisplayName } from '../../../utils/table/getDisplayNameByOption';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -64,7 +65,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function RenderRows(props: RenderRowsProps): React.ReactElement {
     const classes = useStyles()
-    const { headerData, rowsData = [], searchActions, loading, viewPortWidth, isInactive, isOwnershipOu, showEnrollments, showRowActions, rowAction, displayType } = props;
+    const {
+        headerData,
+        rowsData = [],
+        searchActions,
+        loading,
+        viewPortWidth,
+        isInactive,
+        isOwnershipOu,
+        showEnrollments,
+        showRowActions,
+        rowAction,
+        displayType,
+        programConfig
+    } = props;
 
     if (rowsData?.length === 0 && !loading) {
         return (
@@ -101,7 +115,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                         >
                                             <div>
                                                 {
-                                                    row[column.id]
+                                                    getDisplayName({ metaData: column.id, value: row[column.id], program: programConfig })
                                                 }
                                             </div>
                                         </RowCell>

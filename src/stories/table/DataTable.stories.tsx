@@ -7,6 +7,7 @@ import { RowActionsType } from '../../types/table/TableRowActionsProps';
 import { IconEdit24, IconDelete24, IconCheckmarkCircle24 } from "@dhis2/ui";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-select/dist/react-select.css";
+import { ProgramConfig } from "../../types/programConfig/ProgramConfig";
 
 const rowsActions: RowActionsType[] = [
   { icon: <IconEdit24 />, color: '#277314', label: `Edition`, disabled: true, loading: false, onClick: () => { alert("Edition") } },
@@ -140,7 +141,7 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
-    title:"Enrollments",
+    title: "Enrollments",
     viewPortWidth: 1040,
     columns: headerColumns,
     totalElements: 4,
@@ -157,7 +158,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Loading: Story = {
   args: {
-    title:"Enrollments",
+    title: "Enrollments",
     loading: true,
     viewPortWidth: 1040,
     columns: headerColumns,
@@ -166,7 +167,8 @@ export const Loading: Story = {
     rowAction: rowsActions,
     showRowActions: false,
     defaultFilterNumber: 3,
-    rightElements: <div>Right Elements</div>
+    rightElements: <div>Right Elements</div>,
+    programConfig: {} as unknown as ProgramConfig
   },
 };
 
