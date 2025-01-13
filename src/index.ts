@@ -26,8 +26,11 @@ import { DataStoreProps } from "./schemas/dataStore"
 import { ProgramConfig } from "./schemas/programSchema"
 
 
+export {
+    VariablesTypes,  
+}
+
 export type {
-    VariablesTypes,
     CustomAttributeProps,
     Attribute,
     GroupFormProps,
