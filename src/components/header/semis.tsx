@@ -12,19 +12,13 @@ import { useUrlParams } from 'dhis2-semis-functions'
 
 
 const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
-    const { add, remove, getUrlParameter, useQuery } = useUrlParams()
+    const { add, remove, urlParameters, useQuery } = useUrlParams()
+    const { grade, class: section, school, academicYear, schoolName } = urlParameters()
     const [openGrade, setOpenGrade] = useState<boolean>(false)
     const [openClass, setOpenClass] = useState<boolean>(false)
     const [openAcademicYear, setOpenAcademicYear] = useState<boolean>(false)
     const [openOu, setOpenOu] = useState<boolean>(false)
     const [headerValues, setHeaderValues] = useRecoilState(HeaderValuesState)
-
-    const grade = getUrlParameter("grade");
-    const section = getUrlParameter("class");
-    const academicYear = getUrlParameter("academicYear");
-    const school = getUrlParameter("school");
-    const schoolName = getUrlParameter("schoolName");
-
 
     //RETRIEVE VALUES FROM ULR AND SET TO STATE
     useEffect(() => {

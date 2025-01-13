@@ -38,7 +38,6 @@ const useDataStore = (keySpace: string) => {
       }
       return response?.result
     } catch (error) {
-      console.log(error,"dhis2-semis-components")
       setError(error)
     } finally {
     }

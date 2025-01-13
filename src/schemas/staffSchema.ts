@@ -53,6 +53,7 @@ const transferSchema = z.object({
     destinySchool: z.string(),
     programStage: z.string(),
     status: z.string(),
+    key: z.string().optional(),
     statusOptions: z.array(transferStatusOptionSchema)
 });
 
@@ -72,9 +73,9 @@ export const staffDataStoreSchema = z.object({
     defaults: defaultsSchema,
     filters: filtersSchema,
     key: z.string(),
-    "final-result": finalResultSchema,
+    "final-result": finalResultSchema.optional(),
     lastUpdate: z.string(),
-    performance: performanceSchema,
+    performance: performanceSchema.optional(),
     program: z.string(),
     registration: registrationSchema,
     "socio-economics": socioEconomicsSchema,

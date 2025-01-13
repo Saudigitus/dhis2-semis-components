@@ -16,7 +16,6 @@ const AppWrapperRaw = ({ children, dataStoreKey }: AppWrapperProps) => {
   useEffect(() => {
     void getDataStore()
       .then(async (response: DataStoreProps) => {
-        console.log(response, "response app wrapper")
         for (let i = 0; i < response.length; i++) {
           await getProgram(response?.[i].program)
         }
@@ -26,7 +25,6 @@ const AppWrapperRaw = ({ children, dataStoreKey }: AppWrapperProps) => {
       })
   }, [])
 
-  console.log(error, "Chegou aqui")
 
   if (loading) {
     return (
