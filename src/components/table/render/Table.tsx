@@ -60,7 +60,8 @@ function Table(props: TableRenderProps): React.ReactElement {
         filterState,
         setFilterState,
         defaultFilterNumber,
-        rightElements
+        rightElements,
+        programConfig
     } = props
 
     const classes = useStyles()
@@ -125,6 +126,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         showRowActions={showRowActions}
                                         rowAction={rowAction}
                                         displayType={displayType}
+                                        programConfig={programConfig}
                                     />
                                 )}
 
