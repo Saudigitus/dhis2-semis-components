@@ -16,7 +16,7 @@ import WithBorder from "./components/template/WithBorder"
 import WithPadding from "./components/template/WithPadding"
 import Text from "./components/text/Text"
 import { Attribute } from "./types/generated/models"
-import { VariablesTypes, CustomAttributeProps } from "./types/variables/AttributeColumns"
+import { VariablesTypes, CustomAttributeProps, OptionsProps } from "./types/variables/AttributeColumns"
 import { GroupFormProps, FormProps } from "./types/form/GroupFormProps"
 import { AppWrapper } from "./components/appWrapper/appWrapper"
 import useDataStoreKey from "./hooks/appWrapper/useDataStoreKey"
@@ -30,13 +30,15 @@ export {
     VariablesTypes,  
 }
 
+
 export type {
     CustomAttributeProps,
     Attribute,
     GroupFormProps,
     FormProps,
     DataStoreProps,
-    ProgramConfig
+    ProgramConfig,
+    OptionsProps
 }
 
 export {
