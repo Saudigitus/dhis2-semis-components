@@ -26,8 +26,11 @@ import { ProgramConfig } from "./schemas/programSchema"
 import DataExporter from "./components/bulk/bulkExport/DataExporter"
 import DataImporter from "./components/bulk/bulkImport/dataImporter"
 
+export {
+    VariablesTypes,  
+}
+
 export type {
-    VariablesTypes,
     CustomAttributeProps,
     Attribute,
     GroupFormProps,
