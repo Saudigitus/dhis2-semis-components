@@ -25,11 +25,11 @@ import { DataStoreProps } from "./schemas/dataStore"
 import { ProgramConfig } from "./schemas/programSchema"
 import DataExporter from "./components/bulk/bulkExport/DataExporter"
 import DataImporter from "./components/bulk/bulkImport/dataImporter"
+import SemisHeader from "./components/header/semisHeader"
 
 export {
     VariablesTypes,  
 }
-
 
 export type {
     CustomAttributeProps,
@@ -42,6 +42,7 @@ export type {
 }
 
 export {
+    SemisHeader,
     CustomForm,
     Table,
     SingleSelectField,
