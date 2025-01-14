@@ -9,6 +9,7 @@ import { HeaderValuesState } from '../../schemas/headerDataSchema'
 import OrgUnitTreeComponent from './components/orgUnitTree'
 import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
+import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
 
 
 const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
@@ -93,7 +94,7 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 setOpen={() => setOpenOu(!openOu)}
             >
                 <DataProvider baseUrl='http://localhost:8080'>
-                    <OrgUnitTreeComponent selectedOu={headerValues?.selectedOu} onChange={onChangeOu} />
+                    <OrgUnitTreeSearch selectedOu={headerValues?.selectedOu} onChange={onChangeOu}/>
                 </DataProvider>
             </SelectorBarItem>
             <SelectorBarItem

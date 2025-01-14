@@ -23,13 +23,10 @@ const useDataStore = (keySpace: string) => {
   const [validationError, setValidationError] = useState<object | null>(null)
   const setDataStoreValues = useSetRecoilState(DataStoreState)
 
-  console.log("first")
-
   const getDataStore = async () => {
     setLoading(true)
     try {
       const response = await engine.query(DATASTORE_QUERY(keySpace))
-      console.log(response,"response")
       if (typeof dataStoreSchemaValidator(response?.result) === "object") {
         setValidationError(dataStoreSchemaValidator(response?.result) as object)
       } else {

@@ -1,64 +1,84 @@
-import { Center, CircularLoader, Help, Input, Menu, OrganisationUnitTree } from '@dhis2/ui';
-import { useDataQuery } from '@dhis2/app-runtime'
-import React, { useState } from 'react'
-import style from "../mainHeader.module.css"
+import { Help, OrganisationUnitTree } from '@dhis2/ui';
+import { OrgUnitTreeComponentProps } from '../../../types/orgUnitTree/OrgUnitTreeTypes';
+import { usePreviousOrganizationUnit } from '../../../hooks/organisationUnit/usePreviousOrganizationUnit';
+import { useEffect, useState } from 'react';
 
+const OrgUnitTreeComponent = (props: OrgUnitTreeComponentProps) => {
+    const { roots, treeKey, previousOrgUnitId, onSelectClick } = props;
+    const previousSelectedOrgUnit = usePreviousOrganizationUnit(previousOrgUnitId);
 
-const ORG_UNIT_QUERY = {
-    results: {
-        resource: "me",
-        params: {
-            fields: "organisationUnits[id,displayName]"
+    const getExpandedItems = () => {
+        if (roots && roots.length === 1) {
+            return [`/${roots[0].id}`];
+        } else if (roots?.length > 1) {
+            return roots?.map(root => root?.path);
         }
+
+        return undefined;
+    };
+
+    const getHighlightedItems = () => {
+        if (previousSelectedOrgUnit?.path) {
+            return [previousSelectedOrgUnit?.path];
+        }
+        return undefined;
+    };
+
+    const initiallyExpanded = getExpandedItems();
+
+    const [expanded, setExpanded] = useState(initiallyExpanded);
+
+    useEffect(() => {
+        if (previousSelectedOrgUnit?.expandedPaths) {
+            setExpanded(previousSelectedOrgUnit.expandedPaths);
+        }
+    }, [previousSelectedOrgUnit?.expandedPaths]);
+
+    const handleExpand = ({ path }: { path: string }) => {
+        if (expanded && !expanded.includes(path)) {
+            setExpanded([...expanded, path]);
+        }
+    };
+
+    const handleCollapse = ({ path }: { path: string }) => {
+        const pathIndex = expanded?.indexOf(path);
+
+        if (pathIndex && pathIndex !== -1 && expanded) {
+            const updatedExpanded =
+                pathIndex === 0
+                    ? expanded.slice(1)
+                    : [
+                        ...expanded.slice(0, pathIndex),
+                        ...expanded.slice(pathIndex + 1),
+                    ];
+            setExpanded(updatedExpanded);
+        }
+    };
+
+
+    if (!roots) {
+        return null;
     }
-}
 
-const OrgUnitTreeComponent = ({ onChange, selectedOu }) => {
-    const { loading, data, error } = useDataQuery<{ results: { organisationUnits: [{ id: string, displayName: string }] } }>(ORG_UNIT_QUERY, {
-    })
-
-    if (error != null) {
-        return (
-            <div onClick={(e) => e.stopPropagation()} style={{ width: 400, minHeight: 400 }}>
-                <Help error>
-                    Something went wrong when loading the organisation units!
-                </Help>
-            </div>
-        )
+    if (roots.length === 0) {
+        return <Help error>
+            No organisation units to show!
+        </Help>
     }
-
-    if (loading) {
-        return (
-            <Center>
-                <CircularLoader small />
-            </Center>
-        )
-    }
-
-    // const onOuChange = (event: { id: string, displayName: string, selected: any }) => {
-    //     console.log(event, "event")
-    //     setSelectedOu(event);
-    // }
-
-
 
     return (
-        <div style={{ width: 400, minHeight: 400 }} onClick={(e) => e.stopPropagation()}>
-            <Menu>
-                <div onClick={(e) => e.stopPropagation()}>
-                    <div className={style.SimpleSearcInputContainer} >
-                        <Input placeholder={"Search for a school"} name="input" />
-                    </div>
-                    <OrganisationUnitTree
-                        roots={data?.results.organisationUnits[0].id}
-                        singleSelection
-                        selected={selectedOu?.selected}
-                        onChange={onChange}
-                    />
-                </div>
-            </Menu>
-        </div>
+        <OrganisationUnitTree
+            key={treeKey}
+            roots={roots?.map(item => item?.id)}
+            // expanded={expanded}
+            handleExpand={handleExpand}
+            handleCollapse={handleCollapse}
+            singleSelection
+            selected={getHighlightedItems()}
+            onChange={onSelectClick}
+        />
     );
 }
+
 
 export default OrgUnitTreeComponent
