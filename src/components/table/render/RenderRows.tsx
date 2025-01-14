@@ -9,6 +9,11 @@ import TableRowActions from '../components/rowsActions/TableRowActions';
 import { getDisplayName } from '../../../utils/table/getDisplayNameByOption';
 import { checkCanceled } from '../../../utils/table/checkCanceled';
 import { checkOwnershipOu } from '../../../utils/table/checkCanceled';
+import { Attribute } from '../../../types/generated/models';
+import { formatKeyValueTypeHeader } from '../../../utils/common/formatKeyValueType';
+import { GetImageUrl } from '../../../utils/table/getImageUrl';
+import { IconButton, Tooltip } from '@mui/material';
+import { CropOriginal } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -67,6 +72,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function RenderRows(props: RenderRowsProps): React.ReactElement {
     const classes = useStyles()
+    const { imageUrl } = GetImageUrl()
     const {
         headerData,
         rowsData = [],
@@ -116,11 +122,19 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                             key={column.id}
                                             className={classNames(classes.cell, classes.bodyCell)}
                                         >
-                                            <div>
-                                                {
-                                                    getDisplayName({ metaData: column.id, value: row[column.id], program: programConfig })
-                                                }
-                                            </div>
+                                            {
+                                                formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
+                                                    <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity })} target='_blank'>
+                                                        {row[column.id] &&
+                                                            <Tooltip title="Click to open in new tab" >
+                                                                <IconButton> <CropOriginal /></IconButton>
+                                                            </Tooltip>
+                                                        }
+                                                    </a>
+                                                    : <div>
+                                                        {getDisplayName({ metaData: column.id, value: row[column.id], program: programConfig })}
+                                                    </div>
+                                            }
                                         </RowCell>
                                     ))
                                 }
