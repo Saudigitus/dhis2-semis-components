@@ -7,6 +7,8 @@ import RowTable from '../components/row/RowTable';
 import RowCell from '../components/row/RowCell';
 import TableRowActions from '../components/rowsActions/TableRowActions';
 import { getDisplayName } from '../../../utils/table/getDisplayNameByOption';
+import { checkCanceled } from '../../../utils/table/checkCanceled';
+import { checkOwnershipOu } from '../../../utils/table/checkCanceled';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -71,13 +73,13 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
         searchActions,
         loading,
         viewPortWidth,
-        isInactive,
-        isOwnershipOu,
+        selectedOU,
         showEnrollments,
         showRowActions,
         rowAction,
         displayType,
-        programConfig
+        programConfig,
+        inactiveRowMessage
     } = props;
 
     if (rowsData?.length === 0 && !loading) {
@@ -103,8 +105,9 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                         {viewPortWidth > 520 ?
                             <RowTable
                                 key={index}
-                                inactive={isInactive}
-                                isOwnershipOu={isOwnershipOu}
+                                inactive={checkCanceled(row.status)}
+                                title={inactiveRowMessage}
+                                isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
                                 className={classNames(classes.row, classes.dataRow, (searchActions && showEnrollments) ? classes.dataRowCollapsed : null)}
                             >
                                 {
@@ -129,7 +132,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                     >
                                         <TableRowActions
                                             actions={rowAction}
-                                            disabled={isInactive}
+                                            disabled={checkCanceled(row.status)}
                                             loading={loading!}
                                             displayType={displayType}
                                         />
@@ -138,14 +141,15 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                             </RowTable>
                             :
                             <MobileRow
+                                title={inactiveRowMessage}
                                 row={row}
                                 header={headerData}
-                                inactive={isInactive}
-                                isOwnershipOu={isOwnershipOu}
+                                inactive={checkCanceled(row.status)}
+                                isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
                                 actions={
                                     <TableRowActions
                                         actions={rowAction}
-                                        disabled={isInactive}
+                                        disabled={checkCanceled(row.status)}
                                         loading={loading!}
                                         displayType={displayType}
                                     />

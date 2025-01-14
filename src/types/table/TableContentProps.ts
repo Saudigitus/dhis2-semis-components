@@ -54,13 +54,13 @@ interface RenderRowsProps {
     searchActions?: boolean
     loading?: boolean
     viewPortWidth: number
-    isInactive: boolean
-    isOwnershipOu: boolean
+    selectedOU?: string
     showEnrollments: boolean
     showRowActions?: boolean
     rowAction: RowActionsType[]
     displayType?: TableRowActionsType
     programConfig: ProgramConfig
+    inactiveRowMessage?: string
 }
 
 interface EnrollmentDetailsComponentProps {
@@ -89,8 +89,7 @@ interface TableRenderProps {
     rowsPerPages?: { value: number, label: string }[],
     tableData: Record<string, any>[]
     sortable?: boolean,
-    isInactive?: boolean,
-    isOwnershipOu?: boolean,
+    selectedOU?: string,
     showEnrollments?: boolean,
     searchActions?: any
     showRowActions?: boolean
@@ -107,6 +106,7 @@ interface TableRenderProps {
     }) => void,
     rightElements?: ReactElement
     programConfig: ProgramConfig
+    inactiveRowMessage?: string
 }
 
 
