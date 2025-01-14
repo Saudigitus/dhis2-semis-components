@@ -1,0 +1,37 @@
+.loadingContainer {
+    height: 65vh;
+}
+
+.linearProgress {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 95% 5%;
+}
+
+.percentagem {
+    margin-left: 10px;
+    margin-top: -11px;
+}
+
+.loadingContainer h1 {
+    font-size: 20px;
+}
+
+.studentSeek {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading {
+    margin-left: 60px;
+    /* margin-top: -70px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading span {
+    font-weight: 500;
+    letter-spacing: 2px;
+}

@@ -3,9 +3,6 @@ import { SimpleButtonsComponentProps } from "../../../types/buttons/switchButton
 import SimpleDropdownButton from "./components/simpleDropdownButton";
 import SimpleButtons from "./components/simpleButtons";
 
-
-
-
 export default function SwitchButtonView({ items, maxLinearItems, selected, setSelected, onSelect, buttonClassName }: SimpleButtonsComponentProps): React.ReactElement {
   const maxItems = maxLinearItems ?? 3;
 

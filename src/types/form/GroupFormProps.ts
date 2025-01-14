@@ -31,6 +31,7 @@ interface FormProps {
      * @type {(args: any) => void}
      */
     onInputChange?: (args: any) => void
+    onInputChange?: (args: any) => void
 
     /**
      * The function that will be executed when the form is submitted, you just have 
@@ -42,15 +43,6 @@ interface FormProps {
      * @type {(args: any) => void}
      */
     onFormSubtmit?: (e: any) => void
-
-     /**
-     * The function that will be executed when the cancel btn is clicked 
-     * 
-     * by default this button rests the form
-     * 
-     * @type {(args: any) => void}
-     */
-     onCancel?: () => void
 
     /**
      * If you want to show feedback while processing the data after submitting the form,

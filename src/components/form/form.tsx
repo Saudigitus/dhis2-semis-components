@@ -1,11 +1,10 @@
-import React from 'react';
 import { Form as FinalForm } from "react-final-form";
 import GroupForm from "../form/GroupForm";
 import { ModalActions, Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "../../types/form/GroupFormProps";
 import styles from './groupform.module.css'
 
-export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel = null }: FormProps) {
+export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons }: FormProps) {
 
     const formActions = (pristine: boolean, form: any) => [
         {
