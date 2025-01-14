@@ -37,6 +37,7 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                             onChange={(e: any) => { onInputChange(e) }}
                             onSubmit={(e) => {
                                 e.preventDefault()
+                                console.log(values)
                                 handleSubmit(values)
                             }}
                         >
@@ -47,6 +48,7 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                                         description={section.description}
                                         key={i}
                                         fields={section.fields}
+                                        form={form}
                                     />
                                 )
                             }

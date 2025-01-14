@@ -135,6 +135,24 @@ export const Group_form: Story = {
                 ]
             },
             {
+                name: "Image Field",
+                description: "No description",
+                fields: [
+                    {
+                        required: false,
+                        name: "Image",
+                        labelName: "Image Input",
+                        valueType: "IMAGE" as unknown as CustomAttributeProps["valueType"],
+                        disabled: false,
+                        visible: true,
+                        description: "Image",
+                        id: "Image",
+                        displayName: "Image",
+                        type: VariablesTypes.DataElement
+                    }
+                ]
+            },
+            {
                 name: "List Input",
                 description: "No description",
                 fields: [

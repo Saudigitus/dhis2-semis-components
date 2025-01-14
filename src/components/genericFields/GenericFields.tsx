@@ -10,8 +10,9 @@ import RadioButton from "./fields/RadioButton";
 import { type GenericFieldsComponentProps } from "../../types/form/GenericFieldsTypes";
 import { CustomAttributeProps } from "../../types/variables/AttributeColumns";
 import DateRangePicker from './fields/datepicker/improvedDateRage';
+import ImageField from './fields/ImageField';
 
-function GenericFields({ attribute, disabled, valueType }: GenericFieldsComponentProps) {
+function GenericFields({ attribute, disabled, valueType, form }: GenericFieldsComponentProps) {
   switch (valueType) {
     case Attribute.valueType.BOOLEAN as unknown as CustomAttributeProps["valueType"]:
       return <RadioButton {...attribute} disabled={disabled} />;
@@ -39,6 +40,9 @@ function GenericFields({ attribute, disabled, valueType }: GenericFieldsComponen
 
     case Attribute.valueType.LIST as unknown as CustomAttributeProps["valueType"]:
       return <SingleSelectField options={attribute.options} onChange={() => { }} {...attribute} disabled={attribute.disabled} />;
+
+    case Attribute.valueType.IMAGE as unknown as CustomAttributeProps["valueType"]:
+      return <ImageField disabled={disabled} {...attribute} form={form} />;
 
     case 'DATE_RANGE' as unknown as CustomAttributeProps["valueType"]:
       return <DateRangePicker disabled={disabled} name='dateRange' />

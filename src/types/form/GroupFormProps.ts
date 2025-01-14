@@ -4,6 +4,7 @@ interface GroupFormProps {
     name: string
     description?: string
     fields: CustomAttributeProps[]
+    form?: any
 }
 
 interface FormProps {
