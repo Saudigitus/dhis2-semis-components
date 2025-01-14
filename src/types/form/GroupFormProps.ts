@@ -31,14 +31,13 @@ interface FormProps {
      * @type {(args: any) => void}
      */
     onInputChange?: (args: any) => void
-    onInputChange?: (args: any) => void
 
     /**
      * The function that will be executed when the form is submitted, you just have 
      * 
-     * to create your logic knowing that this function will receive an object with 
+     * to create your logic knowing that this function must receive an object with 
      * 
-     * the form values as a parameter.
+     * the f values as a parameter.
      *
      * @type {(args: any) => void}
      */

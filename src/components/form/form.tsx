@@ -1,4 +1,4 @@
-import { Form as FinalForm } from "react-final-form";
+import { Form } from "react-final-form";
 import GroupForm from "../form/GroupForm";
 import { ModalActions, Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "../../types/form/GroupFormProps";
@@ -12,10 +12,7 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
             type: "reset",
             label: "Cancel",
             disabled: false,
-            onClick: () => {
-                if (onCancel) onCancel()
-                else form.reset
-            },
+            onClick: () => { form.reset },
             secondary: true
         }, {
             id: "continue",
@@ -30,7 +27,7 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
 
     return (
         <div style={style} >
-            <FinalForm
+            <Form
                 onSubmit={(values: any) => { onFormSubtmit(values) }}
                 initialValues={initialValues}
             >
@@ -70,7 +67,7 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                         </form>
                     </>
                 )}
-            </FinalForm>
+            </Form>
         </div >
     )
 }
