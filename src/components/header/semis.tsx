@@ -6,7 +6,6 @@ import { OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
 import { MenuSelect } from './common/common'
 import { RecoilRoot, useRecoilState } from 'recoil'
 import { HeaderValuesState } from '../../schemas/headerDataSchema'
-import OrgUnitTreeComponent from './components/orgUnitTree'
 import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
