@@ -49,8 +49,7 @@ function Table(props: TableRenderProps): React.ReactElement {
         orderBy,
         rowsPerPages,
         tableData,
-        isInactive = false,
-        isOwnershipOu = false,
+        selectedOU,
         showEnrollments = false,
         sortable = false,
         searchActions = false,
@@ -61,7 +60,8 @@ function Table(props: TableRenderProps): React.ReactElement {
         setFilterState,
         defaultFilterNumber,
         rightElements,
-        programConfig
+        programConfig,
+        inactiveRowMessage
     } = props
 
     const classes = useStyles()
@@ -118,8 +118,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         headerData={filteredHeaders.length > 0 ? filteredHeaders : columns}
                                         rowsData={tableData}
                                         loading={loading}
-                                        isInactive={isInactive}
-                                        isOwnershipOu={isOwnershipOu}
+                                        selectedOU={selectedOU}
                                         showEnrollments={showEnrollments}
                                         searchActions={searchActions}
                                         viewPortWidth={viewPortWidth}
@@ -127,6 +126,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         rowAction={rowAction}
                                         displayType={displayType}
                                         programConfig={programConfig}
+                                        inactiveRowMessage={inactiveRowMessage}
                                     />
                                 )}
 
