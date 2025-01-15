@@ -9,7 +9,7 @@ import Text from "../text/Text";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function GroupForm(props: GroupFormProps) {
-    const { name, fields, description } = props
+    const { name, fields, description, form } = props
 
     return (
         <>
@@ -45,6 +45,7 @@ function GroupForm(props: GroupFormProps) {
                                         attribute={x}
                                         disabled={!!(x.disabled)}
                                         valueType={x.valueType}
+                                        form={form}
                                     />
                                     <span className={styles.content}>
                                         {x.content}

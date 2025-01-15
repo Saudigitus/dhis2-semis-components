@@ -4,6 +4,7 @@ interface GenericFieldsComponentProps {
     attribute: CustomAttributeProps
     disabled: boolean
     valueType: CustomAttributeProps["valueType"]
+    form: any
 }
 
 interface FormFieldsProps {
@@ -13,6 +14,7 @@ interface FormFieldsProps {
     type?: string
     optionSet?: CustomAttributeProps["options"]
     trackedEntity?: string
+    form?: any
 }
 
 interface MutlipleSelectProps {
