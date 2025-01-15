@@ -8,10 +8,8 @@ import OrgUnitTreeComponent from "./orgUnitTree";
 import style from "../mainHeader.module.css"
 
 
-const OrgUnitTreeSearch = ({ onChange, selectedOu }) => {
-    console.log("Olas",selectedOu)
+const OrgUnitTree = ({ onChange, stringQuery }) => {
     const [key, setKey] = useState<any>(undefined);
-    const [stringQuery, setStringQuery] = useRecoilState(OuQueryString);
 
     const { loading, data, error } = useDataQuery<{ orgUnits: { organisationUnits: [{ id: string, displayName: string }] } }>(
         useMemo(
@@ -21,7 +19,6 @@ const OrgUnitTreeSearch = ({ onChange, selectedOu }) => {
                     params: {
                         fields: ['organisationUnits[id,path]'],
                     },
-
                 },
             }),
             [],
@@ -100,6 +97,15 @@ const OrgUnitTreeSearch = ({ onChange, selectedOu }) => {
         />);
     };
 
+    return (
+        <>
+            {renderOrgUnitTree()}
+        </>
+    )
+}
+
+const OrgUnitTreeSearch = ({ onChange }) => {
+    const [stringQuery, setStringQuery] = useRecoilState(OuQueryString)
     const onChangeQuerySearch = (e: { value: string, name: string }) => {
         setStringQuery(e.value);
     }
@@ -111,11 +117,10 @@ const OrgUnitTreeSearch = ({ onChange, selectedOu }) => {
                     <div className={style.SimpleSearcInputContainer} >
                         <Input onChange={onChangeQuerySearch} value={stringQuery} initialFocus dense placeholder={"Search for a school"} name="input" />
                     </div>
-                    {renderOrgUnitTree()}
+                    <OrgUnitTree onChange={onChange} stringQuery={stringQuery} />
                 </div>
             </Menu>
         </div>
     )
 }
-
 export default OrgUnitTreeSearch

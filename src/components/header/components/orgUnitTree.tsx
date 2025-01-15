@@ -61,9 +61,11 @@ const OrgUnitTreeComponent = (props: OrgUnitTreeComponentProps) => {
     }
 
     if (roots.length === 0) {
-        return <Help error>
-            No organisation units to show!
-        </Help>
+        return <div style={{paddingLeft:"14px",paddingRight:"14px"}}>
+            <Help error>
+                No organisation units to show!
+            </Help>
+        </div>
     }
 
     return (

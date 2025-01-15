@@ -93,7 +93,7 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 setOpen={() => setOpenOu(!openOu)}
             >
                 <DataProvider baseUrl='http://localhost:8080'>
-                    <OrgUnitTreeSearch selectedOu={headerValues?.selectedOu} onChange={onChangeOu}/>
+                    <OrgUnitTreeSearch onChange={onChangeOu} />
                 </DataProvider>
             </SelectorBarItem>
             <SelectorBarItem
