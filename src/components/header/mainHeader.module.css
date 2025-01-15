@@ -88,7 +88,7 @@
 
 .SimpleSearcInputContainer {
     height: auto;
-    width: 100%;
+    padding: 10px 14px;
 }
 
 .ChildrenContentContainer {
@@ -97,4 +97,18 @@
     min-height: 357px;
     max-height: calc(80vh - 50px);
     overflow-y: auto;
+}
+
+.HeaderContainer{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    min-width: 100% !important;
+}
+
+.HeaderMenu li{
+    list-style: none !important;
+}
+
+.NoOPtionArea{
+    padding: 5px 15px;
 }

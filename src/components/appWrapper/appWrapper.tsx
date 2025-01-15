@@ -5,7 +5,7 @@ import useDataStore from '../../hooks/appWrapper/useDataStore';
 import useProgramConfig from '../../hooks/appWrapper/useProgramConfig';
 import { DataStoreProps } from '../../schemas/dataStore';
 import { AppWrapperProps } from '../../types/appWrapper/AppWrapperProps';
-import { DataProvider,useConfig } from '@dhis2/app-runtime';
+import { DataProvider } from '@dhis2/app-runtime';
 import { RecoilRoot } from 'recoil';
 
 const AppWrapperRaw = ({ children, dataStoreKey }: AppWrapperProps) => {
@@ -16,7 +16,6 @@ const AppWrapperRaw = ({ children, dataStoreKey }: AppWrapperProps) => {
   useEffect(() => {
     void getDataStore()
       .then(async (response: DataStoreProps) => {
-        console.log(response, "response app wrapper")
         for (let i = 0; i < response.length; i++) {
           await getProgram(response?.[i].program)
         }
@@ -26,7 +25,6 @@ const AppWrapperRaw = ({ children, dataStoreKey }: AppWrapperProps) => {
       })
   }, [])
 
-  console.log(error, "Chegou aqui")
 
   if (loading) {
     return (
@@ -57,9 +55,7 @@ const AppWrapperRaw = ({ children, dataStoreKey }: AppWrapperProps) => {
 
 
 const AppWrapper = ({ children, dataStoreKey }: AppWrapperProps) => {
-  const {baseUrl} = useConfig()
 
-  console.log(baseUrl,"dssd")
   return (
     <DataProvider baseUrl='http://localhost:8080'>
       <RecoilRoot>
