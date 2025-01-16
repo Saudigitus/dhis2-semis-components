@@ -5,6 +5,7 @@ interface GenericFieldsComponentProps {
     disabled: boolean
     valueType: CustomAttributeProps["valueType"]
     form: any
+    onInputChange: (e: any) => void
 }
 
 interface FormFieldsProps {
