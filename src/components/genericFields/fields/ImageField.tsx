@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IconUpload24, IconCross24 } from "@dhis2/ui";
 import { Button } from '@material-ui/core';
 import { Box } from '@material-ui/core';
@@ -26,6 +26,17 @@ function ImageField(props: FormFieldsProps) {
         reader.readAsDataURL(image);
 
     };
+
+    useEffect(() => {
+        if (input.value && !uploadedImage) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                setUploadedImage(reader.result);
+            };
+            reader.readAsDataURL(input?.value);
+        }
+    }, [input.value])
 
     const onRemove = () => {
         setUploadedImage("");

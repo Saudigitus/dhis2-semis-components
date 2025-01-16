@@ -1,4 +1,3 @@
-import React from 'react';
 import CheckInput from "./fields/CheckInput";
 import DateInput from "./fields/DateInput";
 import InputNumber from "./fields/InputNumber";
@@ -12,7 +11,7 @@ import { CustomAttributeProps } from "../../types/variables/AttributeColumns";
 import DateRangePicker from './fields/datepicker/improvedDateRage';
 import ImageField from './fields/ImageField';
 
-function GenericFields({ attribute, disabled, valueType, form }: GenericFieldsComponentProps) {
+function GenericFields({ attribute, disabled, valueType, form, onInputChange }: GenericFieldsComponentProps) {
   switch (valueType) {
     case Attribute.valueType.BOOLEAN as unknown as CustomAttributeProps["valueType"]:
       return <RadioButton {...attribute} disabled={disabled} />;
@@ -39,7 +38,7 @@ function GenericFields({ attribute, disabled, valueType, form }: GenericFieldsCo
       return <CheckInput {...attribute} disabled={disabled} />
 
     case Attribute.valueType.LIST as unknown as CustomAttributeProps["valueType"]:
-      return <SingleSelectField options={attribute.options} onChange={() => { }} {...attribute} disabled={attribute.disabled} />;
+      return <SingleSelectField options={attribute.options} onChange={onInputChange} {...attribute} disabled={attribute.disabled} />;
 
     case Attribute.valueType.IMAGE as unknown as CustomAttributeProps["valueType"]:
       return <ImageField disabled={disabled} {...attribute} form={form} />;
