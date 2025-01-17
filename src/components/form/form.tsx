@@ -4,7 +4,13 @@ import { ModalActions, Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "../../types/form/GroupFormProps";
 import styles from './groupform.module.css'
 
-export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons }: FormProps) {
+interface imageFieldSpecificProps {
+    storyBook: boolean
+}
+
+interface CombinedProps extends FormProps, imageFieldSpecificProps { }
+
+export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, trackedEntity }: CombinedProps) {
 
     const formActions = (pristine: boolean, form: any) => [
         {
@@ -49,6 +55,8 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                                         fields={section.fields}
                                         form={form}
                                         onInputChange={onInputChange}
+                                        trackedEntity={trackedEntity}
+                                        storyBook={storyBook}
                                     />
                                 )
                             }

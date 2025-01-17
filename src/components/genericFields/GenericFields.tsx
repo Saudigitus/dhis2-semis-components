@@ -10,8 +10,10 @@ import { type GenericFieldsComponentProps } from "../../types/form/GenericFields
 import { CustomAttributeProps } from "../../types/variables/AttributeColumns";
 import DateRangePicker from './fields/datepicker/improvedDateRage';
 import ImageField from './fields/ImageField';
+import { DataProvider } from '@dhis2/app-runtime';
 
-function GenericFields({ attribute, disabled, valueType, form, onInputChange }: GenericFieldsComponentProps) {
+function GenericFields({ attribute, disabled, valueType, form, onInputChange, storybook }: GenericFieldsComponentProps) {
+
   switch (valueType) {
     case Attribute.valueType.BOOLEAN as unknown as CustomAttributeProps["valueType"]:
       return <RadioButton {...attribute} disabled={disabled} />;
@@ -41,7 +43,17 @@ function GenericFields({ attribute, disabled, valueType, form, onInputChange }: 
       return <SingleSelectField options={attribute.options} onChange={onInputChange} {...attribute} disabled={attribute.disabled} />;
 
     case Attribute.valueType.IMAGE as unknown as CustomAttributeProps["valueType"]:
-      return <ImageField disabled={disabled} {...attribute} form={form} />;
+      return <>
+        {
+          storybook ?
+            <ImageField storyBook={storybook} disabled={disabled} {...attribute} form={form} />
+            : (
+              <DataProvider baseUrl='http://localhost:8080'>
+                <ImageField storyBook={storybook} disabled={disabled} {...attribute} form={form} />;
+              </DataProvider>
+            )
+        }
+      </>
 
     case 'DATE_RANGE' as unknown as CustomAttributeProps["valueType"]:
       return <DateRangePicker disabled={disabled} name='dateRange' />

@@ -6,6 +6,7 @@ interface GenericFieldsComponentProps {
     valueType: CustomAttributeProps["valueType"]
     form: any
     onInputChange: (e: any) => void
+    storybook?: boolean
 }
 
 interface FormFieldsProps {

@@ -78,7 +78,7 @@
     "classnames": "^2.5.1",
     "copy-files": "^0.1.0",
     "date-fns": "2.29.3",
-    "dhis2-semis-functions": "^0.0.4-alpha.22",
+    "dhis2-semis-functions": "^0.0.4-alpha.23",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "lottie-react": "^2.4.0",
