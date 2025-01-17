@@ -52,6 +52,8 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                                     description={section.description}
                                     key={i}
                                     fields={section.fields}
+                                        form={form}
+                                        onInputChange={onInputChange}
                                 />
                             )
                         }

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Label } from "@dhis2/ui";
 import WithPadding from "../template/WithPadding";
 import GenericFields from "../genericFields/GenericFields";
@@ -9,7 +8,7 @@ import Text from "../text/Text";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function GroupForm(props: GroupFormProps) {
-    const { name, fields, description } = props
+    const { name, fields, description, form, onInputChange } = props
 
     return (
         <>
@@ -45,6 +44,8 @@ function GroupForm(props: GroupFormProps) {
                                         attribute={x}
                                         disabled={!!(x.disabled)}
                                         valueType={x.valueType}
+                                        form={form}
+                                        onInputChange={onInputChange}
                                     />
                                     <span className={styles.content}>
                                         {x.content}

@@ -5,7 +5,7 @@ import { ModalProps } from "../../types/modal/ModalProps";
 import { Modal, ModalContent, ModalActions, ButtonStrip, Button, Center, CircularLoader } from "@dhis2/ui";
 
 function ModalComponent(props: ModalProps): React.ReactElement {
-  const modalRef: React.MutableRefObject<HTMLDivElement | undefined> = useRef();
+  const modalRef: React.MutableRefObject<HTMLDivElement | undefined> = useRef(null);
   const { open, title, children, handleClose, position = "middle", size = "large", isClickAway = false, actions, loading = false } = props;
 
   /*** Click away code */

@@ -1,4 +1,4 @@
-import { unknown, z } from "zod"
+import {z } from "zod"
 import { studentDataStoreSchema } from "./studentSchema";
 import { staffDataStoreSchema } from "./staffSchema";
 import { atom } from "recoil";
@@ -18,13 +18,12 @@ const cleanEmptyErrors = (obj: any): object => {
     return obj; // Retorna o objeto atualizado
 }
 
-const dataStoreSchema = z.array(
-    z.union([studentDataStoreSchema, staffDataStoreSchema])
-);
+const dataStoreSchema = z.array(studentDataStoreSchema, staffDataStoreSchema);
 
 export type DataStoreProps = z.infer<typeof dataStoreSchema>
 
 const dataStoreSchemaValidator = (dataSoreResult: unknown) => {
+
     const validationResult = dataStoreSchema.safeParse(dataSoreResult);
 
     if (!validationResult.success) {

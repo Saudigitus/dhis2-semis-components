@@ -2,9 +2,11 @@ import { useRecoilValue } from "recoil"
 import { DataStoreState } from "../../schemas/dataStore"
 
 
-const useDataStoreKey = () => {
+const useDataStoreKey = ({ sectionType }: { sectionType: "student" | "staff" }) => {
     const dataStoreValues = useRecoilValue(DataStoreState)
-    return { dataStoreValues }
+    const dataStoreKeyValues = dataStoreValues?.find((dataStore) => dataStore.key === sectionType)
+
+    return dataStoreKeyValues
 }
 
 export default useDataStoreKey

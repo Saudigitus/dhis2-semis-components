@@ -7,6 +7,13 @@ import RowTable from '../components/row/RowTable';
 import RowCell from '../components/row/RowCell';
 import TableRowActions from '../components/rowsActions/TableRowActions';
 import { getDisplayName } from '../../../utils/table/getDisplayNameByOption';
+import { checkCanceled } from '../../../utils/table/checkCanceled';
+import { checkOwnershipOu } from '../../../utils/table/checkCanceled';
+import { Attribute } from '../../../types/generated/models';
+import { formatKeyValueTypeHeader } from '../../../utils/common/formatKeyValueType';
+import { GetImageUrl } from '../../../utils/table/getImageUrl';
+import { IconButton, Tooltip } from '@mui/material';
+import { CropOriginal } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -65,19 +72,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function RenderRows(props: RenderRowsProps): React.ReactElement {
     const classes = useStyles()
+    const { imageUrl } = GetImageUrl()
     const {
         headerData,
         rowsData = [],
         searchActions,
         loading,
         viewPortWidth,
-        isInactive,
-        isOwnershipOu,
+        selectedOU,
         showEnrollments,
         showRowActions,
         rowAction,
         displayType,
-        programConfig
+        programConfig,
+        inactiveRowMessage
     } = props;
 
     if (rowsData?.length === 0 && !loading) {
@@ -103,8 +111,9 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                         {viewPortWidth > 520 ?
                             <RowTable
                                 key={index}
-                                inactive={isInactive}
-                                isOwnershipOu={isOwnershipOu}
+                                inactive={checkCanceled(row.status)}
+                                title={inactiveRowMessage}
+                                isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
                                 className={classNames(classes.row, classes.dataRow, (searchActions && showEnrollments) ? classes.dataRowCollapsed : null)}
                             >
                                 {
@@ -113,11 +122,19 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                             key={column.id}
                                             className={classNames(classes.cell, classes.bodyCell)}
                                         >
-                                            <div>
-                                                {
-                                                    getDisplayName({ metaData: column.id, value: row[column.id], program: programConfig })
-                                                }
-                                            </div>
+                                            {
+                                                formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
+                                                    <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity })} target='_blank'>
+                                                        {row[column.id] &&
+                                                            <Tooltip title="Click to open in new tab" >
+                                                                <IconButton> <CropOriginal /></IconButton>
+                                                            </Tooltip>
+                                                        }
+                                                    </a>
+                                                    : <div>
+                                                        {getDisplayName({ metaData: column.id, value: row[column.id], program: programConfig })}
+                                                    </div>
+                                            }
                                         </RowCell>
                                     ))
                                 }
@@ -129,7 +146,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                     >
                                         <TableRowActions
                                             actions={rowAction}
-                                            disabled={isInactive}
+                                            disabled={checkCanceled(row.status)}
                                             loading={loading!}
                                             displayType={displayType}
                                         />
@@ -138,14 +155,15 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                             </RowTable>
                             :
                             <MobileRow
+                                title={inactiveRowMessage}
                                 row={row}
                                 header={headerData}
-                                inactive={isInactive}
-                                isOwnershipOu={isOwnershipOu}
+                                inactive={checkCanceled(row.status)}
+                                isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
                                 actions={
                                     <TableRowActions
                                         actions={rowAction}
-                                        disabled={isInactive}
+                                        disabled={checkCanceled(row.status)}
                                         loading={loading!}
                                         displayType={displayType}
                                     />

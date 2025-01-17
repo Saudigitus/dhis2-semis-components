@@ -4,7 +4,6 @@ import SingleSelectField from "./components/genericFields/fields/SingleSelect"
 import MainHeader from "./components/header/mainHeader"
 import InfoPage from "./components/info/InfoPage"
 import SideBar from "./components/layout/sidebar/SideBar"
-import CustomForm from './components/form/form'
 import ModalComponent from "./components/modal/Modal"
 import SummaryCard from "./components/summaryCard/summaryCard"
 import Pagination from "./components/table/components/pagination/Pagination"
@@ -25,8 +24,8 @@ import { DataStoreProps } from "./schemas/dataStore"
 import { ProgramConfig } from "./schemas/programSchema"
 import DataExporter from "./components/bulk/bulkExport/DataExporter"
 import DataImporter from "./components/bulk/bulkImport/dataImporter"
-import SemisHeader from "./components/header/semisHeader"
-
+import CustomForm from "./components/form/form"
+import SemisHeader from "./components/header/semis"
 export {
     VariablesTypes,  
 }
@@ -42,10 +41,9 @@ export type {
 }
 
 export {
-    SemisHeader,
-    CustomForm,
     Table,
     SingleSelectField,
+    CustomForm,
     DashboardCard,
     SummaryCard,
     DropZone,
@@ -64,5 +62,6 @@ export {
     useDataStoreKey,
     useProgramsKeys,
     DataExporter,
-    DataImporter
+    DataImporter,
+    SemisHeader
 }

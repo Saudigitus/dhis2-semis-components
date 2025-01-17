@@ -4,6 +4,8 @@ interface GroupFormProps {
     name: string
     description?: string
     fields: CustomAttributeProps[]
+    form?: any
+    onInputChange?: (e: any) => void
 }
 
 interface FormProps {

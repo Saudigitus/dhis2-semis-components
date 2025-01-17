@@ -18,7 +18,7 @@ const attendanceSchema = z.object({
 const defaultsSchema = z.object({
     allowSearching: z.boolean(),
     currentAcademicYear: z.string(),
-    defaultOrder: z.string()
+    defaultOrder: z.string().optional()
 });
 
 const filterElementSchema = z.object({
@@ -63,7 +63,7 @@ const transferSchema = z.object({
     destinySchool: z.string(),
     programStage: z.string(),
     status: z.string(),
-    key: z.string(),
+    key: z.string().optional(),
     statusOptions: z.array(transferStatusOptionSchema)
 });
 
@@ -71,9 +71,10 @@ export const studentDataStoreSchema = z.object({
     attendance: attendanceSchema,
     defaults: defaultsSchema,
     filters: filtersSchema,
-    "final-result": finalResultSchema,
+    key: z.string(),
+    "final-result": finalResultSchema.optional(),
     lastUpdate: z.string(),
-    performance: performanceSchema,
+    performance: performanceSchema.optional(),
     program: z.string(),
     registration: registrationSchema,
     "socio-economics": socioEconomicsSchema,
