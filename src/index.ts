@@ -18,7 +18,6 @@ import { Attribute } from "./types/generated/models"
 import { VariablesTypes, CustomAttributeProps, OptionsProps } from "./types/variables/AttributeColumns"
 import { GroupFormProps, FormProps } from "./types/form/GroupFormProps"
 import { AppWrapper } from "./components/appWrapper/appWrapper"
-import useDataStoreKey from "./hooks/appWrapper/useDataStoreKey"
 import useProgramsKeys from "./hooks/appWrapper/useProgramsKeys"
 import { DataStoreProps } from "./schemas/dataStore"
 import { ProgramConfig } from "./schemas/programSchema"
@@ -59,7 +58,6 @@ export {
     WithBorder,
     WithPadding,
     AppWrapper,
-    useDataStoreKey,
     useProgramsKeys,
     DataExporter,
     DataImporter,
