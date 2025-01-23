@@ -5,7 +5,7 @@ import { DataProvider } from "@dhis2/app-runtime"
 import { OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
 import { MenuSelect } from './common/common'
 import { RecoilRoot, useRecoilState } from 'recoil'
-import { HeaderValuesState } from '../../schemas/headerDataSchema'
+import { HeaderValuesState, stateEmitter } from '../../schemas/headerDataSchema'
 import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
@@ -28,6 +28,7 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
             selectedGrade: headerItems?.grades?.options?.filter((option: OptionProps) => option.value === grade)?.[0] as OptionProps,
             selectedOu: { displayName: schoolName, id: school, selected: [] }
         })
+        stateEmitter.emit('stateChange', headerValues);
     }, [useQuery()])
 
     const onChangeGrade = (event) => {

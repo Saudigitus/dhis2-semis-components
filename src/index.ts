@@ -25,6 +25,11 @@ import DataExporter from "./components/bulk/bulkExport/DataExporter"
 import DataImporter from "./components/bulk/bulkImport/dataImporter"
 import CustomForm from "./components/form/form"
 import SemisHeader from "./components/header/semis"
+import useHeaderKey from "./hooks/header/useHeaderValues"
+import {HeaderValuesState} from "./schemas/headerDataSchema"
+import {stateEmitter} from "./schemas/headerDataSchema"
+
+
 export {
     VariablesTypes,  
 }
@@ -40,6 +45,9 @@ export type {
 }
 
 export {
+    HeaderValuesState,
+    stateEmitter,
+    useHeaderKey,
     Table,
     SingleSelectField,
     CustomForm,
