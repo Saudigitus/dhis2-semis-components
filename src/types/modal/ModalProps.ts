@@ -15,6 +15,14 @@ interface ModalActionButtonType extends ButtonProps {
     name?: string
 }
 
+export interface ModalSearchTemplateProps {
+    setOpen: (value: boolean) => void
+    sectionName: string
+    setOpenNewEnrollment: (value: boolean) => void
+    //TODO importar from types
+    programConfig:
+}
+
 /**
  * Modal component interface.
  * @interface ModalProps

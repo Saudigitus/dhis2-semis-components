@@ -68,7 +68,7 @@ interface ActiveFilterButtonProps {
     onChange: () => void
     iconClass: any
     title: string
-    arrowIconElement: React.ReactElement
+    arrowIconElement
     buttonText: string
     onClear: () => void
     innerRef: (instance: HTMLDivElement | null) => void

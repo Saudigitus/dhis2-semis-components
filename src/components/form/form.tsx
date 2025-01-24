@@ -6,9 +6,9 @@ import { Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "../../types/form/GroupFormProps";
 import styles from './groupform.module.css'
 
-interface IForm extends Record<string, any> {}
+interface IForm extends Record<string, any> { }
 
-export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons }: FormProps) {
+export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel }: FormProps) {
     const formRef: React.MutableRefObject<FormApi<IForm, Partial<IForm>>> = useRef(null);
 
     const formActions = (pristine: boolean, form: any) => [
@@ -16,8 +16,11 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
             id: "cancel",
             type: "reset",
             label: "Cancel",
-            disabled: false,
-            onClick: () => { form.reset },
+            disabled: loading,
+            onClick: () => {
+                if (typeof onCancel != undefined) onCancel()
+                else form.reset
+            },
             secondary: true
         }, {
             id: "continue",
@@ -52,8 +55,8 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                                     description={section.description}
                                     key={i}
                                     fields={section.fields}
-                                        form={form}
-                                        onInputChange={onInputChange}
+                                    form={form}
+                                    onInputChange={onInputChange}
                                 />
                             )
                         }

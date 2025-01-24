@@ -71,6 +71,24 @@ interface FormProps {
      * @type {?boolean}
      */
     withButtons?: boolean
+
+    /**
+    * what happens after cancel?
+    * 
+    * Send you custom form, but default ir resets the form
+    *
+    * @type {?boolean}
+    */
+    onCancel?: () => void
+
+    /**
+   * Your custom label form the "blue" button that submites the form
+   * 
+   * by default, the label is "Submit"
+   *
+   * @type {?boolean}
+   */
+    submitButtonLabel?: string
 }
 
 export type { GroupFormProps, FormProps }
