@@ -1,6 +1,5 @@
 import { format } from "date-fns"
-import { ProgramConfig } from "../../../../types/programConfig/ProgramConfig"
-import { DataStoreRecord } from "../../../../types/dataStore/DataStoreConfig"
+import { selectedDataStoreKey, ProgramConfig } from 'dhis2-semis-types';
 
 export function generateEventObjects(programStages: string[], data: any, programConfig: ProgramConfig) {
     let events: any = []
@@ -34,7 +33,7 @@ export function generateEventObjects(programStages: string[], data: any, program
     return { events }
 }
 
-export function generateAttendanceEventObjects(programStages: string[], data: any, dataStore: DataStoreRecord) {
+export function generateAttendanceEventObjects(programStages: string[], data: any, dataStore: selectedDataStoreKey) {
     let attendanceEvents: any = []
 
     for (const student of data) {

@@ -1,9 +1,9 @@
-import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns';
+import { CustomAttributeProps, VariablesTypes } from 'dhis2-semis-types';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
 import RenderHeader from '../../components/table/render/RenderHeader';
-import { Attribute } from '../../types/generated/models';
+import { Attribute } from "dhis2-semis-types";
 
 const headerColumns = [
   {

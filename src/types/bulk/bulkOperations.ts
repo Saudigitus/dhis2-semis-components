@@ -1,5 +1,4 @@
-import { DataStoreRecord } from "../dataStore/DataStoreConfig"
-import { ProgramConfig } from "../programConfig/ProgramConfig"
+import { selectedDataStoreKey, ProgramConfig } from 'dhis2-semis-types';
 
 /**
  * Description placeholder
@@ -18,7 +17,7 @@ interface ExportData {
      * Error handler
      */
     onError: (args: string) => void
-    
+
     /**
      * Base url for dhis2 data provider
      */
@@ -97,9 +96,9 @@ interface ExportData {
     /**
      * Settings saved at data store
      *
-     * @type {DataStoreRecord}
+     * @type {selectedDataStoreKey}
      */
-    selectedSectionDataStore: DataStoreRecord
+    selectedSectionDataStore: selectedDataStoreKey
 
     /**
     * Program configurations
@@ -129,7 +128,7 @@ interface ExportData {
 
 interface GenerateHeaders {
     stagesToExport: string[]
-    selectedSectionDataStore: DataStoreRecord
+    selectedSectionDataStore: selectedDataStoreKey
     withSocioEconomics: boolean
     programConfig: ProgramConfig
     sectionType: string
@@ -224,7 +223,7 @@ interface importData {
     /**
      * Data store configuration for SEMIS
      */
-    selectedSectionDataStore: DataStoreRecord
+    selectedSectionDataStore: selectedDataStoreKey
 
     /**
      * the selected organization unit at header filters

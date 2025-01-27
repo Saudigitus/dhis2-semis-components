@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './HeaderFilters.module.css'
-import { CustomAttributeProps } from "../../../../types/variables/AttributeColumns";
+import { type CustomAttributeProps } from 'dhis2-semis-types'
 import ConfigTableColumns from "../configTableColumns/ConfigTableColumns";
 import EnrollmentFilters from "../../../filters/enrollment/EnrollmentFilters";
 

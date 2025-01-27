@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import SDCustomForm from "../../components/form/form";
-import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns';
+import { CustomAttributeProps, VariablesTypes } from 'dhis2-semis-types';
 // import { fn } from '@storybook/test';
 
 const meta = {
