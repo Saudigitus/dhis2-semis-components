@@ -21,8 +21,9 @@ import DataImporter from "./components/bulk/bulkImport/dataImporter"
 import CustomForm from "./components/form/form"
 import SemisHeader from "./components/header/semis"
 import useHeaderKey from "./hooks/header/useHeaderValues"
-import {HeaderValuesState} from "./schemas/headerDataSchema"
-import {stateEmitter} from "./schemas/headerDataSchema"
+import { HeaderValuesState } from "./schemas/headerDataSchema"
+import { stateEmitter } from "./schemas/headerDataSchema"
+import ModalSearchEnrollmentContent from "./components/searchEnrollment/ModalSearchEnrollmentContent"
 
 export {
     HeaderValuesState,
@@ -49,5 +50,6 @@ export {
     useProgramsKeys,
     DataExporter,
     DataImporter,
-    SemisHeader
+    SemisHeader,
+    ModalSearchEnrollmentContent
 }

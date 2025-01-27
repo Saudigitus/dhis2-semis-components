@@ -2,8 +2,8 @@ import { useRef } from "react";
 import { Form } from "react-final-form";
 import { FormApi } from "final-form"
 import GroupForm from "../form/GroupForm";
-import { Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
-import { type FormProps } from "../../types/form/GroupFormProps";
+import {  Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
+import { type FormProps } from "dhis2-semis-types";
 import styles from './groupform.module.css'
 
 interface IForm extends Record<string, any> { }

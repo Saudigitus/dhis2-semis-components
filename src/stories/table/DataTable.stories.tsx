@@ -1,13 +1,13 @@
 import React from "react";
-import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns';
+import { CustomAttributeProps, VariablesTypes } from 'dhis2-semis-types';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Attribute } from '../../types/generated/models';
+import { Attribute } from "dhis2-semis-types";
 import Table from '../../components/table/render/Table';
 import { RowActionsType } from '../../types/table/TableRowActionsProps';
 import { IconEdit24, IconDelete24, IconCheckmarkCircle24 } from "@dhis2/ui";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-select/dist/react-select.css";
-import { ProgramConfig } from "../../types/programConfig/ProgramConfig";
+import { ProgramConfig } from "dhis2-semis-types";
 
 const rowsActions: RowActionsType[] = [
   { icon: <IconEdit24 />, color: '#277314', label: `Edition`, disabled: true, loading: false, onClick: () => { alert("Edition") } },

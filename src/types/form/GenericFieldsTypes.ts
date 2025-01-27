@@ -1,4 +1,4 @@
-import { CustomAttributeProps, OptionsProps } from "../variables/AttributeColumns"
+import { CustomAttributeProps, OptionsProps } from "dhis2-semis-types"
 
 interface GenericFieldsComponentProps {
     attribute: CustomAttributeProps

@@ -6,13 +6,10 @@ import { GroupedSearchableAttributesTypes } from '../../types/variables/GroupedS
 export default function useGetSearchEnrollmentForm({ programConfig }) {
     const [searchEnrollmentFields, setSearchEnrollmentFields] = useState<GroupedSearchableAttributesTypes[]>([])
 
-    //TODO import it from semis functions lib
-    const { getDataStoreData } = getSelectedKey()
-
     const buildSearhForm = () => {
-        if (Object.keys(getDataStoreData)?.length && program !== undefined) {
+        if (programConfig !== undefined) {
 
-            const formSearchableAttributes = formatResponseAttributes(program).filter((element) => element.unique === true || element.searchable === true).map((el) => { return { ...el, disabled: false, required: false } })
+            const formSearchableAttributes = formatResponseAttributes(programConfig).filter((element) => element.unique === true || element.searchable === true).map((el) => { return { ...el, disabled: false, required: false } })
 
             setSearchEnrollmentFields(groupAttributes(formSearchableAttributes))
         }

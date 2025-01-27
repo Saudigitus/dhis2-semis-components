@@ -5,7 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useState } from 'react'
 import { Button } from 'react-bootstrap';
-import { type CustomAttributeProps } from '../../../../types/variables/AttributeColumns';
+import { type CustomAttributeProps } from 'dhis2-semis-types'
 import { useEffect } from 'react'
 import DragDropList from '../../../drag&drop/DragDropList';
 

@@ -1,6 +1,6 @@
 import { ExportData } from "../../../types/bulk/bulkOperations";
 import { formatSheetData } from "../../../utils/format/formatSheetData";
-import { DataStoreRecord } from "../../../types/dataStore/DataStoreConfig";
+import { selectedDataStoreKey } from 'dhis2-semis-types';
 import { getMetaData } from '../../../utils/excelMetadata/getMetadata';
 import { generateHeaders } from './excelHeaders/generateExcelHeaders';
 import { getCommonSheetData } from './useGetCommonData/commonData';
@@ -82,7 +82,7 @@ export function useExportData(props: ExportData) {
                                         module: module,
                                         stageId: stagesToExport[a],
                                         events: events,
-                                        dataStore: selectedSectionDataStore as unknown as DataStoreRecord
+                                        dataStore: selectedSectionDataStore as unknown as selectedDataStoreKey
                                     })
                                 }
 

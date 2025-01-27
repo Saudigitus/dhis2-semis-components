@@ -1,5 +1,5 @@
-import { GroupFormProps } from "../../types/form/GroupFormProps";
-//TODO import VariablesTypes from types
+import { VariablesTypes, GroupFormProps } from 'dhis2-semis-types'
+
 const staticForm = () => {
   return {
     registeringSchool: {
@@ -50,9 +50,9 @@ function formFields(variablesData: any[], sectionName: string): GroupFormProps[]
 
   return [
     {
-        name: "",
-        description: "",
-        fields: variablesData
+      name: "",
+      description: "",
+      fields: variablesData
     }
   ];
 }

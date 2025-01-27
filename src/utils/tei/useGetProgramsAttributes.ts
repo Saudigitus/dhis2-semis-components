@@ -1,9 +1,8 @@
-import { formatResponseTEI } from "../../utils/tei/formatResponseAttributes";
 import { CustomAttributeProps, VariablesTypes } from "../../types/variables/AttributeColumns";
-import { Attribute } from "../../types/generated/models";
+import { ProgramConfig, Attribute } from 'dhis2-semis-types'
+import { formatResponseTEI } from "./formatResponseAttributes";
 
-//TODO import it from types
-function useGetProgramsAttributes({programConfig}) {
+function useGetProgramsAttributes({ programConfig }: { programConfig: ProgramConfig }) {
 
     const staticHeaders: CustomAttributeProps[] = [
         {
@@ -45,8 +44,8 @@ function useGetProgramsAttributes({programConfig}) {
     ]
 
     return {
-        teiAttributes: formatResponseTEI(programconfig),
-        searchableAttributes: formatResponseTEI(programconfig)?.filter((attr) => attr?.unique === true || attr.searchable === true).concat(staticHeaders),
+        teiAttributes: formatResponseTEI(programConfig),
+        searchableAttributes: formatResponseTEI(programConfig)?.filter((attr) => attr?.unique === true || attr.searchable === true).concat(staticHeaders),
     }
 }
 export { useGetProgramsAttributes }

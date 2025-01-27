@@ -4,14 +4,13 @@ import useShowAlerts from '../common/useShowAlert';
 import { formatResponseData } from '../../utils/tei/formatResponseData';
 import { useGetTei } from './useGetTei';
 import { attributes } from '../../utils/format/formatData';
+import { useDataStoreKey } from 'dhis2-semis-functions'
 
-export default function useSearchEnrollments() {
+export default function useSearchEnrollments({ sectionType }: { sectionType: "staff" | "student" }) {
     const { getTeiSearch } = useGetTei()
     const { getEvents } = useGetEvents()
     const { show } = useShowAlerts()
-
-    //TODO import it from semis functions
-    const { registration, program, socioEconomics } = getDataStoreKeys()
+    const { registration, program, "socio-economics": socioEconomics } = useDataStoreKey({ sectionType: sectionType })
     const [enrollmentValues, setEnrollmentValues] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)

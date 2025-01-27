@@ -50,7 +50,7 @@ interface Filters {
     dataElements: filterItem[]
 }
 
-interface DataStoreRecord {
+interface DataStoreProps {
     attendance: Attendance
     key: string
     trackedEntityType: string
@@ -65,4 +65,4 @@ interface DataStoreRecord {
     defaults: Defaults
 }
 
-export type {DataStoreRecord, Transfer, Registration, Performance, Attendance, SimpleProgramStage, Filters, filterItem}
+export type { DataStoreProps, Transfer, Registration, Performance, Attendance, SimpleProgramStage, Filters, filterItem }

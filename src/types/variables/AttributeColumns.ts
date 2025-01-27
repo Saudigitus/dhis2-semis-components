@@ -1,4 +1,5 @@
-import { type Attribute } from '../generated';
+import { Attribute } from "dhis2-semis-types";
+import { OptionsProps } from "dhis2-semis-types"
 
 export enum VariablesTypes {
     DataElement = "dataElement",
@@ -47,11 +48,6 @@ export interface CustomAttributeProps {
     value?: string
     class?: string
     initialOptions?: any
-}
-
-export interface OptionsProps {
-    value: string
-    label: string
 }
 
 export interface AttendanceOptionsProps {

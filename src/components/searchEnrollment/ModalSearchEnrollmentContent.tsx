@@ -1,42 +1,31 @@
 import React, { useState } from "react";
-import { ModalActions, Button, ButtonStrip, Label, NoticeBox } from "@dhis2/ui";
+import { NoticeBox } from "@dhis2/ui";
 import styles from "./modal.module.css"
 import { Collapse } from "@material-ui/core";
 import WithBorder from "../template/WithBorder";
-import { makeStyles } from "@material-ui/core";
-import { useRecoilState } from "recoil";
-import { SearchInitialValues } from "../../schema/searchInitialValues";
 import WithPadding from "../template/WithPadding";
 import { IconButton } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import { CustomAttributeProps } from "../../types/variables/AttributeColumns";
-import classNames from "classnames";
 import CustomForm from "../form/form";
-import { useUrlParams } from 'dhis2-semis-functions'
+import { useUrlParams, useDataStoreKey } from 'dhis2-semis-functions'
 import useGetSearchEnrollmentForm from "../../hooks/enrollmentSearch/useGetSearchEnrollmentForm";
 import { ModalSearchTemplateProps } from '../../types/modal/ModalProps'
 import { useGetProgramsAttributes } from "../../utils/tei/useGetProgramsAttributes";
 import { formFields } from "../../utils/constants/searchEnrollmentForm";
 import { getRecentEnrollment } from "../../utils/tei/getRecentEnrollment";
-import useViewportWidth from "../../hooks/common/useViewPort";
 import useSearchEnrollments from "../../hooks/tei/useSearchEnrollments";
 import Table from "../table/render/Table";
-
-const usetStyles = makeStyles({
-  tableContainer: {
-    overflowX: 'auto'
-  }
-});
+import ModalComponent from "../modal/Modal";
 
 function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
-  const { setOpen, sectionName, setOpenNewEnrollment, programConfig } = props;
+  const { sectionName, setOpenNewEnrollment, programConfig, open, setOpen } = props;
   const { searchEnrollmentFields } = useGetSearchEnrollmentForm({ programConfig });
-  //TODO import from functions
-  const { registration } = getDataStoreKeys()
+  const { registration } = useDataStoreKey({ sectionType: sectionName })
   const [showResults, setShowResults] = useState<boolean>(false)
   const { teiAttributes, searchableAttributes } = useGetProgramsAttributes({ programConfig });
-  const { enrollmentValues, setEnrollmentValues, loading, getEnrollmentsData } = useSearchEnrollments()
-  const [, setInitialValues] = useRecoilState(SearchInitialValues)
+  const { enrollmentValues, setEnrollmentValues, loading, getEnrollmentsData } = useSearchEnrollments({ sectionType: sectionName })
+  // const [, setInitialValues] = useRecoilState(SearchInitialValues)
   const [collapseAttributes, setCollapseAttributes] = useState(0)
   const { urlParameters } = useUrlParams();
   const { school: orgUnit, schoolName: orgUnitName, academicYear } = urlParameters();
@@ -108,7 +97,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   }
 
   const onHandleRegisterNew = async () => {
-    setInitialValues(filterUniqueVariables());
+    // setInitialValues(filterUniqueVariables());
     setOpen(false);
     setOpenNewEnrollment(true);
   };
@@ -116,100 +105,90 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   const onReset = () => {
     setQueryForm({});
     setEnrollmentValues([]);
-    setInitialValues({})
+    // setInitialValues({})
     setShowResults(false);
   };
 
   const modalActions = [
-    { id: "cancel", type: "button", label: "Cancel", small: true, disabled: false, onClick: () => { setOpen(false) } },
-    { id: "continue", label: "Register new", success: "success", small: true, disabled: loading, onClick: () => { onHandleRegisterNew() } }
+    { id: "cancel", small: true, name: "Cancel", disabled: false, primary: true, onClick: () => { setOpen(false) } },
+    { id: "continue", name: "Register new", color: "gray", small: true, disabled: loading, onClick: () => { onHandleRegisterNew() } },
   ];
+
 
   const onSelectTei = (teiData: any) => {
     const recentEnrollment = getRecentEnrollment(teiData.enrollments).enrollment
     const recentRegistration = teiData.registrationEvents?.find((event: any) => event.enrollment === recentEnrollment)
     const recentSocioEconomics = teiData.socioEconomicsEvents?.find((event: any) => event.enrollment === recentEnrollment)
 
-    setInitialValues({
-      trackedEntity: teiData.trackedEntity,
-      ...teiData?.mainAttributesFormatted,
-      ...recentRegistration,
-      ...recentSocioEconomics,
-      [registration.academicYear]: academicYear
-    })
+    // setInitialValues({
+    //   trackedEntity: teiData.trackedEntity,
+    //   ...teiData?.mainAttributesFormatted,
+    //   ...recentRegistration,
+    //   ...recentSocioEconomics,
+    //   [registration.academicYear]: academicYear
+    // })
 
     setOpenNewEnrollment(true)
     setOpen(false);
   }
 
   return (
-    <div>
-      <Label className={styles.modalLabel}>Fill in at least 1 attribute to search.</Label>
-      <br />
+    <ModalComponent
+      title="Fill in at least 1 attribute to search."
+      actions={modalActions}
+      handleClose={() => setOpen(false)}
+      open={open}
+      size="medium"
+      isClickAway={false}
+      showActions={showResults}
+      children={
+        <div>
+          {searchEnrollmentFields?.map((group, index) => (
+            <div className="mb-3">
+              <WithBorder type="all">
+                <div className={styles.accordionHeaderContainer} onClick={() => setCollapseAttributes(index === collapseAttributes ? -1 : index)}>
+                  <label className={styles.accordionHeader}>Search by {group?.name}</label>
+                  <IconButton size="small" onClick={() => setCollapseAttributes(index)}> {collapseAttributes === index ? <ExpandLess /> : <ExpandMore />}  </IconButton>
+                </div>
 
-      {searchEnrollmentFields?.map((group, index) => (
-        <div className="mb-3">
-          <WithBorder type="all">
-            <div className={styles.accordionHeaderContainer} onClick={() => setCollapseAttributes(index === collapseAttributes ? -1 : index)}>
-              <label className={styles.accordionHeader}>Search by {group?.name}</label>
-              <IconButton size="small" onClick={() => setCollapseAttributes(index)}> {collapseAttributes === index ? <ExpandLess /> : <ExpandMore />}  </IconButton>
-            </div>
-
-            <Collapse in={collapseAttributes === index}>
-              <WithBorder type="top">
-                <WithPadding>
-                  <CustomForm
-                    formFields={formFields(group?.variables, sectionName)}
-                    initialValues={{ ...initialValues, orgUnit, ...queryForm }}
-                    onFormSubtmit={onHandleSubmit}
-                    onInputChange={onHandleChange}
-                    onCancel={onReset}
-                    submitButtonLabel={`Search ${sectionName.toLocaleLowerCase()}`}
-                  />
-                </WithPadding>
+                <Collapse in={collapseAttributes === index}>
+                  <WithBorder type="top">
+                    <WithPadding>
+                      <CustomForm
+                        formFields={formFields(group?.variables, sectionName)}
+                        initialValues={{ ...initialValues, orgUnit, ...queryForm }}
+                        onFormSubtmit={onHandleSubmit}
+                        onInputChange={onHandleChange}
+                        onCancel={onReset}
+                        submitButtonLabel={`Search ${sectionName.toLocaleLowerCase()}`}
+                      />
+                    </WithPadding>
+                  </WithBorder>
+                </Collapse>
               </WithBorder>
-            </Collapse>
-          </WithBorder>
-        </div>
+            </div>
+          ))}
 
-      ))}
-
-      <Collapse in={showResults} style={{}}>
-        <>
-          {enrollmentValues?.length ?
-            <div className="">
-              <Table
-                columns={searchableAttributes}
-                programConfig={programConfig}
-                tableData={enrollmentValues}
-                totalElements={10}
-                title={`Results found for ${sectionName} search<`}
-              />
-            </div> :
-            <NoticeBox className={styles.noticeBox} title={`No ${sectionName} found`}>
-              Continue serching or click <strong>'Register new'</strong> if you want to register as a new <strong>{sectionName}</strong>.
-            </NoticeBox>}
-        </>
-      </Collapse>
-      {showResults ? <ModalActions>
-        <div className={styles.modalSearchActions}>
-          {enrollmentValues.length ? <small>If none of the matches above is the {sectionName} you are searching for, click 'Register new'.</small> : <small></small>}
-          <ButtonStrip end className={classNames(styles.modalButtonsStrip)}>
-            {modalActions.map((action, i) => {
-              return (
-                <Button
-                  key={i}
-                  {...action}
-                  className={styles.modalButtons}
-                >
-                  {action.label}
-                </Button>
-              )
-            })}
-          </ButtonStrip>
-        </div>
-      </ModalActions> : null}
-    </div >
+          <Collapse in={showResults} style={{}}>
+            <>
+              {enrollmentValues?.length ?
+                <div className="">
+                  <Table
+                    columns={searchableAttributes}
+                    programConfig={programConfig}
+                    tableData={enrollmentValues}
+                    totalElements={10}
+                    title={`Results found for ${sectionName} search<`}
+                  />
+                </div> :
+                <NoticeBox className={styles.noticeBox} title={`No ${sectionName} found`}>
+                  Continue serching or click <strong>'Register new'</strong> if you want to register as a new <strong>{sectionName}</strong>.
+                </NoticeBox>}
+            </>
+          </Collapse>
+        </div >
+      }
+    />
   )
 }
 

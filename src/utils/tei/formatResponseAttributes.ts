@@ -1,9 +1,10 @@
-import { VariablesTypes, ProgramConfig, CustomAttributeProps, Attribute } from 'dhis2-semis-types'
+import { Attribute } from "../../types/generated/models";
+import { CustomAttributeProps, VariablesTypes, ProgramConfig } from "dhis2-semis-types";
 
-export function formatResponseAttributes(attributes: ProgramConfig): CustomAttributeProps[] {
+export function formatResponseTEI(attributes: ProgramConfig): CustomAttributeProps[] {
     if (!attributes) return [];
 
-    return attributes?.programTrackedEntityAttributes?.map((trackedEntityAttribute: any) => (
+    return attributes.programTrackedEntityAttributes.map(trackedEntityAttribute => (
         {
             required: trackedEntityAttribute?.mandatory,
             name: trackedEntityAttribute?.trackedEntityAttribute?.id,
@@ -28,5 +29,5 @@ export function formatResponseAttributes(attributes: ProgramConfig): CustomAttri
             unique: trackedEntityAttribute?.trackedEntityAttribute?.unique,
             assignedValue: undefined
         }
-    )) as CustomAttributeProps[];
+    ));
 }

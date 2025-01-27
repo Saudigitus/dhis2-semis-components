@@ -1,5 +1,5 @@
 import { ButtonProps } from "@dhis2/ui"
-
+import { ProgramConfig } from 'dhis2-semis-types'
 /**
  * Modal action buttons interface. It extends ButtonProps from @dhis2/ui and adds a new props as color.
  * @interface ModalActionButtonType
@@ -17,10 +17,10 @@ interface ModalActionButtonType extends ButtonProps {
 
 export interface ModalSearchTemplateProps {
     setOpen: (value: boolean) => void
-    sectionName: string
+    sectionName: "student" | "staff"
     setOpenNewEnrollment: (value: boolean) => void
-    //TODO importar from types
-    programConfig:
+    programConfig: ProgramConfig
+    open: boolean
 }
 
 /**
@@ -74,6 +74,10 @@ interface ModalProps {
      * @type {?boolean}
      */
     loading?: boolean
+    /**
+   * A variable to choose of you want to show actions or not
+   */
+    showActions?: boolean
 }
 
 export type { ModalProps }

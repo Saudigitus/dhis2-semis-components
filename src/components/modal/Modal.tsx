@@ -6,7 +6,7 @@ import { Modal, ModalContent, ModalActions, ButtonStrip, Button, Center, Circula
 
 function ModalComponent(props: ModalProps): React.ReactElement {
   const modalRef: React.MutableRefObject<HTMLDivElement | undefined> = useRef(null);
-  const { open, title, children, handleClose, position = "middle", size = "large", isClickAway = false, actions, loading = false } = props;
+  const { showActions = true, open, title, children, handleClose, position = "middle", size = "large", isClickAway = false, actions, loading = false } = props;
 
   /*** Click away code */
   useEffect(() => {
@@ -55,7 +55,7 @@ function ModalComponent(props: ModalProps): React.ReactElement {
                   <>
                     <ModalContent>{children}</ModalContent>
                     {
-                      actions?.length ?
+                      (actions?.length && showActions) ?
                         <ModalActions>
                           <ButtonStrip end className={styles.modalButtonsStrip}>
                             {

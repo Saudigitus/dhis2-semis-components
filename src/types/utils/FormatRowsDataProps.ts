@@ -1,4 +1,4 @@
-import { ProgramConfig } from "../programConfig/ProgramConfig"
+import { ProgramConfig } from "dhis2-semis-types";
 
 interface defaultProps {
     metaData: string
