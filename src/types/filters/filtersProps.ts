@@ -1,4 +1,4 @@
-import { CustomAttributeProps } from "../variables/AttributeColumns"
+import { type CustomAttributeProps } from 'dhis2-semis-types'
 
 /**
  * Description placeholder

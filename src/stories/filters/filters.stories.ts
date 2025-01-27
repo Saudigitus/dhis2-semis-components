@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import EnrollmentFilters from '../../components/filters/enrollment/EnrollmentFilters';
-import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns';
+import { CustomAttributeProps, VariablesTypes } from 'dhis2-semis-types';
 
 const meta = {
     title: 'Table/Filters',

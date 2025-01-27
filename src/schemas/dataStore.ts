@@ -1,7 +1,8 @@
-import {z } from "zod"
+import { z } from "zod"
 import { studentDataStoreSchema } from "./studentSchema";
 import { staffDataStoreSchema } from "./staffSchema";
 import { atom } from "recoil";
+import { DataStoreProps } from 'dhis2-semis-types'
 
 const cleanEmptyErrors = (obj: any): object => {
     if (Array.isArray(obj)) {
@@ -19,8 +20,6 @@ const cleanEmptyErrors = (obj: any): object => {
 }
 
 const dataStoreSchema = z.array(studentDataStoreSchema, staffDataStoreSchema);
-
-export type DataStoreProps = z.infer<typeof dataStoreSchema>
 
 const dataStoreSchemaValidator = (dataSoreResult: unknown) => {
 

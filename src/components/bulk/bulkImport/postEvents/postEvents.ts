@@ -3,7 +3,7 @@ import useUploadEvents from "../../../../hooks/events/useUploadEvents";
 import { splitArrayIntoChunks } from "../../../../utils/common/splitArray";
 import { importData, importStrategy } from "../../../../types/bulk/bulkOperations";
 import { importSummary } from "../../../../utils/common/getImportSummary";
-import { ProgramConfig } from "../../../../types/programConfig/ProgramConfig";
+import { ProgramConfig } from "dhis2-semis-types"
 
 
 export function postValues({ setStats, setProgress, onError }: { setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {

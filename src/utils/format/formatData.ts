@@ -1,8 +1,8 @@
 import { DataValuesProps } from "../../types/api/WithoutRegistrationTypes"
 import { attributesProps } from "../../types/api/WithRegistrationTypes"
-import { RowsDataProps } from "../../types/common/FormatRowsDataProps"
+import { RowsDataProps } from "dhis2-semis-types"
 import { type AttendanceFormaterProps } from "../../types/attendance/attendaceFormaterProps"
-import { Attendance } from "../../types/dataStore/DataStoreConfig"
+import { selectedDataStoreKey } from "dhis2-semis-types"
 
 export function attributes(data: attributesProps[]): RowsDataProps {
     const localData: RowsDataProps = {}
@@ -21,7 +21,7 @@ export function dataValues(data: DataValuesProps[], stageId: string): RowsDataPr
     return localData
 }
 
-export function attendanceFormater(events: AttendanceFormaterProps[], attendanceConfig: Attendance): RowsDataProps {
+export function attendanceFormater(events: AttendanceFormaterProps[], attendanceConfig: selectedDataStoreKey['attendance']): RowsDataProps {
     const localData: RowsDataProps = {}
     let status: string = ""
 
@@ -32,7 +32,7 @@ export function attendanceFormater(events: AttendanceFormaterProps[], attendance
                 status = dataValue.value
             }
         }
-    
+
         localData[event.occurredAt?.split("T")?.[0]] = status
     }
 

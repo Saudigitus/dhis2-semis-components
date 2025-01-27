@@ -1,7 +1,7 @@
 import { Form } from "react-final-form";
 import GroupForm from "../form/GroupForm";
 import { ModalActions, Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
-import { type FormProps } from "../../types/form/GroupFormProps";
+import { type FormProps } from "dhis2-semis-types";
 import styles from './groupform.module.css'
 
 export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons }: FormProps) {

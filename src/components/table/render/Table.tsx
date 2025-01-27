@@ -10,7 +10,7 @@ import Pagination from '../components/pagination/Pagination';
 import RenderRows from './RenderRows';
 import { TableRenderProps } from '../../../types/table/TableContentProps';
 import HeaderFilters from '../components/head/HeaderFilters';
-import { CustomAttributeProps } from '../../../types/variables/AttributeColumns';
+import { type CustomAttributeProps } from 'dhis2-semis-types'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-select/dist/react-select.css";
 

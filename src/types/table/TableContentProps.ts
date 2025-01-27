@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
-import { CustomAttributeProps } from "../variables/AttributeColumns"
+import { type CustomAttributeProps } from 'dhis2-semis-types'
 import { RowActionsType, TableRowActionsType } from "./TableRowActionsProps"
-import { ProgramConfig } from "../programConfig/ProgramConfig"
+import { ProgramConfig } from "dhis2-semis-types"
 
 interface TableProps {
     head: any

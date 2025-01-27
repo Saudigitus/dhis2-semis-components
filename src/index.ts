@@ -14,31 +14,13 @@ import Table from "./components/table/render/Table"
 import WithBorder from "./components/template/WithBorder"
 import WithPadding from "./components/template/WithPadding"
 import Text from "./components/text/Text"
-import { Attribute } from "./types/generated/models"
-import { VariablesTypes, CustomAttributeProps, OptionsProps } from "./types/variables/AttributeColumns"
-import { GroupFormProps, FormProps } from "./types/form/GroupFormProps"
 import { AppWrapper } from "./components/appWrapper/appWrapper"
 import useDataStoreKey from "./hooks/appWrapper/useDataStoreKey"
 import useProgramsKeys from "./hooks/appWrapper/useProgramsKeys"
-import { DataStoreProps } from "./schemas/dataStore"
-import { ProgramConfig } from "./schemas/programSchema"
 import DataExporter from "./components/bulk/bulkExport/DataExporter"
 import DataImporter from "./components/bulk/bulkImport/dataImporter"
 import CustomForm from "./components/form/form"
 import SemisHeader from "./components/header/semis"
-export {
-    VariablesTypes,  
-}
-
-export type {
-    CustomAttributeProps,
-    Attribute,
-    GroupFormProps,
-    FormProps,
-    DataStoreProps,
-    ProgramConfig,
-    OptionsProps
-}
 
 export {
     Table,

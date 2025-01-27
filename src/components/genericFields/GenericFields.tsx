@@ -5,7 +5,7 @@ import InputNumber from "./fields/InputNumber";
 import InputText from "./fields/InputText";
 import SingleSelectField from "./fields/SingleSelect";
 import InputArea from "./fields/InputArea";
-import { Attribute } from "../../types/generated/models";
+import { Attribute } from "dhis2-semis-types";
 import RadioButton from "./fields/RadioButton";
 import { type GenericFieldsComponentProps } from "../../types/form/GenericFieldsTypes";
 import { CustomAttributeProps } from "../../types/variables/AttributeColumns";

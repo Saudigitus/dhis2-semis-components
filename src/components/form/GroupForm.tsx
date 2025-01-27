@@ -3,7 +3,7 @@ import { Label } from "@dhis2/ui";
 import WithPadding from "../template/WithPadding";
 import GenericFields from "../genericFields/GenericFields";
 import styles from './groupform.module.css'
-import { type GroupFormProps } from "../../types/form/GroupFormProps";
+import { type GroupFormProps } from "dhis2-semis-types";
 import classNames from "classnames";
 import Text from "../text/Text";
 import 'bootstrap/dist/css/bootstrap.min.css';

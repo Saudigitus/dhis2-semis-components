@@ -1,10 +1,10 @@
-import { DataStoreRecord } from '../../../types/dataStore/DataStoreConfig'
+import { selectedDataStoreKey } from 'dhis2-semis-types';
 import ModalComponent from '../../../components/modal/Modal'
 import CustomForm from '../../../components/form/form'
 import { exportFields } from '../../../utils/constants/exportFields'
 import { format } from 'date-fns'
 
-export default function ModalExportEmpty({ orgUnitName, eventFilters, open, setOpen, onSubmit, selectedSectionDataStore, module }: { selectedSectionDataStore: DataStoreRecord, onSubmit: (rows: any) => void, orgUnitName: string, eventFilters: string[], open: boolean, setOpen: (args: boolean) => void, module: "attendance" | "final-result" | "enrollment" | "performance" }) {
+export default function ModalExportEmpty({ orgUnitName, eventFilters, open, setOpen, onSubmit, selectedSectionDataStore, module }: { selectedSectionDataStore: selectedDataStoreKey, onSubmit: (rows: any) => void, orgUnitName: string, eventFilters: string[], open: boolean, setOpen: (args: boolean) => void, module: "attendance" | "final-result" | "enrollment" | "performance" }) {
 
     function getAcademicYear() {
         const academicYearFilter = eventFilters.find(x => x.includes(selectedSectionDataStore.registration.academicYear))?.split(":") as unknown as string

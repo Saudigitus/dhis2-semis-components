@@ -7,7 +7,7 @@ import styles from './ContentFilter.module.css'
 import SelectButton from "../selectButton/SelectButton"
 import useViewportWidth from '../../../hooks/common/useViewPort'
 import { convertArrayToObject } from '../../../utils/common/formatArrayToObject'
-import { type CustomAttributeProps } from '../../../types/variables/AttributeColumns'
+import { type CustomAttributeProps } from 'dhis2-semis-types'
 import { EnrollmentFilterProps } from '../../../types/filters/filtersProps'
 
 type FiltersValuesProps = Record<string, any | { endDate: string } | { startDate: string }>

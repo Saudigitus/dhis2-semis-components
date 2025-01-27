@@ -4,8 +4,8 @@ import TextFilter from './components/text/Text'
 import TrueOnly from './components/trueOnly/TrueOnly';
 import SelectBoxes from './components/optionSet/selectBoxes/SelectBoxes';
 import { FilterComponentProps } from '../../../types/table/ContentFiltersProps';
-import { CustomAttributeProps } from '../../../types/variables/AttributeColumns';
-import { Attribute } from "../../../types/generated/models";
+import { type CustomAttributeProps } from 'dhis2-semis-types'
+import { Attribute } from "dhis2-semis-types";
 
 function FilterComponents(props: FilterComponentProps) {
     const { type, column, onChange, value } = props;
