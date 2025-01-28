@@ -41,6 +41,28 @@
     opacity: 0.5 !important;
 }
 
+.accordionHeaderContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center !important;
+    padding: 5px 10px 3px 10px;
+}
+
+.accordionHeader {
+    /* color: rgba(0, 0, 0, 0.87); */
+    color: #404B5A;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    margin: 0px !important;
+}
+
+
+.noticeBoxTitle {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 @media screen and (max-width: 650px) and (min-width: 352px) {}
 
 @media screen and (max-width: 620px) and (min-width: 436px) {

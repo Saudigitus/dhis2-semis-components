@@ -4,4 +4,5 @@ coverage
 storybook-static
 dist
 .storybook
+package-lock.json
 tsconfig.app.tsbuildinfo

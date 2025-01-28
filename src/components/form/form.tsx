@@ -7,76 +7,73 @@ import { type FormProps } from "dhis2-semis-types";
 import styles from './groupform.module.css'
 
 interface IForm extends Record<string, any> { }
-
 export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel }: FormProps) {
-    const formRef: React.MutableRefObject<FormApi<IForm, Partial<IForm>>> = useRef(null);
+    const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
 
-    const formActions = (pristine: boolean, form: any) => [
+    const formActions = (pristine: boolean, form: FormApi) => [
         {
             id: "cancel",
             type: "reset",
             label: "Cancel",
             disabled: loading,
             onClick: () => {
-                if (typeof onCancel != undefined) onCancel()
-                else form.reset
+                onCancel ? onCancel() : form.reset();
             },
-            secondary: true
-        }, {
+            secondary: true,
+        },
+        {
             id: "continue",
             label: "Submit",
             success: "success",
             type: "submit",
-            disabled: (pristine || loading),
+            disabled: pristine || loading,
             primary: true,
-            icon: loading ? <CircularLoader small /> : <></>
-        }
+            icon: loading ? <CircularLoader small /> : null,
+        },
     ];
 
     return (
-        <div style={style} >
+        <div style={style}>
             <Form
-                onSubmit={(values: any) => { onFormSubtmit(values) }}
+                onSubmit={(values: any) => onFormSubtmit(values)}
                 initialValues={initialValues}
             >
-                {({ pristine, form, handleSubmit, values }: any) => {
+                {({ pristine, form, handleSubmit, values }) => {
                     formRef.current = form;
-                    return <form
-                        onChange={(e: any) => { onInputChange(e) }}
-                        onSubmit={(e) => {
-                            e.preventDefault()
-                            handleSubmit(values)
-                        }}
-                    >
-                        {
-                            formFields?.map((section: any, i: any) =>
+                    return (
+                        <form
+                            onChange={onInputChange}
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleSubmit(values);
+                            }}
+                        >
+                            {formFields?.map((section: any, i: number) => (
                                 <GroupForm
+                                    key={i}
                                     name={section.name}
                                     description={section.description}
-                                    key={i}
                                     fields={section.fields}
                                     form={form}
                                     onInputChange={onInputChange}
                                 />
-                            )
-                        }
+                            ))}
 
-                        {withButtons && <div>
-                            <ButtonStrip end className={styles.btnStrip} >
-                                {formActions(pristine, form).map((action: any, i) =>
-                                    <Button
-                                        key={i}
-                                        {...action}
-                                        loading={false}
-                                    >
-                                        {action.label}
-                                    </Button>
-                                )}
-                            </ButtonStrip>
-                        </div>}
-                    </form>
+                            {withButtons && (
+                                <div>
+                                    <ButtonStrip end className={styles.btnStrip}>
+                                        {formActions(pristine, form).map((action, i) => (
+                                            <Button key={i} {...action} loading={false}>
+                                                {action.label}
+                                            </Button>
+                                        ))}
+                                    </ButtonStrip>
+                                </div>
+                            )}
+                        </form>
+                    );
                 }}
             </Form>
-        </div >
-    )
+        </div>
+    );
 }

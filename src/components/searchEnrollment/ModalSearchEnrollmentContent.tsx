@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NoticeBox } from "@dhis2/ui";
-import styles from "./modal.module.css"
+import styles from "../modal/modal.module.css"
 import { Collapse } from "@material-ui/core";
 import WithBorder from "../template/WithBorder";
 import WithPadding from "../template/WithPadding";
