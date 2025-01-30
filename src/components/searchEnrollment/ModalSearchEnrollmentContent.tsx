@@ -6,7 +6,6 @@ import WithBorder from "../template/WithBorder";
 import WithPadding from "../template/WithPadding";
 import { IconButton } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
-import { CustomAttributeProps } from "../../types/variables/AttributeColumns";
 import CustomForm from "../form/form";
 import { useUrlParams } from 'dhis2-semis-functions'
 import useGetSearchEnrollmentForm from "../../hooks/enrollmentSearch/useGetSearchEnrollmentForm";
@@ -18,6 +17,8 @@ import useSearchEnrollments from "../../hooks/tei/useSearchEnrollments";
 import Table from "../table/render/Table";
 import ModalComponent from "../modal/Modal";
 import { useDataStoreKey } from "../../hooks/dataStore/useDataStoreKey";
+import { formattedQuery } from "../../utils/search/formatQuery";
+import { IconInfo24 } from "@dhis2/ui";
 
 function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   const { sectionName, setOpenNewEnrollmentModal, programConfig, open, setOpen, Form, setFormInitialValues } = props;
@@ -29,6 +30,15 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   const [collapseAttributes, setCollapseAttributes] = useState(0)
   const { urlParameters } = useUrlParams();
   const { school: orgUnit, schoolName: orgUnitName, academicYear } = urlParameters();
+  
+  const rowsActions: any[] = [
+    { icon: <IconInfo24 />, color: '#277314', label: `View history`, disabled: false, onClick: () => { alert("Edition") } },
+  ];
+
+  const modalActions = [
+    { id: "cancel", small: true, name: "Cancel", disabled: false, primary: true, onClick: () => { setOpen(false) } },
+    { id: "continue", name: "Register new", color: "gray", small: true, disabled: loading, onClick: () => { onHandleRegisterNew() } },
+  ];
 
   const [initialValues] = useState<object>({
     registeringSchool: orgUnitName,
@@ -50,39 +60,21 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
     }
   };
 
-  const filterCollapsedAttributes = () => {
-    // filter collapsed attributes from filled fields
-    const selectedObjectIDs: string[] = searchEnrollmentFields[collapseAttributes]?.variables.map((obj: CustomAttributeProps) => obj.id);
-    const filteredQueryForm: { [id: string]: string } = {};
-
-    Object.keys(queryForm).forEach(key => {
-      if (selectedObjectIDs.includes(key as unknown as string)) {
-        filteredQueryForm[key] = queryForm[key];
-      }
-    });
-    return filteredQueryForm;
-  }
-
-  const formattedQuery = () => {
-    var query = "";
-    for (const [key, value] of Object.entries(filterCollapsedAttributes())) {
-      if (key && value) {
-        const id = teiAttributes?.filter((element) => {
-          return element.name == key;
-        })[0].name;
-
-        if (id) {
-          query += `${id}:LIKE:${value},`;
-        }
-      }
-    }
-    return query;
-  }
 
   const onHandleSubmit = async () => {
     console.log(queryForm, 'submit')
-    if (formattedQuery().length > 0) {
-      getEnrollmentsData(formattedQuery(), setShowResults, orgUnit)
+    if (formattedQuery(
+      teiAttributes,
+      searchEnrollmentFields,
+      collapseAttributes,
+      queryForm
+    ).length > 0) {
+      getEnrollmentsData(formattedQuery(
+        teiAttributes,
+        searchEnrollmentFields,
+        collapseAttributes,
+        queryForm
+      ), setShowResults, orgUnit)
     }
   };
 
@@ -109,11 +101,6 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
     setFormInitialValues({})
     setShowResults(false);
   };
-
-  const modalActions = [
-    { id: "cancel", small: true, name: "Cancel", disabled: false, primary: true, onClick: () => { setOpen(false) } },
-    { id: "continue", name: "Register new", color: "gray", small: true, disabled: loading, onClick: () => { onHandleRegisterNew() } },
-  ];
 
 
   const onSelectTei = (teiData: any) => {
@@ -183,6 +170,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                     tableData={enrollmentValues}
                     totalElements={10}
                     title={`Results found for ${sectionName} search`}
+                    rowAction={rowsActions}
                   />
                 </div> :
                 <NoticeBox className={styles.noticeBox} title={`No ${sectionName} found`}>

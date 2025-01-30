@@ -22,7 +22,7 @@ export default function ModalExportEmpty({ orgUnitName, eventFilters, open, setO
             title='Export Data Details'
             children={
                 <CustomForm
-                Form={Form}
+                    Form={Form}
                     initialValues={{ orgUnitName: orgUnitName, ...getAcademicYear() }}
                     onFormSubtmit={(e) => {
                         void onSubmit({
