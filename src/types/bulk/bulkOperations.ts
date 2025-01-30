@@ -14,8 +14,12 @@ import { selectedDataStoreKey, ProgramConfig } from 'dhis2-semis-types';
  */
 interface ExportData {
     /**
-     * Error handler
+     * react-final-form Form instance
      */
+    Form: any
+    /**
+    * Error handler
+    */
     onError: (args: string) => void
 
     /**
@@ -35,13 +39,6 @@ interface ExportData {
     fileName: string
 
     /**
-     * The id of the organisationa unit from which the data will be retrieved
-     *
-     * @type {string}
-     */
-    orgUnit: string
-
-    /**
      * Array of program stages id to export data
      * 
      * @type {string[]}
@@ -56,13 +53,6 @@ interface ExportData {
      * @type {?string[]}
      */
     eventFilters: string[]
-
-    /**
-     * The selected org unit name
-     *
-     * @type {string}
-     */
-    orgUnitName: string
 
     /**
      * The data of the socio-economics stge is not mandatory, if you want this data 
@@ -224,11 +214,6 @@ interface importData {
      * Data store configuration for SEMIS
      */
     selectedSectionDataStore: selectedDataStoreKey
-
-    /**
-     * the selected organization unit at header filters
-     */
-    orgUnit?: string
 }
 
 export type { ExportData, GenerateHeaders, excelProps, importData, excelData }

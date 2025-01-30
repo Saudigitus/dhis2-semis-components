@@ -1,16 +1,16 @@
-import { useRef } from "react";
-import { Form } from "react-final-form";
-import { FormApi } from "final-form"
 import GroupForm from "../form/GroupForm";
-import {  Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
+import { Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "dhis2-semis-types";
 import styles from './groupform.module.css'
+import { useRef } from "react";
+import { FormApi } from "final-form"
 
 interface IForm extends Record<string, any> { }
-export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel }: FormProps) {
+
+export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form }: FormProps) {
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
 
-    const formActions = (pristine: boolean, form: FormApi) => [
+    const formActions = (form: any) => [
         {
             id: "cancel",
             type: "reset",
@@ -26,7 +26,7 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
             label: "Submit",
             success: "success",
             type: "submit",
-            disabled: pristine || loading,
+            disabled: loading,
             primary: true,
             icon: loading ? <CircularLoader small /> : null,
         },
@@ -38,7 +38,7 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                 onSubmit={(values: any) => onFormSubtmit(values)}
                 initialValues={initialValues}
             >
-                {({ pristine, form, handleSubmit, values }) => {
+                {({ form, handleSubmit, values }) => {
                     formRef.current = form;
                     return (
                         <form
@@ -62,7 +62,7 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                             {withButtons && (
                                 <div>
                                     <ButtonStrip end className={styles.btnStrip}>
-                                        {formActions(pristine, form).map((action, i) => (
+                                        {formActions(form).map((action: any, i) => (
                                             <Button key={i} {...action} loading={false}>
                                                 {action.label}
                                             </Button>

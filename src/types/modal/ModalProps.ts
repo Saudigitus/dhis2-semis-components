@@ -16,11 +16,13 @@ interface ModalActionButtonType extends ButtonProps {
 }
 
 export interface ModalSearchTemplateProps {
+    Form: any
     setOpen: (value: boolean) => void
     sectionName: "student" | "staff"
-    setOpenNewEnrollment: (value: boolean) => void
+    setOpenNewEnrollmentModal: (value: boolean) => void
     programConfig: ProgramConfig
     open: boolean
+    setFormInitialValues?: (args: any) => void
 }
 
 /**

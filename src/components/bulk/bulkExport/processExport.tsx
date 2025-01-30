@@ -4,13 +4,16 @@ import ModalExportEmpty from "../modal/modalExport";
 import { useExportData } from "./exportData";
 import ModalProgress from "../progress/interactiveProgress";
 import { modules } from "../../../types/common/moduleTypes";
+import { useUrlParams } from "dhis2-semis-functions";
 
 export default function ProcessExport(props: ExportData) {
-    const { empty = false, orgUnitName, eventFilters, label, selectedSectionDataStore, module } = props
+    const { empty = false, eventFilters, label, selectedSectionDataStore, module, Form } = props
     const [open, setOpen] = useState(false)
     const [openPogress, setOpenProgress] = useState(false)
     const [progress, setProgress] = useState({ prorocess: "export", progress: 0, buffer: 0 })
     const { exportData } = useExportData({ ...props, setProgress })
+    const { urlParameters } = useUrlParams()
+    const { schoolName: orgUnitName } = urlParameters()
 
     useEffect(() => {
         if (progress.progress > 0) {
@@ -42,6 +45,7 @@ export default function ProcessExport(props: ExportData) {
                 orgUnitName={orgUnitName}
                 setOpen={setOpen}
                 module={module}
+                Form={Form}
             />
 
             <ModalProgress

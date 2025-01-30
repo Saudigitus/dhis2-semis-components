@@ -10,24 +10,25 @@ import { generateEmptyRows } from '../../../utils/common/generateData';
 import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
 import { useGetEvents } from "../../../hooks/events/useGetEvents";
+import { useUrlParams } from "dhis2-semis-functions";
 
 export function useExportData(props: ExportData) {
     const {
         programConfig,
         fileName,
         isSchoolDay,
-        orgUnit,
         stagesToExport,
         module,
         selectedSectionDataStore,
         withSocioEconomics = false,
         sectionType,
         empty = false,
-        orgUnitName,
         setProgress = () => { },
         onError
     } = props
     const { getData } = getCommonSheetData({ ...props, onError })
+    const { urlParameters } = useUrlParams()
+    const { schoolName: orgUnitName, school: orgUnit } = urlParameters()
     const { getEvents } = useGetEvents()
     const { generate } = generateAndReserveIds()
     const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date) => boolean })

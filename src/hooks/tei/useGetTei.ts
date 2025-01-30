@@ -18,16 +18,17 @@ export function useGetTei() {
             paging: false,
             program: program,
             trackedEntity: trackedEntity,
-            fields: "trackedEntity,occuredAt,createdAt,orgUnit,attributes[attribute,value]"
+            fields: "trackedEntity,occuredAt,createdAt,orgUnit,attributes[attribute,value]",
         })) as unknown as TeiQueryResults
     }
 
-    async function getTeiSearch(program: string, filters: string) {
+    async function getTeiSearch(program: string, filters: string, orgUnit: string) {
         return await engine.query(TEI_QUERY({
             pageSize: 5,
             page: 1,
             program,
             filter: filters.slice(0, -1),
+            orgUnit,
             fields: "trackedEntity,createdAt,orgUnit,attributes[attribute,value],enrollments[enrollment,enrolledAt],programOwners[orgUnit]"
         }),
         );

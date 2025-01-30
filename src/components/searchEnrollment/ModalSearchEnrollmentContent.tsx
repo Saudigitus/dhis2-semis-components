@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NoticeBox } from "@dhis2/ui";
+import { Button, ButtonStrip, NoticeBox } from "@dhis2/ui";
 import styles from "../modal/modal.module.css"
 import { Collapse } from "@material-ui/core";
 import WithBorder from "../template/WithBorder";
@@ -8,7 +8,7 @@ import { IconButton } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import { CustomAttributeProps } from "../../types/variables/AttributeColumns";
 import CustomForm from "../form/form";
-import { useUrlParams, useDataStoreKey } from 'dhis2-semis-functions'
+import { useUrlParams } from 'dhis2-semis-functions'
 import useGetSearchEnrollmentForm from "../../hooks/enrollmentSearch/useGetSearchEnrollmentForm";
 import { ModalSearchTemplateProps } from '../../types/modal/ModalProps'
 import { useGetProgramsAttributes } from "../../utils/tei/useGetProgramsAttributes";
@@ -17,15 +17,15 @@ import { getRecentEnrollment } from "../../utils/tei/getRecentEnrollment";
 import useSearchEnrollments from "../../hooks/tei/useSearchEnrollments";
 import Table from "../table/render/Table";
 import ModalComponent from "../modal/Modal";
+import { useDataStoreKey } from "../../hooks/dataStore/useDataStoreKey";
 
 function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
-  const { sectionName, setOpenNewEnrollment, programConfig, open, setOpen } = props;
+  const { sectionName, setOpenNewEnrollmentModal, programConfig, open, setOpen, Form, setFormInitialValues } = props;
   const { searchEnrollmentFields } = useGetSearchEnrollmentForm({ programConfig });
   const { registration } = useDataStoreKey({ sectionType: sectionName })
   const [showResults, setShowResults] = useState<boolean>(false)
   const { teiAttributes, searchableAttributes } = useGetProgramsAttributes({ programConfig });
   const { enrollmentValues, setEnrollmentValues, loading, getEnrollmentsData } = useSearchEnrollments({ sectionType: sectionName })
-  // const [, setInitialValues] = useRecoilState(SearchInitialValues)
   const [collapseAttributes, setCollapseAttributes] = useState(0)
   const { urlParameters } = useUrlParams();
   const { school: orgUnit, schoolName: orgUnitName, academicYear } = urlParameters();
@@ -80,8 +80,9 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   }
 
   const onHandleSubmit = async () => {
+    console.log(queryForm, 'submit')
     if (formattedQuery().length > 0) {
-      getEnrollmentsData(formattedQuery(), setShowResults)
+      getEnrollmentsData(formattedQuery(), setShowResults, orgUnit)
     }
   };
 
@@ -97,15 +98,15 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   }
 
   const onHandleRegisterNew = async () => {
-    // setInitialValues(filterUniqueVariables());
+    setFormInitialValues(filterUniqueVariables());
     setOpen(false);
-    setOpenNewEnrollment(true);
+    setOpenNewEnrollmentModal(true);
   };
 
   const onReset = () => {
     setQueryForm({});
     setEnrollmentValues([]);
-    // setInitialValues({})
+    setFormInitialValues({})
     setShowResults(false);
   };
 
@@ -120,15 +121,15 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
     const recentRegistration = teiData.registrationEvents?.find((event: any) => event.enrollment === recentEnrollment)
     const recentSocioEconomics = teiData.socioEconomicsEvents?.find((event: any) => event.enrollment === recentEnrollment)
 
-    // setInitialValues({
-    //   trackedEntity: teiData.trackedEntity,
-    //   ...teiData?.mainAttributesFormatted,
-    //   ...recentRegistration,
-    //   ...recentSocioEconomics,
-    //   [registration.academicYear]: academicYear
-    // })
+    setFormInitialValues({
+      trackedEntity: teiData.trackedEntity,
+      ...teiData?.mainAttributesFormatted,
+      ...recentRegistration,
+      ...recentSocioEconomics,
+      [registration.academicYear]: academicYear
+    })
 
-    setOpenNewEnrollment(true)
+    setOpenNewEnrollmentModal(true)
     setOpen(false);
   }
 
@@ -138,7 +139,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
       actions={modalActions}
       handleClose={() => setOpen(false)}
       open={open}
-      size="medium"
+      size="large"
       isClickAway={false}
       showActions={showResults}
       children={
@@ -161,6 +162,9 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                         onInputChange={onHandleChange}
                         onCancel={onReset}
                         submitButtonLabel={`Search ${sectionName.toLocaleLowerCase()}`}
+                        Form={Form}
+                        withButtons={true}
+                        loading={loading}
                       />
                     </WithPadding>
                   </WithBorder>
@@ -178,7 +182,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                     programConfig={programConfig}
                     tableData={enrollmentValues}
                     totalElements={10}
-                    title={`Results found for ${sectionName} search<`}
+                    title={`Results found for ${sectionName} search`}
                   />
                 </div> :
                 <NoticeBox className={styles.noticeBox} title={`No ${sectionName} found`}>
@@ -186,6 +190,13 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                 </NoticeBox>}
             </>
           </Collapse>
+          {!showResults &&
+            <ButtonStrip end>
+              <Button key={"fechar"} onClick={() => setOpen(false)} loading={false}>
+                Fechar
+              </Button>
+            </ButtonStrip>
+          }
         </div >
       }
     />

@@ -6,6 +6,7 @@ import { postAttendanceValues } from "./postEvents/postAttendance";
 import { postEnrollmentData } from "./postEvents/postEnrollment";
 import { postValues } from "./postEvents/postEvents";
 import { useState } from 'react'
+import { useUrlParams } from "dhis2-semis-functions";
 
 type CombinedTypes = importData & excelData
 
@@ -14,10 +15,13 @@ export function useImportData({ setProgress, onError }: { setProgress: (rags: an
     const { postData } = postValues({ setStats, setProgress, onError })
     const { postAttendance } = postAttendanceValues({ setStats, setProgress, onError })
     const { postEnrollments } = postEnrollmentData({ setStats, setProgress, onError })
+    const { urlParameters } = useUrlParams()
+    const { school: orgUnit } = urlParameters()
+
 
     async function importData(props: CombinedTypes) {
         setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
-        const { onError, excelData, importMode, updating = false, programConfig, selectedSectionDataStore, orgUnit, sectionType } = props
+        const { onError, excelData, importMode, updating = false, programConfig, selectedSectionDataStore, sectionType } = props
 
         try {
             const studentsData = excelData.mapping

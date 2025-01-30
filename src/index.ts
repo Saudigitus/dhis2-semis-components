@@ -24,10 +24,14 @@ import useHeaderKey from "./hooks/header/useHeaderValues"
 import { HeaderValuesState } from "./schemas/headerDataSchema"
 import { stateEmitter } from "./schemas/headerDataSchema"
 import ModalSearchEnrollmentContent from "./components/searchEnrollment/ModalSearchEnrollmentContent"
+import { useDataStoreKey } from './hooks/dataStore/useDataStoreKey'
+import { useGetUsedProgramStages } from "./hooks/programStages/useGetUsedPProgramStages"
 
 export {
     HeaderValuesState,
     stateEmitter,
+    useGetUsedProgramStages,
+    useDataStoreKey,
     useHeaderKey,
     Table,
     SingleSelectField,

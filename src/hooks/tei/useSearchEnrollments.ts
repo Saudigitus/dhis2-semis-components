@@ -4,7 +4,7 @@ import useShowAlerts from '../common/useShowAlert';
 import { formatResponseData } from '../../utils/tei/formatResponseData';
 import { useGetTei } from './useGetTei';
 import { attributes } from '../../utils/format/formatData';
-import { useDataStoreKey } from 'dhis2-semis-functions'
+import { useDataStoreKey } from "../../hooks/dataStore/useDataStoreKey";
 
 export default function useSearchEnrollments({ sectionType }: { sectionType: "staff" | "student" }) {
     const { getTeiSearch } = useGetTei()
@@ -16,11 +16,11 @@ export default function useSearchEnrollments({ sectionType }: { sectionType: "st
     const [error, setError] = useState<boolean>(false)
     const [totalResults, setTotalResults] = useState<any>(null);
 
-    const getEnrollmentsData = (filters: string, setShowResults: any) => {
+    const getEnrollmentsData = (filters: string, setShowResults: any, orgUnit: string) => {
         const teisWithRegistrationEvents: any[] = [];
         const fields: string = "event,trackedEntity,enrollment,occurredAt,dataValues[dataElement,value],orgUnitName,orgUnit"
         setLoading(true)
-        getTeiSearch(program, filters)
+        getTeiSearch(program, filters, orgUnit)
             .then(async (teiResponse: any) => {
 
                 for (const tei of teiResponse?.results?.instances) {
