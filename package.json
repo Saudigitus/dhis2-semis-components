@@ -1,6 +1,6 @@
 {
   "name": "dhis2-semis-components",
-  "version": "0.6.2-alpha.99",
+  "version": "0.6.2-alpha.101",
   "main": "dist/index.js",
   "types": "dist/declarations/index.d.ts",
   "exports": {
@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "3.2.2",
-    "@dhis2/app-runtime": "^3.12.0",
+    "@dhis2/app-runtime": "^3.13.0",
     "@eslint/js": "^9.13.0",
     "@storybook/addon-actions": "^8.4.2",
     "@storybook/addon-essentials": "^8.4.2",
