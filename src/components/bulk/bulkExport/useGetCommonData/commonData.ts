@@ -1,11 +1,14 @@
 import { ExportData } from "../../../../types/bulk/bulkOperations"
 import { useGetEvents } from "../../../../hooks/events/useGetEvents"
 import { useGetEnrollmentData } from "../../../../hooks/enrollmentDetails/useGetEnrollmentDetails"
+import { useUrlParams } from "dhis2-semis-functions"
 
 export function getCommonSheetData(props: ExportData) {
     const { getEvents } = useGetEvents()
-    const { orgUnit, eventFilters = [], selectedSectionDataStore, setProgress = () => { }, onError } = props
+    const { eventFilters = [], selectedSectionDataStore, setProgress = () => { }, onError } = props
     const { getEnrollmentDetails } = useGetEnrollmentData({ ...props, setProgress })
+    const { urlParameters } = useUrlParams()
+    const { school: orgUnit } = urlParameters()
 
     async function getData() {
         const events = await getEvents({

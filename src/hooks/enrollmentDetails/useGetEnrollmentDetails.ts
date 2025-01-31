@@ -4,11 +4,14 @@ import { attributes, dataValues } from '../../utils/format/formatData';
 import { modules } from '../../types/common/moduleTypes';
 import { format } from 'date-fns';
 import { useGetTei } from '../tei/useGetTei';
+import { useUrlParams } from 'dhis2-semis-functions';
 
 export function useGetEnrollmentData(props: ExportData) {
     const { getTei } = useGetTei()
     const { getEvents } = useGetEvents()
-    const { onError, orgUnitName, orgUnit, eventFilters, withSocioEconomics, selectedSectionDataStore, module, setProgress = () => { } } = props
+    const { onError, eventFilters, withSocioEconomics, selectedSectionDataStore, module, setProgress = () => { } } = props
+    const { urlParameters } = useUrlParams()
+    const { schoolName: orgUnitName, school: orgUnit, } = urlParameters()
 
     const getEnrollmentDetails = async (events: any) => {
         const percentagem = module === modules.enrollment ? 80 : 40

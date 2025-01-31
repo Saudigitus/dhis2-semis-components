@@ -1,11 +1,12 @@
 import { excelData, importData } from "../../../types/bulk/bulkOperations";
 import { modules } from "../../../types/common/moduleTypes";
-import { DataStoreRecord } from "../../../types/dataStore/DataStoreConfig";
+import { selectedDataStoreKey } from 'dhis2-semis-types';
 import { generateAttendanceEventObjects, generateEnrollmentData, generateEventObjects } from "./createEvents/createEventsObject";
 import { postAttendanceValues } from "./postEvents/postAttendance";
 import { postEnrollmentData } from "./postEvents/postEnrollment";
 import { postValues } from "./postEvents/postEvents";
 import { useState } from 'react'
+import { useUrlParams } from "dhis2-semis-functions";
 
 type CombinedTypes = importData & excelData
 
@@ -14,10 +15,13 @@ export function useImportData({ setProgress, onError }: { setProgress: (rags: an
     const { postData } = postValues({ setStats, setProgress, onError })
     const { postAttendance } = postAttendanceValues({ setStats, setProgress, onError })
     const { postEnrollments } = postEnrollmentData({ setStats, setProgress, onError })
+    const { urlParameters } = useUrlParams()
+    const { school: orgUnit } = urlParameters()
+
 
     async function importData(props: CombinedTypes) {
         setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
-        const { onError, excelData, importMode, updating = false, programConfig, selectedSectionDataStore, orgUnit, sectionType } = props
+        const { onError, excelData, importMode, updating = false, programConfig, selectedSectionDataStore, sectionType } = props
 
         try {
             const studentsData = excelData.mapping
@@ -36,7 +40,7 @@ export function useImportData({ setProgress, onError }: { setProgress: (rags: an
 
             switch (excelData.module) {
                 case modules.attendance:
-                    const { attendanceEvents } = generateAttendanceEventObjects(displayNames, studentsData, selectedSectionDataStore as unknown as DataStoreRecord)
+                    const { attendanceEvents } = generateAttendanceEventObjects(displayNames, studentsData, selectedSectionDataStore as unknown as selectedDataStoreKey)
                     const attendanceDisplayName = programConfig.programStages.find(x => x.id === selectedSectionDataStore?.attendance.programStage)?.displayName
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
@@ -82,7 +86,7 @@ export function useImportData({ setProgress, onError }: { setProgress: (rags: an
                         importMode,
                         programConfig.id,
                         updating,
-                        selectedSectionDataStore as unknown as DataStoreRecord,
+                        selectedSectionDataStore as unknown as selectedDataStoreKey,
                         orgUnit as unknown as string
                     )
                     break

@@ -1,4 +1,4 @@
-import { type ProgramConfig } from "../../types/programConfig/ProgramConfig";
+import { ProgramConfig } from "dhis2-semis-types"
 
 export function getMetaData(programConfig: ProgramConfig, stagesId: string[]) {
     let metaDataArray: any = [

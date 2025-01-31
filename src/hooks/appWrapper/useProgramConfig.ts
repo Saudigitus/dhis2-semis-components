@@ -27,7 +27,6 @@ const useProgramConfig = () => {
   const engine = useDataEngine()
   const setProgramsValues = useSetRecoilState(ProgramConfigState)
 
-
   const getProgram = async (program: string) => {
     setLoading(true)
     try {

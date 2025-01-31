@@ -1,5 +1,5 @@
 import { modules } from '../../types/common/moduleTypes'
-import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns'
+import { CustomAttributeProps, VariablesTypes } from 'dhis2-semis-types';
 
 export function exportFields(module: "attendance" | "final-result" | "enrollment" | "performance"): any[] {
 

@@ -3,7 +3,7 @@ import { Center, CircularLoader } from "@dhis2/ui"
 import { DataStoreNotFound, DataStoreNotValidated, ProgramNotFound } from './components/dataStoreErrors';
 import useDataStore from '../../hooks/appWrapper/useDataStore';
 import useProgramConfig from '../../hooks/appWrapper/useProgramConfig';
-import { DataStoreProps } from '../../schemas/dataStore';
+import { DataStoreProps } from 'dhis2-semis-types';
 import { AppWrapperProps } from '../../types/appWrapper/AppWrapperProps';
 import { DataProvider } from '@dhis2/app-runtime';
 import { RecoilRoot } from 'recoil';

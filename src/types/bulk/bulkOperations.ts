@@ -1,5 +1,4 @@
-import { DataStoreRecord } from "../dataStore/DataStoreConfig"
-import { ProgramConfig } from "../programConfig/ProgramConfig"
+import { selectedDataStoreKey, ProgramConfig } from 'dhis2-semis-types';
 
 /**
  * Description placeholder
@@ -15,10 +14,14 @@ import { ProgramConfig } from "../programConfig/ProgramConfig"
  */
 interface ExportData {
     /**
-     * Error handler
+     * react-final-form Form instance
      */
+    Form: any
+    /**
+    * Error handler
+    */
     onError: (args: string) => void
-    
+
     /**
      * Base url for dhis2 data provider
      */
@@ -36,13 +39,6 @@ interface ExportData {
     fileName: string
 
     /**
-     * The id of the organisationa unit from which the data will be retrieved
-     *
-     * @type {string}
-     */
-    orgUnit: string
-
-    /**
      * Array of program stages id to export data
      * 
      * @type {string[]}
@@ -57,13 +53,6 @@ interface ExportData {
      * @type {?string[]}
      */
     eventFilters: string[]
-
-    /**
-     * The selected org unit name
-     *
-     * @type {string}
-     */
-    orgUnitName: string
 
     /**
      * The data of the socio-economics stge is not mandatory, if you want this data 
@@ -97,9 +86,9 @@ interface ExportData {
     /**
      * Settings saved at data store
      *
-     * @type {DataStoreRecord}
+     * @type {selectedDataStoreKey}
      */
-    selectedSectionDataStore: DataStoreRecord
+    selectedSectionDataStore: selectedDataStoreKey
 
     /**
     * Program configurations
@@ -129,7 +118,7 @@ interface ExportData {
 
 interface GenerateHeaders {
     stagesToExport: string[]
-    selectedSectionDataStore: DataStoreRecord
+    selectedSectionDataStore: selectedDataStoreKey
     withSocioEconomics: boolean
     programConfig: ProgramConfig
     sectionType: string
@@ -224,12 +213,7 @@ interface importData {
     /**
      * Data store configuration for SEMIS
      */
-    selectedSectionDataStore: DataStoreRecord
-
-    /**
-     * the selected organization unit at header filters
-     */
-    orgUnit?: string
+    selectedSectionDataStore: selectedDataStoreKey
 }
 
 export type { ExportData, GenerateHeaders, excelProps, importData, excelData }

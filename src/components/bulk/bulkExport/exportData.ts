@@ -1,6 +1,6 @@
 import { ExportData } from "../../../types/bulk/bulkOperations";
 import { formatSheetData } from "../../../utils/format/formatSheetData";
-import { DataStoreRecord } from "../../../types/dataStore/DataStoreConfig";
+import { selectedDataStoreKey } from 'dhis2-semis-types';
 import { getMetaData } from '../../../utils/excelMetadata/getMetadata';
 import { generateHeaders } from './excelHeaders/generateExcelHeaders';
 import { getCommonSheetData } from './useGetCommonData/commonData';
@@ -10,24 +10,25 @@ import { generateEmptyRows } from '../../../utils/common/generateData';
 import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
 import { useGetEvents } from "../../../hooks/events/useGetEvents";
+import { useUrlParams } from "dhis2-semis-functions";
 
 export function useExportData(props: ExportData) {
     const {
         programConfig,
         fileName,
         isSchoolDay,
-        orgUnit,
         stagesToExport,
         module,
         selectedSectionDataStore,
         withSocioEconomics = false,
         sectionType,
         empty = false,
-        orgUnitName,
         setProgress = () => { },
         onError
     } = props
     const { getData } = getCommonSheetData({ ...props, onError })
+    const { urlParameters } = useUrlParams()
+    const { schoolName: orgUnitName, school: orgUnit } = urlParameters()
     const { getEvents } = useGetEvents()
     const { generate } = generateAndReserveIds()
     const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date) => boolean })
@@ -82,7 +83,7 @@ export function useExportData(props: ExportData) {
                                         module: module,
                                         stageId: stagesToExport[a],
                                         events: events,
-                                        dataStore: selectedSectionDataStore as unknown as DataStoreRecord
+                                        dataStore: selectedSectionDataStore as unknown as selectedDataStoreKey
                                     })
                                 }
 

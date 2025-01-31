@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import DragDropList from '../../components/drag&drop/DragDropList';
-import { Attribute } from '../../types/generated/models';
-import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns';
+import { Attribute } from "dhis2-semis-types";
+import { CustomAttributeProps, VariablesTypes } from 'dhis2-semis-types';
 
 const meta = {
     title: 'Columns config/Columns config',

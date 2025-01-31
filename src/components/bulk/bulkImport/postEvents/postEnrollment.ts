@@ -1,6 +1,6 @@
 import { importData, importStrategy } from "../../../../types/bulk/bulkOperations";
 import { useGetEvents } from "../../../../hooks/events/useGetEvents";
-import { DataStoreRecord } from "../../../../types/dataStore/DataStoreConfig";
+import { selectedDataStoreKey } from 'dhis2-semis-types';
 import useUploadEvents from "../../../../hooks/events/useUploadEvents";
 import { splitArrayIntoChunks } from "../../../../utils/common/splitArray";
 import { importSummary } from "../../../../utils/common/getImportSummary";
@@ -23,7 +23,7 @@ export function postEnrollmentData({ setStats, setProgress, onError }: { setStat
         importMode: importData["importMode"],
         program: string,
         updating: boolean,
-        dataStore: DataStoreRecord,
+        dataStore: selectedDataStoreKey,
         orgUnit: string
     ) {
         let copyData = [...enrollments], updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] }

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { IconSettings24 } from '@dhis2/ui';
 import { IconButton, Tooltip } from '@material-ui/core';
 import DialogConfigColumns from './DialogConfigColumns';
-import { CustomAttributeProps } from '../../../../types/variables/AttributeColumns';
+import { type CustomAttributeProps } from 'dhis2-semis-types'
 
 interface ConfigTableColumnsProps {
     headers: CustomAttributeProps[]

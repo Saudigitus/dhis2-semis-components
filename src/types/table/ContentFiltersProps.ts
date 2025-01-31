@@ -1,4 +1,4 @@
-import { CustomAttributeProps } from "../variables/AttributeColumns"
+import { type CustomAttributeProps } from 'dhis2-semis-types'
 
 interface MenuFiltersProps {
     anchorEl: any
@@ -68,7 +68,7 @@ interface ActiveFilterButtonProps {
     onChange: () => void
     iconClass: any
     title: string
-    arrowIconElement: React.ReactElement
+    arrowIconElement
     buttonText: string
     onClear: () => void
     innerRef: (instance: HTMLDivElement | null) => void
