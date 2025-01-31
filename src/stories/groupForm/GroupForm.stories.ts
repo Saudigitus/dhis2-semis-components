@@ -24,6 +24,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Group_form: Story = {
     args: {
+        storyBook: true,
         withButtons: true,
         formFields: [
             {

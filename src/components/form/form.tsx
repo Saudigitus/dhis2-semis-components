@@ -7,8 +7,13 @@ import { FormApi } from "final-form"
 import { objectComparison } from "../../utils/common/customFormPristine";
 
 interface IForm extends Record<string, any> { }
+interface imageFieldSpecificProps {
+    storyBook: boolean
+}
 
-export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel }: FormProps) {
+interface CombinedProps extends FormProps, imageFieldSpecificProps { }
+
+export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity }: CombinedProps) {
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
 
@@ -66,6 +71,8 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                                     fields={section.fields}
                                     form={form}
                                     onInputChange={onInputChange}
+                                    trackedEntity={trackedEntity}
+                                    storyBook={storyBook}
                                 />
                             ))}
 

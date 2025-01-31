@@ -6,11 +6,20 @@ import { Box } from '@material-ui/core';
 import { useField, type FieldRenderProps } from "react-final-form";
 import style from "./fields.module.css";
 import { FormFieldsProps } from '../../../types/form/GenericFieldsTypes';
+import { useFileResource } from 'dhis2-semis-functions'
 
-function ImageField(props: FormFieldsProps) {
-    const { disabled, name, required, form } = props
+interface imageFieldSpecificProps {
+    storyBook: boolean
+}
+
+interface CombinedProps extends FormFieldsProps, imageFieldSpecificProps { }
+
+
+function ImageField(props: CombinedProps) {
+    const { disabled, name, form, storyBook } = props
     const { input }: FieldRenderProps<any, HTMLElement> = useField(name);
     const [uploadedImage, setUploadedImage] = useState<any>();
+    const { createFileResource, getFileResource, loading } = useFileResource()
 
     const handleFileChange = async (event: any) => {
         const image = event.target.files[0];
@@ -25,16 +34,26 @@ function ImageField(props: FormFieldsProps) {
         };
         reader.readAsDataURL(image);
 
+        if (!storyBook)
+            await createFileResource({ file: image }).then((response) => {
+                input.onChange(response?.fileId);
+            })
     };
 
-    useEffect(() => {
-        if (input.value && !uploadedImage) {
+    async function getImage() {
+        await getFileResource({ trackedEntity: props.trackedEntity, attribute: input.name }).then((response: { file: any }) => {
             const reader = new FileReader();
-
             reader.onloadend = () => {
+                console.log(response, 'the fileeee')
                 setUploadedImage(reader.result);
             };
-            reader.readAsDataURL(input?.value);
+            reader.readAsDataURL(response.file);
+        })
+    }
+
+    useEffect(() => {
+        if (input.value && !uploadedImage && !storyBook) {
+            getImage()
         }
     }, [input.value])
 
@@ -48,7 +67,9 @@ function ImageField(props: FormFieldsProps) {
             {
                 uploadedImage ? (
                     <span>
-                        <img src={uploadedImage} alt="Uploaded" className={style.image_field_photo} />
+                        {!(loading) &&
+                            <img src={uploadedImage} alt="Uploaded" className={style.image_field_photo} />
+                        }
                     </span>
                 ) :
                     <span>
