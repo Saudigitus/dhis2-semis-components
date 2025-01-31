@@ -6,9 +6,14 @@ import { Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "../../types/form/GroupFormProps";
 import styles from './groupform.module.css'
 
+interface imageFieldSpecificProps {
+    storyBook: boolean
+}
+
+interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 interface IForm extends Record<string, any> {}
 
-export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons }: FormProps) {
+export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, trackedEntity }: CombinedProps) {
     const formRef: React.MutableRefObject<FormApi<IForm, Partial<IForm>>> = useRef(null);
 
     const formActions = (pristine: boolean, form: any) => [
@@ -54,9 +59,11 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                                     fields={section.fields}
                                         form={form}
                                         onInputChange={onInputChange}
-                                />
-                            )
-                        }
+                                        trackedEntity={trackedEntity}
+                                        storyBook={storyBook}
+                                    />
+                                )
+                            }
 
                         {withButtons && <div>
                             <ButtonStrip end className={styles.btnStrip} >

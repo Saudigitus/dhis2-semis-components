@@ -8,7 +8,7 @@ import Text from "../text/Text";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function GroupForm(props: GroupFormProps) {
-    const { name, fields, description, form, onInputChange } = props
+    const { name, fields, description, form, onInputChange, trackedEntity, storyBook } = props
 
     return (
         <>
@@ -41,11 +41,12 @@ function GroupForm(props: GroupFormProps) {
                                 </div>
                                 <div className="col-12 col-md-6">
                                     <GenericFields
-                                        attribute={x}
+                                        attribute={{ ...x, trackedEntity }}
                                         disabled={!!(x.disabled)}
                                         valueType={x.valueType}
                                         form={form}
                                         onInputChange={onInputChange}
+                                        storybook={storyBook}
                                     />
                                     <span className={styles.content}>
                                         {x.content}

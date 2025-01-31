@@ -39,7 +39,7 @@ const baseArgs = {
 
 export const Data_export: Story = {
     args: {
-        ...baseArgs,
+        ...baseArgs as unknown as any,
         eventFilters: [`iDSrFrrVgmX:in:2023`],
         stagesToExport: [student["final-result"].programStage],
         label: "Click me to export data",
@@ -50,18 +50,19 @@ export const Data_export: Story = {
 
 export const Attendance_export: Story = {
     args: {
-        ...baseArgs,
+        ...baseArgs as unknown as any,
         eventFilters: [`iDSrFrrVgmX:in:2023`, `kNNoif9gASf:in:Grade 1`, `RhABRLO2Fae:in:A`],
         stagesToExport: [student.attendance.programStage],
         label: "Click me to export Attendance Data",
         module: "attendance",
+
     },
     render: renderWithProvider,
 };
 
 export const Empty_enrollment_template: Story = {
     args: {
-        ...baseArgs,
+        ...baseArgs as unknown as any,
         eventFilters: [`iDSrFrrVgmX:in:2023`],
         stagesToExport: [student.registration.programStage],
         label: "Click me to export empty sheet",

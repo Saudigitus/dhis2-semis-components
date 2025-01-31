@@ -6,9 +6,12 @@ interface GroupFormProps {
     fields: CustomAttributeProps[]
     form?: any
     onInputChange?: (e: any) => void
+    trackedEntity?: string
+    storyBook?: boolean
 }
 
 interface FormProps {
+
     /**
      * The form fields 
      *
@@ -71,6 +74,8 @@ interface FormProps {
      * @type {?boolean}
      */
     withButtons?: boolean
+
+    trackedEntity?: string
 }
 
 export type { GroupFormProps, FormProps }

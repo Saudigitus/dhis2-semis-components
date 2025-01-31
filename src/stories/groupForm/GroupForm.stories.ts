@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import SDCustomForm from "../../components/form/form";
 import { CustomAttributeProps, VariablesTypes } from '../../types/variables/AttributeColumns';
-// import { fn } from '@storybook/test';
 
 const meta = {
     title: 'Group form/Group form',
@@ -24,6 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Group_form: Story = {
     args: {
+        storyBook: true,
         withButtons: true,
         formFields: [
             {
