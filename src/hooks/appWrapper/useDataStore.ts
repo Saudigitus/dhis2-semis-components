@@ -3,7 +3,6 @@ import { useState } from "react"
 import { useDataEngine } from "@dhis2/app-runtime"
 import { useSetRecoilState } from "recoil"
 
-
 const DATASTORE_QUERY = (keySpace: string) => {
   return {
     result: {

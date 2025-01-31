@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { atom } from "recoil";
+import { EventEmitter } from 'events';
 
 const headerValuesSchema = z.object({
     selectedAcademicYear: z.object({
@@ -32,3 +33,5 @@ export const HeaderValuesState = atom<HeaderValuesProps>({
         selectedGrade: { label: "", value: "" },
     }
 })
+
+export const stateEmitter = new EventEmitter();

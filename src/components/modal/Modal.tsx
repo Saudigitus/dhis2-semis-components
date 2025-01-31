@@ -2,7 +2,7 @@ import classNames from "classnames";
 import styles from "./modal.module.css";
 import React, { useEffect, useRef } from "react";
 import { ModalProps } from "../../types/modal/ModalProps";
-import { Modal, ModalTitle, ModalContent, ModalActions, ButtonStrip, Button, Center, CircularLoader } from "@dhis2/ui";
+import { Modal, ModalContent, ModalActions, ButtonStrip, Button, Center, CircularLoader } from "@dhis2/ui";
 
 function ModalComponent(props: ModalProps): React.ReactElement {
   const modalRef: React.MutableRefObject<HTMLDivElement | undefined> = useRef(null);
@@ -44,7 +44,7 @@ function ModalComponent(props: ModalProps): React.ReactElement {
                 </button>
               </div>
 
-              <ModalTitle>{title}</ModalTitle>
+              <div className={styles.modalTitle}>{title}</div>
 
               {
                 loading ?

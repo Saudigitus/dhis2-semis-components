@@ -1,6 +1,8 @@
+import { useRef } from "react";
 import { Form } from "react-final-form";
+import { FormApi } from "final-form"
 import GroupForm from "../form/GroupForm";
-import { ModalActions, Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
+import { Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "../../types/form/GroupFormProps";
 import styles from './groupform.module.css'
 
@@ -9,8 +11,10 @@ interface imageFieldSpecificProps {
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
+interface IForm extends Record<string, any> {}
 
 export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, trackedEntity }: CombinedProps) {
+    const formRef: React.MutableRefObject<FormApi<IForm, Partial<IForm>>> = useRef(null);
 
     const formActions = (pristine: boolean, form: any) => [
         {
@@ -37,22 +41,22 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                 onSubmit={(values: any) => { onFormSubtmit(values) }}
                 initialValues={initialValues}
             >
-                {({ pristine, form, handleSubmit, values }: any) => (
-                    <>
-                        <form
-                            onChange={(e: any) => { onInputChange(e) }}
-                            onSubmit={(e) => {
-                                e.preventDefault()
-                                handleSubmit(values)
-                            }}
-                        >
-                            {
-                                formFields?.map((section: any, i: any) =>
-                                    <GroupForm
-                                        name={section.name}
-                                        description={section.description}
-                                        key={i}
-                                        fields={section.fields}
+                {({ pristine, form, handleSubmit, values }: any) => {
+                    formRef.current = form;
+                    return <form
+                        onChange={(e: any) => { onInputChange(e) }}
+                        onSubmit={(e) => {
+                            e.preventDefault()
+                            handleSubmit(values)
+                        }}
+                    >
+                        {
+                            formFields?.map((section: any, i: any) =>
+                                <GroupForm
+                                    name={section.name}
+                                    description={section.description}
+                                    key={i}
+                                    fields={section.fields}
                                         form={form}
                                         onInputChange={onInputChange}
                                         trackedEntity={trackedEntity}
@@ -61,22 +65,21 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                                 )
                             }
 
-                            {withButtons && <ModalActions>
-                                <ButtonStrip end className={styles.btnStrip} >
-                                    {formActions(pristine, form).map((action: any, i) =>
-                                        <Button
-                                            key={i}
-                                            {...action}
-                                            loading={false}
-                                        >
-                                            {action.label}
-                                        </Button>
-                                    )}
-                                </ButtonStrip>
-                            </ModalActions>}
-                        </form>
-                    </>
-                )}
+                        {withButtons && <div>
+                            <ButtonStrip end className={styles.btnStrip} >
+                                {formActions(pristine, form).map((action: any, i) =>
+                                    <Button
+                                        key={i}
+                                        {...action}
+                                        loading={false}
+                                    >
+                                        {action.label}
+                                    </Button>
+                                )}
+                            </ButtonStrip>
+                        </div>}
+                    </form>
+                }}
             </Form>
         </div >
     )

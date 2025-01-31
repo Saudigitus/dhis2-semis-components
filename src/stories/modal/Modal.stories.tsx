@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { Button } from '@dhis2/ui';
 import { fn } from '@storybook/test';
@@ -6,7 +7,7 @@ import ModalComponent from '../../components/modal/Modal';
 
 const actions = [
   { id: "cancel", small: true, name: "Cancel", disabled: false, primary: true, onClick: () => { } },
-  { id: "saveandnew", name: "Save and add new", color: "gray",  disabled: false, onClick: () => { } },
+  { id: "saveandnew", name: "Save and add new", color: "gray", disabled: false, onClick: () => { } },
   { id: "saveandcontinue", name: "Save and close", primary: true, disabled: false, loading: true, onClick: () => { } }
 ];
 
