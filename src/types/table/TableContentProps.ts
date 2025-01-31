@@ -19,7 +19,7 @@ interface HeaderCellProps {
     passOnProps?: object
     table?: TableProps
     colspan?: number
-    onClick?: () => void
+    onClick?: (args: any) => void
 }
 
 interface RowProps {
@@ -55,12 +55,12 @@ interface RenderRowsProps {
     loading?: boolean
     viewPortWidth: number
     selectedOU?: string
-    showEnrollments: boolean
     showRowActions?: boolean
     rowAction: RowActionsType[]
     displayType?: TableRowActionsType
     programConfig: ProgramConfig
     inactiveRowMessage?: string
+    onRowClick?: (args: any) => void
 }
 
 interface EnrollmentDetailsComponentProps {
@@ -90,7 +90,6 @@ interface TableRenderProps {
     tableData: Record<string, any>[]
     sortable?: boolean,
     selectedOU?: string,
-    showEnrollments?: boolean,
     searchActions?: any
     showRowActions?: boolean
     rowAction?: RowActionsType[]
@@ -107,6 +106,7 @@ interface TableRenderProps {
     rightElements?: ReactElement
     programConfig: ProgramConfig
     inactiveRowMessage?: string
+    onRowClick?: (teiData: any) => void
 }
 
 

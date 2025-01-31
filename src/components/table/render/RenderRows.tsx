@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames';
 import { RenderRowsProps } from '../../../types/table/TableContentProps';
 import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
@@ -14,6 +14,10 @@ import { formatKeyValueTypeHeader } from '../../../utils/common/formatKeyValueTy
 import { GetImageUrl } from '../../../utils/table/getImageUrl';
 import { IconButton, Tooltip } from '@mui/material';
 import { CropOriginal } from '@material-ui/icons';
+import EnrollmentDetailsComponent from '../../../components/searchEnrollment/enrollmentDetailsComponent/EnrollmentDetailsComponent';
+import { checkEnrolledAcademicYear } from '../../../utils/table/checkEnrolledAcademicYear';
+import { useUrlParams } from 'dhis2-semis-functions';
+import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -73,6 +77,10 @@ const useStyles = makeStyles((theme: Theme) =>
 function RenderRows(props: RenderRowsProps): React.ReactElement {
     const classes = useStyles()
     const { imageUrl } = GetImageUrl()
+    const { urlParameters } = useUrlParams()
+    const { academicYear, sectionType, school } = urlParameters()
+    const { registration } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
+    const [showEnrollments, setShowEnrollments] = useState<string>()
     const {
         headerData,
         rowsData = [],
@@ -80,12 +88,12 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
         loading,
         viewPortWidth,
         selectedOU,
-        showEnrollments,
         showRowActions,
         rowAction,
         displayType,
         programConfig,
-        inactiveRowMessage
+        inactiveRowMessage,
+        onRowClick
     } = props;
 
     if (rowsData?.length === 0 && !loading) {
@@ -121,6 +129,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                         <RowCell
                                             key={column.id}
                                             className={classNames(classes.cell, classes.bodyCell)}
+                                            onClick={() => onRowClick ? onRowClick(row) : {}}
                                         >
                                             {
                                                 formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
@@ -145,7 +154,12 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                         className={classNames(classes.cell, classes.bodyCell, classes.actionsCell)}
                                     >
                                         <TableRowActions
-                                            actions={rowAction}
+                                            actions={
+                                                searchActions ? [{
+                                                    ...rowAction[0],
+                                                    onClick: () => setShowEnrollments(showEnrollments === row.trackedEntity ? "" : row.trackedEntity)
+                                                }] : rowAction
+                                            }
                                             disabled={checkCanceled(row.status)}
                                             loading={loading!}
                                             displayType={displayType}
@@ -169,6 +183,25 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                     />
                                 }
                             />
+                        }
+
+                        {searchActions && showEnrollments === row.trackedEntity ?
+                            <RowTable className={classNames(classes.row, classes.historyRow)}>
+                                <RowCell
+                                    className={classNames(classes.cell, classes.bodyCell)}
+                                    colspan={headerData?.filter(x => x.visible)?.length as unknown as number + 1}
+                                >
+                                    <EnrollmentDetailsComponent programConfig={programConfig} existingAcademicYear={checkEnrolledAcademicYear
+                                        (
+                                            row?.registrationEvents,
+                                            academicYear as unknown as string,
+                                            registration.academicYear,
+                                            school!,
+                                            sectionType!
+                                        )} onSelectTei={onRowClick ? () => onRowClick(row) : undefined} enrollmentsData={row.registrationEvents} />
+                                </RowCell>
+                            </RowTable>
+                            : null
                         }
                     </>
                 ))

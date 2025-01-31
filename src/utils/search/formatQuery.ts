@@ -1,7 +1,7 @@
 import { GroupedSearchableAttributesTypes } from "../../types/variables/GroupedSearchableAttributesTypes";
 import { filterCollapsedAttributes } from "./filterCollapsedAttributes";
 
-export const formattedQuery = (teiAttributes: any, searchEnrollmentFields: GroupedSearchableAttributesTypes, collapseAttributes: any, queryForm: any) => {
+export const formattedQuery = (teiAttributes: any, searchEnrollmentFields: GroupedSearchableAttributesTypes[], collapseAttributes: any, queryForm: any) => {
     var query = "";
     for (const [key, value] of Object.entries(
         filterCollapsedAttributes(searchEnrollmentFields,

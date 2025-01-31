@@ -50,7 +50,6 @@ function Table(props: TableRenderProps): React.ReactElement {
         rowsPerPages,
         tableData,
         selectedOU,
-        showEnrollments = false,
         sortable = false,
         searchActions = false,
         showRowActions = false,
@@ -61,7 +60,8 @@ function Table(props: TableRenderProps): React.ReactElement {
         defaultFilterNumber,
         rightElements,
         programConfig,
-        inactiveRowMessage
+        inactiveRowMessage,
+        onRowClick
     } = props
 
     const classes = useStyles()
@@ -119,7 +119,6 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         rowsData={tableData}
                                         loading={loading}
                                         selectedOU={selectedOU}
-                                        showEnrollments={showEnrollments}
                                         searchActions={searchActions}
                                         viewPortWidth={viewPortWidth}
                                         showRowActions={showRowActions}
@@ -127,6 +126,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         displayType={displayType}
                                         programConfig={programConfig}
                                         inactiveRowMessage={inactiveRowMessage}
+                                        onRowClick={onRowClick}
                                     />
                                 )}
 

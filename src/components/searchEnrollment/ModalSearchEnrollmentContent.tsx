@@ -30,9 +30,9 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   const [collapseAttributes, setCollapseAttributes] = useState(0)
   const { urlParameters } = useUrlParams();
   const { school: orgUnit, schoolName: orgUnitName, academicYear } = urlParameters();
-  
-  const rowsActions: any[] = [
-    { icon: <IconInfo24 />, color: '#277314', label: `View history`, disabled: false, onClick: () => { alert("Edition") } },
+
+  const rowsActions: any = [
+    { icon: <IconInfo24 />, color: '#144b73', label: `View history`, disabled: false },
   ];
 
   const modalActions = [
@@ -62,7 +62,6 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
 
 
   const onHandleSubmit = async () => {
-    console.log(queryForm, 'submit')
     if (formattedQuery(
       teiAttributes,
       searchEnrollmentFields,
@@ -119,7 +118,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
     setOpenNewEnrollmentModal(true)
     setOpen(false);
   }
-
+  
   return (
     <ModalComponent
       title="Fill in at least 1 attribute to search."
@@ -171,6 +170,10 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                     totalElements={10}
                     title={`Results found for ${sectionName} search`}
                     rowAction={rowsActions}
+                    onRowClick={onSelectTei}
+                    displayType="icon"
+                    showRowActions
+                    searchActions
                   />
                 </div> :
                 <NoticeBox className={styles.noticeBox} title={`No ${sectionName} found`}>

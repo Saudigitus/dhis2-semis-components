@@ -2,13 +2,15 @@ import GroupForm from "../form/GroupForm";
 import { Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "dhis2-semis-types";
 import styles from './groupform.module.css'
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { FormApi } from "final-form"
+import { objectComparison } from "../../utils/common/customFormPristine";
 
 interface IForm extends Record<string, any> { }
 
-export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form }: FormProps) {
+export default function CustomForm({ formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel }: FormProps) {
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
+    const [changed, setChanged] = useState(false)
 
     const formActions = (form: any) => [
         {
@@ -23,10 +25,10 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
         },
         {
             id: "continue",
-            label: "Submit",
+            label: submitButtonLabel ? submitButtonLabel : "Submit",
             success: "success",
             type: "submit",
-            disabled: loading,
+            disabled: !changed || loading,
             primary: true,
             icon: loading ? <CircularLoader small /> : null,
         },
@@ -42,7 +44,15 @@ export default function CustomForm({ formFields, style, onInputChange, onFormSub
                     formRef.current = form;
                     return (
                         <form
-                            onChange={onInputChange}
+                            onChange={(values) => {
+                                if (!objectComparison(initialValues, values)) {
+                                    setChanged(true)
+                                } else {
+                                    setChanged(false)
+                                }
+
+                                onInputChange(values)
+                            }}
                             onSubmit={(e) => {
                                 e.preventDefault();
                                 handleSubmit(values);

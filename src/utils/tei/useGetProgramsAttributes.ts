@@ -22,24 +22,6 @@ function useGetProgramsAttributes({ programConfig }: { programConfig: ProgramCon
             content: '',
             key: '',
             type: VariablesTypes.Attribute
-        },
-        {
-            id: "actions",
-            displayName: "Actions",
-            header: "Actions",
-            required: false,
-            name: "actions",
-            labelName: "Actions",
-            valueType: Attribute.valueType.TEXT as unknown as CustomAttributeProps["valueType"],
-            options: undefined as unknown as CustomAttributeProps["options"],
-            visible: true,
-            disabled: false,
-            pattern: '',
-            searchable: false,
-            error: false,
-            content: '',
-            key: '',
-            type: VariablesTypes.Attribute
         }
     ]
 
