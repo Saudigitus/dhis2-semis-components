@@ -1,18 +1,12 @@
-import { selectedDataStoreKey } from 'dhis2-semis-types';
 import ModalComponent from '../../../components/modal/Modal'
 import CustomForm from '../../../components/form/form'
 import { exportFields } from '../../../utils/constants/exportFields'
 import { format } from 'date-fns'
+import { useUrlParams } from 'dhis2-semis-functions/dist/declarations';
 
-export default function ModalExportEmpty({ orgUnitName, eventFilters, open, setOpen, onSubmit, selectedSectionDataStore, module, Form }: { Form: any, selectedSectionDataStore: selectedDataStoreKey, onSubmit: (rows: any) => void, orgUnitName: string, eventFilters: string[], open: boolean, setOpen: (args: boolean) => void, module: "attendance" | "final-result" | "enrollment" | "performance" }) {
-
-    function getAcademicYear() {
-        const academicYearFilter = eventFilters.find(x => x.includes(selectedSectionDataStore.registration.academicYear))?.split(":") as unknown as string
-        const section = eventFilters.find(x => x.includes(selectedSectionDataStore.registration.section))?.split(":") as unknown as string
-        const grade = eventFilters.find(x => x.includes(selectedSectionDataStore.registration.grade))?.split(":") as unknown as string
-
-        return { academicYear: academicYearFilter?.[2] ?? "", class: section?.[2] ?? "", grade: grade?.[2] ?? "" }
-    }
+export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form }: { Form: any, onSubmit: (rows: any) => void, open: boolean, setOpen: (args: boolean) => void, module: "attendance" | "final-result" | "enrollment" | "performance" }) {
+    const { urlParameters } = useUrlParams()
+    const { schoolName: orgUnitName, academicYear, class: section, grade } = urlParameters()
 
     return (
         <ModalComponent
@@ -22,8 +16,9 @@ export default function ModalExportEmpty({ orgUnitName, eventFilters, open, setO
             title='Export Data Details'
             children={
                 <CustomForm
+                    storyBook={false}
                     Form={Form}
-                    initialValues={{ orgUnitName: orgUnitName, ...getAcademicYear() }}
+                    initialValues={{ orgUnitName: orgUnitName, academicYear: academicYear, class: section, grade: grade }}
                     onFormSubtmit={(e) => {
                         void onSubmit({
                             numberOfEmptyRows: e.rows,
