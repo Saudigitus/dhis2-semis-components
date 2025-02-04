@@ -118,7 +118,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
     setOpenNewEnrollmentModal(true)
     setOpen(false);
   }
-  
+
   return (
     <ModalComponent
       title="Fill in at least 1 attribute to search."
@@ -151,6 +151,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                         Form={Form}
                         withButtons={true}
                         loading={loading}
+                        storyBook={false}
                       />
                     </WithPadding>
                   </WithBorder>

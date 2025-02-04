@@ -2,7 +2,7 @@ import ModalComponent from '../../../components/modal/Modal'
 import CustomForm from '../../../components/form/form'
 import { exportFields } from '../../../utils/constants/exportFields'
 import { format } from 'date-fns'
-import { useUrlParams } from 'dhis2-semis-functions/dist/declarations';
+import { useUrlParams } from 'dhis2-semis-functions';
 
 export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form }: { Form: any, onSubmit: (rows: any) => void, open: boolean, setOpen: (args: boolean) => void, module: "attendance" | "final-result" | "enrollment" | "performance" }) {
     const { urlParameters } = useUrlParams()
@@ -16,7 +16,8 @@ export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form
             title='Export Data Details'
             children={
                 <CustomForm
-                    storyBook={false}
+
+                storyBook={false}
                     Form={Form}
                     initialValues={{ orgUnitName: orgUnitName, academicYear: academicYear, class: section, grade: grade }}
                     onFormSubtmit={(e) => {
@@ -30,6 +31,7 @@ export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form
                     formFields={[
                         {
                             "name": "Details",
+                            "storyBook":false,
                             "description": "This file will allow the import of new student data into the system.",
                             "fields": [
                                 ...exportFields(module)

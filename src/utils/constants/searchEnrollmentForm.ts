@@ -50,6 +50,7 @@ function formFields(variablesData: any[], sectionName: string): GroupFormProps[]
 
   return [
     {
+      storyBook:false,
       name: "",
       description: "",
       fields: variablesData

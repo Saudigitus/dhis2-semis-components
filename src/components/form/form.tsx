@@ -8,7 +8,8 @@ import { objectComparison } from "../../utils/common/customFormPristine";
 
 interface IForm extends Record<string, any> { }
 interface imageFieldSpecificProps {
-    storyBook: boolean
+    storyBook: boolean,
+    trackedEntity?: string
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
