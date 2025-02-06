@@ -1,11 +1,10 @@
 import { importData } from "../../../types/bulk/bulkOperations";
-import DropZone from "../../../components/dropzone/DropZone";
-import { useValidation } from "../template_validation/useValidation";
+import DropZone from "../../../kcomponents/dropzone/DropZone";
 import { useImportData } from "./useImportData";
-import { modules } from "../../../types/common/moduleTypes";
 import ModalComponent from "../../../components/modal/Modal";
 import { useEffect, useState } from "react";
 import ModalProgress from "../progress/interactiveProgress";
+import { useValidation } from "dhis2-semis-functions";
 
 export default function ProcessImport(props: importData) {
     const { module, label, onError } = props
@@ -28,7 +27,7 @@ export default function ProcessImport(props: importData) {
     }, [progress.progress])
 
     const onValidation = async (file: File) => {
-        UseValidation.setModule(module as unknown as modules)
+        UseValidation.setModule(module as unknown as any)
 
         await UseValidation.validation(file[0])
             .then((resp) => {

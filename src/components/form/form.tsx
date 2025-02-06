@@ -18,7 +18,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
 
-    const formActions = (form: any) => [
+    const formActions = (form: any, values: any) => [
         {
             id: "cancel",
             type: "reset",
@@ -33,9 +33,13 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
             id: "continue",
             label: submitButtonLabel ? submitButtonLabel : "Submit",
             success: "success",
-            type: "submit",
+            type: "reset",
             disabled: !changed || loading,
             primary: true,
+            onClick: (eventt: any) => {
+                console.log(values, eventt)
+                onFormSubtmit(values)
+            },
             icon: loading ? <CircularLoader small /> : null,
         },
     ];
@@ -43,7 +47,9 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
     return (
         <div style={style}>
             <Form
-                onSubmit={(values: any) => onFormSubtmit(values)}
+                onSubmit={(values: any) => {
+                    onFormSubtmit(values)
+                }}
                 initialValues={initialValues}
             >
                 {({ form, handleSubmit, values }) => {
@@ -57,7 +63,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                                     setChanged(false)
                                 }
 
-                                onInputChange(values)
+                                if (onInputChange) onInputChange(values)
                             }}
                             onSubmit={(e) => {
                                 e.preventDefault();
@@ -80,7 +86,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                             {withButtons && (
                                 <div>
                                     <ButtonStrip end className={styles.btnStrip}>
-                                        {formActions(form).map((action: any, i) => (
+                                        {formActions(form, values).map((action: any, i) => (
                                             <Button key={i} {...action} loading={false}>
                                                 {action.label}
                                             </Button>

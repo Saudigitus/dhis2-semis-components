@@ -16,8 +16,7 @@ export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form
             title='Export Data Details'
             children={
                 <CustomForm
-
-                storyBook={false}
+                    storyBook={false}
                     Form={Form}
                     initialValues={{ orgUnitName: orgUnitName, academicYear: academicYear, class: section, grade: grade }}
                     onFormSubtmit={(e) => {
@@ -31,7 +30,7 @@ export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form
                     formFields={[
                         {
                             "name": "Details",
-                            "storyBook":false,
+                            "storyBook": false,
                             "description": "This file will allow the import of new student data into the system.",
                             "fields": [
                                 ...exportFields(module)
