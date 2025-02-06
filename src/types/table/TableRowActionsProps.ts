@@ -2,6 +2,11 @@ type TableRowActionsType = "icon" | "menu"
 
 interface TableRowActionsProps {
     /**
+     * Selected row data.
+     * @type {Record<string, any>}
+     */
+    row?: Record<string, any>
+    /**
      * To disable the component when true. Must be true if the data are being loaded.
      * @type {boolean}
      */
@@ -57,6 +62,11 @@ interface RowActionsType {
 }
 
 interface RowActionsProps {
+    /**
+     * Selected row data.
+     * @type {Record<string, any>}
+     */
+    row?: Record<string, any>
     /**
      * Sets the whole component disabled if true.
      * @type {boolean}

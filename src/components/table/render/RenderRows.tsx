@@ -160,6 +160,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                                     onClick: () => setShowEnrollments(showEnrollments === row.trackedEntity ? "" : row.trackedEntity)
                                                 }] : rowAction
                                             }
+                                            row={row}
                                             disabled={checkCanceled(row.status)}
                                             loading={loading!}
                                             displayType={displayType}
