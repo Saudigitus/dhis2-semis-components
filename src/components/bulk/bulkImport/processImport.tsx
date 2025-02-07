@@ -1,5 +1,5 @@
 import { importData } from "../../../types/bulk/bulkOperations";
-import DropZone from "../../../kcomponents/dropzone/DropZone";
+import DropZone from "../../../components/dropzone/DropZone";
 import { useImportData } from "./useImportData";
 import ModalComponent from "../../../components/modal/Modal";
 import { useEffect, useState } from "react";

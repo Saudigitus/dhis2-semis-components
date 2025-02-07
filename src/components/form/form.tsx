@@ -8,7 +8,7 @@ import { objectComparison } from "../../utils/common/customFormPristine";
 
 interface IForm extends Record<string, any> { }
 interface imageFieldSpecificProps {
-    storyBook: boolean,
+    storyBook?: boolean,
     trackedEntity?: string
 }
 
@@ -56,14 +56,14 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                     formRef.current = form;
                     return (
                         <form
-                            onChange={(values) => {
+                            onChange={(values: any) => {
                                 if (!objectComparison(initialValues, values)) {
                                     setChanged(true)
                                 } else {
                                     setChanged(false)
                                 }
 
-                                if (onInputChange) onInputChange(values)
+                                if (onInputChange) onInputChange({ value: values.target.value, field: values, name: values.target.name })
                             }}
                             onSubmit={(e) => {
                                 e.preventDefault();
@@ -80,6 +80,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                                     onInputChange={onInputChange}
                                     trackedEntity={trackedEntity}
                                     storyBook={storyBook}
+                                    setChanged={setChanged}
                                 />
                             ))}
 
