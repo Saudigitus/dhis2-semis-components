@@ -104,7 +104,7 @@
 .sideBarSubItemContainer {
     margin-bottom: 3px;
     list-style: none;
-    color: var(--font-secondary-color);
+    color: #555 !important;
     font-weight: 400;
     line-height: var(--sidebar-font-line-height);
     font-style: normal;
