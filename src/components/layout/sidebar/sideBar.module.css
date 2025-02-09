@@ -3,7 +3,7 @@
     height: calc(100vh - 48px);
     width: 270px !important;
     position: relative;
-    background-color: var(--secondary-colort-white) !important;
+    background-color: white !important;
     transition: width 0.3s ease !important;
 }
 
@@ -12,7 +12,7 @@
     height: calc(100vh - 48px);
     max-width: 90px;
     position: relative;
-    background-color: var(--secondary-colort-white) !important;
+    background-color: white !important;
     transition: width 0.3s ease !important;
 }
 
@@ -94,11 +94,11 @@
 }
 
 .sideBarItemTitle {
-    color: var(--font-third-color);
-    font-family: var(--primary-font-family);
-    font-size: var(--sidebar-font-size);
+    color: #1e6194 !important;
+    font-family: Roboto !important;
+    font-size: 16px !important;
     font-weight: 500;
-    line-height: var(--sidebar-font-line-height);
+    line-height: 24px !important;
 }
 
 .sideBarSubItemContainer {
