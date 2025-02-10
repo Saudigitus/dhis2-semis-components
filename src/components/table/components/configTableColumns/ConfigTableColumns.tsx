@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { IconSettings24 } from '@dhis2/ui';
-import { IconButton, Tooltip } from '@material-ui/core';
+import { IconSettings24, NoticeBox } from '@dhis2/ui';
+import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import DialogConfigColumns from './DialogConfigColumns';
 import { type CustomAttributeProps } from 'dhis2-semis-types'
 
@@ -8,11 +8,24 @@ interface ConfigTableColumnsProps {
     headers: CustomAttributeProps[]
     updateVariables: (list: CustomAttributeProps[]) => void
     filteredHeaders: CustomAttributeProps[]
+    selected?: number
+    selectable?: boolean
 }
 
+const useStyles = makeStyles((theme) => ({
+    noticeBox: {
+        margin: '13px 0px 10px 5px',
+        height: '38px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+}));
+
 function ConfigTableColumns(props: ConfigTableColumnsProps) {
-    const { headers, updateVariables, filteredHeaders } = props;
+    const { headers, updateVariables, filteredHeaders, selectable, selected } = props;
     const [open, setopen] = useState(false)
+    const classes = useStyles()
 
     const closeDialog = () => {
         setopen(false)
@@ -24,6 +37,9 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
 
     return (
         <React.Fragment>
+            {
+                (selected > 0 && selectable) && <NoticeBox className={classes.noticeBox} title={`${selected} rows selected`} />
+            }
             <Tooltip
                 disableFocusListener
                 disableTouchListener

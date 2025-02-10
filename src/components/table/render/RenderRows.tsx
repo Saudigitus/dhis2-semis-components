@@ -16,8 +16,10 @@ import { IconButton, Tooltip } from '@mui/material';
 import { CropOriginal } from '@material-ui/icons';
 import EnrollmentDetailsComponent from '../../../components/searchEnrollment/enrollmentDetailsComponent/EnrollmentDetailsComponent';
 import { checkEnrolledAcademicYear } from '../../../utils/table/checkEnrolledAcademicYear';
+import { Checkbox } from "@dhis2/ui"
 import { useUrlParams } from 'dhis2-semis-functions';
 import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey';
+import { deepEqual } from '../../../utils/table/objectComparison';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -93,8 +95,14 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
         displayType,
         programConfig,
         inactiveRowMessage,
-        onRowClick
+        onRowClick,
+        indeterminate,
+        isCheckbox,
+        onChange,
+        selected
     } = props;
+
+    const isSelected = (row: any): boolean => selected.find((item: any) => deepEqual(item, row));
 
     if (rowsData?.length === 0 && !loading) {
         return (
@@ -124,6 +132,17 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
                                 className={classNames(classes.row, classes.dataRow, (searchActions && showEnrollments) ? classes.dataRowCollapsed : null)}
                             >
+                                {isCheckbox &&
+                                    <RowCell
+                                        className={classNames(classes.cell, classes.bodyCell)}
+                                    >
+                                        <Checkbox
+                                            indeterminate={indeterminate}
+                                            checked={isSelected(row)}
+                                            onChange={() => onChange && onChange(row)}
+                                        />
+                                    </RowCell>
+                                }
                                 {
                                     headerData?.filter(x => x.visible)?.map(column => (
                                         <RowCell

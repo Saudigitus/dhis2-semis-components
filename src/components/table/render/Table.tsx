@@ -13,6 +13,7 @@ import HeaderFilters from '../components/head/HeaderFilters';
 import { type CustomAttributeProps } from 'dhis2-semis-types'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-select/dist/react-select.css";
+import { deepEqual } from '../../../utils/table/objectComparison';
 
 const useStyles = makeStyles((theme) => ({
     tableContainer: {
@@ -61,7 +62,10 @@ function Table(props: TableRenderProps): React.ReactElement {
         rightElements,
         programConfig,
         inactiveRowMessage,
-        onRowClick
+        onRowClick,
+        selectable,
+        selected,
+        setSelected
     } = props
 
     const classes = useStyles()
@@ -76,6 +80,23 @@ function Table(props: TableRenderProps): React.ReactElement {
     const onRowsPerPageChange = (event: any) => {
         setPageSize(parseInt(event.value, 10))
         setPage(1)
+    }
+
+    const onCheckboxChange = (row: any, all?: boolean) => {
+        if (all) {
+            if (all && tableData.length === selected.length) setSelected([])
+            else setSelected([...tableData])
+        } else {
+            const index = selected.findIndex((x: any) => deepEqual(x, row))
+
+            if (index > -1) {
+                let copy = [...selected]
+                copy.splice(index, 1)
+                setSelected(copy)
+            } else {
+                setSelected((prev: any) => ([...prev, row]))
+            }
+        }
     }
 
     return (
@@ -96,6 +117,8 @@ function Table(props: TableRenderProps): React.ReactElement {
                         filterState={filterState}
                         setFilterState={setFilterState}
                         defaultFilterNumber={defaultFilterNumber}
+                        selectable={selectable}
+                        selected={selected?.length ?? 0}
                     />
                     <div
                         className={classes.tableContainer}
@@ -111,6 +134,9 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         rowsHeader={filteredHeaders.length > 0 ? filteredHeaders : columns}
                                         sortable={sortable}
                                         showRowActions={showRowActions}
+                                        onChange={onCheckboxChange}
+                                        isCheckbox={selectable}
+                                        selectedAll={tableData?.length === selected?.length}
                                     />
                                 }
                                 {!loading && (
@@ -127,6 +153,9 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         programConfig={programConfig}
                                         inactiveRowMessage={inactiveRowMessage}
                                         onRowClick={onRowClick}
+                                        onChange={onCheckboxChange}
+                                        selected={selected}
+                                        isCheckbox={selectable}
                                     />
                                 )}
 
