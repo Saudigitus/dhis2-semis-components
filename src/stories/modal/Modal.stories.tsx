@@ -8,7 +8,7 @@ import ModalComponent from '../../components/modal/Modal';
 const actions = [
   { id: "cancel", small: true, name: "Cancel", disabled: false, primary: true, onClick: () => { } },
   { id: "saveandnew", name: "Save and add new", color: "gray", disabled: false, onClick: () => { } },
-  { id: "saveandcontinue", name: "Save and close", primary: true, disabled: false, loading: true, onClick: () => { } }
+  { id: "saveandcontinue", name: "Save and close", prfimary: true, disabled: false, loading: true, onClick: () => { } }
 ];
 
 const meta = {
@@ -19,13 +19,38 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    open: { description: "The variable which controls the modal status. If true the modal is opened." },
-    size: { description: "To set modal width.", options: ["small", "medium", "large"] },
-    handleClose: { description: "To set the open value to false and close modal." },
-    title: { description: "The title that appears in the modal." },
+    open: {
+      control: { type: "boolean", value: false },
+      description: "The variable which controls the modal status. If true the modal is opened."
+    },
+    loading: {
+      control: { type: "boolean", value: false },
+      description: "To set loading state of modal."
+    },
+    size: {
+      control: { type: "select" },
+      description: "To set modal width.",
+      options: ["small", "medium", "large"]
+    },
+    handleClose: {
+      control: {},
+      description: "To set the open value to false and close modal."
+    },
+    title: {
+      control: { type: "text", required: true, value: "Modal Component Title" },
+      description: "The title that appears in the modal."
+    },
     children: { description: "The modal body content." },
-    position: { description: "To set modal position on app window.", options: ["top", "middle", "bottom"], value: "middle" },
-    isClickAway: { description: "This variable determines if the modal will be closed with click away." }
+    position: {
+      value: "middle",
+      control: { type: "select" },
+      options: ["top", "middle", "bottom"],
+      description: "To set modal position on app window.",
+    },
+    isClickAway: {
+      control: { type: "boolean", value: false },
+      description: "This variable determines if the modal will be closed with click away."
+    }
   },
   args: {
     open: false,

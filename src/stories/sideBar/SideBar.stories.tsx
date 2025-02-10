@@ -20,7 +20,7 @@ const sideBarData: SideBarItemProps[] = [
                 icon: home,
                 displayInMenu: true,
                 label: "Home",
-                badgeInfo: "10",
+               
                 disabled: false,
                 appName: "SEMIS",
                 route: `home`,
@@ -38,7 +38,7 @@ const sideBarData: SideBarItemProps[] = [
                 icon: listAdd,
                 displayInMenu: true,
                 label: "Enrollment",
-                badgeInfo: "10",
+               
                 disabled: false,
                 appName: "SEMIS-Enrollment",
                 route: `enrollment?`,
@@ -50,7 +50,7 @@ const sideBarData: SideBarItemProps[] = [
                 icon: glyph,
                 displayInMenu: true,
                 label: "Attendance",
-                badgeInfo: "10",
+               
                 disabled: false,
                 appName: "SEMIS-Attendance",
                 route: `attendance?`,
@@ -62,7 +62,7 @@ const sideBarData: SideBarItemProps[] = [
                 icon: fileDocument,
                 displayInMenu: true,
                 label: "Performance",
-                badgeInfo: "10",
+               
                 disabled: false,
                 appName: "SEMIS-Performance",
                 route: `performance?`,
@@ -74,7 +74,7 @@ const sideBarData: SideBarItemProps[] = [
                 icon: gauge,
                 displayInMenu: true,
                 label: "Final result",
-                badgeInfo: "10",
+               
                 disabled: false,
                 appName: "SEMIS-Final-Result",
                 route: `final-result?`,
@@ -86,7 +86,7 @@ const sideBarData: SideBarItemProps[] = [
                 icon: logOut,
                 displayInMenu: true,
                 label: "Transfer",
-                badgeInfo: "10",
+               
                 disabled: false,
                 appName: "SEMIS-Transfer",
                 route: `transfer`,
@@ -104,7 +104,7 @@ const sideBarData: SideBarItemProps[] = [
                 icon: userGroup,
                 displayInMenu: true,
                 label: "Staff registry",
-                badgeInfo: "10",
+               
                 disabled: false,
                 appName: "SEMIS-Enrollment",
                 route: `enrollment`,
@@ -116,7 +116,7 @@ const sideBarData: SideBarItemProps[] = [
                 icon: glyph,
                 displayInMenu: true,
                 label: "Attendance",
-                badgeInfo: "10",
+               
                 disabled: false,
                 appName: "SEMIS-Attendance",
                 route: `attendance`,
@@ -128,7 +128,7 @@ const sideBarData: SideBarItemProps[] = [
                 icon: logOut,
                 displayInMenu: true,
                 label: "Transfer",
-                badgeInfo: "10",
+               
                 disabled: false,
                 appName: "SEMIS-Transfer",
                 route: `transfer`,
@@ -146,14 +146,20 @@ const meta = {
     parameters: {
         layout: 'centered',
     },
-    args: { sideBarData: sideBarData },
+    args: { sideBarData: sideBarData, collapsed: true},
+    argTypes: {
+        collapsed: { 
+            control: { type: 'boolean' },
+            description: "Collapse the sidebar",
+        },
+    },
     tags: ['autodocs'],
-} satisfies Meta;
+} satisfies Meta<typeof SideBarComponent>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Colapsed: Story = {
+export const SideBar: Story = {
 
     args: {
         collapsed: true

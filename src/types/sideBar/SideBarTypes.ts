@@ -56,7 +56,7 @@ interface SideBarSubItemProps {
      * An important information to display aside the side bar subItem label
      * @type {string}
      */
-    badgeInfo: string
+    badgeInfo?: string
     /**
      * The side bar menu icon.
      * @type {string}

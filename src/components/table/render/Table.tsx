@@ -20,12 +20,19 @@ const useStyles = makeStyles((theme) => ({
     },
     workingListsContainer: {
         display: 'flex',
-        marginLeft: '0.5rem',
+        padding: '0.6rem 0.5rem',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    tablebuttons:{
+        display: 'flex',
+        flexWrap: 'wrap',
+        columnGap: '5px',
         alignItems: 'center',
         justifyContent: 'space-between',
     },
     h4: {
-        margin: '10px 0px 10px 5px',
+        margin: '10px 0px 10px 0px',
         fontSize: '22px',
         fontWeigth: '500',
         [theme.breakpoints.down('md')]: {
@@ -82,7 +89,7 @@ function Table(props: TableRenderProps): React.ReactElement {
         <Paper>
             <div className={classes.workingListsContainer}>
                 <h4 className={classes.h4}>{title}</h4>
-                <div >
+                <div className={classes.tablebuttons}>
                     {rightElements}
                 </div>
             </div>

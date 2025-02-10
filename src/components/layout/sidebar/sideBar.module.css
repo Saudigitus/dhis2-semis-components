@@ -10,7 +10,7 @@
 .sideBarContainerCollapsed {
     border-right: 1px solid #e6e4e4;
     height: calc(100vh - 48px);
-    max-width: 90px;
+    max-width: 95px;
     position: relative;
     background-color: var(--secondary-colort-white);
     transition: width 0.3s ease !important;
@@ -36,10 +36,9 @@
 
 .sideBarMenu {
     height: 100%;
-    padding: 20px 15px;
+    padding: 20px 13px;
     flex: inherit;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: auto;
 }
 
 
@@ -59,15 +58,17 @@
     white-space: nowrap !important;
 }
 
-.sideBarContainerCollapsed .sideBarSubItemContainer {
+.sideBarContainerCollapsed .sideBarSubItemContainer,
+.sideBarContainerCollapsed .sideBarSubItemContainerActive {
     justify-content: center;
     /* min-width: 40px; */
-    height: 56px !important;
+    /* height: 56px !important; */
 }
 
-.sideBarContainerCollapsed .sideBarSubItemContainer img {
-    margin-right: 0px;
-    min-width: 22px !important;
+.sideBarContainerCollapsed .sideBarSubItemContainer img,
+.sideBarContainerCollapsed .sideBarSubItemContainerActive img {
+    margin-right: 0px !important;
+    min-width: 1.2em !important;
 }
 
 .tooltipContainer {
@@ -90,7 +91,7 @@
 .sideBarItemContainer {
     width: 100%;
     height: auto;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .sideBarItemTitle {
@@ -102,14 +103,13 @@
 }
 
 .sideBarSubItemContainer {
-    margin-bottom: 3px;
     list-style: none;
     color: var(--font-secondary-color);
     font-weight: 400;
     line-height: var(--sidebar-font-line-height);
     font-style: normal;
     font-size: var(--sidebar-font-size);
-    padding: 16px;
+    padding: 10px 10px;
     display: flex;
     position: relative;
     align-items: center;
@@ -126,27 +126,26 @@
 }
 
 .sideBarSubItemContainerActive {
-    margin-bottom: 3px;
     list-style: none;
     color: var(--font-secondary-color);
     font-weight: 400;
     line-height: var(--sidebar-font-line-height);
     font-style: normal;
     font-size: var(--sidebar-font-size);
-    padding: 16px;
+    padding: 10px 10px;
     display: flex;
     position: relative;
     align-items: center;
     cursor: default;
     background-color: rgba(0, 0, 0, 0.138);
-    border-radius: 5px !important;
+    border-radius: 6px !important;
     color: black !important;
     cursor: pointer;
 }
 
 .sideBarSubItemContainer:hover {
     background-color: rgba(0, 0, 0, 0.138);
-    border-radius: 5px !important;
+    border-radius: 6px !important;
     cursor: pointer;
 }
 
@@ -169,12 +168,12 @@
 
 .sideBarSubItemContainer img {
     margin-right: 16px;
-    min-width: 22px !important;
+    min-width: 1.2em !important;
 }
 
 .sideBarSubItemContainerActive img {
     margin-right: 16px;
-    min-width: 22px !important;
+    min-width: 1.2em !important;
 }
 
 
@@ -222,7 +221,7 @@
 @media screen and (max-width: 885px) and (min-width: 569px) {
     .sideBarContainer {
         height: 100%;
-        width: 170px !important;
+        width: 240px !important;
         position: relative;
         background-color: var(--secondary-colort-white);
         transition: width 0.3s ease !important;
@@ -236,7 +235,7 @@
 
     .sideBarSubItemContainer,
     .sideBarSubItemContainerActive {
-        height: 36px !important;
+        /* height: 36px !important; */
     }
 
     .sideBarContainerCollapsed .sideBarSubItemContainer img {
@@ -261,7 +260,7 @@
     .sideBarContainerCollapsed .sideBarSubItemContainer {
         justify-content: center;
         min-width: 40px;
-        height: 36px !important;
+        /* height: 36px !important; */
     }
 }
 
@@ -274,7 +273,7 @@
 
     .sideBarSubItemContainer,
     .sideBarSubItemContainerActive {
-        height: 36px !important;
+        /* height: 36px !important; */
     }
 
     .sideBarContainerCollapsed .sideBarSubItemContainer img {
@@ -299,7 +298,7 @@
     .sideBarContainerCollapsed .sideBarSubItemContainer {
         justify-content: center;
         min-width: 40px;
-        height: 36px !important;
+        /* height: 36px !important; */
     }
 
     .sideBarContainerCollapsed .sideBarMenu {
@@ -309,9 +308,8 @@
         padding: 0;
     }
 
-    .sideBarMenu {
-        width: 70px;
-        padding: 20px 10px;
+    .sideBarMenu, .sideBarContainer {
+        width: 65px !important;
     }
 
     .sideBarMenu .sideBarItemTitle,
