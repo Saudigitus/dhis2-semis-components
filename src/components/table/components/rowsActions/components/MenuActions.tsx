@@ -6,7 +6,7 @@ import { ListItemText, Menu, MenuItem, IconButton, ListItemIcon } from '@materia
 
 
 export default function MenuActions(props: RowActionsProps) {
-  const { actions: menuItems, disabled } = props;
+  const { actions: menuItems, disabled, row } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -50,8 +50,8 @@ export default function MenuActions(props: RowActionsProps) {
           <MenuItem dense
             key={index}
             disabled={item.disabled}
-            onClick={() => {
-              item.onClick();
+            onClick={(row: RowActionsProps["row"]) => {
+              item.onClick(row);
               handleClose();
             }}
           >

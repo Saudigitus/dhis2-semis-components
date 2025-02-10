@@ -4,7 +4,7 @@ import { IconButton, Tooltip } from '@material-ui/core';
 import { RowActionsProps, RowActionsType } from '../../../../../types/table/TableRowActionsProps';
 
 export default function IconActions(props: RowActionsProps) {
-  const { actions, disabled } = props;
+  const { actions, disabled, row } = props;
 
   return (
     <React.Fragment>
@@ -19,7 +19,7 @@ export default function IconActions(props: RowActionsProps) {
               style={{ cursor: (option.disabled || disabled) ? 'not-allowed' : "pointer" }}
             >
               <IconButton
-                onClick={() => { option.onClick() }}
+                onClick={(row: RowActionsProps["row"]) => { option.onClick(row) }}
                 className={style.rowActionsIcon}
                 disabled={option.disabled || disabled}
                 style={{ color: option.color, opacity: (option.disabled || disabled) ? "0.3" : "1" }}

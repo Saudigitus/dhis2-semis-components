@@ -16,6 +16,9 @@
     max-width: 400px !important;
 }
 
+.modalContainer>div>div {
+    max-width: 100% !important;
+}
 
 .closeModalButton button {
     top: 0;
