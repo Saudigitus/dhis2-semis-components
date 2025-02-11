@@ -20,8 +20,6 @@ export default function IconActions(props: RowActionsProps) {
             >
               <IconButton
                 onClick={(event) => {
-                  event.stopPropagation(); 
-                  console.log('Row value:', row); // Log the row value
                   option.onClick.bind(null,row); 
                 }}
                 className={style.rowActionsIcon}
