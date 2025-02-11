@@ -1,9 +1,8 @@
-import { modules } from "../../../types/common/moduleTypes";
+import { modules } from "dhis2-semis-functions";
 import { read, utils, WorkBook } from "xlsx";
 
 const METADATA = "Metadata"
 const VALIDATION = "Validation"
-const Ids = "Ids"
 const Attendance = "Attendance"
 
 type Section = {

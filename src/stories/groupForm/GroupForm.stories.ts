@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import SDCustomForm from "../../components/form/form";
 import { CustomAttributeProps, VariablesTypes } from 'dhis2-semis-types';
-// import { fn } from '@storybook/test';
-
+import { Form } from 'react-final-form'
 const meta = {
     title: 'Group form/Group form',
     component: SDCustomForm,
@@ -24,10 +23,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Group_form: Story = {
     args: {
+        Form: Form,
         storyBook: true,
         withButtons: true,
         formFields: [
             {
+                storyBook: true,
                 name: "Text Inputs",
                 description: "No description",
                 fields: [

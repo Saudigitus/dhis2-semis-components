@@ -3,15 +3,16 @@ import { Field } from 'react-final-form';
 import { Popover, Paper, Button, TextField } from '@mui/material';
 import { DateRange } from 'react-date-range';
 import { format } from 'date-fns';
-import "react-date-range/dist/styles.css"; 
-import "react-date-range/dist/theme/default.css"; 
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 interface DateRangePickerProps {
     name: string;
     disabled?: boolean;
+    setChanged?: any
 }
 
-const DateRangePicker: React.FC<DateRangePickerProps> = ({ name, disabled }) => {
+const DateRangePicker: React.FC<DateRangePickerProps> = ({ name, disabled, setChanged }) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [open, setOpen] = useState(false);
 
@@ -77,6 +78,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ name, disabled }) => 
                                             endDate: value[0].endDate,
                                         });
                                         setOpen(false);
+                                        setChanged(true)
                                     }}
                                     color="primary"
                                 >

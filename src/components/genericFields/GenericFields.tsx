@@ -12,7 +12,7 @@ import DateRangePicker from './fields/datepicker/improvedDateRage';
 import ImageField from './fields/ImageField';
 import { DataProvider } from '@dhis2/app-runtime';
 
-function GenericFields({ attribute, disabled, valueType, form, onInputChange, storybook }: GenericFieldsComponentProps) {
+function GenericFields({ attribute, disabled, valueType, form, onInputChange, storybook, setChanged }: GenericFieldsComponentProps) {
 
   switch (valueType) {
     case Attribute.valueType.BOOLEAN as unknown as CustomAttributeProps["valueType"]:
@@ -49,14 +49,14 @@ function GenericFields({ attribute, disabled, valueType, form, onInputChange, st
             <ImageField storyBook={storybook} disabled={disabled} {...attribute} form={form} />
             : (
               <DataProvider baseUrl='http://localhost:8080'>
-                <ImageField storyBook={storybook} disabled={disabled} {...attribute} form={form} />;
+                <ImageField storyBook={storybook} disabled={disabled} {...attribute} form={form} />
               </DataProvider>
             )
         }
       </>
 
     case 'DATE_RANGE' as unknown as CustomAttributeProps["valueType"]:
-      return <DateRangePicker disabled={disabled} name='dateRange' />
+      return <DateRangePicker disabled={disabled} name='dateRange' setChanged={setChanged} />
 
     default:
       return <span>ValueType not mapped</span>;

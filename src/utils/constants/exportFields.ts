@@ -35,7 +35,7 @@ export function exportFields(module: "attendance" | "final-result" | "enrollment
             "required": true,
             "name": "rows",
             "labelName": "Number of Rows",
-            "valueType": "TEXT" as unknown as CustomAttributeProps['valueType'],
+            "valueType": "NUMBER" as unknown as CustomAttributeProps['valueType'],
             "disabled": false,
             "visible": true,
             "description": "label",
