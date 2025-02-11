@@ -19,7 +19,7 @@ export default function IconActions(props: RowActionsProps) {
               style={{ cursor: (option.disabled || disabled) ? 'not-allowed' : "pointer" }}
             >
               <IconButton
-                onClick={(row: RowActionsProps["row"]) => { option.onClick(row) }}
+                onClick={() => { option.onClick(row) }}
                 className={style.rowActionsIcon}
                 disabled={option.disabled || disabled}
                 style={{ color: option.color, opacity: (option.disabled || disabled) ? "0.3" : "1" }}

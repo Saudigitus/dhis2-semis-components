@@ -50,7 +50,7 @@ export default function MenuActions(props: RowActionsProps) {
           <MenuItem dense
             key={index}
             disabled={item.disabled}
-            onClick={(row: RowActionsProps["row"]) => {
+            onClick={() => {
               item.onClick(row);
               handleClose();
             }}
