@@ -19,7 +19,11 @@ export default function IconActions(props: RowActionsProps) {
               style={{ cursor: (option.disabled || disabled) ? 'not-allowed' : "pointer" }}
             >
               <IconButton
-                onClick={() => { option.onClick(row) }}
+                onClick={(event) => {
+                  event.stopPropagation(); 
+                  console.log('Row value:', row); // Log the row value
+                  option.onClick.bind(null,row); 
+                }}
                 className={style.rowActionsIcon}
                 disabled={option.disabled || disabled}
                 style={{ color: option.color, opacity: (option.disabled || disabled) ? "0.3" : "1" }}
