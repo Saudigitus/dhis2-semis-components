@@ -44,9 +44,9 @@ const OptionSetAutocomplete = (props: AutoCompleteProps) => {
           />
 
         )}
-        onChange={(_, value: any) => {
-          input.onChange(value?.value);
-          if (props.onChange) props.onChange(value)
+        onChange={(field, value: any) => {
+          input.onChange(value);
+          if (props.onChange) props.onChange({ field: field, value: value.value, name: props.name });
         }}
       />
       {

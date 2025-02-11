@@ -1,11 +1,11 @@
 
 import { useEffect, useState } from 'react'
-import { IconUpload24, IconCross24 } from "@dhis2/ui";
-import { Button } from '@material-ui/core';
-import { Box } from '@material-ui/core';
-import { useField, type FieldRenderProps } from "react-final-form";
-import style from "./fields.module.css";
-import { FormFieldsProps } from '../../../types/form/GenericFieldsTypes';
+import { IconUpload24, IconCross24 } from "@dhis2/ui"
+import { Button } from '@material-ui/core'
+import { Box } from '@material-ui/core'
+import { useField, type FieldRenderProps } from "react-final-form"
+import style from "./fields.module.css"
+import { FormFieldsProps } from '../../../types/form/GenericFieldsTypes'
 import { useFileResource } from 'dhis2-semis-functions'
 
 interface imageFieldSpecificProps {
@@ -17,37 +17,37 @@ interface CombinedProps extends FormFieldsProps, imageFieldSpecificProps { }
 
 function ImageField(props: CombinedProps) {
     const { disabled, name, form, storyBook } = props
-    const { input }: FieldRenderProps<any, HTMLElement> = useField(name);
-    const [uploadedImage, setUploadedImage] = useState<any>();
+    const { input }: FieldRenderProps<any, HTMLElement> = useField(name)
+    const [uploadedImage, setUploadedImage] = useState<any>()
     const { createFileResource, getFileResource, loading } = useFileResource()
 
     const handleFileChange = async (event: any) => {
-        const image = event.target.files[0];
+        const image = event.target.files[0]
 
         form.batch(() => {
-            form.change(name, image);
-        });
+            form.change(name, image)
+        })
 
-        const reader = new FileReader();
+        const reader = new FileReader()
         reader.onloadend = () => {
-            setUploadedImage(reader.result);
-        };
-        reader.readAsDataURL(image);
+            setUploadedImage(reader.result)
+        }
+        reader.readAsDataURL(image)
 
         if (!storyBook)
             await createFileResource({ file: image }).then((response) => {
-                input.onChange(response?.fileId);
+                input.onChange(response?.fileId)
             })
-    };
+    }
 
     async function getImage() {
         await getFileResource({ trackedEntity: props.trackedEntity, attribute: input.name }).then((response: { file: any }) => {
-            const reader = new FileReader();
+            const reader = new FileReader()
             reader.onloadend = () => {
                 console.log(response, 'the fileeee')
-                setUploadedImage(reader.result);
-            };
-            reader.readAsDataURL(response.file);
+                setUploadedImage(reader.result)
+            }
+            reader.readAsDataURL(response.file)
         })
     }
 
@@ -58,8 +58,8 @@ function ImageField(props: CombinedProps) {
     }, [input.value])
 
     const onRemove = () => {
-        setUploadedImage("");
-        input.onChange("");
+        setUploadedImage("")
+        input.onChange("")
     }
 
     return (

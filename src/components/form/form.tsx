@@ -8,7 +8,7 @@ import { objectComparison } from "../../utils/common/customFormPristine";
 
 interface IForm extends Record<string, any> { }
 interface imageFieldSpecificProps {
-    storyBook: boolean,
+    storyBook?: boolean,
     trackedEntity?: string
 }
 
@@ -18,7 +18,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
 
-    const formActions = (form: any) => [
+    const formActions = (form: any, values: any) => [
         {
             id: "cancel",
             type: "reset",
@@ -33,9 +33,13 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
             id: "continue",
             label: submitButtonLabel ? submitButtonLabel : "Submit",
             success: "success",
-            type: "submit",
+            type: "reset",
             disabled: !changed || loading,
             primary: true,
+            onClick: (eventt: any) => {
+                console.log(values, eventt)
+                onFormSubtmit(values)
+            },
             icon: loading ? <CircularLoader small /> : null,
         },
     ];
@@ -43,21 +47,23 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
     return (
         <div style={style}>
             <Form
-                onSubmit={(values: any) => onFormSubtmit(values)}
+                onSubmit={(values: any) => {
+                    onFormSubtmit(values)
+                }}
                 initialValues={initialValues}
             >
                 {({ form, handleSubmit, values }) => {
                     formRef.current = form;
                     return (
                         <form
-                            onChange={(values) => {
+                            onChange={(values: any) => {
                                 if (!objectComparison(initialValues, values)) {
                                     setChanged(true)
                                 } else {
                                     setChanged(false)
                                 }
 
-                                onInputChange(values)
+                                if (onInputChange) onInputChange({ value: values.target.value, field: values, name: values.target.name })
                             }}
                             onSubmit={(e) => {
                                 e.preventDefault();
@@ -74,13 +80,14 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                                     onInputChange={onInputChange}
                                     trackedEntity={trackedEntity}
                                     storyBook={storyBook}
+                                    setChanged={setChanged}
                                 />
                             ))}
 
                             {withButtons && (
                                 <div>
                                     <ButtonStrip end className={styles.btnStrip}>
-                                        {formActions(form).map((action: any, i) => (
+                                        {formActions(form, values).map((action: any, i) => (
                                             <Button key={i} {...action} loading={false}>
                                                 {action.label}
                                             </Button>

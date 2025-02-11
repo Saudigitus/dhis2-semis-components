@@ -6,19 +6,27 @@ import useProgramConfig from '../../hooks/appWrapper/useProgramConfig';
 import { DataStoreProps } from 'dhis2-semis-types';
 import { AppWrapperProps } from '../../types/appWrapper/AppWrapperProps';
 import { DataProvider } from '@dhis2/app-runtime';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useSetRecoilState } from 'recoil';
+import { ProgramConfigState } from '../../schemas/programSchema';
 
 const AppWrapperRaw = ({ children, dataStoreKey }: AppWrapperProps) => {
   const [loading, setLoading] = useState<boolean>(true)
   const { error, validationError, getDataStore } = useDataStore(dataStoreKey);
-  const { getProgram, data: programs, error: errorProgram } = useProgramConfig()
+  const { getProgram, error: errorProgram } = useProgramConfig()
+  const setProgramsValues = useSetRecoilState(ProgramConfigState
+  )
 
   useEffect(() => {
     void getDataStore()
       .then(async (response: DataStoreProps) => {
+        let programs: any = []
+
         for (let i = 0; i < response.length; i++) {
-          await getProgram(response?.[i].program)
+          const result = await getProgram(response?.[i].program)
+          programs.push(result)
         }
+
+        setProgramsValues(programs);
         setLoading(false)
       }).catch(() => {
         setLoading(false)

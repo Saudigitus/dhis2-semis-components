@@ -7,8 +7,14 @@ import classNames from "classnames";
 import Text from "../text/Text";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function GroupForm(props: GroupFormProps) {
-    const { name, fields, description, form, onInputChange, trackedEntity, storyBook } = props
+interface customProps {
+    setChanged?: any,
+}
+
+interface CombinedProps extends GroupFormProps, customProps { }
+
+function GroupForm(props: CombinedProps) {
+    const { setChanged, name, fields, description, form, onInputChange, trackedEntity, storyBook } = props
 
     return (
         <>
@@ -47,6 +53,7 @@ function GroupForm(props: GroupFormProps) {
                                         form={form}
                                         onInputChange={onInputChange}
                                         storybook={storyBook}
+                                        setChanged={setChanged}
                                     />
                                     <span className={styles.content}>
                                         {x.content}

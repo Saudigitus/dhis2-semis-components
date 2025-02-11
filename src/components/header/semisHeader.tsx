@@ -3,7 +3,7 @@ import { SemisHeaderProps } from "../../types/header/headerTypes"
 import HeaderItem from "./components/headerItem"
 
 const SemisHeader = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
-    const { grades, classes, academicYears,orgunits } = headerItems;
+    const { grades, classes, academicYears, orgunits } = headerItems;
     return (
         <>
             <HeaderItem headerItem={

@@ -18,7 +18,6 @@ export function useImportData({ setProgress, onError }: { setProgress: (rags: an
     const { urlParameters } = useUrlParams()
     const { school: orgUnit } = urlParameters()
 
-
     async function importData(props: CombinedTypes) {
         setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
         const { onError, excelData, importMode, updating = false, programConfig, selectedSectionDataStore, sectionType } = props

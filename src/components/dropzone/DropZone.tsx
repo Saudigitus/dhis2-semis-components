@@ -11,6 +11,7 @@ import { FormApi } from 'final-form';
 import { type DropZoneProps } from "../../types/dropzone/dropZoneTypes";
 import ModalComponent from "../modal/Modal";
 import { DefaultExtensionType, FileIcon, defaultStyles } from "react-file-icon";
+import { useValidation } from "../../hooks/template_validation/useValidation";
 
 interface IForm { }
 
@@ -23,6 +24,7 @@ function DropZone(props: DropZoneProps) {
     const inputFiles = document.querySelectorAll(".dropzone_area input[type='file']");
     const inputElement: any = inputFiles[0];
     const dropZoneElement: any = inputElement?.closest(".dropzone_area");
+    const validation = new useValidation();
 
     useEffect(() => {
         if (uploadedFile === undefined) {
@@ -53,7 +55,10 @@ function DropZone(props: DropZoneProps) {
             label: "Continue",
             success: "success",
             disabled: !Boolean(uploadedFile) || loading,
-            onClick: () => onSave([uploadedFile]),
+            // onClick: () => onSave([uploadedFile]),
+            onclick: () => {
+
+            },
             primary: true,
             icon: loading ? <CircularLoader small /> : <></>
         }

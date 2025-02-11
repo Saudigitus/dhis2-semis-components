@@ -43,9 +43,10 @@ interface RenderHeaderProps {
     isCheckbox?: boolean
     checked?: boolean
     indeterminate?: boolean
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onChange?: (selected: any, all?: boolean) => void
     sortable: boolean
     showRowActions?: boolean
+    selectedAll?: boolean
 }
 
 interface RenderRowsProps {
@@ -61,6 +62,10 @@ interface RenderRowsProps {
     programConfig: ProgramConfig
     inactiveRowMessage?: string
     onRowClick?: (args: any) => void
+    onChange?: (selected: any, all?: boolean) => void
+    isCheckbox?: boolean
+    indeterminate?: boolean
+    selected?: any
 }
 
 interface EnrollmentDetailsComponentProps {
@@ -79,7 +84,10 @@ interface TableSortProps {
 
 interface TableRenderProps {
     title?: string,
+    selectable?: boolean,
     viewPortWidth?: number,
+    selected?: any,
+    setSelected?: (arg: any) => void,
     columns: any,
     totalElements: number,
     loading?: boolean,
