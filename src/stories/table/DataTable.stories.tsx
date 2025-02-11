@@ -127,10 +127,10 @@ const headerColumns = [
 ]
 
 const rowsData = [
-  { fistid1: 'First Name', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' },
-  { fistid1: 'First Name', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' },
-  { fistid1: 'First Name', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' },
-  { fistid1: 'First Name', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' }
+  { fistid1: 'First Name 1', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' },
+  { fistid1: 'First Name 2', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' },
+  { fistid1: 'First Name 3', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' },
+  { fistid1: 'First Name 4', fistid2: 'Second Name', fistid3: 'Therd Name', fistid4: 'Fourth Name' }
 ]
 
 const meta = {

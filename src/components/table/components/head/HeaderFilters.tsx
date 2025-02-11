@@ -17,16 +17,18 @@ interface HeaderFiltersProps {
     dataElements: any[],
     attributes: any[]
   }) => void
+  selected?: number
+  selectable?: boolean
 }
 
 function HeaderFilters(props: HeaderFiltersProps): React.ReactElement {
-  const { updateVariables, filteredHeaders, columns, filterState, setFilterState, defaultFilterNumber } = props;
+  const { updateVariables, filteredHeaders, columns, filterState, setFilterState, defaultFilterNumber, selectable, selected } = props;
 
   return (
     <div className={styles.filterContainer}>
-      <EnrollmentFilters filterState={filterState}  variables={columns} setFilterState={setFilterState} defaultFilterNumber={defaultFilterNumber} />
+      <EnrollmentFilters filterState={filterState} variables={columns} setFilterState={setFilterState} defaultFilterNumber={defaultFilterNumber} />
 
-      <ConfigTableColumns filteredHeaders={filteredHeaders} headers={columns} updateVariables={updateVariables} />
+      <ConfigTableColumns selected={selected} selectable={selectable} filteredHeaders={filteredHeaders} headers={columns} updateVariables={updateVariables} />
     </div>
   );
 }
