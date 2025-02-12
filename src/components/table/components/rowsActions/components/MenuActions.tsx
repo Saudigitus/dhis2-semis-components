@@ -51,8 +51,7 @@ export default function MenuActions(props: RowActionsProps) {
             key={index}
             disabled={item.disabled}
             onClick={(event) => {
-              console.log(row)
-              item.onClick({ event, row });
+              item.onClick({ row });
               handleClose();
             }}
           >
