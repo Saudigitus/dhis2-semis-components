@@ -1,4 +1,6 @@
 import { ReactNode } from "react"
+
+type ButtonPosition = "top" | "top-offset";
 interface SideBarProps {
     /**
      * Defines if side bar must show icons and labels or only icons.
@@ -12,6 +14,8 @@ interface SideBarProps {
      * @type {SideBarItemProps[]}
      */
     sideBarData: SideBarItemProps[]
+
+    sideBarBtnPosition?: ButtonPosition
 }
 
 interface SideBarItemProps {
@@ -117,5 +121,8 @@ interface SideBarCollapseProps {
      * @type {(collapsed: boolean) => void}
      */
     setCollapsed: (collapsed: boolean) => void
+
+    sideBarBtnPosition?: ButtonPosition
+
 }
 export type { SideBarProps, SideBarItemProps, SideBarItemTitleProps, SideBarSubItemProps, SideBarCollapseProps, SideBarNavWrapperProps }

@@ -3,10 +3,14 @@ import style from "../sideBar.module.css"
 import { SideBarCollapseProps } from '../../../../types/sideBar/SideBarTypes';
 
 export default function SibeBarCollapseBtn(props: SideBarCollapseProps): React.ReactElement {
-    const { setCollapsed, collapsed } = props;
-    
+    const { setCollapsed, collapsed, sideBarBtnPosition } = props;
+
+    const buildStyle = (): string => {
+        return sideBarBtnPosition == 'top' ? '2px' : '41px'
+    }
+
     return (
-        <div onClick={() => { setCollapsed(!collapsed); }} className={style.expandCollapseSideBar}>
+        <div style={{ top: buildStyle() }} onClick={() => { setCollapsed(!collapsed); }} className={style.expandCollapseSideBar}>
             <div className={style.iconContainer}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="56" viewBox="0 0 24 56" fill="none">
                     <path d="M0 0L19.6825 10.2058C22.335 11.5811 24 14.32 24 17.3078V38.6922C24 41.68 22.335 44.4189 19.6825 45.7942L0 56V0Z" fill="#1E6194" />

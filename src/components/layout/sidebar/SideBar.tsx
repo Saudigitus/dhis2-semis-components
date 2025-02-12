@@ -5,7 +5,7 @@ import SibeBarCollapseBtn from './components/SibeBarCollapseBtn';
 import { SideBarItemProps, SideBarProps } from '../../../types/sideBar/SideBarTypes';
 
 export default function SideBar(props: SideBarProps): React.ReactElement {
-    const { sideBarData, collapsed: isCollapsed = true } = props;
+    const { sideBarData, collapsed: isCollapsed = true, sideBarBtnPosition = "top" } = props;
     const [collapsed, setCollapsed] = useState<boolean>(isCollapsed);
 
     return (
@@ -17,7 +17,7 @@ export default function SideBar(props: SideBarProps): React.ReactElement {
                     ))
                 }
             </div>
-            <SibeBarCollapseBtn collapsed={collapsed} setCollapsed={setCollapsed} />
+            <SibeBarCollapseBtn collapsed={collapsed} setCollapsed={setCollapsed} sideBarBtnPosition={sideBarBtnPosition}/>
         </aside>
     )
 }
