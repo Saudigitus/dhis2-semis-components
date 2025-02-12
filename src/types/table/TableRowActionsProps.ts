@@ -58,7 +58,7 @@ interface RowActionsType {
      * The action event.
      * @type {(arg?: any) => void}
      */
-    onClick: (arg?: any) => void
+    onClick: (args: { event?: any; row?: any }) => void
 }
 
 interface RowActionsProps {
