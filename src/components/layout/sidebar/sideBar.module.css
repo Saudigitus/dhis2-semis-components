@@ -135,6 +135,7 @@
     padding: 10px 10px;
     display: flex;
     position: relative;
+    height: 56px !important;
     align-items: center;
     cursor: default;
     background-color: rgba(0, 0, 0, 0.138);
@@ -195,7 +196,6 @@
 
 .expandCollapseSideBar {
     position: absolute;
-    top: 2px;
     z-index: 1;
     right: -25px;
     cursor: pointer;
