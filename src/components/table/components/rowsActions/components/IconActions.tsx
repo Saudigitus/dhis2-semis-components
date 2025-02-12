@@ -20,8 +20,7 @@ export default function IconActions(props: RowActionsProps) {
             >
               <IconButton
                 onClick={(event) => {
-                  console.log(row)
-                  option.onClick({ event, row });
+                  option.onClick({ row });
                 }}
                 className={style.rowActionsIcon}
                 disabled={option.disabled || disabled}
