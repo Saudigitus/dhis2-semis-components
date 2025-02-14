@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import style from "./sideBar.module.css"
 import SideBarItem from './components/SideBarItem'
 import SibeBarCollapseBtn from './components/SibeBarCollapseBtn';
-import { SideBarItemProps, SideBarProps } from '../../../types/sideBar/SideBarTypes';
+import { SideBarItemProps, SideBarProps } from '../../types/sideBar/SideBarTypes';
 
 export default function SideBar(props: SideBarProps): React.ReactElement {
     const { sideBarData, collapsed: isCollapsed = true, sideBarBtnPosition = "top" } = props;

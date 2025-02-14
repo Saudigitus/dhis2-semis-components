@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import Badge from '../../../badge/Badge';
+import Badge from '../../badge/Badge';
 import style from "../sideBar.module.css"
-import { SideBarSubItemProps } from '../../../../types/sideBar/SideBarTypes';
+import { SideBarSubItemProps } from '../../../types/sideBar/SideBarTypes';
 
 export default function SideBarSubItem(props: SideBarSubItemProps) {
     const { icon, label, badgeInfo, disabled, appUrl, active, action } = props
