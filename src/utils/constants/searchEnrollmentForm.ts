@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { VariablesTypes, GroupFormProps } from 'dhis2-semis-types'
 
 const staticForm = () => {
@@ -21,6 +22,26 @@ const staticForm = () => {
       header: "Registering School",
       type: VariablesTypes.DataElement,
       assignedValue: undefined
+    },
+    enrollmentDate: {
+      required: true,
+      name: "enrollment_date",
+      labelName: "Enrollment date",
+      valueType: "DATE",
+      options: undefined,
+      disabled: false,
+      pattern: "",
+      visible: true,
+      description: "Enrollment date",
+      searchable: false,
+      error: false,
+      programStage: "",
+      content: "",
+      id: "enrollment_date",
+      displayName: "Enrollment date",
+      header: "Enrollment date",
+      type: VariablesTypes.DataElement,
+      assignedValue: format(new Date(), "yyyy-MM-dd")
     },
     numberOfStudents: {
       required: false,
@@ -50,7 +71,7 @@ function formFields(variablesData: any[], sectionName: string): GroupFormProps[]
 
   return [
     {
-      storyBook:false,
+      storyBook: false,
       name: "",
       description: "",
       fields: variablesData

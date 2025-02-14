@@ -1,42 +1,21 @@
-import { useGetDataElements, useUrlParams, useUploadEvents } from "dhis2-semis-functions";
+import { useBuildForm, modules } from "dhis2-semis-functions";
 import { useDataStoreKey } from "../../hooks/dataStore/useDataStoreKey";
 import { useState } from "react";
 import { NoticeBox, Button, IconAddCircle24 } from "@dhis2/ui";
 import WithPadding from "../template/WithPadding";
 import CustomForm from "../form/form";
 import ModalComponent from "../modal/Modal";
+import useProgramsKeys from "../../hooks/appWrapper/useProgramsKeys";
 import WithBorder from "../template/WithBorder";
+import { staticForm } from "../../utils/constants/searchEnrollmentForm";
 
-export default function AsssignFinalResult({ selected, Form }: { selected: any[], Form: any }) {
-    const { urlParameters } = useUrlParams()
-    const { sectionType } = urlParameters()
-    const { "final-result": fr } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
-    const { dataElements } = useGetDataElements({ programStageId: fr.programStage, type: "programStage" })
+export default function PerformPromotion({ selected, Form, loading, onSubmit }: { onSubmit: (e: any) => void, selected: any[], Form: any, loading: boolean }) {
+    const programsValues = useProgramsKeys();
+    const programData = programsValues[0];
+    const dataStoreData = useDataStoreKey({ sectionType: "student" });
+    const { formData } = useBuildForm({ dataStoreData, programData, module: modules.enrollment });
+    const [enrollmentDetails = []] = formData;
     const [open, setOpen] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const { uploadValues } = useUploadEvents()
-
-    async function formSubmit(values: any) {
-        setLoading(true)
-        let events = []
-        let frStatus = Object.keys(values)[0]
-
-        for (const tei of selected) {
-            events.push({
-                ...tei.frEvent,
-                dataValues: [
-                    {
-                        dataElement: frStatus,
-                        value: values[frStatus]
-                    }
-                ]
-            })
-        }
-        await uploadValues({ events: events }, 'COMMIT', 'CREATE_AND_UPDATE')
-            .then(() => setLoading(false))
-            .catch(() => setLoading(false))
-    }
-
 
     return (
         <>
@@ -44,7 +23,7 @@ export default function AsssignFinalResult({ selected, Form }: { selected: any[]
                 setOpen(true);
             }} icon={<IconAddCircle24 />}
             >
-                <span>Assing final result</span>
+                <span>Perform promotion</span>
             </Button >
 
             {
@@ -61,14 +40,18 @@ export default function AsssignFinalResult({ selected, Form }: { selected: any[]
                                     formFields={[
                                         {
                                             storyBook: false,
-                                            name: "Final Result",
-                                            description: "Student final result",
-                                            fields: dataElements
+                                            name: "Student promotion",
+                                            description: "Student promotion",
+                                            fields: [
+                                                staticForm().registeringSchool,
+                                                ...enrollmentDetails,
+                                                staticForm().enrollmentDate
+                                            ]
                                         }
                                     ]}
                                     storyBook={false}
                                     withButtons={true}
-                                    onFormSubtmit={(e) => formSubmit(e)}
+                                    onFormSubtmit={(e) => onSubmit(e)}
                                     onCancel={() => setOpen(false)}
                                 />
                             </WithPadding>
@@ -76,7 +59,7 @@ export default function AsssignFinalResult({ selected, Form }: { selected: any[]
                     </WithPadding>}
                     open={open}
                     handleClose={() => setOpen(false)}
-                    title="Assign Final Result"
+                    title="Perform Promotion"
                 />
             }
         </>

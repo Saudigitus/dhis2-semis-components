@@ -26,6 +26,8 @@ import { stateEmitter } from "./schemas/headerDataSchema"
 import ModalSearchEnrollmentContent from "./components/searchEnrollment/ModalSearchEnrollmentContent"
 import { useDataStoreKey } from './hooks/dataStore/useDataStoreKey'
 import { useGetUsedProgramStages } from "./hooks/programStages/useGetUsedPProgramStages"
+import AsssignFinalResult from './components/assingFinalResult/assignFinalResult'
+import PerformPromotion from "./components/perforPromotion/performPromotion"
 
 export {
     HeaderValuesState,
@@ -55,5 +57,7 @@ export {
     DataExporter,
     DataImporter,
     SemisHeader,
-    ModalSearchEnrollmentContent
+    ModalSearchEnrollmentContent,
+    AsssignFinalResult,
+    PerformPromotion
 }

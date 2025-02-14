@@ -3,6 +3,7 @@ import { IconSettings24, NoticeBox } from '@dhis2/ui';
 import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import DialogConfigColumns from './DialogConfigColumns';
 import { type CustomAttributeProps } from 'dhis2-semis-types'
+import styles from "./configTableColumns.module.css"
 
 interface ConfigTableColumnsProps {
     headers: CustomAttributeProps[]
@@ -36,7 +37,7 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
     }
 
     return (
-        <React.Fragment>
+        <div className={styles['config-table__columns']}>
             {
                 (selected > 0 && selectable) && <NoticeBox className={classes.noticeBox} title={`${selected} rows selected`} />
             }
@@ -60,7 +61,7 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
                 filteredHeaders={filteredHeaders}
                 headers={headers}
             />
-        </React.Fragment>
+        </div>
     )
 }
 
