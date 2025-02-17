@@ -26,6 +26,8 @@ import { stateEmitter } from "./schemas/headerDataSchema"
 import ModalSearchEnrollmentContent from "./components/searchEnrollment/ModalSearchEnrollmentContent"
 import { useDataStoreKey } from './hooks/dataStore/useDataStoreKey'
 import { useGetUsedProgramStages } from "./hooks/programStages/useGetUsedPProgramStages"
+import AsssignFinalResult from './components/assingFinalResult/assignFinalResult'
+import PerformPromotion from "./components/perforPromotion/performPromotion"
 import CustomDropdown from "./components/buttons/dropdown/DropdownButton"
 import { SimpleLayout, FullLayout, SideBarLayout, HeaderBarLayout } from "./components/layout"
 
@@ -58,6 +60,8 @@ export {
     DataImporter,
     SemisHeader,
     ModalSearchEnrollmentContent,
+    AsssignFinalResult,
+    PerformPromotion
     CustomDropdown,
     SideBarLayout,
     SimpleLayout,

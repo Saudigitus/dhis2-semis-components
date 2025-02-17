@@ -40,7 +40,7 @@ function GenericFields({ attribute, disabled, valueType, form, onInputChange, st
       return <CheckInput {...attribute} disabled={disabled} />
 
     case Attribute.valueType.LIST as unknown as CustomAttributeProps["valueType"]:
-      return <SingleSelectField options={attribute.options} onChange={onInputChange} {...attribute} disabled={attribute.disabled} />;
+      return <SingleSelectField setChanged={setChanged} options={attribute.options} onChange={onInputChange} {...attribute} disabled={attribute.disabled} />;
 
     case Attribute.valueType.IMAGE as unknown as CustomAttributeProps["valueType"]:
       return <>

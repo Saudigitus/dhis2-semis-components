@@ -4,7 +4,7 @@ import { type FormProps } from "dhis2-semis-types";
 import styles from './groupform.module.css'
 import { useRef, useState } from "react";
 import { FormApi } from "final-form"
-import { objectComparison } from "../../utils/common/customFormPristine";
+import { deepEqual } from "../../utils/table/objectComparison";
 
 interface IForm extends Record<string, any> { }
 interface imageFieldSpecificProps {
@@ -36,8 +36,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
             type: "reset",
             disabled: !changed || loading,
             primary: true,
-            onClick: (eventt: any) => {
-                console.log(values, eventt)
+            onClick: () => {
                 onFormSubtmit(values)
             },
             icon: loading ? <CircularLoader small /> : null,
@@ -57,7 +56,8 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                     return (
                         <form
                             onChange={(values: any) => {
-                                if (!objectComparison(initialValues, values)) {
+                                console.log(values, deepEqual(initialValues, values))
+                                if (deepEqual(initialValues, values)) {
                                     setChanged(true)
                                 } else {
                                     setChanged(false)

@@ -32,6 +32,7 @@ interface AutoCompleteProps {
     required?: string | boolean
     onChange: (args: any) => void
     style?: any
+    setChanged?: (args: boolean) => void
 }
 
 interface SwitchFieldProps {
