@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import WithBorder from '../../components/template/WithBorder';
 
 const meta = {
-    title: 'Layout/With border',
+    title: 'Layout Utilities/With border',
     component: WithBorder,
     parameters: {
         layout: 'centered',

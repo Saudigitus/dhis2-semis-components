@@ -3,7 +3,7 @@ import DropZone from "./components/dropzone/DropZone"
 import SingleSelectField from "./components/genericFields/fields/SingleSelect"
 import MainHeader from "./components/header/mainHeader"
 import InfoPage from "./components/info/InfoPage"
-import SideBar from "./components/layout/sidebar/SideBar"
+import SideBar from "./components/sidebar/SideBar"
 import ModalComponent from "./components/modal/Modal"
 import SummaryCard from "./components/summaryCard/summaryCard"
 import Pagination from "./components/table/components/pagination/Pagination"
@@ -26,6 +26,8 @@ import { stateEmitter } from "./schemas/headerDataSchema"
 import ModalSearchEnrollmentContent from "./components/searchEnrollment/ModalSearchEnrollmentContent"
 import { useDataStoreKey } from './hooks/dataStore/useDataStoreKey'
 import { useGetUsedProgramStages } from "./hooks/programStages/useGetUsedPProgramStages"
+import CustomDropdown from "./components/buttons/dropdown/DropdownButton"
+import { SimpleLayout, FullLayout, SideBarLayout, HeaderBarLayout } from "./components/layout"
 
 export {
     HeaderValuesState,
@@ -55,5 +57,10 @@ export {
     DataExporter,
     DataImporter,
     SemisHeader,
-    ModalSearchEnrollmentContent
+    ModalSearchEnrollmentContent,
+    CustomDropdown,
+    SideBarLayout,
+    SimpleLayout,
+    FullLayout,
+    HeaderBarLayout
 }
