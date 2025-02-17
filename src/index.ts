@@ -61,7 +61,7 @@ export {
     SemisHeader,
     ModalSearchEnrollmentContent,
     AsssignFinalResult,
-    PerformPromotion
+    PerformPromotion,
     CustomDropdown,
     SideBarLayout,
     SimpleLayout,

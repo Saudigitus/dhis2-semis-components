@@ -1,6 +1,6 @@
 {
   "name": "dhis2-semis-components",
-  "version": "0.6.2-alpha.157",
+  "version": "0.6.2-alpha.159",
   "main": "dist/index.js",
   "types": "dist/declarations/index.d.ts",
   "exports": {
@@ -40,7 +40,6 @@
     "@storybook/theming": "^8.4.2",
     "@types/react": "18.3.1",
     "@types/react-dom": "^18.3.1",
-    "@types/react-select": "^5.0.1",
     "@vitejs/plugin-react": "^4.3.3",
     "copyfiles": "^2.4.1",
     "eslint": "^9.13.0",
@@ -73,7 +72,6 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/pickers": "^3.3.11",
     "@mui/material": "^6.2.0",
-    "@types/classnames": "^2.3.4",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
     "copy-files": "^0.1.0",
