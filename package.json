@@ -1,6 +1,6 @@
 {
   "name": "dhis2-semis-components",
-  "version": "0.6.2-alpha.159",
+  "version": "0.6.2-alpha.161",
   "main": "dist/index.js",
   "types": "dist/declarations/index.d.ts",
   "exports": {
