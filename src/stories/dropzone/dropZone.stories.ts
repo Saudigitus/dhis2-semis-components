@@ -27,9 +27,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Drop_Zone: Story = {
-    args: { onSave: fn(), accept: '.csv,.xlsx,.pdf', hideUploadIcon: false, hideLabel: false, height: "", width: "", buttonLabel: "", dialogMode: false, title: "", placeholder: "" },
+    args: { onSave: fn(), accept: '.csv,.xlsx,.pdf', hideUploadIcon: false, hideLabel: false, height: "", width: "", buttonLabel: "", dialogMode: false, title: "Bulk Operation", placeholder: "" },
 };
 
 export const Dialog_Mode: Story = {
-    args: { onSave: fn(), accept: '.csv,.xlsx,.pdf', hideUploadIcon: false, hideLabel: false, height: "", width: "", buttonLabel: "", dialogMode: true, title: "", placeholder: "" },
+    args: { onSave: fn(), accept: '.csv,.xlsx,.pdf', hideUploadIcon: false, hideLabel: false, height: "", width: "", buttonLabel: "", dialogMode: true, title: "Bulk Operation", placeholder: "" },
 };

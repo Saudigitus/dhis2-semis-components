@@ -1,6 +1,5 @@
 .dropzone_box {
     border-radius: 1rem;
-    padding-top: .5rem;
     display: flex;
     justify-content: center;
     flex-direction: column;

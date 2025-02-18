@@ -7,7 +7,7 @@ import ModalProgress from "../progress/interactiveProgress";
 import { useValidation } from "dhis2-semis-functions";
 
 export default function ProcessImport(props: importData) {
-    const { module, label, onError } = props
+    const { module, label, onError, title } = props
     const [progress, setProgress] = useState({ prorocess: "import", progress: 0, buffer: 0 })
     const { importData } = useImportData({ setProgress, onError })
     const UseValidation = new useValidation()
@@ -51,7 +51,7 @@ export default function ProcessImport(props: importData) {
                 children={<DropZone accept='.csv,.xlsx' onSave={(file) => onValidation(file)} />}
                 handleClose={() => { setOpen(false) }}
                 open={open}
-                title=""
+                title={title}
             />
 
             <ModalProgress
