@@ -171,6 +171,13 @@ interface importData {
     label: string
 
     /**
+   * The title of the import operation component.
+   * 
+   * @type {string}
+   */
+    title: string
+
+    /**
     * this variable makes the system know that it will have to update
     * 
     * existing data using data in this file. 

@@ -1,9 +1,16 @@
 .container {
-    background-color: #fff;
     height: 45px;
-    margin: 4px 0 4px 0px;
+    display: flex !important;
+    align-items: center !important;
+    padding: 4px 0;
+    background-color: #fff;
+    justify-content: space-between !important;
     border-bottom: solid 1px #cecece;
 }
+
+.container div {
+    width: max-content !important;
+} 
 
 .iconContainer {
     float: right !important;
