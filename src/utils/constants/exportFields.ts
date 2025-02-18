@@ -1,4 +1,4 @@
-import { modules } from '../../types/common/moduleTypes'
+import { Modules } from 'dhis2-semis-types';
 import { CustomAttributeProps, VariablesTypes } from 'dhis2-semis-types';
 
 export function exportFields(module: "attendance" | "final-result" | "enrollment" | "performance"): any[] {
@@ -85,10 +85,10 @@ export function exportFields(module: "attendance" | "final-result" | "enrollment
     ]
 
     switch (module) {
-        case modules.attendance:
+        case Modules.Attendance:
             return [...commonFields, ...attendanceFields]
 
-        case modules.enrollment:
+        case Modules.Enrollment:
             return [...commonFields, ...emptyTemplateField]
     }
 
