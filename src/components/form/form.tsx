@@ -9,12 +9,13 @@ import { deepEqual } from "../../utils/table/objectComparison";
 interface IForm extends Record<string, any> { }
 interface imageFieldSpecificProps {
     storyBook?: boolean,
-    trackedEntity?: string
+    trackedEntity?: string,
+    destructive?: boolean
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 
-export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity }: CombinedProps) {
+export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive }: CombinedProps) {
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
 
@@ -25,7 +26,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
             label: "Cancel",
             disabled: loading,
             onClick: () => {
-                form.reset();
+                form.reset()
                 onCancel && onCancel()
             },
             secondary: true,
@@ -36,7 +37,8 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
             success: "success",
             type: "reset",
             disabled: !changed || loading,
-            primary: true,
+            primary: destructive ? !destructive : true,
+            destructive: destructive,
             onClick: () => {
                 onFormSubtmit(values)
             },
