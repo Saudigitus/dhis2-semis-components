@@ -68,7 +68,7 @@ function DropZone(props: DropZoneProps) {
                         className="dropzone_box"
                         onChange={onChange}
                     >
-                        <div style={height && width ? { height: height, width: width } : height ? { height: height } : width ? { width: width } : { width: "900px" }} className={classNames("dropzone_area", uploadedFile && "dropzone_area_filled_bg")}>
+                        <div style={height && width ? { height: height, width: width } : height ? { height: height } : width ? { width: width } : { width: "100%" }} className={classNames("dropzone_area", uploadedFile && "dropzone_area_filled_bg")}>
                             <div className="file_upload_icon">
                                 {uploadedFile ?
                                     <div className="icon" >

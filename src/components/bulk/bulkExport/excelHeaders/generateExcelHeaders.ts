@@ -1,6 +1,6 @@
 import { generateAttendanceDays } from "../../../../utils/attendance/generateAttendanceDays";
 import { GenerateHeaders } from "../../../../types/bulk/bulkOperations";
-import { modules } from "../../../../types/common/moduleTypes";
+import { Modules } from 'dhis2-semis-types';
 import { dfHeaders } from "../../../../utils/constants/dfHeaders";
 import { getFilterLables } from "../../../../utils/format/getFilterLables";
 
@@ -23,8 +23,8 @@ export function generateHeaders(props: GenerateHeaders) {
         const Profile = (sectionType ?? '').substring(0, 1).toUpperCase() + (sectionType ?? '').substring(1, (sectionType ?? '').length) + ' profile'
         let defaultLockedHeaders: any = [Profile, "Ids"], filters: any = {}
         const stageHeaders = [selectedSectionDataStore.registration.programStage,
-        ...((withSocioEconomics || module === modules.enrollment) ? [selectedSectionDataStore["socio-economics"].programStage] : []),
-        ...(module != modules.enrollment ? stagesToExport : [])
+        ...((withSocioEconomics || module === Modules.Enrollment) ? [selectedSectionDataStore["socio-economics"].programStage] : []),
+        ...(module != Modules.Enrollment ? stagesToExport : [])
         ]
         const colors = {
             [selectedSectionDataStore.registration.programStage]: "FCE5CD",

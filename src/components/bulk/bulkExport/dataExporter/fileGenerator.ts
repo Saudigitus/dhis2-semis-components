@@ -5,7 +5,7 @@ import metadataHeaders from '../../../../utils/constants/metadataHeaders.json'
 import { excelProps } from '../../../../types/bulk/bulkOperations';
 import { separateByMonth } from '../../../../utils/attendance/separateByMonth';
 import { dfHeaders } from '../../../../utils/constants/dfHeaders';
-import { modules } from '../../../../types/common/moduleTypes';
+import { Modules } from 'dhis2-semis-types';
 import { generateValidationSheet } from '../../../../utils/common/generateValidationSheet';
 import { convertNumberToLetter } from '../../../../utils/common/convertNumberToLetter';
 
@@ -17,7 +17,7 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
         const regex = /^\d{4}-\d{2}-\d{2}$/
         const workbook = new Excel.Workbook();
         const { headers, rows, filters, fileName, metadata, module, empty, defaultLockedHeaders } = props
-        const workSheets = { ...(module === modules.attendance ? separateByMonth(headers.find(x => x.name === 'Attendance').headers) : { [module]: module }) }
+        const workSheets = { ...(module === Modules.Attendance ? separateByMonth(headers.find(x => x.name === 'Attendance').headers) : { [module]: module }) }
         const { validationHeaders, validationRows } = generateValidationSheet(filters)
 
         let validationSheet = workbook.addWorksheet('Validation', { state: 'veryHidden' })
@@ -114,7 +114,7 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
                 });
             });
 
-            if (module === modules.attendance)
+            if (module === Modules.Attendance)
                 sheet.eachRow({ includeEmpty: true }, (row: any) => {
                     row.eachCell({ includeEmpty: true }, (cell: any) => {
                         if (regex.test(cell._column._key) && cell._row._number > 3) {

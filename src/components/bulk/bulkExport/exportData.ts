@@ -1,11 +1,10 @@
 import { ExportData } from "../../../types/bulk/bulkOperations";
 import { formatSheetData } from "../../../utils/format/formatSheetData";
-import { selectedDataStoreKey } from 'dhis2-semis-types';
+import { selectedDataStoreKey, Modules } from 'dhis2-semis-types';
 import { getMetaData } from '../../../utils/excelMetadata/getMetadata';
 import { generateHeaders } from './excelHeaders/generateExcelHeaders';
 import { getCommonSheetData } from './useGetCommonData/commonData';
 import { generateFile } from './dataExporter/fileGenerator';
-import { modules } from '../../../types/common/moduleTypes';
 import { generateEmptyRows } from '../../../utils/common/generateData';
 import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
@@ -49,7 +48,7 @@ export function useExportData(props: ExportData) {
             onError(`Export error: ${msg}`)
         } else {
 
-            if (empty && module != modules.enrollment) {
+            if (empty && module != Modules.Enrollment) {
                 onError('Export error: The empty variable only applies to the enrollment module!')
             } else {
                 setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
@@ -59,12 +58,12 @@ export function useExportData(props: ExportData) {
 
                 if (!empty) data = await getData()
 
-                if (module != modules.enrollment) {
+                if (module != Modules.Enrollment) {
                     for (let teisCounter = 0; teisCounter < data.length; teisCounter++) {
                         for (let a = 0; a < stagesToExport.length; a++) {
                             await getEvents({
                                 program: selectedSectionDataStore?.program as unknown as string,
-                                ...(module === modules.attendance ? {
+                                ...(module === Modules.Attendance ? {
                                     occurredAfter: startDate,
                                     occurredBefore: endDate
                                 } : {}),
@@ -98,7 +97,7 @@ export function useExportData(props: ExportData) {
                             })
                         }
                     }
-                } else if (empty && module == modules.enrollment) {
+                } else if (empty && module == Modules.Enrollment) {
                     let ids: any = {}
 
                     for (const idToGenerate of toGenerate) {

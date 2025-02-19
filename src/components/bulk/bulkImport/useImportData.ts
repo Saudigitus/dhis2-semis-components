@@ -1,6 +1,5 @@
 import { excelData, importData } from "../../../types/bulk/bulkOperations";
-import { modules } from "../../../types/common/moduleTypes";
-import { selectedDataStoreKey } from 'dhis2-semis-types';
+import { selectedDataStoreKey, Modules } from 'dhis2-semis-types';
 import { generateAttendanceEventObjects, generateEnrollmentData, generateEventObjects } from "./createEvents/createEventsObject";
 import { postAttendanceValues } from "./postEvents/postAttendance";
 import { postEnrollmentData } from "./postEvents/postEnrollment";
@@ -27,7 +26,7 @@ export function useImportData({ setProgress, onError }: { setProgress: (rags: an
             const profile = sectionType.substring(0, 1).toUpperCase() + sectionType.substring(1, sectionType.length) + ' profile'
             const programStages = [
                 ...(
-                    excelData.module != modules.enrollment ?
+                    excelData.module != Modules.Enrollment ?
                         (selectedSectionDataStore as unknown as any)?.[excelData.module].programStage ?
                             [(selectedSectionDataStore as unknown as any)?.[excelData.module].programStage] :
                             (selectedSectionDataStore as unknown as any)?.[excelData.module].programStages.map((x: any) => x.programStage)
@@ -38,7 +37,7 @@ export function useImportData({ setProgress, onError }: { setProgress: (rags: an
             const displayNames = programConfig.programStages.filter(x => programStages.includes(x.id)).map(x => x.displayName)
 
             switch (excelData.module) {
-                case modules.attendance:
+                case Modules.Attendance:
                     const { attendanceEvents } = generateAttendanceEventObjects(displayNames, studentsData, selectedSectionDataStore as unknown as selectedDataStoreKey)
                     const attendanceDisplayName = programConfig.programStages.find(x => x.id === selectedSectionDataStore?.attendance.programStage)?.displayName
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
@@ -53,7 +52,7 @@ export function useImportData({ setProgress, onError }: { setProgress: (rags: an
                     )
                     break;
 
-                case modules.enrollment:
+                case Modules.Enrollment:
                     /**
                      * Ao se registar um novo estudante criam-se eventos de todos os program stages, excepto attendance e transfer e 
                      * ao se actualizar o estudante nao se cria nenhum evento, sendo assim, esse array terá uma lista de todos os 

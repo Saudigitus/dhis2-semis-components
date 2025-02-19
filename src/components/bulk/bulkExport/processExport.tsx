@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import ModalExportEmpty from "../modal/modalExport";
 import { useExportData } from "./exportData";
 import ModalProgress from "../progress/interactiveProgress";
-import { modules } from "../../../types/common/moduleTypes";
+import { Modules } from "dhis2-semis-types";
 
 export default function ProcessExport(props: ExportData) {
     const { empty = false, label, module, Form } = props
@@ -29,7 +29,7 @@ export default function ProcessExport(props: ExportData) {
         <>
             <a style={{ width: "100%", cursor: "pointer", padding: "5px" }} onClick={async (e) => {
                 e.preventDefault()
-                if (empty || module === modules.attendance) setOpen(true)
+                if (empty || module === Modules.Attendance) setOpen(true)
                 else await exportData({})
             }}>
                 {label}

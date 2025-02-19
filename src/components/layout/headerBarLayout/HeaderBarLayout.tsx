@@ -17,7 +17,7 @@ export default function HeaderBarLayout(props: HeaderBarLayoutProps) {
         <div className={style.layoutContainer}>
             <div className={style.headerBarLayoutContainer}>
                 {header}
-                <main className={style.mainContentContainer}>
+                <main className={style.headerBarLayoutContent}>
                     {children}
                 </main>
             </div>

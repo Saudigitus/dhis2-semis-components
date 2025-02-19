@@ -1,7 +1,7 @@
 import { useGetEvents } from '../events/useGetEvents';
 import { ExportData } from '../../types/bulk/bulkOperations';
 import { attributes, dataValues } from '../../utils/format/formatData';
-import { modules } from '../../types/common/moduleTypes';
+import { Modules } from 'dhis2-semis-types';
 import { format } from 'date-fns';
 import { useGetTei } from '../tei/useGetTei';
 import { useUrlParams } from 'dhis2-semis-functions';
@@ -14,7 +14,7 @@ export function useGetEnrollmentData(props: ExportData) {
     const { schoolName: orgUnitName, school: orgUnit, } = urlParameters()
 
     const getEnrollmentDetails = async (events: any) => {
-        const percentagem = module === modules.enrollment ? 80 : 40
+        const percentagem = module === Modules.Enrollment ? 80 : 40
         const trackedEntityIds = events?.map((x: { trackedEntity: string }) => x.trackedEntity).join(';')
 
         try {
@@ -39,7 +39,7 @@ export function useGetEnrollmentData(props: ExportData) {
                             orgUnit: orgUnit
                         })
 
-                        if (withSocioEconomics || module === modules.enrollment) {
+                        if (withSocioEconomics || module === Modules.Enrollment) {
                             socioEconomiscData = await getEvents({
                                 program: selectedSectionDataStore?.program as unknown as string,
                                 programStage: selectedSectionDataStore?.['socio-economics'].programStage as unknown as string,
