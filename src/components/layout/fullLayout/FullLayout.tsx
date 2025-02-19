@@ -18,7 +18,7 @@ export default function FullLayout(props: FullLayoutProps) {
             {header}
             <div className={style.fullLayoutContainer}>
                 {sidebar}
-                <main className={style.mainContentContainer}>
+                <main className={style.fullLayoutContent}>
                     {children}
                 </main>
             </div>

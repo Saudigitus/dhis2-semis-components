@@ -1,10 +1,9 @@
-import classNames from "classnames";
 import style from "../layout.module.css"
 import { Center, CircularLoader } from "@dhis2/ui";
 import { SidebarLayoutProps } from "../../../types/layout/LayoutProps"
 
 const SideBarLayout = (props: SidebarLayoutProps) => {
-const { sidebar, children, loading } = props
+    const { sidebar, children, loading } = props
 
     if (loading) {
         return (
@@ -15,11 +14,9 @@ const { sidebar, children, loading } = props
     }
 
     return (
-        <div className={classNames(style.layoutContainer, style.sideBarLayoutContaner)}>
-            <aside className={style.asideContainer}>
-                {sidebar}
-            </aside>
-            <main className={style.mainContentContainer}>
+        <div className={style.layoutContainer}>
+            {sidebar}
+            <main className={style.sideBarLayoutContent}>
                 {children}
             </main>
         </div>
