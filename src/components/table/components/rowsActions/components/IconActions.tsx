@@ -23,7 +23,7 @@ export default function IconActions(props: RowActionsProps) {
                   option.onClick({ row });
                 }}
                 className={style.rowActionsIcon}
-                disabled={option.disabled || disabled}
+                disabled={option.disabled || (disabled && Boolean(option.disableOnInactive))}
                 style={{ color: option.color, opacity: (option.disabled || disabled) ? "0.3" : "1" }}
               >
                 {option.icon}

@@ -115,6 +115,10 @@ interface TableRenderProps {
     programConfig: ProgramConfig
     inactiveRowMessage?: string
     onRowClick?: (teiData: any) => void
+    handlePageChange?: (page: any) => void
+    handlePageSizeChange?: (pageSize: any) => void
+    page: number
+    pageSize:number
 }
 
 
