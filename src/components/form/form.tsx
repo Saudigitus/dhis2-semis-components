@@ -2,19 +2,20 @@ import GroupForm from "../form/GroupForm";
 import { Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
 import { type FormProps } from "dhis2-semis-types";
 import styles from './groupform.module.css'
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormApi } from "final-form"
 import { deepEqual } from "../../utils/table/objectComparison";
 
 interface IForm extends Record<string, any> { }
 interface imageFieldSpecificProps {
     storyBook?: boolean,
-    trackedEntity?: string
+    trackedEntity?: string,
+    destructive?: boolean
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 
-export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity }: CombinedProps) {
+export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive }: CombinedProps) {
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
 
@@ -25,7 +26,8 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
             label: "Cancel",
             disabled: loading,
             onClick: () => {
-                onCancel ? onCancel() : form.reset();
+                form.reset()
+                onCancel && onCancel()
             },
             secondary: true,
         },
@@ -35,7 +37,8 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
             success: "success",
             type: "reset",
             disabled: !changed || loading,
-            primary: true,
+            primary: destructive ? !destructive : true,
+            destructive: destructive,
             onClick: () => {
                 onFormSubtmit(values)
             },
@@ -53,17 +56,19 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
             >
                 {({ form, handleSubmit, values }) => {
                     formRef.current = form;
+
+                    useEffect(() => {
+                        if (deepEqual(initialValues, values)) {
+                            setChanged(false)
+                        } else {
+                            setChanged(true)
+                        }
+                    }, [values])
+
                     return (
                         <form
-                            onChange={(values: any) => {
-                                console.log(values, deepEqual(initialValues, values))
-                                if (deepEqual(initialValues, values)) {
-                                    setChanged(true)
-                                } else {
-                                    setChanged(false)
-                                }
-
-                                if (onInputChange) onInputChange({ value: values.target.value, field: values, name: values.target.name })
+                            onChange={(onchangeValue: any) => {
+                                if (onInputChange) onInputChange({ value: onchangeValue.target.value, field: onchangeValue, name: onchangeValue.target.name })
                             }}
                             onSubmit={(e) => {
                                 e.preventDefault();

@@ -144,8 +144,8 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                       <CustomForm
                         formFields={formFields(group?.variables, sectionName)}
                         initialValues={{ ...initialValues, orgUnit, ...queryForm }}
-                        onFormSubtmit={onHandleSubmit}
-                        onInputChange={onHandleChange}
+                        onFormSubtmit={(e: any) => onHandleSubmit()}
+                        onInputChange={(e: any) => onHandleChange(e)}
                         onCancel={onReset}
                         submitButtonLabel={`Search ${sectionName.toLocaleLowerCase()}`}
                         Form={Form}
