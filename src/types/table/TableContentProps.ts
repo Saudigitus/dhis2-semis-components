@@ -117,8 +117,8 @@ interface TableRenderProps {
     onRowClick?: (teiData: any) => void
     handlePageChange?: (page: any) => void
     handlePageSizeChange?: (pageSize: any) => void
-    page: number
-    pageSize:number
+    page?: number
+    pageSize?:number
 }
 
 
