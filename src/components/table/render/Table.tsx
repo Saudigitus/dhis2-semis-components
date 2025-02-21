@@ -72,21 +72,22 @@ function Table(props: TableRenderProps): React.ReactElement {
         onRowClick,
         selectable,
         selected,
-        setSelected
+        setSelected,
+        handlePageChange,
+        handlePageSizeChange,
+        page,
+        pageSize
     } = props
 
     const classes = useStyles()
-    const [page, setPage] = useState(1)
-    const [pageSize, setPageSize] = useState(10)
     const [filteredHeaders, setFilteredHeaders] = useState<CustomAttributeProps[]>([])
 
     const onPageChange = (newPage: number) => {
-        setPage(newPage)
+        handlePageChange(newPage)
     }
 
     const onRowsPerPageChange = (event: any) => {
-        setPageSize(parseInt(event.value, 10))
-        setPage(1)
+        handlePageSizeChange(parseInt(event.value, 10))
     }
 
     const onCheckboxChange = (row: any, all?: boolean) => {

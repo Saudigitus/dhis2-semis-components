@@ -50,6 +50,11 @@ interface RowActionsType {
      */
     disabled: boolean
     /**
+     * To define whether row inactivity affects the action.
+     * @type {boolean}
+     */
+    disableOnInactive?: boolean
+    /**
      * The action icon.
      * @type {React.ReactNode}
      */
