@@ -49,11 +49,11 @@ export default function MenuActions(props: RowActionsProps) {
         {menuItems?.map((item: any, index: any) => (
           <MenuItem dense
             key={index}
-            disabled={item.disabled}
             onClick={(event) => {
               item.onClick({ row });
               handleClose();
             }}
+            disabled={item.disabled || (disabled && Boolean(item.disableOnInactive))}
           >
             <ListItemIcon>
               {item.icon}
