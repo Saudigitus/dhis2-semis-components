@@ -11,11 +11,12 @@ interface imageFieldSpecificProps {
     storyBook?: boolean,
     trackedEntity?: string,
     destructive?: boolean
+    deleting?: boolean
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 
-export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive }: CombinedProps) {
+export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive, deleting }: CombinedProps) {
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
 
@@ -34,14 +35,10 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
         {
             id: "continue",
             label: submitButtonLabel ? submitButtonLabel : "Submit",
-            success: "success",
-            type: "reset",
-            disabled: !changed || loading,
+            disabled: deleting ? false : !changed || loading,
             primary: destructive ? !destructive : true,
             destructive: destructive,
-            onClick: () => {
-                onFormSubtmit(values)
-            },
+            type: "submit",
             icon: loading ? <CircularLoader small /> : null,
         },
     ];
@@ -50,6 +47,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
         <div style={style}>
             <Form
                 onSubmit={(values: any) => {
+                    console.log(values)
                     onFormSubtmit(values)
                 }}
                 initialValues={initialValues}

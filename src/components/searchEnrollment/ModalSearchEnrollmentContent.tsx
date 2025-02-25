@@ -60,7 +60,6 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
     }
   };
 
-
   const onHandleSubmit = async () => {
     if (formattedQuery(
       teiAttributes,
@@ -100,7 +99,6 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
     setFormInitialValues({})
     setShowResults(false);
   };
-
 
   const onSelectTei = (teiData: any) => {
     const recentEnrollment = getRecentEnrollment(teiData.enrollments).enrollment
