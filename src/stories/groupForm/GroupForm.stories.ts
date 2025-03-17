@@ -186,6 +186,7 @@ export const Group_form: Story = {
         ],
         onFormSubtmit: (e) => { console.log(e) },
         onInputChange: (e) => { console.log(e) },
+        onKeyDown: (e, values) => { console.log(e, values) },
         initialValues: {},
         style: { width: "900px" },
         loading: false
