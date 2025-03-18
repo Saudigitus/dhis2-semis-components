@@ -8,6 +8,7 @@ interface GenericFieldsComponentProps {
     onInputChange: (e: any) => void
     storybook?: boolean
     setChanged?: any
+    submitted?: boolean
 }
 
 interface FormFieldsProps {

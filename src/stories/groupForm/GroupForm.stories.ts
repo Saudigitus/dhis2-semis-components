@@ -159,7 +159,7 @@ export const Group_form: Story = {
                 description: "No description",
                 fields: [
                     {
-                        required: false,
+                        required: true,
                         name: "List",
                         labelName: "List Input",
                         valueType: "LIST" as unknown as CustomAttributeProps["valueType"],

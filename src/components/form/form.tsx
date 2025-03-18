@@ -18,6 +18,12 @@ interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive }: CombinedProps) {
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
+    const [formSubmitted, setFormSubmitted] = useState(false)
+
+    const handleInputChange = (event: any) => {
+        if (onInputChange) onInputChange({ value: event.target.value, field: event, name: event.target.name })
+        setFormSubmitted(false)
+    }
 
     const formActions = (form: any, values: any) => [
         {
@@ -40,6 +46,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
             primary: destructive ? !destructive : true,
             destructive: destructive,
             onClick: () => {
+                setFormSubmitted(true)
                 onFormSubtmit(values)
             },
             icon: loading ? <CircularLoader small /> : null,
@@ -49,7 +56,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
     return (
         <div style={style}>
             <Form
-                onSubmit={(values: any)=>
+                onSubmit={(values: any) =>
                     onFormSubtmit(values)
                 }
                 initialValues={initialValues}
@@ -67,17 +74,17 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
 
                     return (
                         <form
-                            onChange={(onchangeValue: any) => {
-                                if (onInputChange) onInputChange({ value: onchangeValue.target.value, field: onchangeValue, name: onchangeValue.target.name })
-                            }}
+                            onChange={(onchangeValue: any) => { handleInputChange(onchangeValue) }}
                             onSubmit={(e) => {
                                 e.preventDefault();
                                 handleSubmit(values);
+                                setFormSubmitted(true)
                             }}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
                                     e.preventDefault();
                                     handleSubmit(values);
+                                    setFormSubmitted(true)
                                 }
                             }}
                         >
@@ -92,6 +99,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                                     trackedEntity={trackedEntity}
                                     storyBook={storyBook}
                                     setChanged={setChanged}
+                                    submitted={formSubmitted}
                                 />
                             ))}
 

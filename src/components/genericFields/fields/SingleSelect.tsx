@@ -6,9 +6,9 @@ import styles from "./fields.module.css"
 import { AutoCompleteProps } from "../../../types/form/GenericFieldsTypes";
 import { useState } from 'react'
 
-const OptionSetAutocomplete = (props: AutoCompleteProps) => {
+const OptionSetAutocomplete = (props: AutoCompleteProps & { submitted: boolean }) => {
   const { input }: FieldRenderProps<any, HTMLElement> = useField(props.name);
-  const [cliked] = useState<boolean>(false)
+  const [cliked, setClicked] = useState<boolean>(false)
 
   const options = (props?.options?.optionSet?.options != null)
     ? props?.options?.optionSet?.options?.map((option: { value: string, label: string }) => ({
@@ -32,8 +32,8 @@ const OptionSetAutocomplete = (props: AutoCompleteProps) => {
           <TextField
             {...params}
             variant="outlined"
-            error={!!(cliked && input.value === "" && props?.required)}
-            helperText={(cliked && input.value === "" && (Boolean(props?.required))) && "Please provide a value"}
+            error={Boolean((props?.submitted || cliked) && input.value === "" && props?.required)}
+            helperText={((props?.submitted || cliked) && input.value === "" && (Boolean(props?.required))) && "Please provide a value"}
             size="small"
             InputProps={{
               ...params.InputProps,
@@ -41,6 +41,7 @@ const OptionSetAutocomplete = (props: AutoCompleteProps) => {
                 backgroundColor: "#fff"
               }
             }}
+            onBlur={() => setClicked(true)}
           />
 
         )}
@@ -48,18 +49,21 @@ const OptionSetAutocomplete = (props: AutoCompleteProps) => {
           input.onChange(value.value);
           props.setChanged(true)
           if (props.onChange) props.onChange({ field: field, value: value.value, name: props.name });
+
+          setClicked(false)
         }}
       />
       {
-        (cliked && input.value === "" && (Boolean(props?.required))) && <div className={styles["alert-icon__area"]}>
+        ((props?.submitted || cliked) && input.value === "" && (Boolean(props?.required))) ? <div className={styles["alert-icon__area"]}>
           <ErrorIcon />
         </div>
+          : null
       }
     </div>
   );
 };
 
-function SingleSelectField(props: AutoCompleteProps) {
+function SingleSelectField(props: AutoCompleteProps & { submitted: boolean }) {
   return (
     <div >
       <OptionSetAutocomplete {...props} name={props.name} />
