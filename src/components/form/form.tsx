@@ -35,7 +35,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
             id: "continue",
             label: submitButtonLabel ? submitButtonLabel : "Submit",
             success: "success",
-            type: "reset",
+            type: "submit",
             disabled: !changed || loading,
             primary: destructive ? !destructive : true,
             destructive: destructive,
@@ -49,9 +49,9 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
     return (
         <div style={style}>
             <Form
-                onSubmit={(values: any) => {
+                onSubmit={(values: any)=>
                     onFormSubtmit(values)
-                }}
+                }
                 initialValues={initialValues}
             >
                 {({ form, handleSubmit, values }) => {
@@ -75,10 +75,11 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                                 handleSubmit(values);
                             }}
                             onKeyDown={(e) => {
-                                e.preventDefault();
-                                onKeyDown(e as any, values)
-                            }
-                            }
+                                if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    handleSubmit(values);
+                                }
+                            }}
                         >
                             {formFields?.map((section: any, i: number) => (
                                 <GroupForm

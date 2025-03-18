@@ -51,7 +51,7 @@ export const Group_form: Story = {
                 description: "No description",
                 fields: [
                     {
-                        required: false,
+                        required: true,
                         name: "Number",
                         labelName: "Number Input",
                         valueType: "NUMBER" as unknown as CustomAttributeProps["valueType"],
@@ -69,7 +69,7 @@ export const Group_form: Story = {
                 description: "No description",
                 fields: [
                     {
-                        required: false,
+                        required: true,
                         name: "boolean",
                         labelName: "Boolean Input",
                         valueType: "BOOLEAN" as unknown as CustomAttributeProps["valueType"],
@@ -184,9 +184,8 @@ export const Group_form: Story = {
                 ]
             },
         ],
-        onFormSubtmit: (e) => { console.log(e) },
-        onInputChange: (e) => { console.log(e) },
-        onKeyDown: (e, values) => { console.log(e, values) },
+        onFormSubtmit: (e) => { console.log(e, "lllll") },
+        onInputChange: (e) => { console.log(e, "ll") },
         initialValues: {},
         style: { width: "900px" },
         loading: false
