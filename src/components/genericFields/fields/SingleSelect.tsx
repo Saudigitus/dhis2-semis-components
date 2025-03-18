@@ -6,7 +6,7 @@ import styles from "./fields.module.css"
 import { AutoCompleteProps } from "../../../types/form/GenericFieldsTypes";
 import { useState } from 'react'
 
-const OptionSetAutocomplete = (props: AutoCompleteProps & { submitted: boolean }) => {
+const OptionSetAutocomplete = (props: AutoCompleteProps & { submitted?: boolean }) => {
   const { input }: FieldRenderProps<any, HTMLElement> = useField(props.name);
   const [cliked, setClicked] = useState<boolean>(false)
 
@@ -63,10 +63,10 @@ const OptionSetAutocomplete = (props: AutoCompleteProps & { submitted: boolean }
   );
 };
 
-function SingleSelectField(props: AutoCompleteProps & { submitted: boolean }) {
+function SingleSelectField(props: AutoCompleteProps & { submitted?: boolean }) {
   return (
     <div >
-      <OptionSetAutocomplete {...props} name={props.name} />
+      <OptionSetAutocomplete {...props} submitted={props.submitted} name={props.name} />
     </div>
   );
 }
