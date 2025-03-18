@@ -15,7 +15,7 @@ interface imageFieldSpecificProps {
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 
-export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, onKeyDown, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive }: CombinedProps) {
+export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive }: CombinedProps) {
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
 
