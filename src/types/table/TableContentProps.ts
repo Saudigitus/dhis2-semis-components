@@ -118,7 +118,10 @@ interface TableRenderProps {
     handlePageChange?: (page: any) => void
     handlePageSizeChange?: (pageSize: any) => void
     page?: number
-    pageSize?:number
+    pageSize?: number
+    showHeaderFilters?: boolean
+    showWorkingListsContainer?: boolean
+    paginate?: boolean
 }
 
 

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
-    tablebuttons:{
+    tablebuttons: {
         display: 'flex',
         flexWrap: 'wrap',
         columnGap: '5px',
@@ -76,7 +76,10 @@ function Table(props: TableRenderProps): React.ReactElement {
         handlePageChange,
         handlePageSizeChange,
         page,
-        pageSize
+        pageSize,
+        showHeaderFilters = true,
+        showWorkingListsContainer = true,
+        paginate = true
     } = props
 
     const classes = useStyles()
@@ -109,16 +112,16 @@ function Table(props: TableRenderProps): React.ReactElement {
 
     return (
         <Paper>
-            <div className={classes.workingListsContainer}>
+            {showWorkingListsContainer && <div className={classes.workingListsContainer}>
                 <h4 className={classes.h4}>{title}</h4>
                 <div className={classes.tablebuttons}>
                     {rightElements}
                 </div>
-            </div>
+            </div>}
             <WithBorder type='bottom' />
             <WithPadding>
                 <WithBorder type='all'>
-                    <HeaderFilters
+                    {showHeaderFilters && <HeaderFilters
                         columns={columns}
                         updateVariables={setFilteredHeaders}
                         filteredHeaders={filteredHeaders}
@@ -127,7 +130,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                         defaultFilterNumber={defaultFilterNumber}
                         selectable={selectable}
                         selected={selected?.length ?? 0}
-                    />
+                    />}
                     <div
                         className={classes.tableContainer}
                     >
@@ -175,7 +178,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                             </CenteredContent>
                         ) : null}
                     </div>
-                    <Pagination
+                    {paginate && <Pagination
                         loading={loading}
                         onPageChange={onPageChange}
                         onRowsPerPageChange={onRowsPerPageChange}
@@ -185,7 +188,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                         disablePreviousPage={page === 1}
                         disableNextPage={page * pageSize >= totalElements}
                         rowsPerPages={rowsPerPages}
-                    />
+                    />}
                 </WithBorder>
             </WithPadding>
         </Paper>

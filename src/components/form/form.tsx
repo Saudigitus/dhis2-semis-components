@@ -45,10 +45,6 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
             disabled: !changed || loading,
             primary: destructive ? !destructive : true,
             destructive: destructive,
-            onClick: () => {
-                setFormSubmitted(true)
-                onFormSubtmit(values)
-            },
             icon: loading ? <CircularLoader small /> : null,
         },
     ];
@@ -56,9 +52,10 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
     return (
         <div style={style}>
             <Form
-                onSubmit={(values: any) =>
+                onSubmit={(values: any) => {
+                    setFormSubmitted(true)
                     onFormSubtmit(values)
-                }
+                }}
                 initialValues={initialValues}
             >
                 {({ form, handleSubmit, values }) => {
