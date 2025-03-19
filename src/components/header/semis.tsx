@@ -5,7 +5,7 @@ import { DataProvider } from "@dhis2/app-runtime"
 import { OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
 import { MenuSelect } from './common/common'
 import { RecoilRoot, useRecoilState } from 'recoil'
-import { HeaderValuesState, stateEmitter } from '../../schemas/headerDataSchema'
+import { HeaderValuesState } from '../../schemas/headerDataSchema'
 import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
@@ -28,7 +28,6 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
             selectedGrade: headerItems?.grades?.options?.filter((option: OptionProps) => option.value === grade)?.[0] as OptionProps,
             selectedOu: { displayName: schoolName, id: school, selected: [] }
         })
-        stateEmitter.emit('stateChange', headerValues);
     }, [useQuery()])
 
     const onChangeGrade = (event) => {
@@ -61,7 +60,7 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
 
     return (
         <SelectorBar className={style.HeaderContainer}
-            additionalContent={
+            additionalContent={headerItems?.academicYears &&
                 <SelectorBarItem
                     label="Academic year"
                     value={academicYear ?? headerValues?.selectedAcademicYear?.value}
@@ -69,11 +68,12 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                     open={openAcademicYear}
                     setOpen={() => setOpenAcademicYear(!openAcademicYear)}
                 >
-                    <MenuSelect placeholder="" isSeachable={false} values={headerItems.academicYears.options} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
+                    <MenuSelect placeholder="" isSeachable={false} values={headerItems?.academicYears.options} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
                 </SelectorBarItem>
             }
         >
-            <SelectorBarItem
+
+            {headerItems?.orgunits && <SelectorBarItem
                 value={schoolName ?? headerValues?.selectedOu?.displayName}
                 onClearSelectionClick={() => {
                     setHeaderValues({
@@ -96,8 +96,9 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 <DataProvider baseUrl='http://localhost:8080'>
                     <OrgUnitTreeSearch onChange={onChangeOu} />
                 </DataProvider>
-            </SelectorBarItem>
-            <SelectorBarItem
+            </SelectorBarItem>}
+
+            {headerItems?.grades && <SelectorBarItem
                 onClearSelectionClick={() => {
                     setHeaderValues(prevState => ({ ...prevState, selectedGrade: { label: "", value: "" } }))
                     remove("grade")
@@ -108,9 +109,10 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 open={openGrade}
                 setOpen={() => setOpenGrade(!openGrade)}
             >
-                <MenuSelect placeholder="Search for a grade" isSeachable values={headerItems.grades.options} selected={headerValues?.selectedGrade?.value} onChange={onChangeGrade} />
-            </SelectorBarItem>
-            <SelectorBarItem
+                <MenuSelect placeholder="Search for a grade" isSeachable values={headerItems?.grades.options} selected={headerValues?.selectedGrade?.value} onChange={onChangeGrade} />
+            </SelectorBarItem>}
+
+            {headerItems?.classes && <SelectorBarItem
                 onClearSelectionClick={() => {
                     setHeaderValues(prevState => ({ ...prevState, selectedClass: { label: "", value: "" } }))
                     remove("class")
@@ -122,13 +124,15 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 open={openClass}
                 setOpen={() => setOpenClass(!openClass)}
             >
-                <MenuSelect placeholder="Search for a class" isSeachable values={headerItems.classes.options} selected={headerValues?.selectedClass?.value} onChange={onChangeClass} />
-            </SelectorBarItem>
+                <MenuSelect placeholder="Search for a class" isSeachable values={headerItems?.classes.options} selected={headerValues?.selectedClass?.value} onChange={onChangeClass} />
+            </SelectorBarItem>}
+
         </SelectorBar>
     )
 }
 
 const SemisHeader = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
+    console.log("headerItems", headerItems)
     return (
         <RecoilRoot>
             <SemisHeaderRaw headerItems={headerItems} />
