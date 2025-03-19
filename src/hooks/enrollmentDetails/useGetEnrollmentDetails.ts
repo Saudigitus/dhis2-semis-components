@@ -59,7 +59,7 @@ export function useGetEnrollmentData(props: ExportData) {
                             ref: "" + counter + " ",
                             school: orgUnitName,
                             orgUnit: currEnrollmentRegistration?.orgUnit,
-                            enrollmentDate: format(new Date(currEnrollmentRegistration?.occurredAt), 'yyyy-MM-dd'),
+                            enrollmentDate: currEnrollmentRegistration?.occurredAt ? format(new Date(currEnrollmentRegistration?.occurredAt), 'yyyy-MM-dd') : "- -",
                             enrollment: enrollment,
                             trackedEntity: tei.trackedEntity,
                             ...attributes(tei?.attributes ?? []),

@@ -9,16 +9,7 @@ const config: StorybookConfig = {
   framework: {
     name: "@storybook/react-vite",
     options: {},
-  },
-  viteFinal: (config) => {
-    config.server = {
-      ...config.server,
-      proxy: {
-        '/api': 'https://emis.dhis2.org/startracker/',
-      },
-    };
-    return config;
-  },
+  }
 };
 
 export default config;
