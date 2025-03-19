@@ -66,7 +66,19 @@
     margin: 0 !important;
 }
 
-@media screen and (max-width: 650px) and (min-width: 352px) {}
+@media screen and (max-width: 950px) and (min-width: 436px) {
+    .modalContainer.large {
+        min-width: 84.21vw !important;
+    }
+    
+    .modalContainer.medium {
+        min-width: 42.11vw !important;
+    }
+    
+    .modalContainer.small {
+        max-width: 21.05 !important;
+    }
+}
 
 @media screen and (max-width: 620px) and (min-width: 436px) {
     .modalButtons {
@@ -76,7 +88,9 @@
 }
 
 @media screen and (max-width: 435px) {
-    .modalContainer {
+    .modalContainer.large ,    
+    .modalContainer.medium,
+    .modalContainer.small  {
         min-width: 95vw !important;
     }
 
@@ -98,6 +112,10 @@
         font-size: 12px !important;
         height: 32px !important;
         padding: 5px 8px !important;
+    }
+
+    .modalContainer>div>div {
+        max-width: fit-content !important;
     }
 }
 
