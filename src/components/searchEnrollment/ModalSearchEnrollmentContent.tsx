@@ -143,7 +143,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                     <WithPadding>
                       <CustomForm
                         formFields={formFields(group?.variables, sectionName)}
-                        initialValues={{ ...initialValues, orgUnit, ...queryForm }}
+                        initialValues={{ ...initialValues, orgUnit }}
                         onFormSubtmit={(e: any) => onHandleSubmit()}
                         onInputChange={(e: any) => onHandleChange(e)}
                         onCancel={onReset}
