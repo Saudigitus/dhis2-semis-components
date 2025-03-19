@@ -22,7 +22,6 @@ import CustomForm from "./components/form/form"
 import SemisHeader from "./components/header/semis"
 import useHeaderKey from "./hooks/header/useHeaderValues"
 import { HeaderValuesState } from "./schemas/headerDataSchema"
-import { stateEmitter } from "./schemas/headerDataSchema"
 import ModalSearchEnrollmentContent from "./components/searchEnrollment/ModalSearchEnrollmentContent"
 import { useDataStoreKey } from './hooks/dataStore/useDataStoreKey'
 import { useGetUsedProgramStages } from "./hooks/programStages/useGetUsedPProgramStages"
@@ -33,7 +32,6 @@ import { SimpleLayout, FullLayout, SideBarLayout, HeaderBarLayout } from "./comp
 
 export {
     HeaderValuesState,
-    stateEmitter,
     useGetUsedProgramStages,
     useDataStoreKey,
     useHeaderKey,
