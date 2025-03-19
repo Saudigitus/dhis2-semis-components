@@ -96,12 +96,12 @@ export const SemisOne: Story = {
                         value: "Grade 7",
                     }
                 ]
-            },
-            orgunits: {
-                options: [
-
-                ]
             }
+            // orgunits: {
+            //     options: [
+
+            //     ]
+            // }
         }
     },
 };

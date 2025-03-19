@@ -10,10 +10,10 @@ export interface OptionProps {
 }
 
 export interface SemisHeaderProps {
-    grades: { options?: OptionProps[], loader?: boolean }
-    classes: { options?: OptionProps[], loader?: boolean }
-    academicYears: { options?: OptionProps[], loader?: boolean }
-    orgunits: { options?: OptionProps[], loader?: boolean }
+    grades?: { options?: OptionProps[], loader?: boolean }
+    classes?: { options?: OptionProps[], loader?: boolean }
+    academicYears?: { options?: OptionProps[], loader?: boolean }
+    orgunits?: { options?: OptionProps[], loader?: boolean }
 }
 
 export interface HeaderItemProps {

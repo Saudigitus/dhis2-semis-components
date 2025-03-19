@@ -85,7 +85,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
     const [showEnrollments, setShowEnrollments] = useState<string>()
     const { headerData, rowsData = [], searchActions, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected } = props;
 
-    const isSelected = (row: any): boolean => selected.find((item: any) => deepEqual(item, row));
+    const isSelected = (row: any): boolean => selected?.find((item: any) => deepEqual(item, row));
 
     if (rowsData?.length === 0 && !loading) {
         return (
