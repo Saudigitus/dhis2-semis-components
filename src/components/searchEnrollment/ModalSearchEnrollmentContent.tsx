@@ -47,15 +47,15 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
 
   const [queryForm, setQueryForm] = useState<any>({});
 
-  const onHandleChange = ({ target: { value, name } }: { target: { value: any; name: any } }) => {
-    if (value.length === 0 || value === null || value === undefined) {
+  const onHandleChange = (e: { value: string, field: string, name: string }) => {
+    if (e.value.length === 0 || e.value === null || e.value === undefined) {
       const updatedForm = { ...queryForm };
-      delete updatedForm[name];
+      delete updatedForm[e.name];
       setQueryForm(updatedForm);
     } else {
       setQueryForm((prevQueryForm: any) => ({
         ...prevQueryForm,
-        [name]: value,
+        [e.name]: e.value,
       }));
     }
   };
