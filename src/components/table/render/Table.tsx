@@ -7,6 +7,7 @@ import WithBorder from '../../template/WithBorder';
 import WithPadding from '../../template/WithPadding';
 import TableComponent from '../components/table/TableComponent';
 import Pagination from '../components/pagination/Pagination';
+import "./style.css"
 import RenderRows from './RenderRows';
 import { TableRenderProps } from '../../../types/table/TableContentProps';
 import HeaderFilters from '../components/head/HeaderFilters';

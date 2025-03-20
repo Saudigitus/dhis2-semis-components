@@ -79,9 +79,9 @@ const useStyles = makeStyles((theme: Theme) =>
 function RenderRows(props: RenderRowsProps): React.ReactElement {
     const classes = useStyles()
     const { imageUrl } = GetImageUrl()
-    const { urlParameters } = useUrlParams()
-    const { academicYear, sectionType, school } = urlParameters()
-    const { registration } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
+    // const { urlParameters } = useUrlParams()
+    // const { academicYear, sectionType, school } = urlParameters()
+    // const { registration } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
     const [showEnrollments, setShowEnrollments] = useState<string>()
     const { headerData, rowsData = [], searchActions, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected } = props;
 
@@ -188,7 +188,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                             />
                         }
 
-                        {searchActions && showEnrollments === row.trackedEntity ?
+                        {/* {searchActions && showEnrollments === row.trackedEntity ?
                             <RowTable className={classNames(classes.row, classes.historyRow)}>
                                 <RowCell
                                     className={classNames(classes.cell, classes.bodyCell)}
@@ -205,7 +205,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 </RowCell>
                             </RowTable>
                             : null
-                        }
+                        } */}
                     </>
                 ))
             }
