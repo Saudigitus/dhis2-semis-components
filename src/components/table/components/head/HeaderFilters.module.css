@@ -1,4 +1,5 @@
 .filterContainer {
     display: flex !important;
     justify-content: space-between !important;
+    height: 64px !important;
 }

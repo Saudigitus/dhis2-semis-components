@@ -159,9 +159,10 @@ type Story = StoryObj<typeof meta>;
 export const Loading: Story = {
   args: {
     title: "Enrollments",
-    loading: true,
+    loading: false,
     viewPortWidth: 1040,
     columns: headerColumns,
+    selectable:true,
     totalElements: 4,
     tableData: rowsData,
     rowAction: rowsActions,
