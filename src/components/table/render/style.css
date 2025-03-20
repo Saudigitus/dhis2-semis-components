@@ -1,20 +1,26 @@
 .jsx-1193297444 .icon {
-    width: auto;
-    margin: 0;
+    width: auto !important;
+    margin: 0 !important;
 }
 
 ._tableCell_9okx2_22 {
-    padding: 4px 56px 4px 24px;
+    padding: 4px 56px 4px 24px !important;
 }
 
 @media (max-width: 1279.95px) {
     .makeStyles-cell-7 {
-        padding: 4px 56px 4px 24px;
+        padding: 4px 56px 4px 24px !important;
         }
 }
 
 @media (max-width: 959.95px) {
     .makeStyles-cell-15 {
-        padding: 4px 56px 4px 24px;
+        padding: 4px 56px 4px 24px !important;
+    }
+}
+
+@media (max-width: 959.95px) {
+    .makeStyles-cell-29 {
+        padding: 4px 56px 4px 24px !important;
     }
 }
