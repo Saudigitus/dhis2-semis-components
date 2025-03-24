@@ -142,13 +142,14 @@ function Table(props: TableRenderProps): React.ReactElement {
                                     <RenderHeader
                                         createSortHandler={createSortHandler}
                                         order={order}
+                                        indeterminate={selected?.length > 0 && selected.length != tableData?.length}
                                         orderBy={orderBy}
                                         rowsHeader={filteredHeaders.length > 0 ? filteredHeaders : columns}
                                         sortable={sortable}
                                         showRowActions={showRowActions}
                                         onChange={onCheckboxChange}
                                         isCheckbox={selectable}
-                                        selectedAll={tableData?.length === selected?.length}
+                                        selectedAll={!loading && tableData?.length === selected?.length}
                                     />
                                 }
                                 {!loading && (
@@ -170,7 +171,6 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         isCheckbox={selectable}
                                     />
                                 )}
-
                             </>
                         </TableComponent>
                         {(loading) ? (
