@@ -7,6 +7,7 @@ import WithBorder from '../../template/WithBorder';
 import WithPadding from '../../template/WithPadding';
 import TableComponent from '../components/table/TableComponent';
 import Pagination from '../components/pagination/Pagination';
+import "./style.css"
 import RenderRows from './RenderRows';
 import { TableRenderProps } from '../../../types/table/TableContentProps';
 import HeaderFilters from '../components/head/HeaderFilters';
@@ -141,13 +142,14 @@ function Table(props: TableRenderProps): React.ReactElement {
                                     <RenderHeader
                                         createSortHandler={createSortHandler}
                                         order={order}
+                                        indeterminate={selected?.length > 0 && selected.length != tableData?.length}
                                         orderBy={orderBy}
                                         rowsHeader={filteredHeaders.length > 0 ? filteredHeaders : columns}
                                         sortable={sortable}
                                         showRowActions={showRowActions}
                                         onChange={onCheckboxChange}
                                         isCheckbox={selectable}
-                                        selectedAll={tableData?.length === selected?.length}
+                                        selectedAll={!loading && tableData?.length === selected?.length}
                                     />
                                 }
                                 {!loading && (
@@ -169,7 +171,6 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         isCheckbox={selectable}
                                     />
                                 )}
-
                             </>
                         </TableComponent>
                         {(loading) ? (
