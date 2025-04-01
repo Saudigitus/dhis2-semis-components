@@ -168,7 +168,6 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                     columns={searchableAttributes}
                     programConfig={programConfig}
                     tableData={enrollmentValues}
-                    totalElements={10}
                     title={`Results found for ${sectionName} search`}
                     rowAction={rowsActions}
                     onRowClick={onSelectTei}
