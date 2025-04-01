@@ -8,7 +8,7 @@ function formatDataElementsEvents(data: any) {
         columnObj["enrollment"] = dataValues.enrollment
         columnObj["orgUnitName"] = dataValues.orgUnitName
         columnObj["orgUnitId"] = dataValues.orgUnit
-        for (const dataElement of dataValues.dataValues || []) {
+        for (const dataElement of dataValues?.dataValues || []) {
             columnObj[dataElement?.dataElement] = dataElement?.value
         }
         column.push(columnObj)

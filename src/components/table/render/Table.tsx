@@ -51,7 +51,6 @@ function Table(props: TableRenderProps): React.ReactElement {
         title = 'Table',
         viewPortWidth = 1040,
         columns,
-        totalElements,
         loading = false,
         createSortHandler,
         order,
@@ -74,10 +73,8 @@ function Table(props: TableRenderProps): React.ReactElement {
         selectable,
         selected,
         setSelected,
-        handlePageChange,
-        handlePageSizeChange,
-        page,
-        pageSize,
+        setPagination,
+        pagination,
         showHeaderFilters = true,
         showWorkingListsContainer = true,
         paginate = true
@@ -86,13 +83,9 @@ function Table(props: TableRenderProps): React.ReactElement {
     const classes = useStyles()
     const [filteredHeaders, setFilteredHeaders] = useState<CustomAttributeProps[]>([])
 
-    const onPageChange = (newPage: number) => {
-        handlePageChange(newPage)
-    }
+    const onPageChange = (newPage: number) => setPagination({ ...pagination, page: newPage })
 
-    const onRowsPerPageChange = (event: any) => {
-        handlePageSizeChange(parseInt(event.value, 10))
-    }
+    const onRowsPerPageChange = (event: any) => setPagination({ ...pagination, pageSize: parseInt(event.value, 10) })
 
     const onCheckboxChange = (row: any, all?: boolean) => {
         if (all) {
@@ -183,11 +176,10 @@ function Table(props: TableRenderProps): React.ReactElement {
                         loading={loading}
                         onPageChange={onPageChange}
                         onRowsPerPageChange={onRowsPerPageChange}
-                        page={page}
-                        rowsPerPage={pageSize}
-                        totalPerPage={totalElements}
-                        disablePreviousPage={page === 1}
-                        disableNextPage={page * pageSize >= totalElements}
+                        page={pagination.page}
+                        rowsPerPage={pagination.pageSize}
+                        disablePreviousPage={pagination.page === 1}
+                        disableNextPage={pagination.page === pagination.totalPages}
                         rowsPerPages={rowsPerPages}
                     />}
                 </WithBorder>

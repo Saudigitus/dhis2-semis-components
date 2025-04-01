@@ -26,7 +26,7 @@ export function attendanceFormater(events: AttendanceFormaterProps[], attendance
     let status: string = ""
 
     for (const event of events) {
-        for (const dataValue of event.dataValues) {
+        for (const dataValue of event?.dataValues) {
 
             if (attendanceConfig?.status === dataValue.dataElement) {
                 status = dataValue.value

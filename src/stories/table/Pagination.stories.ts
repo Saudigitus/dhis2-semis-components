@@ -17,7 +17,6 @@ const meta = {
     onPageChange: () => { },
     onRowsPerPageChange: () => { },
     loading: false,
-    totalPerPage: 100,
     disablePreviousPage: true,
     disableNextPage: false,
     rowsPerPages: [
@@ -40,7 +39,6 @@ export const LoadingPagination: Story = {
     onPageChange: () => { },
     onRowsPerPageChange: () => { },
     loading: true,
-    totalPerPage: 100,
     disablePreviousPage: true,
     disableNextPage: false,
     rowsPerPages: [

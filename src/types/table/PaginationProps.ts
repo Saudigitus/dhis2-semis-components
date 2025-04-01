@@ -4,7 +4,6 @@ interface PaginationProps {
     onPageChange: (page: number) => void
     onRowsPerPageChange: (rowsPerPage: number) => void
     loading: boolean
-    totalPerPage: number
     disablePreviousPage: boolean
     disableNextPage: boolean
     rowsPerPages?: { value: number, label: string }[]

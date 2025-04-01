@@ -89,7 +89,6 @@ interface TableRenderProps {
     selected?: any,
     setSelected?: (arg: any) => void,
     columns: any,
-    totalElements: number,
     loading?: boolean,
     createSortHandler?: () => void,
     order?: "asc" | "desc",
@@ -115,10 +114,8 @@ interface TableRenderProps {
     programConfig: ProgramConfig
     inactiveRowMessage?: string
     onRowClick?: (teiData: any) => void
-    handlePageChange?: (page: any) => void
-    handlePageSizeChange?: (pageSize: any) => void
-    page?: number
-    pageSize?: number
+    setPagination?: (args: { page: number, pageSize: number, totalPages: number }) => void
+    pagination?: { page: number, pageSize: number, totalPages: number }
     showHeaderFilters?: boolean
     showWorkingListsContainer?: boolean
     paginate?: boolean
