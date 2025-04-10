@@ -77,7 +77,8 @@ function Table(props: TableRenderProps): React.ReactElement {
         pagination,
         showHeaderFilters = true,
         showWorkingListsContainer = true,
-        paginate = true
+        paginate = true,
+        beforeSettings
     } = props
 
     const classes = useStyles()
@@ -124,6 +125,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                         defaultFilterNumber={defaultFilterNumber}
                         selectable={selectable}
                         selected={selected?.length ?? 0}
+                        beforeSettings={beforeSettings}
                     />}
                     <div
                         className={classes.tableContainer}

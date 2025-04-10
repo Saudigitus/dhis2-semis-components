@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import styles from './HeaderFilters.module.css'
 import { type CustomAttributeProps } from 'dhis2-semis-types'
 import ConfigTableColumns from "../configTableColumns/ConfigTableColumns";
@@ -19,16 +19,20 @@ interface HeaderFiltersProps {
   }) => void
   selected?: number
   selectable?: boolean
+  beforeSettings?: ReactElement
 }
 
 function HeaderFilters(props: HeaderFiltersProps): React.ReactElement {
-  const { updateVariables, filteredHeaders, columns, filterState, setFilterState, defaultFilterNumber, selectable, selected } = props;
+  const { beforeSettings, updateVariables, filteredHeaders, columns, filterState, setFilterState, defaultFilterNumber, selectable, selected } = props;
 
   return (
     <div className={styles.filterContainer}>
       <EnrollmentFilters filterState={filterState} variables={columns} setFilterState={setFilterState} defaultFilterNumber={defaultFilterNumber} />
 
-      <ConfigTableColumns selected={selected} selectable={selectable} filteredHeaders={filteredHeaders} headers={columns} updateVariables={updateVariables} />
+      <div>
+        {beforeSettings}
+        <ConfigTableColumns selected={selected} selectable={selectable} filteredHeaders={filteredHeaders} headers={columns} updateVariables={updateVariables} />
+      </div>
     </div>
   );
 }

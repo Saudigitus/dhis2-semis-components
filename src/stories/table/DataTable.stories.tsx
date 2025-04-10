@@ -148,7 +148,8 @@ const meta = {
     rowAction: rowsActions,
     showRowActions: false,
     defaultFilterNumber: 3,
-    rightElements: <div>Right Elements</div>
+    rightElements: <div>Right Elements</div>,
+    paginate: false
   },
 
 } satisfies Meta<typeof Table>;
@@ -161,7 +162,7 @@ export const Loading: Story = {
     loading: false,
     viewPortWidth: 1040,
     columns: headerColumns,
-    selectable:true,
+    selectable: true,
     tableData: rowsData,
     rowAction: rowsActions,
     showRowActions: false,

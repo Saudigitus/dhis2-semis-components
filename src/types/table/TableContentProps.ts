@@ -111,6 +111,7 @@ interface TableRenderProps {
         attributes: any[]
     }) => void,
     rightElements?: ReactElement
+    beforeSettings?: ReactElement
     programConfig: ProgramConfig
     inactiveRowMessage?: string
     onRowClick?: (teiData: any) => void

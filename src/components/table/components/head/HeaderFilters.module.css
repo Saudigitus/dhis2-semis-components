@@ -3,3 +3,11 @@
     justify-content: space-between !important;
     height: 64px !important;
 }
+
+.filterContainer > div {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    padding: 0 8px !important;
+}
