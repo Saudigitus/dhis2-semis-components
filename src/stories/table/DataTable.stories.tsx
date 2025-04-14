@@ -168,7 +168,8 @@ export const Loading: Story = {
     showRowActions: false,
     defaultFilterNumber: 3,
     rightElements: <div>Right Elements</div>,
-    programConfig: {} as unknown as ProgramConfig
+    programConfig: {} as unknown as ProgramConfig,
+    beforeSettings: <div>Before Settings</div>,
   },
 };
 

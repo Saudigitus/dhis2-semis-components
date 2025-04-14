@@ -11,7 +11,7 @@ interface SimpleButtonType {
      * @type {string}
      */
     id: string;
-    
+
     /**
      * The label displayed on the button. If not provided, a default label may be shown.
      *
@@ -61,7 +61,7 @@ interface SimpleButtonsComponentProps {
      *
      * @type {() => void}
      */
-    onSelect: () => void;
+    onSelect?: (args: any) => void;
 
     /**
      * Custom CSS class name to apply to the button elements for additional styling.

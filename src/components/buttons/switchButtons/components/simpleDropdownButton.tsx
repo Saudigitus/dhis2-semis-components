@@ -29,7 +29,7 @@ export default function SimpleDropdownButton(props: SimpleButtonsComponentProps)
   const handleSelect = (item: SimpleButtonType) => {
     setSelected(item); 
     setAnchorEl(null);
-    onSelect()
+    onSelect(item)
   }
 
   return (

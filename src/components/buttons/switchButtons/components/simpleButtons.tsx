@@ -10,7 +10,7 @@ export default function SimpleButtons(props: SimpleButtonsComponentProps): React
   const handleSelect = (item: SimpleButtonType) => {
     if (selected?.id !== item?.id) {
       setSelected(item)
-      onSelect()
+      onSelect(item)
     }
   }
 

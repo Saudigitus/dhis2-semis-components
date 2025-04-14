@@ -29,6 +29,7 @@ import AsssignFinalResult from './components/assingFinalResult/assignFinalResult
 import PerformPromotion from "./components/perforPromotion/performPromotion"
 import CustomDropdown from "./components/buttons/dropdown/DropdownButton"
 import { SimpleLayout, FullLayout, SideBarLayout, HeaderBarLayout } from "./components/layout"
+import SwitchButtonView from './components/buttons/switchButtons/switchButtonsView'
 
 export {
     HeaderValuesState,
@@ -64,5 +65,6 @@ export {
     SideBarLayout,
     SimpleLayout,
     FullLayout,
-    HeaderBarLayout
+    HeaderBarLayout,
+    SwitchButtonView
 }
