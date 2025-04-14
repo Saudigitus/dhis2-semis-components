@@ -5,8 +5,7 @@ export enum VariablesTypes {
     DataElement = "dataElement",
     Attribute = "attribute",
     Custom = "custom",
-    Default = "default",
-    Attendance = "attendance"
+    Default = "default"
 }
 
 export enum enrollmentStatus {

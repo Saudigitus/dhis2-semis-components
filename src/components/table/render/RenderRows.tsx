@@ -20,6 +20,7 @@ import { Checkbox } from "@dhis2/ui"
 import { useUrlParams } from 'dhis2-semis-functions';
 import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey';
 import { deepEqual } from '../../../utils/table/objectComparison';
+import { VariablesTypes } from '../../../types/variables/AttributeColumns';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -80,7 +81,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
     const classes = useStyles()
     const { imageUrl } = GetImageUrl()
     const { urlParameters } = useUrlParams()
-    const { academicYear, sectionType, school } = urlParameters()
+    const { academicYear, sectionType, school } = urlParameters();
     const { registration } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
     const [showEnrollments, setShowEnrollments] = useState<string>()
     const { headerData, rowsData = [], searchActions, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected } = props;
@@ -127,24 +128,25 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                     </RowCell>
                                 }
                                 {
-                                    headerData?.filter(x => x.visible)?.map(column => (
+                                    headerData?.filter((x: any) => x.visible)?.map((column: any) => (
                                         <RowCell
                                             key={column.id}
                                             className={classNames(classes.cell, classes.bodyCell)}
                                             onClick={() => onRowClick ? onRowClick(row) : {}}
                                         >
                                             {
-                                                formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
-                                                    <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity })} target='_blank'>
-                                                        {row[column.id] &&
-                                                            <Tooltip title="Click to open in new tab" >
-                                                                <IconButton> <CropOriginal /></IconButton>
-                                                            </Tooltip>
-                                                        }
-                                                    </a>
-                                                    : <div>
-                                                        {getDisplayName({ metaData: column.id, value: row[column.id], program: programConfig })}
-                                                    </div>
+                                                column.type === VariablesTypes.Custom ? row[column.id] :
+                                                    formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
+                                                        <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity })} target='_blank'>
+                                                            {row[column.id] &&
+                                                                <Tooltip title="Click to open in new tab" >
+                                                                    <IconButton> <CropOriginal /></IconButton>
+                                                                </Tooltip>
+                                                            }
+                                                        </a>
+                                                        : <div>
+                                                            {getDisplayName({ metaData: column.id, value: row[column.id], program: programConfig })}
+                                                        </div>
                                             }
                                         </RowCell>
                                     ))
