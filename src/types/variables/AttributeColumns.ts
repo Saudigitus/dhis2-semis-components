@@ -5,7 +5,8 @@ export enum VariablesTypes {
     DataElement = "dataElement",
     Attribute = "attribute",
     Custom = "custom",
-    Default = "default"
+    Default = "default",
+    Attendance = "attendance",
 }
 
 export enum enrollmentStatus {
@@ -35,7 +36,7 @@ export interface CustomAttributeProps {
     pattern?: string
     searchable?: boolean
     error?: boolean
-    warning?:boolean
+    warning?: boolean
     content?: string
     key?: any
     description?: string
