@@ -17,5 +17,5 @@ export function getDisplayName({ metaData, value, program }: defaultProps): stri
         }
     }
 
-    return value
+    return value.toString().length > 0 ? value : '--'
 }
