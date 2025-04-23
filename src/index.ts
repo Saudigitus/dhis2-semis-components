@@ -30,6 +30,7 @@ import PerformPromotion from "./components/perforPromotion/performPromotion"
 import CustomDropdown from "./components/buttons/dropdown/DropdownButton"
 import { SimpleLayout, FullLayout, SideBarLayout, HeaderBarLayout } from "./components/layout"
 import SwitchButtonView from './components/buttons/switchButtons/switchButtonsView'
+import DropDownCalendar from './components/calendar/DropDownCalendar'
 
 export {
     HeaderValuesState,
@@ -66,5 +67,6 @@ export {
     SimpleLayout,
     FullLayout,
     HeaderBarLayout,
-    SwitchButtonView
+    SwitchButtonView,
+    DropDownCalendar
 }

@@ -6,16 +6,42 @@ interface DatePickerProps {
 
 interface DropDownCalendarProps {
     setValue: ({ selectedDate }: { selectedDate: Date }) => void
-    dateDisabler?: (args: any) => boolean
+    dateDisabler?: (date: Date, config: SchoolCalendar) => boolean
     label: string
     icon?: any
     value?: string
+    config?: SchoolCalendar
 }
 
 interface CalendarProps {
     value: { selectedDate: Date }
-    dateDisabler?: (args: any) => boolean
+    dateDisabler?: (date: Date, config: SchoolCalendar) => boolean
     setValue: ({ selectedDate }: { selectedDate: Date }) => void
+    config?: SchoolCalendar
 }
 
+interface SchoolCalendar {
+    classPeriods: [
+        {
+            description: string
+            endDate: string
+            startDate: string
+        }
+    ]
+    holidays: [
+        {
+            date: any
+            event: string
+        }
+    ]
+    weekDays: {
+        friday: boolean
+        monday: boolean
+        saturday: boolean
+        sunday: boolean
+        thursday: boolean
+        tuesday: boolean
+        wednesday: boolean
+    }
+}
 export type { CalendarProps, DatePickerProps, DropDownCalendarProps }
