@@ -1,6 +1,6 @@
 {
   "name": "dhis2-semis-components",
-  "version": "0.6.3-alpha.14",
+  "version": "0.6.3-alpha.15",
   "main": "dist/index.js",
   "types": "dist/declarations/index.d.ts",
   "exports": {
@@ -72,6 +72,7 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/pickers": "^3.3.11",
     "@mui/material": "^5.14.5",
+    "@mui/x-date-pickers": "^6.11.1",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
     "copy-files": "^0.1.0",
@@ -86,7 +87,6 @@
     "react-bootstrap": "^2.10.5",
     "react-date-range": "1.4.0",
     "react-dom": "^18.3.1",
-    "@mui/x-date-pickers": "^6.11.1",
     "react-file-icon": "^1.5.0",
     "react-final-form": "^6.5.9",
     "react-json-view": "^1.21.3",
