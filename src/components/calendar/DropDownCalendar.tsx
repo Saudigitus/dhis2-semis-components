@@ -19,11 +19,14 @@ export default function DropDownCalendar(props: DropDownCalendarProps) {
 
     return (
         <>
-            <Dhis2Btn
-                onClick={(event: any) => { setAnchorCalendat(event.currentTarget), setOpen(true) }}
-                icon={icon}
-            >{label}
-            </Dhis2Btn>
+            <span onClick={(event: any) => { setAnchorCalendat(event.currentTarget), setOpen(true) }}>
+                <Dhis2Btn
+                    icon={icon}
+                >
+                    {label}
+                </Dhis2Btn>
+            </span>
+
             <Popover
                 open={open}
                 anchorEl={anchorCalendar}
