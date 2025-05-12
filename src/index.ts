@@ -31,6 +31,7 @@ import CustomDropdown from "./components/buttons/dropdown/DropdownButton"
 import { SimpleLayout, FullLayout, SideBarLayout, HeaderBarLayout } from "./components/layout"
 import SwitchButtonView from './components/buttons/switchButtons/switchButtonsView'
 import DropDownCalendar from './components/calendar/DropDownCalendar'
+import OrgUnitTreeField from './components/genericFields/fields/orgUnitTree/OrgUnitTreeField'
 
 export {
     HeaderValuesState,
@@ -68,5 +69,6 @@ export {
     FullLayout,
     HeaderBarLayout,
     SwitchButtonView,
-    DropDownCalendar
+    DropDownCalendar,
+    OrgUnitTreeField
 }

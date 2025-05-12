@@ -1,0 +1,28 @@
+.orgUnitCard {
+    border: 1px solid #C4C4C4;
+    z-index: 0;
+    box-shadow: 0px 0px 2px 0px #c4c4c4 inset;
+    border-radius: 3px;
+    background-color: white;
+    max-height: 346px !important;
+    max-width: 100% !important;
+}
+
+.orgUnitCard input {
+    border-radius: 0px !important;
+    border: none !important;
+}
+
+.cardTree {
+    max-height: 306px !important;
+    overflow-y: auto !important;
+    padding: 0.5rem;
+}
+
+.ouSpan {
+    display: block;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: rgb(33, 41, 52);
+    padding: 0px;
+}

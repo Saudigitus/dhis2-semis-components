@@ -27,7 +27,7 @@ function InputNumber(props: FormFieldsProps) {
         <Field
             {...props}
             component={InputFieldFF}
-            validate={props.required ? hasValue : undefined}
+            validate={props.required ? VALIDATOR : undefined}
             type={props.type}
             format={formatToString}
             disabled={props.disabled}

@@ -6,7 +6,7 @@ import { useSetRecoilState } from "recoil"
 const DATASTORE_QUERY = (keySpace: string) => {
   return {
     result: {
-      resource: `dataStore/semis/values`,
+      resource: `${keySpace}`,
       params: {
         fields: "*"
       }
@@ -22,11 +22,12 @@ const useDataStore = (keySpace: string) => {
   const [validationError, setValidationError] = useState<object | null>(null)
   const setDataStoreValues = useSetRecoilState(DataStoreState)
 
-  const getDataStore = async () => {
+  const getDataStore = async (validate: boolean) => {
     setLoading(true)
     try {
+      console.log(validate)
       const response = await engine.query(DATASTORE_QUERY(keySpace))
-      if (typeof dataStoreSchemaValidator(response?.result) === "object") {
+      if (typeof dataStoreSchemaValidator(response?.result) === "object" && validate == true) {
         setValidationError(dataStoreSchemaValidator(response?.result) as object)
       } else {
         setData(response?.result)

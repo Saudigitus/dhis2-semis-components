@@ -9,15 +9,14 @@ import { DataProvider } from '@dhis2/app-runtime';
 import { RecoilRoot, useSetRecoilState } from 'recoil';
 import { ProgramConfigState } from '../../schemas/programSchema';
 
-const AppWrapperRaw = ({ children, dataStoreKey }: AppWrapperProps) => {
+const AppWrapperRaw = ({ children, dataStoreKey, validate }: AppWrapperProps) => {
   const [loading, setLoading] = useState<boolean>(true)
   const { error, validationError, getDataStore } = useDataStore(dataStoreKey);
   const { getProgram, error: errorProgram } = useProgramConfig()
-  const setProgramsValues = useSetRecoilState(ProgramConfigState
-  )
+  const setProgramsValues = useSetRecoilState(ProgramConfigState)
 
   useEffect(() => {
-    void getDataStore()
+    void getDataStore(validate)
       .then(async (response: DataStoreProps) => {
         let programs: any = []
 

@@ -7,6 +7,7 @@ interface AppWrapperProps {
      *   const programsValues = useProgramsKeys() - for your array of programs
     */
     dataStoreKey: string
+    validate?: boolean
 }
 
 export type { AppWrapperProps }
