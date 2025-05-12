@@ -1,5 +1,5 @@
 import { useDataQuery } from '@dhis2/app-runtime'
-import { OrganisationUnitTree, CenteredContent, CircularLoader, Help } from "@dhis2/ui"
+import { OrganisationUnitTree, Center, CircularLoader, Help } from "@dhis2/ui"
 import React, { useState } from 'react'
 import { IconButton } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
@@ -44,9 +44,9 @@ export default function OrgUnitTreeField(props: OuFieldProps): React.ReactElemen
 
     if (loading) {
         return (
-            <CenteredContent>
+            <Center>
                 <CircularLoader small />
-            </CenteredContent>
+            </Center>
         )
     }
 
@@ -67,7 +67,7 @@ export default function OrgUnitTreeField(props: OuFieldProps): React.ReactElemen
                         </IconButton>
                     </div>
                     : <OrganisationUnitTree
-                        name={data?.results?.teiSearchOrganisationUnits[0]?.displayName}
+                        key={data?.results?.teiSearchOrganisationUnits[0]?.displayName}
                         roots={data?.results?.teiSearchOrganisationUnits[0]?.id}
                         singleSelection
                         selected={selectedOu?.selected}

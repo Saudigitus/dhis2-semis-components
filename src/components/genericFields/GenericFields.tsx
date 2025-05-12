@@ -11,6 +11,7 @@ import { CustomAttributeProps } from "../../types/variables/AttributeColumns";
 import DateRangePicker from './fields/datepicker/improvedDateRage';
 import ImageField from './fields/ImageField';
 import { DataProvider } from '@dhis2/app-runtime';
+import OrgUnitTreeField from "./fields/orgUnitTree/OrgUnitTreeField";
 
 function GenericFields({ attribute, disabled, valueType, form, onInputChange, storybook, setChanged, submitted }: GenericFieldsComponentProps) {
 
@@ -57,6 +58,9 @@ function GenericFields({ attribute, disabled, valueType, form, onInputChange, st
 
     case 'DATE_RANGE' as unknown as CustomAttributeProps["valueType"]:
       return <DateRangePicker disabled={disabled} name='dateRange' setChanged={setChanged} />
+
+    case Attribute.valueType.ORGANISATION_UNIT as unknown as CustomAttributeProps["valueType"]:
+      return <OrgUnitTreeField {...attribute} />
 
     default:
       return <span>ValueType not mapped</span>;
