@@ -98,9 +98,23 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
                     const cell = row.getCell(colIndex);
 
                     if (index > 2) {
-                        if (empty && colKey != 'ref') cell.protection = { locked: false }
-                        else if (!empty && !defaultLockedHeaders.includes(cell._column._header)) cell.protection = { locked: false }
+                        if (empty && colKey !== 'ref') {
+                            if (defaultLockedHeaders.includes(cell._column._key)) {
+                                cell.protection = { locked: true };
+                            } else {
+                                cell.protection = { locked: false };
+                            }
+                        } else if (
+                            defaultLockedHeaders.includes(cell._column._key) ||
+                            defaultLockedHeaders.includes(cell._column._header)
+                        ) {
+                            cell.protection = { locked: true };
+                        } else {
+                            cell.protection = { locked: false };
+                        }
                     }
+
+
 
                     if (filters?.[dataElementId[0]] || filters?.[dataElementId[1]] || (regex.test(columnHeader) && filters["Attendance"])) {
                         if (index > 2) {
@@ -142,9 +156,7 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
         metadata.map((row: any) => sheet.addRow(row))
         sheet.protect(password, lock)
 
-        console.log('generating')
         const buf = await workbook.xlsx.writeBuffer()
-        console.log(buf)
         saveAs(new Blob([buf]), fileName + ".xlsx")
     }
 

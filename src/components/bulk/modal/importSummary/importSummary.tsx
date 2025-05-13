@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { IconCheckmarkCircle16, Tag, ModalActions, Button, ButtonStrip } from "@dhis2/ui";
 import WithPadding from "../../../template/WithPadding";
 import styles from "../modal.module.css";
@@ -8,28 +8,17 @@ import { Collapse } from "@material-ui/core";
 import { InfoOutlined } from "@material-ui/icons";
 import SummaryCards from "./SummaryCards";
 import SummaryDetails from "./SummaryDetails";
-import useUploadEvents from "../../../../hooks/events/useUploadEvents";
 import { LinearProgress } from "@material-ui/core";
 
 interface ModalContentProps {
     setOpen: (value: boolean) => void
-    summaryData: any
-    sheetData: {
-        attendanceEvents: any[],
-        trackedEntityIds: {
-            tei: string,
-            enrollment: string
-        }[],
-        dateRange: {
-            sDate: Date,
-            eDate: Date
-        }
-    },
-    setOpenDragNDrop: (value: boolean) => void
+    summaryData?: any
+    invalidRecords: any[]
+    validRecords: any[]
 }
 
 const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
-    const { setOpen, summaryData, sheetData, setOpenDragNDrop } = props;
+    const { setOpen, summaryData, invalidRecords, validRecords } = props;
     const [showDetails, setShowDetails] = useState(false)
     const [doneProcessing, setDoneProcessing] = useState({ validate: false, commit: false })
 
@@ -39,21 +28,19 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
         {
             label: "Dry Run",
             loading: false,
-            disabled: summaryData?.summary?.new?.length === 0 || doneProcessing.validate || doneProcessing.commit,
+            disabled: validRecords?.length === 0 || doneProcessing.validate || doneProcessing.commit,
             onClick: () => {
                 setDoneProcessing({ validate: true, commit: false })
             },
-            // className: progress?.progress != null && styles.remove
         },
         {
-            label: "Import attendance data",
+            label: "Import data",
             primary: true,
             loading: false,
-            disabled: doneProcessing.commit || (summaryData?.summary?.new?.length === 0),
+            disabled: doneProcessing.commit || (validRecords?.length === 0),
             onClick: () => {
                 setDoneProcessing((done: any) => ({ ...done, commit: true }))
             },
-            // className: progress?.progress != null && styles.remove
         },
         {
             label: "Close",
@@ -61,7 +48,6 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             loading: false,
             onClick: () => {
                 setOpen(false)
-                setOpenDragNDrop(false)
             }
         }
     ];
@@ -87,20 +73,20 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
 
     return (
         <>
-            <Tag positive icon={< IconCheckmarkCircle16 />} className={styles.tagContainer} > Attendance import preview </Tag>
+            <Tag positive icon={< IconCheckmarkCircle16 />} className={styles.tagContainer} >  <Title style={{ fontSize: "13px", fontWeight:"400" }} label={`Import data preview `} type="title" /></Tag>
 
-            < WithPadding />
-            <Title label={`Import Summary`} type="title" />
-            < WithPadding />
+            <WithPadding />
+            <Title style={{ fontSize: "18px" }} label={`Summary`} type="title" />
+            <WithPadding />
 
-            <SummaryCards doneProcessing={doneProcessing.commit || doneProcessing.validate} {...summaryData} />
+            <SummaryCards duplicateRecs={[]} invalidRecs={invalidRecords} validRecs={validRecords} doneProcessing={doneProcessing.commit || doneProcessing.validate} />
 
-            < WithPadding />
+            <WithPadding />
             <ButtonStrip>
-                <Button small icon={< InfoOutlined className={styles.infoIcon} />} onClick={handleShowDetails} > More details </Button>
+                <Button small icon={<InfoOutlined className={styles.infoIcon} />} onClick={handleShowDetails} > More details </Button>
             </ButtonStrip>
 
-            < WithPadding />
+            <WithPadding />
             <Collapse in={showDetails}>
                 <div className={styles.detailsContainer}>
                     <SummaryDetails doneProcessing={doneProcessing.commit || doneProcessing.validate} summaryData={summaryData} />

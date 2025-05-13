@@ -14,6 +14,7 @@ interface TextProps {
      * @type {?("normal" | "bold")}
      */
     weight?: "normal" | "bold"
+    style?: React.CSSProperties
 }
 
 export type { TextProps }

@@ -1,19 +1,16 @@
 import React from "react";
 import { ButtonStrip } from "@dhis2/ui";
 import SummaryCard from "../../../card/SummaryCard";
-import { useRecoilValue } from "recoil";
 
-function SummaryCards(props: any): React.ReactElement {
-    const newRecs = props?.summary?.new?.reduce((sum: any, item: any) => sum + item.columns, 0);
-    const invalid = props?.summary?.invalid?.reduce((sum: any, item: any) => sum + item.columns, 0);
+function SummaryCards({ validRecs, invalidRecs, duplicateRecs, doneProcessing }: { validRecs: any, invalidRecs: any, duplicateRecs: any, doneProcessing: boolean }): React.ReactElement {
     const stats: any = {}
 
     return (
         <ButtonStrip>
-            {!props.doneProcessing ? <>
-                <SummaryCard color="success" label="New Records" value={newRecs?.toString()} />
-                <SummaryCard color="warning" label="Invalid Records" value={invalid?.toString()} />
-                <SummaryCard color="error" label="Invalid Sheets" value={props?.summary?.invalidSheets?.length.toString()} />
+            {!doneProcessing ? <>
+                <SummaryCard color="success" label="New Records" value={validRecs?.length} />
+                <SummaryCard color="warning" label="Invalid Records" value={invalidRecs?.length} />
+                <SummaryCard color="error" label="Duplicates" value={duplicateRecs?.length} />
             </>
                 :
                 <>

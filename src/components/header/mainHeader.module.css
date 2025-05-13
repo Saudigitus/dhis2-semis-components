@@ -11,7 +11,7 @@
     gap: 1px;
 }
 
-.leftContent{
+.leftContent {
     -webkit-box-flex: 1;
     flex-grow: 1;
     display: flex;
@@ -19,7 +19,7 @@
     gap: 1px;
 }
 
-.rightContent{
+.rightContent {
     -webkit-box-flex: 1;
     flex-grow: 1;
     display: flex;
@@ -72,23 +72,24 @@
 }
 
 .SimpleSearchContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #FFFF;
-    border: 1px solid #c4c4c4;
-    border-radius: 4px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    background: #FFFF !important;
+    border: 1px solid #c4c4c4 !important;
+    border-radius: 4px !important;
     box-shadow: 0 1px 2px rgba(33, 41, 52, .06), 0 1px 3px rgba(33, 41, 52, .1) !important;
-    box-shadow: inset 0 0 2px 0 #c4c4c4;
-    max-height: 80vh;
-    min-height: 400px;
-    min-width: 395px;
-    padding: 10px 8px;
+    box-shadow: inset 0 0 2px 0 #c4c4c4 !important;
+    max-height: 80vh !important;
+    min-height: 400px !important;
+    min-width: 355px !important;
+    padding: 10px 8px !important; 
 }
 
 .SimpleSearcInputContainer {
     height: auto;
     padding: 10px 14px;
+    width: 100%;
 }
 
 .ChildrenContentContainer {
@@ -99,16 +100,16 @@
     overflow-y: auto;
 }
 
-.HeaderContainer{
+.HeaderContainer {
     padding-left: 0 !important;
     padding-right: 0 !important;
     min-width: 100% !important;
 }
 
-.HeaderMenu li{
+.HeaderMenu li {
     list-style: none !important;
 }
 
-.NoOPtionArea{
+.NoOPtionArea {
     padding: 5px 15px;
 }

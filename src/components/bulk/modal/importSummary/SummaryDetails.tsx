@@ -5,7 +5,7 @@ import { SummaryTable } from "./SummaryContent";
 const SummaryDetails = ({ summaryData, doneProcessing }: { summaryData: any, doneProcessing: boolean }): React.ReactElement => {
     const [data, setData] = useState<any>([])
     const [activeTab, setActiveTab] = useState("new")
-    const [pagination, setPagination] = useState<any>({ new: { page: 1, pageSize: 10 }, invalid: { page: 1, pageSize: 10 }, invalidSheets: { page: 1, pageSize: 10 } });
+    const [pagination, setPagination] = useState<any>({ new: { page: 1, pageSize: 10 }, invalid: { page: 1, pageSize: 10 }, duplicates: { page: 1, pageSize: 10 } });
     const currentPage = pagination[activeTab]?.page;
     const tabPageSize = pagination[activeTab]?.pageSize;
     const newRecs = summaryData?.summary?.new?.reduce((sum: any, item: any) => sum + item.columns, 0);
@@ -33,8 +33,8 @@ const SummaryDetails = ({ summaryData, doneProcessing }: { summaryData: any, don
                 <Tab onClick={() => { setActiveTab('invalid') }} selected={activeTab === 'invalid'}>
                     {invalid}<br /> Invalid Records
                 </Tab>
-                <Tab onClick={() => { setActiveTab('invalidSheets') }} selected={activeTab === 'invalidSheets'}>
-                    {summaryData.summary?.invalidSheets?.length}<br /> Invalid Sheets
+                <Tab onClick={() => { setActiveTab('duplicates') }} selected={activeTab === 'duplicates'}>
+                    {summaryData.summary?.duplicates?.length}<br /> Invalid Sheets
                 </Tab>
             </TabBar>}
 

@@ -12,8 +12,8 @@
 }
 
 .warning {
-    border: solid 1px var(--summary-card-border-warning);
-    background-color: var(--summary-card-warning-background);
+    border: solid 1px #ffca3a;
+    background-color: #ffd5492e;
     width: 160px;
     height: 70px;
     display: flex;
