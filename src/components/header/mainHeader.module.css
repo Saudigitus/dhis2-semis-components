@@ -88,7 +88,7 @@
 
 .SimpleSearcInputContainer {
     height: auto;
-    padding: 10px 14px;
+    margin-bottom: 10px;
 }
 
 .ChildrenContentContainer {
@@ -103,6 +103,10 @@
     padding-left: 0 !important;
     padding-right: 0 !important;
     min-width: 100% !important;
+}
+
+.HeaderMenu ul{
+    padding: 10px;
 }
 
 .HeaderMenu li{
