@@ -1,7 +1,7 @@
 /* ========== Summary Cards styles ============== */
 .success {
-    border: solid 1px var(--summary-card-border-success);
-    background-color: var(--summary-card-success-background);
+    border: solid 1px #4CAF50;
+    background-color: #F4FBF4;
     width: 160px;
     height: 70px;
     display: flex;
@@ -25,8 +25,8 @@
 }
 
 .error {
-    border: solid 1px var(--summary-card-border-error);
-    background-color: var(--summary-card-error-background);
+    border: solid 1px #DEA9A7;
+    background-color: #FFECE7;
     width: 160px;
     height: 70px;
     display: flex;

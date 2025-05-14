@@ -9,12 +9,12 @@ import program from "../../../../program.json";
 import ModalSummaryContent from "../modal/importSummary/importSummary";
 
 export default function ProcessImport(props: importData) {
-    const { label, onError, title, updating, programConfig } = props
+    const { label, onError, title, updating, programConfig, module } = props
     const [progress, setProgress] = useState({ prorocess: "import", progress: 0, buffer: 0 })
     const UseValidation = new useValidation()
     const [open, setOpen] = useState(false)
     const [excelData, serExcelData] = useState<any>({ mapping: [], module: "" })
-    const { importData } = useImportData({ setProgress, onError })
+    // const { importData } = useImportData({ setProgress, onError })
     const [openStats, setOpenStats] = useState(false)
     const [openPogress, setOpenProgress] = useState(false)
     const { validador, invalidRecords, validRecords } = useValidateFile(program, updating ? 'UPDATE' : "POST")
@@ -32,11 +32,11 @@ export default function ProcessImport(props: importData) {
     }, [progress.progress])
 
     const onSubmit = async (importMode: "VALIDATE" | "COMMIT") => {
-        await importData({ ...props, ...excelData, importMode })
+        // await importData({ ...props, ...excelData, importMode })
     }
 
     const onValidation = async (file: File) => {
-        UseValidation.setModule('attendance' as unknown as any)
+        UseValidation.setModule(module as unknown as any)
 
         await UseValidation.validation(file[0])
             .then((resp) => {
