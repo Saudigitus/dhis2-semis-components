@@ -111,11 +111,11 @@ const OrgUnitTreeSearch = ({ onChange }) => {
     }
 
     return (
-        <div style={{ width: 400, minHeight: 400 }} onClick={(e) => e.stopPropagation()}>
+        <div style={{ width: 400, height: 400 }} className={style.HeaderMenu} onClick={(e) => e.stopPropagation()}>
             <Menu>
                 <div onClick={(e) => e.stopPropagation()}>
                     <div className={style.SimpleSearcInputContainer} >
-                        <Input onChange={onChangeQuerySearch} value={stringQuery} initialFocus dense placeholder={"Search for a school"} name="input" />
+                        <Input onChange={onChangeQuerySearch} value={stringQuery} initialFocus placeholder={"Search for a school"} name="input" />
                     </div>
                     <OrgUnitTree onChange={onChange} stringQuery={stringQuery} />
                 </div>
