@@ -20,7 +20,7 @@ export function postEnrollmentData({ setStats, setProgress, onError }: { setStat
     async function postEnrollments(
         enrollments: any[],
         excelData: any,
-        importMode: importData["importMode"],
+        importMode: "VALIDATE" | "COMMIT",
         program: string,
         updating: boolean,
         dataStore: selectedDataStoreKey,

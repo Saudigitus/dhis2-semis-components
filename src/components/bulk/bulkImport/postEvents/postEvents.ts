@@ -22,7 +22,7 @@ export function postValues({ setStats, setProgress, onError }: { setStats: (args
     async function postData(
         data: any[],
         excelData: any,
-        importMode: importData["importMode"],
+        importMode: "VALIDATE" | "COMMIT",
         programConfig: ProgramConfig,
         programStages: string[]
     ) {

@@ -23,7 +23,7 @@ export function postAttendanceValues({ setStats, setProgress, onError }: { setSt
         programStageId: string,
         excelData: any[],
         program: string,
-        importMode: importData["importMode"]
+        importMode: "VALIDATE" | "COMMIT"
     ) {
         let values: any = { CREATE: [], UPDATE: [] }
         const keys = Object.keys(values)
