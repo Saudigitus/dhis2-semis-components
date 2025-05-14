@@ -105,8 +105,8 @@
     min-width: 100% !important;
 }
 
-.HeaderMenu ul{
-    padding: 10px;
+.HeaderMenu{
+    padding: 10px !important;
 }
 
 .HeaderMenu li{
