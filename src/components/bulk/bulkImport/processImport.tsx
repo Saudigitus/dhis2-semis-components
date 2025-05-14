@@ -7,17 +7,17 @@ import ModalProgress from "../progress/interactiveProgress";
 import { useValidateFile, useValidation } from "dhis2-semis-functions";
 import program from "../../../../program.json";
 import ModalSummaryContent from "../modal/importSummary/importSummary";
-import Title from "../../text/Text";
 
 export default function ProcessImport(props: importData) {
-    const { module, label, onError, title, updating, programConfig } = props
+    const { label, onError, title, updating, programConfig } = props
     const [progress, setProgress] = useState({ prorocess: "import", progress: 0, buffer: 0 })
-    // const { importData } = useImportData({ setProgress, onError })
     const UseValidation = new useValidation()
     const [open, setOpen] = useState(false)
+    const [excelData, serExcelData] = useState<any>({ mapping: [], module: "" })
+    const { importData } = useImportData({ setProgress, onError })
     const [openStats, setOpenStats] = useState(false)
     const [openPogress, setOpenProgress] = useState(false)
-    const { validador, invalidRecords, validRecords } = useValidateFile(program, 'UPDATE')
+    const { validador, invalidRecords, validRecords } = useValidateFile(program, updating ? 'UPDATE' : "POST")
 
     useEffect(() => {
         if (progress.progress > 0) {
@@ -31,8 +31,12 @@ export default function ProcessImport(props: importData) {
         }
     }, [progress.progress])
 
+    const onSubmit = async (importMode: "VALIDATE" | "COMMIT") => {
+        await importData({ ...props, ...excelData, importMode })
+    }
+
     const onValidation = async (file: File) => {
-        UseValidation.setModule(module as unknown as any)
+        UseValidation.setModule('attendance' as unknown as any)
 
         await UseValidation.validation(file[0])
             .then((resp) => {
@@ -41,7 +45,7 @@ export default function ProcessImport(props: importData) {
                     setOpen(false)
                     setOpenStats(true)
                 })
-                // void importData({ ...props, excelData: resp })
+                serExcelData(resp)
             })
             .catch((error) => {
                 onError('Import Error: ' + error)
@@ -65,10 +69,9 @@ export default function ProcessImport(props: importData) {
             />
 
             {openStats && <ModalComponent
-                children={<ModalSummaryContent setOpen={setOpenStats} invalidRecords={invalidRecords} validRecords={validRecords} />}
+                children={<ModalSummaryContent progress={progress} onSubmit={onSubmit} programConfig={programConfig} setOpen={setOpenStats} invalidRecords={invalidRecords} validRecords={validRecords} />}
                 handleClose={() => { setOpenStats(false) }}
                 open={openStats}
-                title={<Title style={{ fontSize: "20px", fontWeight:"600" }} label={`Bulk ${module}`} type="title" />}
             />}
 
             <ModalProgress

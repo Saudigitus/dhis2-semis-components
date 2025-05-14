@@ -7,7 +7,7 @@ import { postValues } from "./postEvents/postEvents";
 import { useState } from 'react'
 import { useUrlParams } from "dhis2-semis-functions";
 
-type CombinedTypes = importData & excelData
+type CombinedTypes = importData & excelData & { importMode: "VALIDATE" | "COMMIT" };
 
 export function useImportData({ setProgress, onError }: { setProgress: (rags: any) => void, onError: (rags: any) => void }) {
     const [stats, setStats] = useState<any>()

@@ -4,21 +4,22 @@ import WithPadding from "../../../template/WithPadding";
 import styles from "../modal.module.css";
 import { type ButtonActionProps } from "../../../../types/buttons/ButtonActions";
 import Title from "../../../text/Text";
-import { Collapse } from "@material-ui/core";
+import { Collapse, LinearProgress } from "@material-ui/core";
 import { InfoOutlined } from "@material-ui/icons";
 import SummaryCards from "./SummaryCards";
 import SummaryDetails from "./SummaryDetails";
-import { LinearProgress } from "@material-ui/core";
 
 interface ModalContentProps {
     setOpen: (value: boolean) => void
-    summaryData?: any
     invalidRecords: any[]
     validRecords: any[]
+    programConfig: any
+    onSubmit: (args: "VALIDATE" | "COMMIT") => void
+    progress: any
 }
 
 const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
-    const { setOpen, summaryData, invalidRecords, validRecords } = props;
+    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, progress } = props;
     const [showDetails, setShowDetails] = useState(false)
     const [doneProcessing, setDoneProcessing] = useState({ validate: false, commit: false })
 
@@ -31,6 +32,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             disabled: validRecords?.length === 0 || doneProcessing.validate || doneProcessing.commit,
             onClick: () => {
                 setDoneProcessing({ validate: true, commit: false })
+                onSubmit("VALIDATE")
             },
         },
         {
@@ -39,6 +41,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             loading: false,
             disabled: doneProcessing.commit || (validRecords?.length === 0),
             onClick: () => {
+                onSubmit("COMMIT")
                 setDoneProcessing((done: any) => ({ ...done, commit: true }))
             },
         },
@@ -73,7 +76,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
 
     return (
         <>
-            <Tag positive icon={< IconCheckmarkCircle16 />} className={styles.tagContainer} >  <Title style={{ fontSize: "13px", fontWeight:"400" }} label={`Import data preview `} type="title" /></Tag>
+            <Tag positive icon={< IconCheckmarkCircle16 />} className={styles.tagContainer} >  <Title style={{ fontSize: "15px", fontWeight: "400" }} label={`Import data preview `} type="title" /></Tag>
 
             <WithPadding />
             <Title style={{ fontSize: "18px" }} label={`Summary`} type="title" />
@@ -89,10 +92,10 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             <WithPadding />
             <Collapse in={showDetails}>
                 <div className={styles.detailsContainer}>
-                    <SummaryDetails doneProcessing={doneProcessing.commit || doneProcessing.validate} summaryData={summaryData} />
+                    <SummaryDetails programConfig={programConfig} doneProcessing={doneProcessing.commit || doneProcessing.validate} dupliRecords={[]} invalidRecords={invalidRecords} validRecords={validRecords} />
                 </div>
             </Collapse>
-            {/* {progress?.progress != null && doneProcessing.validate && <LinearProgress />} */}
+            {progress?.progress != null && doneProcessing.validate && <LinearProgress />}
             <Actions />
         </>
     );
