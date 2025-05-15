@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: '#F1FBFF'
         },
         cell: {
+            whiteSpace: "nowrap",
             padding: `${theme.spacing(1) / 2}px ${theme.spacing(1) * 7}px ${theme.spacing(1) /
                 2}px ${theme.spacing(1) * 3}px`,
             '&:last-child': {

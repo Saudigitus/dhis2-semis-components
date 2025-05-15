@@ -35,14 +35,8 @@ const useStyles = makeStyles((theme) => ({
     },
     h4: {
         margin: '10px 0px 10px 0px',
-        fontSize: '22px',
-        fontWeigth: '500',
-        [theme.breakpoints.down('md')]: {
-            fontSize: '20px',
-        },
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '16px',
-        }
+        fontSize: 'larger',
+        fontWeight: '500',
     }
 }));
 
