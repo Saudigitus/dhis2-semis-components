@@ -9,7 +9,6 @@ import {
 export default function ErrorDetailsTable({ data }: { data: any }) {
     const keys: any = Object?.keys(data?.[0])
 
-    console.log(data)
     return (
         <>
             <DataTable>
@@ -34,12 +33,13 @@ export default function ErrorDetailsTable({ data }: { data: any }) {
                 </DataTableHead>
                 <DataTableBody>
                     {
-                        data?.map((data: any, _) => {
+                        data?.map((row: any) => {
                             return (
                                 <DataTableRow>
                                     {keys.map((x: any) => {
+                                        console.log(x, row)
                                         return (
-                                            <DataTableCell align="center">{data?.[x]}</DataTableCell>
+                                            <DataTableCell align="center">{row?.[x]}</DataTableCell>
                                         )
                                     })}
                                 </DataTableRow>

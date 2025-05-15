@@ -41,7 +41,6 @@ const SummaryDetails = ({ invalidRecords, doneProcessing, dupliRecords, validRec
 
                 <SummaryTable
                     displayData={data}
-                    activeTab={activeTab}
                     doneProcessing={doneProcessing}
                     programConfig={programConfig}
                 />

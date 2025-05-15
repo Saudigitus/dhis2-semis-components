@@ -17,7 +17,7 @@ export default function ProcessImport(props: importData) {
     const { importData } = useImportData({ setProgress, onError })
     const [openStats, setOpenStats] = useState(false)
     const [openPogress, setOpenProgress] = useState(false)
-    const { validador, invalidRecords, validRecords } = useValidateFile(programConfig, updating ? 'UPDATE' : "POST")
+    const { validador, invalidRecords, validRecords, loader } = useValidateFile(programConfig, updating ? 'UPDATE' : "POST")
 
     useEffect(() => {
         if (progress.progress > 0) {
@@ -62,7 +62,7 @@ export default function ProcessImport(props: importData) {
             </a>
 
             <ModalComponent
-                children={<DropZone accept='.csv,.xlsx' onSave={(file) => onValidation(file)} />}
+                children={<DropZone loading={loader} accept='.csv,.xlsx' onSave={(file) => onValidation(file)} />}
                 handleClose={() => { setOpen(false) }}
                 open={open}
                 title={title}

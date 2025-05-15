@@ -1,6 +1,5 @@
-import React from "react";
 function FileInput(props: any) {
-    const { name, setUploadedFile, accept = ".csv", setdisplayDetails } = props
+    const { name, setUploadedFile, accept = ".csv", setdisplayDetails, disabled } = props
 
     const handleFileChange = async (event: any) => {
         const file = event.target.files[0];
@@ -20,6 +19,7 @@ function FileInput(props: any) {
             name={name}
             accept={accept}
             onChange={handleFileChange}
+            disabled={disabled}
         />
     )
 }

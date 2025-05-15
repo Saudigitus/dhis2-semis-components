@@ -5,13 +5,12 @@ import program from '../../../../program.json'
 
 interface SummaryTableProps {
     displayData: Record<string, any>[]
-    activeTab: string
     doneProcessing: boolean
     programConfig: any
 }
 
 export const SummaryTable = (props: SummaryTableProps): React.ReactElement => {
-    const { displayData, activeTab, doneProcessing, programConfig = program } = props
+    const { displayData, doneProcessing, programConfig = program } = props
     const [expanded, setExpanded] = useState<string>("")
     const stats: any = {}
     const att = [
@@ -22,7 +21,6 @@ export const SummaryTable = (props: SummaryTableProps): React.ReactElement => {
 
     const flatArray = displayData.map(item => {
         const flatObj = {};
-        console.log(item)
         for (const section of Object.values(item)) {
             for (const [key, value] of Object.entries(section)) {
                 if (attributeIds.includes(key) || key === "ref") {
@@ -31,7 +29,7 @@ export const SummaryTable = (props: SummaryTableProps): React.ReactElement => {
             }
         }
 
-        flatObj['errors'] = item?.warnings ? item.warnings : item?.error
+        flatObj['errors'] = item?.warnings ? item.warnings : item?.errors
         return flatObj;
     });
 
@@ -78,9 +76,11 @@ export const SummaryTable = (props: SummaryTableProps): React.ReactElement => {
                                     <DataTableRow
                                         expanded={expanded === index.toString()}
                                         onExpandToggle={() => {
-                                            if (expanded == index.toString())
-                                                setExpanded(null)
-                                            else setExpanded(index.toString())
+                                            if (data?.errors?.length > 0) {
+                                                if (expanded == index.toString())
+                                                    setExpanded(null)
+                                                else setExpanded(index.toString())
+                                            }
                                         }}
                                         expandableContent={<ErrorDetailsTable data={data?.errors} />}
                                     >

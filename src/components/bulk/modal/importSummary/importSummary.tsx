@@ -14,7 +14,7 @@ interface ModalContentProps {
     invalidRecords: any[]
     validRecords: any[]
     programConfig: any
-    onSubmit: (args: "VALIDATE" | "COMMIT") => void
+    onSubmit: (args: "VALIDATE" | "COMMIT") => any
     progress: any
 }
 
@@ -30,9 +30,14 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             label: "Dry Run",
             loading: false,
             disabled: validRecords?.length === 0 || doneProcessing.validate || doneProcessing.commit,
-            onClick: () => {
-                setDoneProcessing({ validate: true, commit: false })
-                onSubmit("VALIDATE")
+            onClick: async () => {
+                await onSubmit("VALIDATE").then((e) => {
+                    console.log(e, 'dry run resp')
+                    setDoneProcessing({ validate: true, commit: false })
+                }).catch((e) => {
+                    console.log(e, 'dry run error')
+                    setDoneProcessing({ validate: true, commit: false })
+                })
             },
         },
         {
@@ -41,8 +46,13 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             loading: false,
             disabled: doneProcessing.commit || (validRecords?.length === 0),
             onClick: () => {
-                onSubmit("COMMIT")
-                setDoneProcessing((done: any) => ({ ...done, commit: true }))
+                onSubmit("COMMIT").then((e) => {
+                    console.log(e, 'submit resp')
+                    setDoneProcessing((done: any) => ({ ...done, commit: true }))
+                }).catch((e) => {
+                    console.log(e, 'submit error')
+                    setDoneProcessing((done: any) => ({ ...done, commit: true }))
+                })
             },
         },
         {
