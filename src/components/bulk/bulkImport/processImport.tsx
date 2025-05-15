@@ -13,8 +13,9 @@ export default function ProcessImport(props: importData) {
     const [progress, setProgress] = useState({ prorocess: "import", progress: 0, buffer: 0 })
     const UseValidation = new useValidation()
     const [open, setOpen] = useState(false)
-    const [excelData, serExcelData] = useState<any>({ mapping: [], module: "" })
-    const { importData } = useImportData({ setProgress, onError })
+    const [stats, setStats] = useState<any>({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] })
+    const [excelData, setExcelData] = useState<any>({ mapping: [], module: "" })
+    const { importData } = useImportData({ setProgress, onError, stats, setStats })
     const [openStats, setOpenStats] = useState(false)
     const [openPogress, setOpenProgress] = useState(false)
     const { validador, invalidRecords, validRecords, loader } = useValidateFile(programConfig, updating ? 'UPDATE' : "POST")
@@ -31,9 +32,7 @@ export default function ProcessImport(props: importData) {
         }
     }, [progress.progress])
 
-    const onSubmit = async (importMode: "VALIDATE" | "COMMIT") => {
-        await importData({ ...props, ...excelData, importMode })
-    }
+    const onSubmit = async (importMode: "VALIDATE" | "COMMIT") => await importData({ ...props, excelData: excelData, importMode })
 
     const onValidation = async (file: File) => {
         UseValidation.setModule(module as unknown as any)
@@ -45,7 +44,7 @@ export default function ProcessImport(props: importData) {
                     setOpen(false)
                     setOpenStats(true)
                 })
-                serExcelData(resp)
+                setExcelData(resp)
             })
             .catch((error) => {
                 onError('Import Error: ' + error)
@@ -69,7 +68,17 @@ export default function ProcessImport(props: importData) {
             />
 
             {openStats && <ModalComponent
-                children={<ModalSummaryContent progress={progress} onSubmit={onSubmit} programConfig={programConfig} setOpen={setOpenStats} invalidRecords={invalidRecords} validRecords={validRecords} />}
+                children={
+                    <ModalSummaryContent
+                        progress={progress}
+                        onSubmit={onSubmit}
+                        programConfig={programConfig}
+                        setOpen={setOpenStats}
+                        invalidRecords={invalidRecords}
+                        validRecords={validRecords}
+                        stats={stats}
+                    />
+                }
                 handleClose={() => { setOpenStats(false) }}
                 open={openStats}
             />}

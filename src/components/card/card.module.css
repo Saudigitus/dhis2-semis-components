@@ -36,9 +36,21 @@
     border-radius: 3px;
 }
 
+.updated {
+    border: solid 1px #FFEB3B;
+    background-color: #ffeb3b3b;
+    width: 160px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
 .secondary {
-    border: solid 1px var(--summary-card-background-secondary);
-    background-color: var(--summary-card-secondary-background);
+    border: solid 1px #616161;
+    background-color: rgba(145, 145, 145, 0.144);
     width: 160px;
     height: 70px;
     display: flex;
@@ -50,6 +62,7 @@
 
 .success h5,
 .error h5,
+.updated h5,
 .secondary h5 {
     text-align: center;
 }
