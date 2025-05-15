@@ -5,7 +5,7 @@ import ModalComponent from "../../../components/modal/Modal";
 import { useEffect, useState } from "react";
 import ModalProgress from "../progress/interactiveProgress";
 import { useValidateFile, useValidation } from "dhis2-semis-functions";
-import program from "../../../../program.json";
+// import program from "../../../../program.json";
 import ModalSummaryContent from "../modal/importSummary/importSummary";
 
 export default function ProcessImport(props: importData) {
@@ -14,10 +14,10 @@ export default function ProcessImport(props: importData) {
     const UseValidation = new useValidation()
     const [open, setOpen] = useState(false)
     const [excelData, serExcelData] = useState<any>({ mapping: [], module: "" })
-    // const { importData } = useImportData({ setProgress, onError })
+    const { importData } = useImportData({ setProgress, onError })
     const [openStats, setOpenStats] = useState(false)
     const [openPogress, setOpenProgress] = useState(false)
-    const { validador, invalidRecords, validRecords } = useValidateFile(program, updating ? 'UPDATE' : "POST")
+    const { validador, invalidRecords, validRecords } = useValidateFile(programConfig, updating ? 'UPDATE' : "POST")
 
     useEffect(() => {
         if (progress.progress > 0) {
@@ -32,7 +32,7 @@ export default function ProcessImport(props: importData) {
     }, [progress.progress])
 
     const onSubmit = async (importMode: "VALIDATE" | "COMMIT") => {
-        // await importData({ ...props, ...excelData, importMode })
+        await importData({ ...props, ...excelData, importMode })
     }
 
     const onValidation = async (file: File) => {
