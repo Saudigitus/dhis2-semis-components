@@ -2,9 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 200px);
+    height: 100%;
     width: 100%;
-    width: 90vw;
 }
 
 .paperInit {
