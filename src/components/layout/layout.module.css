@@ -1,13 +1,13 @@
 /* Layout */
 .layoutContainer {
     width: 100%;
-    height: inherit;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
     overflow: hidden;
     background-color: #F9F9FA;
+    height: calc(100vh - 48px) !important;
 }
 
 /* Full layout */
@@ -58,5 +58,4 @@
     flex: 1;
     padding: 0px;
     overflow-y: auto;
-    height: calc(100vh - 48px) !important;
 }
