@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             borderBottomColor: "rgba(224, 224, 224, 1)",
             [theme.breakpoints.down('md')]: {
-                padding: `{theme.spacing(1) * 1}px`,
+                padding: `${theme.spacing(1) * 1}px`,
                 '&:last-child': {
                     paddingRight: `${theme.spacing(1) * 1}px`
                 },
