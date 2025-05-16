@@ -107,6 +107,10 @@
 
 .HeaderMenu{
     padding: 10px !important;
+    height: 400px;
+    overflow-y: auto;
+    min-width: 400px;
+    max-width: auto;
 }
 
 .HeaderMenu li{
