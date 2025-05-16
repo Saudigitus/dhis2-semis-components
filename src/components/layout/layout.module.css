@@ -45,7 +45,7 @@
 }
 
 @media screen and (max-width: 520px) {
-    .headerBarLayoutConten {
+    .headerBarLayoutContent {
         flex: 1;
         overflow-y: auto;
         padding: 10px;
@@ -58,4 +58,5 @@
     flex: 1;
     padding: 0px;
     overflow-y: auto;
+    height: calc(100vh - 48px) !important;
 }
