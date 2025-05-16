@@ -1,9 +1,9 @@
-import { importData, importStrategy } from "../../../../types/bulk/bulkOperations";
-import { useGetEvents } from "../../../../hooks/events/useGetEvents";
+import { importStrategy } from "../../../../types/bulk/bulkOperations";
 import { selectedDataStoreKey } from 'dhis2-semis-types';
-import useUploadEvents from "../../../../hooks/events/useUploadEvents";
 import { splitArrayIntoChunks } from "../../../../utils/common/splitArray";
 import { importSummary } from "../../../../utils/common/getImportSummary";
+import { useUploadEvents } from "dhis2-semis-functions";
+import { useGetEvents } from "dhis2-semis-functions";
 
 export function postEnrollmentData({ setStats, setProgress, onError }: { setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { getEvents } = useGetEvents()
@@ -81,8 +81,7 @@ export function postEnrollmentData({ setStats, setProgress, onError }: { setStat
         const chunks = splitArrayIntoChunks(copyData, 50);
 
         for (const chunk of chunks) {
-            const response = await uploadValues({ trackedEntities: chunk }, importMode, importStrategy.CREATE).then(() => {
-
+            await uploadValues({ trackedEntities: chunk }, importMode, importStrategy.CREATE).then((response) => {
                 updatedStats = importSummary(response, updatedStats)
                 updateProgressF((90 + 5 - updateProgress), (90 - updateProgress), chunks.length)
             }).catch((error) => {

@@ -1,9 +1,9 @@
 import { format } from "date-fns"
-import { importData, importStrategy } from "../../../../types/bulk/bulkOperations"
+import { importStrategy } from "../../../../types/bulk/bulkOperations"
 import { importSummary } from "../../../../utils/common/getImportSummary"
 import { splitArrayIntoChunks } from "../../../../utils/common/splitArray"
-import useUploadEvents from "../../../../hooks/events/useUploadEvents"
-import { useGetEvents } from "../../../../hooks/events/useGetEvents"
+import { useGetEvents } from "dhis2-semis-functions";
+import { useUploadEvents } from "dhis2-semis-functions";
 
 export function postAttendanceValues({ setStats, setProgress, onError }: { setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { uploadValues } = useUploadEvents()
@@ -73,7 +73,7 @@ export function postAttendanceValues({ setStats, setProgress, onError }: { setSt
             const chunks = splitArrayIntoChunks(values[key], 50);
 
             for (const chunk of chunks) {
-                const response = await uploadValues({ events: chunk }, importMode, (importStrategy as unknown as any)[key]).then(() => {
+                await uploadValues({ events: chunk }, importMode, (importStrategy as unknown as any)[key]).then((response) => {
                     updatedStats = importSummary(response, updatedStats)
                     updateProgressF(50, 50, keys.length * chunks.length)
 

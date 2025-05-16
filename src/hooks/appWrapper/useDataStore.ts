@@ -25,7 +25,6 @@ const useDataStore = (keySpace: string) => {
   const getDataStore = async (validate: boolean) => {
     setLoading(true)
     try {
-      console.log(validate)
       const response = await engine.query(DATASTORE_QUERY(keySpace))
       if (typeof dataStoreSchemaValidator(response?.result) === "object" && validate == true) {
         setValidationError(dataStoreSchemaValidator(response?.result) as object)

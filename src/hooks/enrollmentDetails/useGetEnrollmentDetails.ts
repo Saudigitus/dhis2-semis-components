@@ -1,10 +1,9 @@
-import { useGetEvents } from '../events/useGetEvents';
 import { ExportData } from '../../types/bulk/bulkOperations';
 import { attributes, dataValues } from '../../utils/format/formatData';
 import { Modules } from 'dhis2-semis-types';
 import { format } from 'date-fns';
 import { useGetTei } from '../tei/useGetTei';
-import { useUrlParams } from 'dhis2-semis-functions';
+import { useGetEvents, useUrlParams } from "dhis2-semis-functions";
 
 export function useGetEnrollmentData(props: ExportData) {
     const { getTei } = useGetTei()

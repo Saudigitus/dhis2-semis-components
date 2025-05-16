@@ -8,7 +8,7 @@ import {
 
 export default function ErrorDetailsTable({ data }: { data: any }) {
     const keys: any = Object?.keys(data?.[0])
-
+    console.log(data, keys,'Recruta')
     return (
         <>
             <DataTable>
@@ -37,7 +37,6 @@ export default function ErrorDetailsTable({ data }: { data: any }) {
                             return (
                                 <DataTableRow>
                                     {keys.map((x: any) => {
-                                        console.log(x, row)
                                         return (
                                             <DataTableCell align="center">{row?.[x]}</DataTableCell>
                                         )

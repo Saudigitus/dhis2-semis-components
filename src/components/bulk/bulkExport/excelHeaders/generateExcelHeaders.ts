@@ -89,9 +89,9 @@ export function generateHeaders(props: GenerateHeaders) {
                     if (de?.dataElement?.optionSet?.options?.length > 0) filters[de.dataElement.id] = getFilterLables(de.dataElement.optionSet.options)
                     section = {
                         ...section, headers: [...section.headers, {
-                            header: `${de?.dataElement.displayName}${de.compulsory && empty ? "*" : ""}`,
+                            header: `${de?.dataElement.displayName}${de?.compulsory && empty ? "*" : ""}`,
                             key: `${stageId}.${de?.dataElement?.id}`,
-                            width: de?.dataElement.displayName.length > 25 ? de?.dataElement.displayName.length : 25,
+                            width: de?.dataElement?.displayName.length > 25 ? de?.dataElement.displayName.length : 25,
                         }]
                     }
                 })

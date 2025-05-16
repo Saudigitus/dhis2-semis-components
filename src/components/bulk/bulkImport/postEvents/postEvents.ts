@@ -1,9 +1,9 @@
-import { useGetEvents } from "../../../../hooks/events/useGetEvents";
-import useUploadEvents from "../../../../hooks/events/useUploadEvents";
 import { splitArrayIntoChunks } from "../../../../utils/common/splitArray";
 import { importStrategy } from "../../../../types/bulk/bulkOperations";
 import { importSummary } from "../../../../utils/common/getImportSummary";
 import { ProgramConfig } from "dhis2-semis-types"
+import { useUploadEvents } from "dhis2-semis-functions";
+import { useGetEvents } from "dhis2-semis-functions";
 
 export function postValues({ setStats, setProgress, onError }: { setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { uploadValues } = useUploadEvents()
@@ -55,9 +55,7 @@ export function postValues({ setStats, setProgress, onError }: { setStats: (args
 
         for (const chunk of chunks) {
             await uploadValues({ events: chunk }, importMode, importStrategy.CREATE).then((response) => {
-                console.log(response,'the response')
                 updatedStats = importSummary(response, updatedStats)
-                console.log(updatedStats)
                 updateProgressF(50, 40, chunks.length)
             }).catch((error) => {
                 setProgress({ progress: 110 })

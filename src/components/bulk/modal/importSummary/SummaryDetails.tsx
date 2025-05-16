@@ -3,13 +3,13 @@ import { TabBar, Tab } from '@dhis2/ui'
 import { SummaryTable } from "./SummaryContent";
 import Pagination from "../../../../components/table/components/pagination/Pagination";
 
-const SummaryDetails = ({ invalidRecords, doneProcessing, dupliRecords, validRecords, programConfig }: { programConfig: any, dupliRecords: any, validRecords: any, invalidRecords: any, doneProcessing: boolean }): React.ReactElement => {
+const SummaryDetails = ({ invalidRecords, doneProcessing, dupliRecords, validRecords, programConfig, stats }: { stats: any, programConfig: any, dupliRecords: any, validRecords: any, invalidRecords: any, doneProcessing: boolean }): React.ReactElement => {
     const [data, setData] = useState<any>([])
     const [activeTab, setActiveTab] = useState("valid")
     const [pagination, setPagination] = useState<any>({ valid: { page: 1, pageSize: 10 }, invalid: { page: 1, pageSize: 10 }, duplicates: { page: 1, pageSize: 10 } });
     const currentPage = pagination[activeTab]?.page;
     const tabPageSize = pagination[activeTab]?.pageSize;
-    const dataCont = { valid: validRecords, invalid: invalidRecords, duplicates: dupliRecords }
+    const dataCont = { valid: doneProcessing ? stats?.errorDetails : validRecords, invalid: invalidRecords, duplicates: dupliRecords }
 
     const handlePageChange = (newPage: number) => {
         setPagination((prev: any) => ({
@@ -22,7 +22,8 @@ const SummaryDetails = ({ invalidRecords, doneProcessing, dupliRecords, validRec
         setData(() => (
             [...(dataCont?.[activeTab]?.slice((currentPage - 1) * tabPageSize, currentPage * tabPageSize) ?? [])]
         ));
-    }, [activeTab, invalidRecords, pagination])
+    }, [activeTab, stats, pagination])
+
 
     return (
         <>
@@ -40,6 +41,7 @@ const SummaryDetails = ({ invalidRecords, doneProcessing, dupliRecords, validRec
             <div style={{ height: doneProcessing ? "200px" : "137px", overflow: "auto" }}>
 
                 <SummaryTable
+                    stats={stats?.stats}
                     displayData={data}
                     doneProcessing={doneProcessing}
                     programConfig={programConfig}

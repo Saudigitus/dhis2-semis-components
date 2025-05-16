@@ -70,7 +70,6 @@ export default function ProcessImport(props: importData) {
             {openStats && <ModalComponent
                 children={
                     <ModalSummaryContent
-                        progress={progress}
                         onSubmit={onSubmit}
                         programConfig={programConfig}
                         setOpen={setOpenStats}

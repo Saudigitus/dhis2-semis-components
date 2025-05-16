@@ -15,13 +15,13 @@ interface ModalContentProps {
     validRecords: any[]
     programConfig: any
     onSubmit: (args: "VALIDATE" | "COMMIT") => any
-    progress: any
     stats: { stats: { ignored: number, created: number, updated: number, total: number }, errorDetails: any[] }
 }
 
 const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
-    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, progress, stats } = props;
+    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, stats } = props;
     const [showDetails, setShowDetails] = useState(false)
+    const [load, setLoading] = useState(false)
     const [doneProcessing, setDoneProcessing] = useState({ validate: false, commit: false })
 
     const handleShowDetails = () => { setShowDetails(!showDetails); }
@@ -32,26 +32,23 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             loading: false,
             disabled: validRecords?.length === 0 || doneProcessing.validate || doneProcessing.commit,
             onClick: async () => {
+                setLoading(true)
                 await onSubmit("VALIDATE").then((e) => {
-                    console.log(e, 'dry run resp')
                     setDoneProcessing({ validate: true, commit: false })
                 }).catch((e) => {
-                    console.log(e, 'dry run error')
                     setDoneProcessing({ validate: true, commit: false })
-                })
+                }).finally(() => setLoading(false))
             },
         },
         {
             label: "Import data",
             primary: true,
             loading: false,
-            disabled: doneProcessing.commit || (validRecords?.length === 0),
+            disabled: doneProcessing.commit || (validRecords?.length === 0) || (doneProcessing.validate && (stats.stats.created + stats.stats.updated) == 0),
             onClick: () => {
                 onSubmit("COMMIT").then((e) => {
-                    console.log(e, 'submit resp')
                     setDoneProcessing((done: any) => ({ ...done, commit: true }))
                 }).catch((e) => {
-                    console.log(e, 'submit error')
                     setDoneProcessing((done: any) => ({ ...done, commit: true }))
                 })
             },
@@ -60,9 +57,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             label: "Close",
             disabled: false,
             loading: false,
-            onClick: () => {
-                setOpen(false)
-            }
+            onClick: () => setOpen(false)
         }
     ];
 
@@ -103,10 +98,10 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             <WithPadding />
             <Collapse in={showDetails}>
                 <div className={styles.detailsContainer}>
-                    <SummaryDetails programConfig={programConfig} doneProcessing={doneProcessing.commit || doneProcessing.validate} dupliRecords={[]} invalidRecords={invalidRecords} validRecords={validRecords} />
+                    <SummaryDetails stats={stats} programConfig={programConfig} doneProcessing={doneProcessing.commit || doneProcessing.validate} dupliRecords={[]} invalidRecords={invalidRecords} validRecords={validRecords} />
                 </div>
             </Collapse>
-            {progress?.progress != null && doneProcessing.validate && <LinearProgress />}
+            {load && <LinearProgress />}
             <Actions />
         </>
     );

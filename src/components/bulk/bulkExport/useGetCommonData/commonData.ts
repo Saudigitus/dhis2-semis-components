@@ -1,7 +1,6 @@
 import { ExportData } from "../../../../types/bulk/bulkOperations"
-import { useGetEvents } from "../../../../hooks/events/useGetEvents"
+import { useGetEvents, useUrlParams } from "dhis2-semis-functions";
 import { useGetEnrollmentData } from "../../../../hooks/enrollmentDetails/useGetEnrollmentDetails"
-import { useUrlParams } from "dhis2-semis-functions"
 
 export function getCommonSheetData(props: ExportData) {
     const { getEvents } = useGetEvents()

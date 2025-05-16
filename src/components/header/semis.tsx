@@ -132,7 +132,7 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
 }
 
 const SemisHeader = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
-    console.log("headerItems", headerItems)
+
     return (
         <RecoilRoot>
             <SemisHeaderRaw headerItems={headerItems} />

@@ -1,5 +1,4 @@
 export function checkEnrolledAcademicYear(registrationEvents: any[], selectedAcademicYear: string, academicYearId: string, selectedSchool: string, sectionType: string): boolean {
-    console.log(registrationEvents)
     if (sectionType === 'staff') {
         for (const event of registrationEvents.filter((ev) => ev[academicYearId] === selectedAcademicYear)) {
             if (event["orgUnitId"] === selectedSchool) {

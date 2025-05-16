@@ -15,8 +15,8 @@ function SummaryCards({ validRecs, invalidRecs, duplicateRecs, doneProcessing, s
                 <>
                     <SummaryCard color="success" label="Imported" value={stats?.stats?.created?.toString()} />
                     <SummaryCard color="updated" label="Updated" value={stats?.stats?.updated?.toString()} />
-                    <SummaryCard color="error" label="Ignored" value={stats?.stats?.ignored?.toString()} />
-                    <SummaryCard color="secondary" label="Total" value={stats?.stats?.total?.toString()} />
+                    <SummaryCard color="error" label="Errors" value={stats?.stats?.ignored?.toString()} />
+                    <SummaryCard color="secondary" label="Total rows" value={validRecs?.length + invalidRecs?.length} />
                 </>
             }
         </ButtonStrip>
