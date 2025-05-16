@@ -111,7 +111,7 @@ const OrgUnitTreeSearch = ({ onChange }) => {
     }
 
     return (
-        <div style={{ width: 400, height: 400 }} className={style.HeaderMenu} onClick={(e) => e.stopPropagation()}>
+        <div className={style.HeaderMenu} onClick={(e) => e.stopPropagation()}>
             <Menu>
                 <div onClick={(e) => e.stopPropagation()}>
                     <div className={style.SimpleSearcInputContainer} >
