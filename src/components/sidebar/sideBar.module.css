@@ -35,6 +35,7 @@
 }
 
 .sideBarMenu {
+    height: 100%;
     overflow-y: auto;
     padding: 10px 15px;
 }
