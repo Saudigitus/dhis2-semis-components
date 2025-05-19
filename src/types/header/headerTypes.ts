@@ -14,6 +14,8 @@ export interface SemisHeaderProps {
     classes?: { options?: OptionProps[], loader?: boolean }
     academicYears?: { options?: OptionProps[], loader?: boolean }
     orgunits?: { options?: OptionProps[], loader?: boolean }
+    typeOfStaff?: { options?: OptionProps[], loader?: boolean }
+    employmentType?: { options?: OptionProps[], loader?: boolean }
 }
 
 export interface HeaderItemProps {
