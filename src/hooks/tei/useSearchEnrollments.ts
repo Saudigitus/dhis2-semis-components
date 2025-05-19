@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { useGetEvents } from '../events/useGetEvents';
 import useShowAlerts from '../common/useShowAlert';
 import { formatResponseData } from '../../utils/tei/formatResponseData';
 import { useGetTei } from './useGetTei';
 import { attributes } from '../../utils/format/formatData';
 import { useDataStoreKey } from "../../hooks/dataStore/useDataStoreKey";
+import { useGetEvents } from "dhis2-semis-functions";
 
 export default function useSearchEnrollments({ sectionType }: { sectionType: "staff" | "student" }) {
     const { getTeiSearch } = useGetTei()

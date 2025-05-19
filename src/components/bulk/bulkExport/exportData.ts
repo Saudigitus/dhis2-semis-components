@@ -8,8 +8,7 @@ import { generateFile } from './dataExporter/fileGenerator';
 import { generateEmptyRows } from '../../../utils/common/generateData';
 import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
-import { useGetEvents } from "../../../hooks/events/useGetEvents";
-import { useUrlParams } from "dhis2-semis-functions";
+import { useGetEvents, useUrlParams } from "dhis2-semis-functions";
 
 export function useExportData(props: ExportData) {
     const {

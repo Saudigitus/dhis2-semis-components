@@ -4,13 +4,11 @@ import { generateAttendanceEventObjects, generateEnrollmentData, generateEventOb
 import { postAttendanceValues } from "./postEvents/postAttendance";
 import { postEnrollmentData } from "./postEvents/postEnrollment";
 import { postValues } from "./postEvents/postEvents";
-import { useState } from 'react'
 import { useUrlParams } from "dhis2-semis-functions";
 
-type CombinedTypes = importData & excelData
+type CombinedTypes = importData & excelData & { importMode: "VALIDATE" | "COMMIT" };
 
-export function useImportData({ setProgress, onError }: { setProgress: (rags: any) => void, onError: (rags: any) => void }) {
-    const [stats, setStats] = useState<any>()
+export function useImportData({ setProgress, onError, setStats, stats }: { stats: any, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (rags: any) => void }) {
     const { postData } = postValues({ setStats, setProgress, onError })
     const { postAttendance } = postAttendanceValues({ setStats, setProgress, onError })
     const { postEnrollments } = postEnrollmentData({ setStats, setProgress, onError })

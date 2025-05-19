@@ -198,16 +198,6 @@ interface importData {
     module: "attendance" | "final-result" | "enrollment" | "performance"
 
     /**
-     * This variable makes the system know the operation to be done in the 
-     * 
-     * dhis2 api, validate to see if the data is in the correct form
-     * 
-     * or commit to save data already verified
-     * 
-     */
-    importMode: "VALIDATE" | "COMMIT"
-
-    /**
      * The selected program definitions
      */
     programConfig: ProgramConfig

@@ -33,14 +33,12 @@ const HeaderItem = ({ headerItem }: { headerItem: HeaderItemProps }) => {
 
         return (<DropdownButton
             component={
-                <FlyoutMenu>
-                    <div className={classNames(style.SimpleSearchContainer)}>
-                        {isSeachable && <div className={style.SimpleSearcInputContainer}>
-                            <Input value={query} onChange={onSearch} placeholder={searchInputPlaceholder} name="input" />
-                        </div>}
-                        <div className={style.ChildrenContentContainer}>
-                            <MenuItemContainer onSelectOption={onSelectOption} onToggle={toggleExpand} setSelected={setSelected} options={filteredMenuItems} />
-                        </div>
+                <FlyoutMenu dense className={classNames(style.SimpleSearchContainer)}>
+                    {isSeachable && <div className={style.SimpleSearcInputContainer}>
+                        <Input value={query} onChange={onSearch}  placeholder={searchInputPlaceholder} name="input" />
+                    </div>}
+                    <div className={style.ChildrenContentContainer}>
+                        <MenuItemContainer onSelectOption={onSelectOption} onToggle={toggleExpand} setSelected={setSelected} options={filteredMenuItems} />
                     </div>
                 </FlyoutMenu >
             }

@@ -35,7 +35,7 @@ interface ModalProps {
      * The text to display at the top of the modal.
      * @type {string}
      */
-    title: string
+    title?: any
     /**
      * The variable that controls the modal opening. If true, the modal is open.
      * @type {boolean}

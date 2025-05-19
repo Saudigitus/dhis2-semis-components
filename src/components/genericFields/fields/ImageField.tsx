@@ -44,7 +44,6 @@ function ImageField(props: CombinedProps) {
         await getFileResource({ trackedEntity: props.trackedEntity, attribute: input.name }).then((response: { file: any }) => {
             const reader = new FileReader()
             reader.onloadend = () => {
-                console.log(response, 'the fileeee')
                 setUploadedImage(reader.result)
             }
             reader.readAsDataURL(response.file)

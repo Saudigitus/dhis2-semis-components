@@ -98,9 +98,9 @@ const OrgUnitTree = ({ onChange, stringQuery }) => {
     };
 
     return (
-        <>
+        <div style={{ minWidth: "300px" }} >
             {renderOrgUnitTree()}
-        </>
+        </div>
     )
 }
 
@@ -111,16 +111,14 @@ const OrgUnitTreeSearch = ({ onChange }) => {
     }
 
     return (
-        <div className={style.HeaderMenu} onClick={(e) => e.stopPropagation()}>
-            <Menu>
-                <div onClick={(e) => e.stopPropagation()}>
-                    <div className={style.SimpleSearcInputContainer} >
-                        <Input onChange={onChangeQuerySearch} value={stringQuery} initialFocus placeholder={"Search for a school"} name="input" />
-                    </div>
-                    <OrgUnitTree onChange={onChange} stringQuery={stringQuery} />
+        <Menu>
+            <div onClick={(e) => e.stopPropagation()}>
+                <div className={style.SimpleSearcInputContainer} >
+                    <Input onChange={onChangeQuerySearch} value={stringQuery} initialFocus dense placeholder={"Search for a school"} name="input" />
                 </div>
-            </Menu>
-        </div>
+                <OrgUnitTree onChange={onChange} stringQuery={stringQuery} />
+            </div>
+        </Menu>
     )
 }
 export default OrgUnitTreeSearch

@@ -1,36 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { IconCheckmarkCircle16, Tag, ModalActions, Button, ButtonStrip } from "@dhis2/ui";
 import WithPadding from "../../../template/WithPadding";
 import styles from "../modal.module.css";
 import { type ButtonActionProps } from "../../../../types/buttons/ButtonActions";
 import Title from "../../../text/Text";
-import { Collapse } from "@material-ui/core";
+import { Collapse, LinearProgress } from "@material-ui/core";
 import { InfoOutlined } from "@material-ui/icons";
 import SummaryCards from "./SummaryCards";
 import SummaryDetails from "./SummaryDetails";
-import useUploadEvents from "../../../../hooks/events/useUploadEvents";
-import { LinearProgress } from "@material-ui/core";
 
 interface ModalContentProps {
     setOpen: (value: boolean) => void
-    summaryData: any
-    sheetData: {
-        attendanceEvents: any[],
-        trackedEntityIds: {
-            tei: string,
-            enrollment: string
-        }[],
-        dateRange: {
-            sDate: Date,
-            eDate: Date
-        }
-    },
-    setOpenDragNDrop: (value: boolean) => void
+    invalidRecords: any[]
+    validRecords: any[]
+    programConfig: any
+    onSubmit: (args: "VALIDATE" | "COMMIT") => any
+    stats: { stats: { ignored: number, created: number, updated: number, total: number }, errorDetails: any[] }
 }
 
 const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
-    const { setOpen, summaryData, sheetData, setOpenDragNDrop } = props;
+    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, stats } = props;
     const [showDetails, setShowDetails] = useState(false)
+    const [load, setLoading] = useState(false)
     const [doneProcessing, setDoneProcessing] = useState({ validate: false, commit: false })
 
     const handleShowDetails = () => { setShowDetails(!showDetails); }
@@ -39,30 +30,34 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
         {
             label: "Dry Run",
             loading: false,
-            disabled: summaryData?.summary?.new?.length === 0 || doneProcessing.validate || doneProcessing.commit,
-            onClick: () => {
-                setDoneProcessing({ validate: true, commit: false })
+            disabled: validRecords?.length === 0 || doneProcessing.validate || doneProcessing.commit,
+            onClick: async () => {
+                setLoading(true)
+                await onSubmit("VALIDATE").then((e) => {
+                    setDoneProcessing({ validate: true, commit: false })
+                }).catch((e) => {
+                    setDoneProcessing({ validate: true, commit: false })
+                }).finally(() => setLoading(false))
             },
-            // className: progress?.progress != null && styles.remove
         },
         {
-            label: "Import attendance data",
+            label: "Import data",
             primary: true,
             loading: false,
-            disabled: doneProcessing.commit || (summaryData?.summary?.new?.length === 0),
+            disabled: doneProcessing.commit || validRecords?.length === 0,
             onClick: () => {
-                setDoneProcessing((done: any) => ({ ...done, commit: true }))
+                onSubmit("COMMIT").then((e) => {
+                    setDoneProcessing((done: any) => ({ ...done, commit: true }))
+                }).catch((e) => {
+                    setDoneProcessing((done: any) => ({ ...done, commit: true }))
+                })
             },
-            // className: progress?.progress != null && styles.remove
         },
         {
             label: "Close",
             disabled: false,
             loading: false,
-            onClick: () => {
-                setOpen(false)
-                setOpenDragNDrop(false)
-            }
+            onClick: () => setOpen(false)
         }
     ];
 
@@ -87,26 +82,26 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
 
     return (
         <>
-            <Tag positive icon={< IconCheckmarkCircle16 />} className={styles.tagContainer} > Attendance import preview </Tag>
+            <Tag positive icon={< IconCheckmarkCircle16 />} className={styles.tagContainer} >  <Title style={{ fontSize: "15px", fontWeight: "400" }} label={`Import data preview `} type="title" /></Tag>
 
-            < WithPadding />
-            <Title label={`Import Summary`} type="title" />
-            < WithPadding />
+            <WithPadding />
+            <Title style={{ fontSize: "18px" }} label={`Summary`} type="title" />
+            <WithPadding />
 
-            <SummaryCards doneProcessing={doneProcessing.commit || doneProcessing.validate} {...summaryData} />
+            <SummaryCards stats={stats} invalidRecs={invalidRecords} validRecs={validRecords} doneProcessing={doneProcessing.commit || doneProcessing.validate} />
 
-            < WithPadding />
+            <WithPadding />
             <ButtonStrip>
-                <Button small icon={< InfoOutlined className={styles.infoIcon} />} onClick={handleShowDetails} > More details </Button>
+                <Button small icon={<InfoOutlined className={styles.infoIcon} />} onClick={handleShowDetails} > More details </Button>
             </ButtonStrip>
 
-            < WithPadding />
+            <WithPadding />
             <Collapse in={showDetails}>
                 <div className={styles.detailsContainer}>
-                    <SummaryDetails doneProcessing={doneProcessing.commit || doneProcessing.validate} summaryData={summaryData} />
+                    <SummaryDetails stats={stats} programConfig={programConfig} doneProcessing={doneProcessing.commit || doneProcessing.validate} invalidRecords={invalidRecords} validRecords={validRecords} />
                 </div>
             </Collapse>
-            {/* {progress?.progress != null && doneProcessing.validate && <LinearProgress />} */}
+            {load && <LinearProgress />}
             <Actions />
         </>
     );

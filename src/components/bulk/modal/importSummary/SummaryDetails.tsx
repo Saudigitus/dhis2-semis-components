@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { TabBar, Tab } from '@dhis2/ui'
 import { SummaryTable } from "./SummaryContent";
+import Pagination from "../../../../components/table/components/pagination/Pagination";
 
-const SummaryDetails = ({ summaryData, doneProcessing }: { summaryData: any, doneProcessing: boolean }): React.ReactElement => {
+const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programConfig, stats }: { stats: any, programConfig: any, validRecords: any, invalidRecords: any, doneProcessing: boolean }): React.ReactElement => {
     const [data, setData] = useState<any>([])
-    const [activeTab, setActiveTab] = useState("new")
-    const [pagination, setPagination] = useState<any>({ new: { page: 1, pageSize: 10 }, invalid: { page: 1, pageSize: 10 }, invalidSheets: { page: 1, pageSize: 10 } });
+    const [activeTab, setActiveTab] = useState("valid")
+    const [pagination, setPagination] = useState<any>({ valid: { page: 1, pageSize: 10 }, invalid: { page: 1, pageSize: 10 } });
     const currentPage = pagination[activeTab]?.page;
     const tabPageSize = pagination[activeTab]?.pageSize;
-    const newRecs = summaryData?.summary?.new?.reduce((sum: any, item: any) => sum + item.columns, 0);
-    const invalid = summaryData?.summary?.invalid?.reduce((sum: any, item: any) => sum + item.columns, 0);
+    const dataCont = { valid: doneProcessing ? stats?.errorDetails : validRecords, invalid: invalidRecords }
 
     const handlePageChange = (newPage: number) => {
         setPagination((prev: any) => ({
@@ -19,22 +19,20 @@ const SummaryDetails = ({ summaryData, doneProcessing }: { summaryData: any, don
     };
 
     useEffect(() => {
-        setData((dados: any) => (
-            [...(summaryData?.summary?.[activeTab]?.slice((currentPage - 1) * tabPageSize, currentPage * tabPageSize) ?? [])]
+        setData(() => (
+            [...(dataCont?.[activeTab]?.slice((currentPage - 1) * tabPageSize, currentPage * tabPageSize) ?? [])]
         ));
-    }, [activeTab, summaryData, pagination])
+    }, [activeTab, stats, pagination])
+
 
     return (
         <>
             {!doneProcessing && <TabBar>
-                <Tab onClick={() => { setActiveTab('new') }} selected={activeTab === 'new'}>
-                    {newRecs}<br /> New Records
+                <Tab onClick={() => { setActiveTab('valid') }} selected={activeTab === 'valid'}>
+                    {validRecords?.lenfth}<br /> New Records
                 </Tab>
                 <Tab onClick={() => { setActiveTab('invalid') }} selected={activeTab === 'invalid'}>
-                    {invalid}<br /> Invalid Records
-                </Tab>
-                <Tab onClick={() => { setActiveTab('invalidSheets') }} selected={activeTab === 'invalidSheets'}>
-                    {summaryData.summary?.invalidSheets?.length}<br /> Invalid Sheets
+                    {invalidRecords?.lenfth}<br /> Invalid Records
                 </Tab>
             </TabBar>}
 
@@ -43,22 +41,25 @@ const SummaryDetails = ({ summaryData, doneProcessing }: { summaryData: any, don
             <div style={{ height: doneProcessing ? "200px" : "137px", overflow: "auto" }}>
 
                 <SummaryTable
+                    stats={stats?.stats}
                     displayData={data}
-                    activeTab={activeTab}
                     doneProcessing={doneProcessing}
+                    programConfig={programConfig}
                 />
 
                 <br />
-                {/* {(summaryData.summary?.[activeTab]?.length > 0 && !doneProcessing) &&
+                {(dataCont?.[activeTab]?.length > 0 && !doneProcessing) &&
                     <Pagination
                         page={currentPage}
                         onPageChange={handlePageChange}
                         onRowsPerPageChange={() => { }}
                         rowsPerPage={tabPageSize}
                         loading={false}
-                        totalPerPage={data?.length}
+                        disablePreviousPage={pagination?.[activeTab]?.page === 1}
+                        disableNextPage={pagination?.[activeTab]?.page === pagination?.[activeTab]?.totalPages}
+                        rowsPerPages={[{ value: 10, label: "10" }]}
                     />
-                } */}
+                }
             </div>
         </>
     )

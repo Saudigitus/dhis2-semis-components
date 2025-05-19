@@ -1,10 +1,9 @@
-import { useGetEvents } from "../../../../hooks/events/useGetEvents";
-import useUploadEvents from "../../../../hooks/events/useUploadEvents";
 import { splitArrayIntoChunks } from "../../../../utils/common/splitArray";
-import { importData, importStrategy } from "../../../../types/bulk/bulkOperations";
+import { importStrategy } from "../../../../types/bulk/bulkOperations";
 import { importSummary } from "../../../../utils/common/getImportSummary";
 import { ProgramConfig } from "dhis2-semis-types"
-
+import { useUploadEvents } from "dhis2-semis-functions";
+import { useGetEvents } from "dhis2-semis-functions";
 
 export function postValues({ setStats, setProgress, onError }: { setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { uploadValues } = useUploadEvents()
@@ -22,7 +21,7 @@ export function postValues({ setStats, setProgress, onError }: { setStats: (args
     async function postData(
         data: any[],
         excelData: any,
-        importMode: importData["importMode"],
+        importMode: "VALIDATE" | "COMMIT",
         programConfig: ProgramConfig,
         programStages: string[]
     ) {
@@ -55,7 +54,7 @@ export function postValues({ setStats, setProgress, onError }: { setStats: (args
         const chunks = splitArrayIntoChunks(copyData, 50);
 
         for (const chunk of chunks) {
-            const response = await uploadValues({ events: chunk }, importMode, importStrategy.UPDATE).then(() => {
+            await uploadValues({ events: chunk }, importMode, importStrategy.CREATE).then((response) => {
                 updatedStats = importSummary(response, updatedStats)
                 updateProgressF(50, 40, chunks.length)
             }).catch((error) => {

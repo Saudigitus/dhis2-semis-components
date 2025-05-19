@@ -1,45 +1,49 @@
-import React from 'react';
-import i18n from '@dhis2/d2-i18n'
 import {
     DataTable,
     DataTableHead,
     DataTableBody,
     DataTableCell,
-    DataTableColumnHeader,
-    DataTableRow
+    DataTableRow,
 } from '@dhis2/ui'
 
-
-export default function ErrorDetailsTable() {
-    const stats: any = {}
-
+export default function ErrorDetailsTable({ data }: { data: any }) {
+    const keys: any = Object?.keys(data?.[0])
+    console.log(data, keys,'Recruta')
     return (
         <>
             <DataTable>
                 <DataTableHead>
                     <DataTableRow>
                         <DataTableCell colSpan="3" error>
-                            {i18n.t("Errors")}
+                            Validation Errors
                         </DataTableCell>
                     </DataTableRow>
                     <DataTableRow>
-                        <DataTableColumnHeader>Error Code</DataTableColumnHeader>
-                        <DataTableColumnHeader>UID</DataTableColumnHeader>
-                        <DataTableColumnHeader>Tracker Type</DataTableColumnHeader>
-                        <DataTableColumnHeader>Error Message</DataTableColumnHeader>
+                        {
+                            keys?.map((x) => <th style={{
+                                textAlign: "center",
+                                background: "#eee",
+                                fontSize: "15px",
+                                padding: "10px",
+                                fontWeight: "400",
+                                textTransform: "capitalize"
+                            }}>{x}</th>)
+                        }
                     </DataTableRow>
                 </DataTableHead>
                 <DataTableBody>
                     {
-                        stats.errorDetails.map((error: any, idx: number
-                        ) => (
-                            <DataTableRow key={idx}>
-                                <DataTableCell>{error.errorCode}</DataTableCell>
-                                <DataTableCell error>{error.uid}</DataTableCell>
-                                <DataTableCell>{error.trackerType}</DataTableCell>
-                                <DataTableCell>{error.message}</DataTableCell>
-                            </DataTableRow>)
-                        )
+                        data?.map((row: any) => {
+                            return (
+                                <DataTableRow>
+                                    {keys.map((x: any) => {
+                                        return (
+                                            <DataTableCell align="center">{row?.[x]}</DataTableCell>
+                                        )
+                                    })}
+                                </DataTableRow>
+                            )
+                        })
                     }
                 </DataTableBody>
             </DataTable>

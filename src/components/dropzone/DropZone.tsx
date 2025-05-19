@@ -1,10 +1,9 @@
-import React from "react";
 import "./dropzone.css"
 import Lottie from "lottie-react";
 import { Form } from "react-final-form";
 import { useState, useRef, useEffect } from "react";
 import uploadcloud from "../../assets/images/bulkImport/uploadcloud.json"
-import { ModalActions, Button, ButtonStrip, IconUpload24, CircularLoader } from "@dhis2/ui";
+import { ModalActions, Button, ButtonStrip, IconUpload24 } from "@dhis2/ui";
 import classNames from "classnames";
 import FileInput from "./fileInput/fileInput";
 import { FormApi } from 'final-form';
@@ -45,7 +44,7 @@ function DropZone(props: DropZoneProps) {
             id: "cancel",
             type: "reset",
             label: "Cancel",
-            disabled: false,
+            disabled: loading,
             onClick: () => { setUploadedFile(undefined); setOpen(false) },
             secondary: true
         }, {
@@ -55,7 +54,7 @@ function DropZone(props: DropZoneProps) {
             disabled: !Boolean(uploadedFile) || loading,
             onClick: () => onSave([uploadedFile]),
             primary: true,
-            icon: loading ? <CircularLoader small /> : <></>
+            loading: loading
         }
     ];
 
@@ -69,15 +68,15 @@ function DropZone(props: DropZoneProps) {
                         onChange={onChange}
                     >
                         <div style={height && width ? { height: height, width: width } : height ? { height: height } : width ? { width: width } : { width: "100%" }} className={classNames("dropzone_area", uploadedFile && "dropzone_area_filled_bg")}>
-                            <div className="file_upload_icon">
+                            <div className={classNames("file_upload_icon", loading && "disabled")}>
                                 {uploadedFile ?
                                     <div className="icon" >
                                         <FileIcon extension={displayDetails.extension} {...defaultStyles[displayDetails.extension as DefaultExtensionType]} />
                                     </div>
-                                    : !hideUploadIcon && <Lottie animationData={uploadcloud} loop={true} />}
+                                    : !hideUploadIcon && <Lottie animationData={uploadcloud} loop={loading ? false : true} />}
                             </div>
-                            <FileInput accept={accept} name="uploaded-file" setdisplayDetails={setdisplayDetails} setUploadedFile={setUploadedFile} />
-                            {!hideLabel && <h4 className="mb-3 file-info">{displayDetails.name}</h4>}
+                            <FileInput disabled={loading} accept={accept} name="uploaded-file" setdisplayDetails={setdisplayDetails} setUploadedFile={setUploadedFile} />
+                            {!hideLabel && <h4 className={classNames("mb-3 file-info", loading && "disabled")}>{displayDetails.name}</h4>}
                             <p className="mt-3">{placeholder}</p>
                         </div>
 
@@ -87,7 +86,6 @@ function DropZone(props: DropZoneProps) {
                                     <Button
                                         key={i}
                                         {...action}
-                                        loading={false}
                                     >
                                         {action.label}
                                     </Button>

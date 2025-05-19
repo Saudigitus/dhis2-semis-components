@@ -18,10 +18,9 @@ export function generateHeaders(props: GenerateHeaders) {
     const { getValidDaysToExport } = generateAttendanceDays({ unavailableDays: isSchoolDay as unknown as (args: Date) => boolean })
 
     function getHeaders(startDate: string, endDate: string) {
-
         let formatedHeaders: any[] = [], toGenerate: any[] = []
         const Profile = (sectionType ?? '').substring(0, 1).toUpperCase() + (sectionType ?? '').substring(1, (sectionType ?? '').length) + ' profile'
-        let defaultLockedHeaders: any = [Profile, "Ids"], filters: any = {}
+        let defaultLockedHeaders: any = [...(module != Modules.Enrollment ? [Profile] : []), "Ids"], filters: any = {}, att = [];
         const stageHeaders = [selectedSectionDataStore.registration.programStage,
         ...((withSocioEconomics || module === Modules.Enrollment) ? [selectedSectionDataStore["socio-economics"].programStage] : []),
         ...(module != Modules.Enrollment ? stagesToExport : [])
@@ -90,9 +89,9 @@ export function generateHeaders(props: GenerateHeaders) {
                     if (de?.dataElement?.optionSet?.options?.length > 0) filters[de.dataElement.id] = getFilterLables(de.dataElement.optionSet.options)
                     section = {
                         ...section, headers: [...section.headers, {
-                            header: `${de?.dataElement.displayName}${de.compulsory && empty ? "*" : ""}`,
+                            header: `${de?.dataElement.displayName}${de?.compulsory && empty ? "*" : ""}`,
                             key: `${stageId}.${de?.dataElement?.id}`,
-                            width: de?.dataElement.displayName.length > 25 ? de?.dataElement.displayName.length : 25,
+                            width: de?.dataElement?.displayName.length > 25 ? de?.dataElement.displayName.length : 25,
                         }]
                     }
                 })
@@ -103,16 +102,24 @@ export function generateHeaders(props: GenerateHeaders) {
             }
         }
 
-        const att = programConfig?.programTrackedEntityAttributes?.map(x => {
-            if (x?.trackedEntityAttribute?.optionSet?.options?.length > 0) filters[x.trackedEntityAttribute.id] = getFilterLables(x?.trackedEntityAttribute?.optionSet?.options)
-            if (x.trackedEntityAttribute.generated || x.trackedEntityAttribute.unique) toGenerate.push(x.trackedEntityAttribute.id)
 
-            return {
-                header: `${x.trackedEntityAttribute.displayName}${x.mandatory && empty ? "*" : ""}`,
-                key: x.trackedEntityAttribute?.id,
-                width: x.trackedEntityAttribute.displayName.length > 25 ? x.trackedEntityAttribute.displayName : 25,
+        for (const x of programConfig?.programTrackedEntityAttributes || []) {
+            if (x?.trackedEntityAttribute?.optionSet?.options?.length > 0) {
+                filters[x.trackedEntityAttribute.id] = getFilterLables(x.trackedEntityAttribute.optionSet.options);
             }
-        })
+
+            if (x.trackedEntityAttribute.generated || x.trackedEntityAttribute.unique) {
+                toGenerate.push(x.trackedEntityAttribute.id);
+                module == Modules.Enrollment && defaultLockedHeaders.push(x.trackedEntityAttribute.id);
+            }
+
+            att.push({
+                header: `${x.trackedEntityAttribute.displayName}${x.mandatory && empty ? "*" : ""}`,
+                key: x.trackedEntityAttribute.id,
+                width: x.trackedEntityAttribute.displayName.length > 25 ? x.trackedEntityAttribute.displayName : 25,
+            });
+        }
+
 
         formatedHeaders.splice(1, 0, {
             name: Profile, headers: [...(att || [])], fill: 'D9EAD3'
