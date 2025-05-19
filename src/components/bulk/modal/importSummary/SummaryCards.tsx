@@ -2,14 +2,13 @@ import React from "react";
 import { ButtonStrip } from "@dhis2/ui";
 import SummaryCard from "../../../card/SummaryCard";
 
-function SummaryCards({ validRecs, invalidRecs, duplicateRecs, doneProcessing, stats }: { stats: any, validRecs: any, invalidRecs: any, duplicateRecs: any, doneProcessing: boolean }): React.ReactElement {
+function SummaryCards({ validRecs, invalidRecs, doneProcessing, stats }: { stats: any, validRecs: any, invalidRecs: any, doneProcessing: boolean }): React.ReactElement {
 
     return (
         <ButtonStrip>
             {!doneProcessing ? <>
                 <SummaryCard color="success" label="New Records" value={validRecs?.length} />
                 <SummaryCard color="warning" label="Invalid Records" value={invalidRecs?.length} />
-                <SummaryCard color="error" label="Duplicates" value={duplicateRecs?.length} />
             </>
                 :
                 <>

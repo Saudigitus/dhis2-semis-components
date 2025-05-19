@@ -44,7 +44,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             label: "Import data",
             primary: true,
             loading: false,
-            disabled: doneProcessing.commit || (validRecords?.length === 0) || (doneProcessing.validate && (stats.stats.created + stats.stats.updated) == 0),
+            disabled: doneProcessing.commit || validRecords?.length === 0,
             onClick: () => {
                 onSubmit("COMMIT").then((e) => {
                     setDoneProcessing((done: any) => ({ ...done, commit: true }))
@@ -88,7 +88,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             <Title style={{ fontSize: "18px" }} label={`Summary`} type="title" />
             <WithPadding />
 
-            <SummaryCards stats={stats} duplicateRecs={[]} invalidRecs={invalidRecords} validRecs={validRecords} doneProcessing={doneProcessing.commit || doneProcessing.validate} />
+            <SummaryCards stats={stats} invalidRecs={invalidRecords} validRecs={validRecords} doneProcessing={doneProcessing.commit || doneProcessing.validate} />
 
             <WithPadding />
             <ButtonStrip>
@@ -98,7 +98,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             <WithPadding />
             <Collapse in={showDetails}>
                 <div className={styles.detailsContainer}>
-                    <SummaryDetails stats={stats} programConfig={programConfig} doneProcessing={doneProcessing.commit || doneProcessing.validate} dupliRecords={[]} invalidRecords={invalidRecords} validRecords={validRecords} />
+                    <SummaryDetails stats={stats} programConfig={programConfig} doneProcessing={doneProcessing.commit || doneProcessing.validate} invalidRecords={invalidRecords} validRecords={validRecords} />
                 </div>
             </Collapse>
             {load && <LinearProgress />}
