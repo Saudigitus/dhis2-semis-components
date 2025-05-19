@@ -35,6 +35,7 @@
 }
 
 .sideBarMenu {
+    height: 100%;
     overflow-y: auto;
     padding: 10px 15px;
 }
@@ -123,6 +124,7 @@
     position: relative;
     align-items: center;
     height: 46px !important;
+    margin-bottom: 3px;
     cursor: default;
 }
 
@@ -144,7 +146,8 @@
     padding: 10px 10px;
     display: flex;
     position: relative;
-    height: 56px !important;
+    height: 46px !important;
+    margin-bottom: 3px;
     align-items: center;
     cursor: default;
     background-color: rgba(0, 0, 0, 0.138);
@@ -229,7 +232,6 @@
 
 @media screen and (max-width: 885px) and (min-width: 569px) {
     .sideBarContainer {
-        height: 100%;
         width: 240px !important;
         position: relative;
         background-color: var(--secondary-colort-white);

@@ -2,9 +2,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 200px);
+    height: 100%;
     width: 100%;
-    min-width: 900px;
+    overflow-y: auto;
 }
 
 .paperInit {
@@ -18,7 +18,7 @@
 
 .paperInit span {
     margin-top: 12px;
-    margin-left: -100px;
+    /* margin-left: -100px; */
 }
 
 .paperInit ul li {
@@ -27,7 +27,7 @@
 
 .paperInit h2 {
     color: var(--colors-grey800);
-    font-size: 21px;
+    font-size: large;
     font-weight: 500 !important;
     line-height: 22px;
     margin-top: 0;
@@ -35,14 +35,14 @@
 
 .paperInit span {
     color: var(--colors-grey800);
-    margin-left: 10px;
-    font-size: 18px;
+    /* margin-left: 10px; */
+    font-size: large;
 }
 
 .paperOtherText {
     font-size: 16px;
     letter-spacing: .1px;
-    line-height: 18px;
+    line-height: small;
     margin-bottom: var(--spacers-dp12);
 }
 
@@ -80,14 +80,14 @@
     }
 
     .paperInit h2 {
-        font-size: 17px;
+        font-size: small;
     }
 
     .paperInit span {
-        font-size: 15px;
+        font-size: small;
     }
 
     .paperOtherText {
-        font-size: 14px;
+        font-size: smaller;
     }
 }

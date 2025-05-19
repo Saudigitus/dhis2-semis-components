@@ -11,10 +11,10 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
         : values;
 
     return (
-        <div style={{ width: 400 }} className={style.HeaderMenu}>
+        <div className={style.HeaderMenu}>
             <Menu>
                 {isSeachable && <div className={style.SimpleSearcInputContainer} onClick={(e) => e.stopPropagation()} >
-                    <Input onChange={(event) => setQuery(event.value)} placeholder={placeholder} name="input" />
+                    <Input initialFocus onChange={(event) => setQuery(event.value)} placeholder={placeholder} name="input" />
                 </div>}
                 {filteredMenuItems.length > 0 ? filteredMenuItems.map(({ value, label }) => (
                     <MenuItem
