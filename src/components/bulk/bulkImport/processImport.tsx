@@ -5,7 +5,6 @@ import ModalComponent from "../../../components/modal/Modal";
 import { useEffect, useState } from "react";
 import ModalProgress from "../progress/interactiveProgress";
 import { useValidateFile, useValidation } from "dhis2-semis-functions";
-// import program from "../../../../program.json";
 import ModalSummaryContent from "../modal/importSummary/importSummary";
 
 export default function ProcessImport(props: importData) {
