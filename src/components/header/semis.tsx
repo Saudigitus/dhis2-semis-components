@@ -13,9 +13,11 @@ import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
 
 const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
     const { add, remove, urlParameters, useQuery } = useUrlParams()
-    const { grade, class: section, school, academicYear, schoolName } = urlParameters()
+    const { grade, class: section, school, academicYear, schoolName, employmentType, position } = urlParameters()
     const [openGrade, setOpenGrade] = useState<boolean>(false)
     const [openClass, setOpenClass] = useState<boolean>(false)
+    const [openEmploymentType, setOpenEmploymentType] = useState<boolean>(false)
+    const [opentTypeStaff, setOpentTypeStaff] = useState<boolean>(false)
     const [openAcademicYear, setOpenAcademicYear] = useState<boolean>(false)
     const [openOu, setOpenOu] = useState<boolean>(false)
     const [headerValues, setHeaderValues] = useRecoilState(HeaderValuesState)
@@ -26,7 +28,9 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
             selectedAcademicYear: headerItems?.academicYears?.options?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
             selectedClass: headerItems?.classes?.options?.filter((option: OptionProps) => option.value === section)?.[0] as OptionProps,
             selectedGrade: headerItems?.grades?.options?.filter((option: OptionProps) => option.value === grade)?.[0] as OptionProps,
-            selectedOu: { displayName: schoolName, id: school, selected: [] }
+            selectedOu: { displayName: schoolName, id: school, selected: [] },
+            selectedEmploymentType: headerItems?.employmentType?.options?.filter((option: OptionProps) => option.value === employmentType)?.[0] as OptionProps,
+            selectedTypeStaff: headerItems?.typeOfStaff?.options?.filter((option: OptionProps) => option.value === position)?.[0] as OptionProps,
         })
     }, [useQuery()])
 
@@ -51,6 +55,20 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
         setOpenOu(!openOu)
     }
 
+    const onChangeEmploymentType = (event) => {
+        const getSelectOption = headerItems?.employmentType?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
+        setHeaderValues(prevState => ({ ...prevState, selectedEmploymentType: getSelectOption }))
+        add("employmentType", getSelectOption.value)
+        setOpenEmploymentType(!openEmploymentType)
+    }
+
+    const onChangeTypeStaff = (event) => {
+        const getSelectOption = headerItems?.typeOfStaff?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
+        setHeaderValues(prevState => ({ ...prevState, selectedTypeStaff: getSelectOption }))
+        add("position", getSelectOption.value)
+        setOpentTypeStaff(!opentTypeStaff)
+    }
+
     const onChangeAcademicYear = (event) => {
         const getSelectOption = headerItems?.academicYears?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedAcademicYear: getSelectOption }))
@@ -64,7 +82,7 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 <SelectorBarItem
                     label="Academic year"
                     value={academicYear ?? headerValues?.selectedAcademicYear?.value}
-                    noValueMessage="Select a acamic year"
+                    noValueMessage="Select a academic year"
                     open={openAcademicYear}
                     setOpen={() => setOpenAcademicYear(!openAcademicYear)}
                 >
@@ -112,6 +130,7 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 <MenuSelect placeholder="Search for a grade" isSeachable values={headerItems?.grades.options} selected={headerValues?.selectedGrade?.value} onChange={onChangeGrade} />
             </SelectorBarItem>}
 
+
             {headerItems?.classes && <SelectorBarItem
                 onClearSelectionClick={() => {
                     setHeaderValues(prevState => ({ ...prevState, selectedClass: { label: "", value: "" } }))
@@ -125,6 +144,33 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 setOpen={() => setOpenClass(!openClass)}
             >
                 <MenuSelect placeholder="Search for a class" isSeachable values={headerItems?.classes.options} selected={headerValues?.selectedClass?.value} onChange={onChangeClass} />
+            </SelectorBarItem>}
+
+            {headerItems?.employmentType && <SelectorBarItem
+                onClearSelectionClick={() => {
+                    setHeaderValues(prevState => ({ ...prevState, selectedEmploymentType: { label: "", value: "" } }))
+                    remove("employmentType")
+                }}
+                label="Employment Type"
+                value={employmentType ?? headerValues?.selectedEmploymentType?.value}
+                noValueMessage="Select a employment type"
+                open={openEmploymentType}
+                setOpen={() => setOpenEmploymentType(!openEmploymentType)}
+            >
+                <MenuSelect placeholder="Search for a employment type" isSeachable values={headerItems?.employmentType.options} selected={headerValues?.selectedEmploymentType?.value} onChange={onChangeEmploymentType} />
+            </SelectorBarItem>}
+            {headerItems?.typeOfStaff && <SelectorBarItem
+                onClearSelectionClick={() => {
+                    setHeaderValues(prevState => ({ ...prevState, selectedTypeStaff: { label: "", value: "" } }))
+                    remove("position")
+                }}
+                label="Type of Staff"
+                value={position ?? headerValues?.selectedTypeStaff?.value}
+                noValueMessage="Select a type of staff"
+                open={opentTypeStaff}
+                setOpen={() => setOpentTypeStaff(!opentTypeStaff)}
+            >
+                <MenuSelect placeholder="Search for a type of staff" isSeachable values={headerItems?.typeOfStaff.options} selected={headerValues?.selectedTypeStaff?.value} onChange={onChangeTypeStaff} />
             </SelectorBarItem>}
 
         </SelectorBar>
