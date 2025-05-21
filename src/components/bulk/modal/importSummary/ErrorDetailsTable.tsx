@@ -8,7 +8,7 @@ import {
 
 export default function ErrorDetailsTable({ data }: { data: any }) {
     const keys: any = Object?.keys(data?.[0])
-    console.log(data, keys,'Recruta')
+
     return (
         <>
             <DataTable>

@@ -27,6 +27,7 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
 
         Object.keys(workSheets).map((workSheet) => {
             let columns: any = [], colIndex = 1, counter = 0
+            let rowsToBlock: any[] = []
             sheet = workbook.addWorksheet(workSheet)
 
             headers.forEach(section => {
@@ -100,16 +101,12 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
                     const dataElementId = colKey.split(".")
                     const cell = row.getCell(colIndex);
 
-                    if (rows?.[row._number - 3]?.enrollmentStatus === 'CANCELLED' &&
-                        module != Modules.Final_Result &&
-                        module != Modules.Attendance) {
+                    if (!rowsToBlock.includes(row._number) && colKey === 'ref') {
+                        const status = rows?.find(x => x.ref == row?.getCell(colIndex)?.value)?.enrollmentStatus
+                        if (status === 'CANCELLED' && module != Modules.Final_Result) rowsToBlock.push(row._number)
+                    }
 
-                        cell.protection = cancelled.protection;
-                        cell.fill = cancelled.fill
-                        cell.border = border as unknown as any
-                        cell.dataValidation = null
-
-                    } else if (index > 2) {
+                    if (index > 2) {
                         if (empty && colKey !== 'ref') {
                             if (defaultLockedHeaders.includes(cell._column._key)) {
                                 cell.protection = { locked: true };
@@ -141,14 +138,7 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
             if (module === Modules.Attendance)
                 sheet.eachRow({ includeEmpty: true }, (row: any) => {
                     row.eachCell({ includeEmpty: true }, (cell: any) => {
-                        if (rows?.[row._number - 3]?.enrollmentStatus === 'CANCELLED') {
-
-                            cell.protection = cancelled.protection;
-                            cell.fill = cancelled.fill
-                            cell.border = border as unknown as any
-                            cell.dataValidation = null
-
-                        } else if (regex.test(cell._column._key) && cell._row._number > 3) {
+                        if (regex.test(cell._column._key) && cell._row._number > 3) {
                             if (unavailableDays != undefined && unavailableDays(new Date(cell._column._key))) {
 
                                 cell.dataValidation = null
@@ -164,6 +154,19 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
                         }
                     });
                 });
+
+            sheet.eachRow({ includeEmpty: true }, (row: any) => {
+                if (rowsToBlock.includes(row._number)) {
+                    row.eachCell({ includeEmpty: true }, (cell: any) => {
+
+                        cell.protection = cancelled.protection;
+                        cell.fill = cancelled.fill
+                        cell.border = border as unknown as any
+                        cell.dataValidation = null
+
+                    });
+                }
+            });
 
             sheet.protect(password, lock);
         })

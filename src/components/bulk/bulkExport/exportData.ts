@@ -57,7 +57,6 @@ export function useExportData(props: ExportData) {
 
                 if (!empty) data = await getData()
 
-                    console.log(data,'dtaaaaaaaaaaaaaa')
                 if (module != Modules.Enrollment) {
                     for (let teisCounter = 0; teisCounter < data.length; teisCounter++) {
                         for (let a = 0; a < stagesToExport.length; a++) {

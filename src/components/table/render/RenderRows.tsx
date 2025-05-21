@@ -85,7 +85,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
     const { academicYear, sectionType, school } = urlParameters();
     const { registration } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
     const [showEnrollments, setShowEnrollments] = useState<string>()
-    const { headerData, rowsData = [], pagination, searchActions, showRowIndex, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected } = props;
+    const { enableInactiveRowSelection, headerData, rowsData = [], pagination, searchActions, showRowIndex, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected } = props;
 
     const isSelected = (row: any): boolean => selected?.find((item: any) => deepEqual(item, row));
 
@@ -124,6 +124,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                         <Checkbox
                                             indeterminate={indeterminate}
                                             checked={isSelected(row)}
+                                            disabled={enableInactiveRowSelection ? false : checkCanceled(row.status)}
                                             onChange={() => onChange && onChange(row)}
                                         />
                                     </RowCell>

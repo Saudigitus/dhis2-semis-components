@@ -69,6 +69,7 @@ interface RenderRowsProps {
     isCheckbox?: boolean
     indeterminate?: boolean
     selected?: any
+    enableInactiveRowSelection?: boolean
 }
 
 interface EnrollmentDetailsComponentProps {
@@ -125,6 +126,7 @@ interface TableRenderProps {
     showHeaderFilters?: boolean
     showWorkingListsContainer?: boolean
     paginate?: boolean
+    enableInactiveRowSelection?: boolean
 }
 
 
