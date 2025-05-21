@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function RenderHeader(props: RenderHeaderProps): React.ReactElement {
-    const { selectedAll, rowsHeader = [], order, orderBy, createSortHandler, isCheckbox, checked, indeterminate, onChange, sortable, showRowActions } = props
+    const { selectedAll, rowsHeader = [], showRowIndex, order, orderBy, createSortHandler, isCheckbox, checked, indeterminate, onChange, sortable, showRowActions } = props
     const classes = useStyles()
 
     const headerCells = rowsHeader?.filter(x => x.visible)?.map((column) => (
@@ -102,6 +102,13 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
                             checked={selectedAll}
                             onChange={() => onChange && onChange({}, true)}
                         />
+                    </HeaderCell>
+                }
+                {showRowIndex &&
+                    <HeaderCell
+                        className={classNames(classes.cell, classes.headerCell)}
+                    >
+                        <span>#</span>
                     </HeaderCell>
                 }
 

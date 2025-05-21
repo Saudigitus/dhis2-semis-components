@@ -44,6 +44,7 @@ function Table(props: TableRenderProps): React.ReactElement {
     const {
         title = 'Table',
         viewPortWidth = 1040,
+        showRowIndex = true,
         columns,
         loading = false,
         createSortHandler,
@@ -129,6 +130,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                                 {
                                     viewPortWidth > 520 &&
                                     <RenderHeader
+                                        showRowIndex={showRowIndex}
                                         createSortHandler={createSortHandler}
                                         order={order}
                                         indeterminate={selected?.length > 0 && selected.length != tableData?.length}
@@ -143,6 +145,8 @@ function Table(props: TableRenderProps): React.ReactElement {
                                 }
                                 {!loading && (
                                     <RenderRows
+                                        pagination={pagination}
+                                        showRowIndex={showRowIndex}
                                         headerData={filteredHeaders.length > 0 ? filteredHeaders : columns}
                                         rowsData={tableData}
                                         loading={loading}

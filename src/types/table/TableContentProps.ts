@@ -37,6 +37,7 @@ interface RowProps {
 interface RenderHeaderProps {
     rowsHeader?: CustomAttributeProps[]
     orderBy?: string
+    showRowIndex?: boolean
     order?: "asc" | "desc"
     createSortHandler?: (property: string) => any
     loading?: boolean,
@@ -50,12 +51,14 @@ interface RenderHeaderProps {
 }
 
 interface RenderRowsProps {
+    showRowIndex?: boolean
     headerData?: CustomAttributeProps[]
     rowsData: Record<string, any>[]
     searchActions?: boolean
     loading?: boolean
     viewPortWidth: number
     selectedOU?: string
+    pagination?: { page: number, pageSize: number, totalPages: number }
     showRowActions?: boolean
     rowAction: RowActionsType[]
     displayType?: TableRowActionsType
@@ -97,6 +100,7 @@ interface TableRenderProps {
     tableData: Record<string, any>[]
     sortable?: boolean,
     selectedOU?: string,
+    showRowIndex?: boolean
     searchActions?: any
     showRowActions?: boolean
     rowAction?: RowActionsType[]
