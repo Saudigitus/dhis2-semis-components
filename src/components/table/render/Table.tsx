@@ -16,6 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-select/dist/react-select.css";
 import { deepEqual } from '../../../utils/table/objectComparison';
 import { useUrlParams } from 'dhis2-semis-functions';
+import { checkCanceled } from '../../../utils/table/checkCanceled';
 
 const useStyles = makeStyles((theme) => ({
     tableContainer: {
@@ -53,6 +54,7 @@ function Table(props: TableRenderProps): React.ReactElement {
         columns,
         loading = false,
         enableRowCounter = true,
+        enableInactiveRowSelection = false,
         createSortHandler,
         order,
         orderBy,
@@ -87,13 +89,17 @@ function Table(props: TableRenderProps): React.ReactElement {
     const { urlParameters } = useUrlParams()
     const { sectionType } = urlParameters()
     const onPageChange = (newPage: number) => setPagination({ ...pagination, page: newPage })
+    const filtered = enableInactiveRowSelection ? tableData : tableData.filter(x => !checkCanceled(x.status))
 
     const onRowsPerPageChange = (event: any) => setPagination({ ...pagination, pageSize: parseInt(event.value, 10) })
-
+    console.log(tableData, 'tableData')
+    
     const onCheckboxChange = (row: any, all?: boolean) => {
         if (all) {
-            if (all && tableData.length === selected.length) setSelected([])
-            else setSelected([...tableData])
+            if (all && filtered.length === selected.length) setSelected([])
+            else {
+                setSelected([...filtered])
+            }
         } else {
             const index = selected.findIndex((x: any) => deepEqual(x, row))
 
@@ -115,7 +121,7 @@ function Table(props: TableRenderProps): React.ReactElement {
         <Paper>
             {showWorkingListsContainer && <div className={classes.workingListsContainer}>
                 {
-                    enableRowCounter ? <h4 className={classes.h4}>{title}  {!loading ? <span className={classes.rowCounter}>{` - ${tableData.length} ${capitalSectionType()}`}</span> : <></>}</h4> :
+                    enableRowCounter ? <h4 className={classes.h4}>{title}  {!loading ? <span className={classes.rowCounter}>{` (${tableData.length} ${capitalSectionType()}/${pagination?.totalElements})`}</span> : <></>}</h4> :
                         <h4 className={classes.h4}>{title}</h4>
                 }
                 <div className={classes.tablebuttons}>
@@ -154,7 +160,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         showRowActions={showRowActions}
                                         onChange={onCheckboxChange}
                                         isCheckbox={selectable}
-                                        selectedAll={!loading && tableData?.length === selected?.length}
+                                        selectedAll={!loading && filtered?.length === selected?.length}
                                     />
                                 }
                                 {!loading && (
@@ -176,6 +182,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         onChange={onCheckboxChange}
                                         selected={selected}
                                         isCheckbox={selectable}
+                                        enableInactiveRowSelection={enableInactiveRowSelection}
                                     />
                                 )}
                             </>
