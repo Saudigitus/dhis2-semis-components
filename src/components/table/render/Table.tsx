@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
         margin: '10px 0px 10px 0px',
         fontSize: 'larger',
         fontWeight: '500',
+    },
+    rowCounter: {
+        fontSize: '0.75em',
+        color: "gray"
     }
 }));
 
@@ -111,7 +115,7 @@ function Table(props: TableRenderProps): React.ReactElement {
         <Paper>
             {showWorkingListsContainer && <div className={classes.workingListsContainer}>
                 {
-                    enableRowCounter ? <h4 className={classes.h4}>{title}  {!loading ? <span>{` - ${tableData.length} ${capitalSectionType()}`}</span> : <></>}</h4> :
+                    enableRowCounter ? <h4 className={classes.h4}>{title}  {!loading ? <span className={classes.rowCounter}>{` - ${tableData.length} ${capitalSectionType()}`}</span> : <></>}</h4> :
                         <h4 className={classes.h4}>{title}</h4>
                 }
                 <div className={classes.tablebuttons}>
