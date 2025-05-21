@@ -104,6 +104,67 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
         );
     }
 
+    const renderRowCheckBox = ({ row }: { row: Record<string, any> }) => {
+        return (
+            <>
+                {isCheckbox &&
+                    <RowCell
+                        className={classNames(classes.cell, classes.bodyCell)}
+                    >
+                        <Checkbox
+                            indeterminate={indeterminate}
+                            checked={isSelected(row)}
+                            onChange={() => onChange && onChange(row)}
+                        />
+                    </RowCell>
+                }
+            </>
+        )
+    }
+
+    const renderRowAction = ({ row }: { row: Record<string, any> }) => {
+        return (
+            <>
+                {
+                    showRowActions &&
+                    <RowCell
+                        key={"actions"}
+                        className={classNames(classes.cell, classes.bodyCell, classes.actionsCell)}
+                    >
+                        <TableRowActions
+                            actions={
+                                searchActions ? [{
+                                    ...rowAction[0],
+                                    onClick: () => setShowEnrollments(showEnrollments === row.trackedEntity ? "" : row.trackedEntity)
+                                }] : rowAction
+                            }
+                            row={row}
+                            disabled={checkCanceled(row.status)}
+                            loading={loading!}
+                            displayType={displayType}
+                        />
+                    </RowCell>
+                }
+            </>
+        )
+    }
+
+    const renderRowIndex = ({ index }: { index: number }) => {
+        return (
+            <>
+                {showRowIndex &&
+                    <RowCell
+                        className={classNames(classes.cell, classes.bodyCell)}
+                    >
+                        {(pagination.page - 1) * pagination.pageSize + index + 1}
+                    </RowCell>
+                }
+            </>
+        )
+    }
+
+
+
     return (
         <React.Fragment>
             {
@@ -117,24 +178,8 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
                                 className={classNames(classes.row, classes.dataRow, (searchActions && showEnrollments) ? classes.dataRowCollapsed : null)}
                             >
-                                {isCheckbox &&
-                                    <RowCell
-                                        className={classNames(classes.cell, classes.bodyCell)}
-                                    >
-                                        <Checkbox
-                                            indeterminate={indeterminate}
-                                            checked={isSelected(row)}
-                                            onChange={() => onChange && onChange(row)}
-                                        />
-                                    </RowCell>
-                                }
-                                {showRowIndex &&
-                                    <RowCell
-                                        className={classNames(classes.cell, classes.bodyCell)}
-                                    >
-                                        {(pagination.page - 1) * pagination.pageSize + index + 1}
-                                    </RowCell>
-                                }
+                                {renderRowCheckBox({ row })}
+                                {renderRowIndex({ index })}
                                 {
                                     headerData?.filter((x: any) => x.visible)?.map((column: any) => (
                                         <RowCell
@@ -159,42 +204,17 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                         </RowCell>
                                     ))
                                 }
-                                {
-                                    showRowActions &&
-                                    <RowCell
-                                        key={"actions"}
-                                        className={classNames(classes.cell, classes.bodyCell, classes.actionsCell)}
-                                    >
-                                        <TableRowActions
-                                            actions={
-                                                searchActions ? [{
-                                                    ...rowAction[0],
-                                                    onClick: () => setShowEnrollments(showEnrollments === row.trackedEntity ? "" : row.trackedEntity)
-                                                }] : rowAction
-                                            }
-                                            row={row}
-                                            disabled={checkCanceled(row.status)}
-                                            loading={loading!}
-                                            displayType={displayType}
-                                        />
-                                    </RowCell>
-                                }
+                                {renderRowAction({ row })}
                             </RowTable>
                             :
                             <MobileRow
-                                title={inactiveRowMessage}
-                                row={row}
-                                header={headerData}
-                                inactive={checkCanceled(row.status)}
-                                isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
-                                actions={
-                                    <TableRowActions
-                                        actions={rowAction}
-                                        disabled={checkCanceled(row.status)}
-                                        loading={loading!}
-                                        displayType={displayType}
-                                    />
-                                }
+                                rowData={row}
+                                headerData={headerData}
+                                programConfig={programConfig}
+                                helperText={inactiveRowMessage}
+                                rowIndex={renderRowIndex({ index })}
+                                rowActions={renderRowAction({ row })}
+                                checkBox={renderRowCheckBox({ row })}
                             />
                         }
 
