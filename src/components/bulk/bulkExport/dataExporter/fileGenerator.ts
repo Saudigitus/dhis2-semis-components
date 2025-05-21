@@ -1,6 +1,6 @@
 import Excel from 'exceljs'
 import { saveAs } from 'file-saver'
-import { alignment, border, dataValidation, fill, lock } from '../../../../utils/exporterSettings/exporterConsts';
+import { alignment, border, dataValidation, fill, lock, cancelled } from '../../../../utils/exporterSettings/exporterConsts';
 import metadataHeaders from '../../../../utils/constants/metadataHeaders.json'
 import { excelProps } from '../../../../types/bulk/bulkOperations';
 import { separateByMonth } from '../../../../utils/attendance/separateByMonth';
@@ -81,7 +81,10 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
                 })
             })
 
-            rows.map(row => sheet.addRow(row))
+            rows.forEach(rowData => {
+                const { enrollmentStatus, ...rowContent } = rowData;
+                sheet.addRow(rowContent);
+            })
 
             sheet.getRow(2).eachCell((headerCell: any, colIndex: number) => {
                 const columnHeader = headerCell.value;
@@ -97,7 +100,16 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
                     const dataElementId = colKey.split(".")
                     const cell = row.getCell(colIndex);
 
-                    if (index > 2) {
+                    if (rows?.[row._number - 3]?.enrollmentStatus === 'CANCELLED' &&
+                        module != Modules.Final_Result &&
+                        module != Modules.Attendance) {
+
+                        cell.protection = cancelled.protection;
+                        cell.fill = cancelled.fill
+                        cell.border = border as unknown as any
+                        cell.dataValidation = null
+
+                    } else if (index > 2) {
                         if (empty && colKey !== 'ref') {
                             if (defaultLockedHeaders.includes(cell._column._key)) {
                                 cell.protection = { locked: true };
@@ -114,8 +126,6 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
                         }
                     }
 
-
-
                     if (filters?.[dataElementId[0]] || filters?.[dataElementId[1]] || (regex.test(columnHeader) && filters["Attendance"])) {
                         if (index > 2) {
                             const colFilter = filters?.[dataElementId[1]] ?? filters?.[dataElementId[0]] ?? filters["Attendance"]
@@ -131,7 +141,14 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
             if (module === Modules.Attendance)
                 sheet.eachRow({ includeEmpty: true }, (row: any) => {
                     row.eachCell({ includeEmpty: true }, (cell: any) => {
-                        if (regex.test(cell._column._key) && cell._row._number > 3) {
+                        if (rows?.[row._number - 3]?.enrollmentStatus === 'CANCELLED') {
+
+                            cell.protection = cancelled.protection;
+                            cell.fill = cancelled.fill
+                            cell.border = border as unknown as any
+                            cell.dataValidation = null
+
+                        } else if (regex.test(cell._column._key) && cell._row._number > 3) {
                             if (unavailableDays != undefined && unavailableDays(new Date(cell._column._key))) {
 
                                 cell.dataValidation = null

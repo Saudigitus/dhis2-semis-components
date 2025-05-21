@@ -9,6 +9,7 @@ interface TeiQueryProps {
     page?: number
     fields: string
     filter?: string
+    skipPaging?: boolean,
 }
 
 interface TeiSearchQueryProps {

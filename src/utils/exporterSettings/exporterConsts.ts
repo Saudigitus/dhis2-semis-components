@@ -22,7 +22,7 @@ export const lock = {
     formatColumns: false,
     formatRows: false,
     insertColumns: false,
-    insertRows: false, 
+    insertRows: false,
     deleteColumns: false,
     deleteRows: false,
     sort: true,
@@ -39,4 +39,13 @@ export const dataValidation = {
     showErrorMessage: true,
     errorTitle: 'Invalid Entry',
     error: 'Please select a value from the list.'
+}
+
+export const cancelled = {
+    protection: { locked: true },
+    fill: {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'f4cccc' }
+    }
 }

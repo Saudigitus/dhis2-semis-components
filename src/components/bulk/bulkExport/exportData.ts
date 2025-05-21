@@ -57,6 +57,7 @@ export function useExportData(props: ExportData) {
 
                 if (!empty) data = await getData()
 
+                    console.log(data,'dtaaaaaaaaaaaaaa')
                 if (module != Modules.Enrollment) {
                     for (let teisCounter = 0; teisCounter < data.length; teisCounter++) {
                         for (let a = 0; a < stagesToExport.length; a++) {
@@ -73,8 +74,9 @@ export function useExportData(props: ExportData) {
                                 trackedEntity: data[teisCounter].trackedEntity,
                                 skipPaging: true
                             }).then((resp) => {
-
                                 const events = resp?.filter((x: any) => x.enrollment === data[teisCounter].enrollment)
+                                const increment = (40 / data.length) / stagesToExport.length;
+                                const bufferIncrement = (41 / data.length) / stagesToExport.length;
 
                                 data[teisCounter] = {
                                     ...data[teisCounter], ...formatSheetData({
@@ -85,11 +87,12 @@ export function useExportData(props: ExportData) {
                                     })
                                 }
 
-                                setProgress((progress: any) => ({
-                                    ...progress,
-                                    progress: progress.progress + (40 / data.length * stagesToExport.length),
-                                    buffer: progress.buffer + (41 / data.length * stagesToExport.length)
-                                }))
+                                setProgress((prev: any) => ({
+                                    ...prev,
+                                    progress: prev.progress + increment,
+                                    buffer: prev.buffer + bufferIncrement
+                                }));
+
                             }).catch((error) => {
                                 setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
                                 onError(`Export error: Occurred error wihile fetching data: ${error}`)
@@ -102,10 +105,12 @@ export function useExportData(props: ExportData) {
                     for (const idToGenerate of toGenerate) {
                         await generate(numberOfEmptyRows, idToGenerate).then((generatedIds: any) => {
                             ids[idToGenerate] = generatedIds?.result?.map((x: any) => x.value)
-                        }).catch((error) => {
-                            onError(`Export error: ${error}`)
-                            setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
                         })
+                            .then(() => setProgress((progress: any) => ({ ...progress, progress: 80 / toGenerate.length, buffer: 82 / toGenerate.length })))
+                            .catch((error) => {
+                                onError(`Export error: ${error}`)
+                                setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
+                            })
                     }
 
                     data = generateEmptyRows(numberOfEmptyRows, formatedHeaders, ids, orgUnitName)
