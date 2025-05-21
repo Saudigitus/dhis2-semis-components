@@ -6,12 +6,11 @@ import ModalProgress from "../progress/interactiveProgress";
 import { Modules } from "dhis2-semis-types";
 
 export default function ProcessExport(props: ExportData) {
-    const { empty = false, label, module, Form } = props
+    const { empty = false, label, module, Form, stagesToExport } = props
     const [open, setOpen] = useState(false)
     const [openPogress, setOpenProgress] = useState(false)
     const [progress, setProgress] = useState({ prorocess: "export", progress: 0, buffer: 0 })
     const { exportData } = useExportData({ ...props, setProgress })
-
 
     useEffect(() => {
         if (progress.progress > 0) {
@@ -46,6 +45,7 @@ export default function ProcessExport(props: ExportData) {
             <ModalProgress
                 progress={progress}
                 open={openPogress}
+                module={module as unknown as string}
                 setOpen={setOpenProgress}
             />
         </>

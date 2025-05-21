@@ -61,6 +61,7 @@ export function useGetEnrollmentData(props: ExportData) {
                             enrollmentDate: currEnrollmentRegistration?.occurredAt ? format(new Date(currEnrollmentRegistration?.occurredAt), 'yyyy-MM-dd') : "",
                             enrollment: enrollment,
                             trackedEntity: tei.trackedEntity,
+                            enrollmentStatus: tei?.enrollments?.find((x: any) => x.enrollment === enrollment)?.status,
                             ...attributes(tei?.attributes ?? []),
                             ...dataValues(currEnrollmentRegistration?.dataValues ?? [], selectedSectionDataStore?.registration.programStage as unknown as string),
                             ...dataValues(currEnrollmentSocioEconomics?.dataValues ?? [], selectedSectionDataStore?.['socio-economics'].programStage as unknown as string),
