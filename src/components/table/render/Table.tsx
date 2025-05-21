@@ -15,6 +15,7 @@ import { type CustomAttributeProps } from 'dhis2-semis-types'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-select/dist/react-select.css";
 import { deepEqual } from '../../../utils/table/objectComparison';
+import { useUrlParams } from 'dhis2-semis-functions';
 
 const useStyles = makeStyles((theme) => ({
     tableContainer: {
@@ -37,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
         margin: '10px 0px 10px 0px',
         fontSize: 'larger',
         fontWeight: '500',
+    },
+    rowCounter: {
+        fontSize: '0.75em',
+        color: "gray"
     }
 }));
 
@@ -44,8 +49,10 @@ function Table(props: TableRenderProps): React.ReactElement {
     const {
         title = 'Table',
         viewPortWidth = 1040,
+        showRowIndex = true,
         columns,
         loading = false,
+        enableRowCounter = true,
         createSortHandler,
         order,
         orderBy,
@@ -77,7 +84,8 @@ function Table(props: TableRenderProps): React.ReactElement {
 
     const classes = useStyles()
     const [filteredHeaders, setFilteredHeaders] = useState<CustomAttributeProps[]>([])
-
+    const { urlParameters } = useUrlParams()
+    const { sectionType } = urlParameters()
     const onPageChange = (newPage: number) => setPagination({ ...pagination, page: newPage })
 
     const onRowsPerPageChange = (event: any) => setPagination({ ...pagination, pageSize: parseInt(event.value, 10) })
@@ -99,10 +107,17 @@ function Table(props: TableRenderProps): React.ReactElement {
         }
     }
 
+    const capitalSectionType = () => {
+        return sectionType?.charAt(0)?.toUpperCase() + sectionType?.slice(1) + 's'
+    }
+
     return (
         <Paper>
             {showWorkingListsContainer && <div className={classes.workingListsContainer}>
-                <h4 className={classes.h4}>{title}</h4>
+                {
+                    enableRowCounter ? <h4 className={classes.h4}>{title}  {!loading ? <span className={classes.rowCounter}>{` - ${tableData.length} ${capitalSectionType()}`}</span> : <></>}</h4> :
+                        <h4 className={classes.h4}>{title}</h4>
+                }
                 <div className={classes.tablebuttons}>
                     {rightElements}
                 </div>
@@ -129,6 +144,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                                 {
                                     viewPortWidth > 520 &&
                                     <RenderHeader
+                                        showRowIndex={showRowIndex}
                                         createSortHandler={createSortHandler}
                                         order={order}
                                         indeterminate={selected?.length > 0 && selected.length != tableData?.length}
@@ -143,6 +159,8 @@ function Table(props: TableRenderProps): React.ReactElement {
                                 }
                                 {!loading && (
                                     <RenderRows
+                                        pagination={pagination}
+                                        showRowIndex={showRowIndex}
                                         headerData={filteredHeaders.length > 0 ? filteredHeaders : columns}
                                         rowsData={tableData}
                                         loading={loading}

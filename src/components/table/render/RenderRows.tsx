@@ -85,7 +85,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
     const { academicYear, sectionType, school } = urlParameters();
     const { registration } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
     const [showEnrollments, setShowEnrollments] = useState<string>()
-    const { headerData, rowsData = [], searchActions, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected } = props;
+    const { headerData, rowsData = [], pagination, searchActions, showRowIndex, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected } = props;
 
     const isSelected = (row: any): boolean => selected?.find((item: any) => deepEqual(item, row));
 
@@ -126,6 +126,13 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                             checked={isSelected(row)}
                                             onChange={() => onChange && onChange(row)}
                                         />
+                                    </RowCell>
+                                }
+                                {showRowIndex &&
+                                    <RowCell
+                                        className={classNames(classes.cell, classes.bodyCell)}
+                                    >
+                                        {(pagination.page - 1) * pagination.pageSize + index + 1}
                                     </RowCell>
                                 }
                                 {

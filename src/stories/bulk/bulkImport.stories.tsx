@@ -26,7 +26,6 @@ export const Data_Import: Story = {
         sectionType: 'student',
         selectedSectionDataStore: student as unknown as any,
         module: "enrollment",
-        importMode: 'COMMIT',
         label: "Click me to open drop zone",
         baseURL: "",
         onError: (err) => { console.log(err) }
