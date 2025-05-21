@@ -11,3 +11,12 @@
     height: 100% !important;
     padding: 0 8px !important;
 }
+
+@media screen and (max-width: 900px) {
+    .filterContainer {
+        align-items: center;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    } 
+}

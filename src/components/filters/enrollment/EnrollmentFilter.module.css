@@ -6,3 +6,9 @@
     margin-top: 10;
     margin-left: 10
 }
+
+@media screen and (max-width: 900px) {
+    .container {
+        margin: 10px 0 0;
+    } 
+}

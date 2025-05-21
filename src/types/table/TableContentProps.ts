@@ -73,6 +73,8 @@ interface RenderRowsProps {
 }
 
 interface MobileRowsProps {
+    checkable?: boolean
+    showAction?: boolean
     helperText?: string
     checkBox: ReactElement
     rowIndex: ReactElement

@@ -209,7 +209,9 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                             :
                             <MobileRow
                                 rowData={row}
+                                checkable={isCheckbox}
                                 headerData={headerData}
+                                showAction={showRowActions}
                                 programConfig={programConfig}
                                 helperText={inactiveRowMessage}
                                 rowIndex={renderRowIndex({ index })}

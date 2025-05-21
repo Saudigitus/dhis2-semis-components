@@ -14,7 +14,7 @@ import { formatKeyValueTypeHeader } from "../../../../utils/common/formatKeyValu
 
 export default function MobileRow(props: MobileRowsProps): React.ReactElement {
   const { imageUrl } = GetImageUrl()
-  const { helperText, rowData, headerData, programConfig, rowActions, rowIndex, checkBox } = props;
+  const { helperText, rowData, headerData, programConfig, rowActions, rowIndex, checkBox, showAction, checkable, } = props;
 
 
   return (
@@ -24,12 +24,16 @@ export default function MobileRow(props: MobileRowsProps): React.ReactElement {
       <div>
         <div className={style.cardActions}>
           <span className={style.cardMessage}>
-            #{rowIndex}&nbsp;{helperText ?? "Actions"}
+            {helperText ?? (showAction || checkable) ? "Actions" : ""}
           </span>
           {rowActions}
           {checkBox}
         </div>
         <div className={style.cardBody}>
+          <RowTable className={classNames(style.row)}>
+            <RowCell className={classNames(style.cell, style.headerCell)}>#</RowCell>
+            <RowCell className={classNames(style.cell, style.bodyCell)}>{rowIndex}</RowCell>
+          </RowTable>
           {
             headerData?.filter((x: any) => x.visible)?.map((column: any) => (
               <RowTable className={classNames(style.row)}>
