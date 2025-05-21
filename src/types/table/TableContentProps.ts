@@ -88,6 +88,7 @@ interface TableSortProps {
 interface TableRenderProps {
     title?: string,
     selectable?: boolean,
+    enableRowCounter: boolean,
     viewPortWidth?: number,
     selected?: any,
     setSelected?: (arg: any) => void,
