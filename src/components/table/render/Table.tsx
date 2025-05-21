@@ -121,7 +121,7 @@ function Table(props: TableRenderProps): React.ReactElement {
         <Paper>
             {showWorkingListsContainer && <div className={classes.workingListsContainer}>
                 {
-                    enableRowCounter ? <h4 className={classes.h4}>{title}  {!loading ? <span className={classes.rowCounter}>{` - ${tableData.length} ${capitalSectionType()}`}</span> : <></>}</h4> :
+                    enableRowCounter ? <h4 className={classes.h4}>{title}  {!loading ? <span className={classes.rowCounter}>{` (${tableData.length} ${capitalSectionType()}/${pagination?.totalElements})`}</span> : <></>}</h4> :
                         <h4 className={classes.h4}>{title}</h4>
                 }
                 <div className={classes.tablebuttons}>

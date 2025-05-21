@@ -121,8 +121,8 @@ interface TableRenderProps {
     programConfig: ProgramConfig
     inactiveRowMessage?: string
     onRowClick?: (teiData: any) => void
-    setPagination?: (args: { page: number, pageSize: number, totalPages: number }) => void
-    pagination?: { page: number, pageSize: number, totalPages: number }
+    setPagination?: (args: { page: number, pageSize: number, totalPages: number, totalElements: number }) => void
+    pagination?: { page: number, pageSize: number, totalPages: number, totalElements: number }
     showHeaderFilters?: boolean
     showWorkingListsContainer?: boolean
     paginate?: boolean
