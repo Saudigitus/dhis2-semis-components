@@ -10,8 +10,10 @@ import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
 
+type CombinedTypes = SemisHeaderProps & { baseUrl: string };
 
-const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
+const SemisHeaderRaw = (props: CombinedTypes) => {
+    const { baseUrl, academicYears, classes, employmentType: typeOfEmployee, grades, orgunits, typeOfStaff } = props
     const { add, remove, urlParameters, useQuery } = useUrlParams()
     const { grade, class: section, school, academicYear, schoolName, employmentType, position } = urlParameters()
     const [openGrade, setOpenGrade] = useState<boolean>(false)
@@ -25,24 +27,24 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
     //RETRIEVE VALUES FROM ULR AND SET TO STATE
     useEffect(() => {
         setHeaderValues({
-            selectedAcademicYear: headerItems?.academicYears?.options?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
-            selectedClass: headerItems?.classes?.options?.filter((option: OptionProps) => option.value === section)?.[0] as OptionProps,
-            selectedGrade: headerItems?.grades?.options?.filter((option: OptionProps) => option.value === grade)?.[0] as OptionProps,
+            selectedAcademicYear: academicYears?.options?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
+            selectedClass: classes?.options?.filter((option: OptionProps) => option.value === section)?.[0] as OptionProps,
+            selectedGrade: grades?.options?.filter((option: OptionProps) => option.value === grade)?.[0] as OptionProps,
             selectedOu: { displayName: schoolName, id: school, selected: [] },
-            selectedEmploymentType: headerItems?.employmentType?.options?.filter((option: OptionProps) => option.value === employmentType)?.[0] as OptionProps,
-            selectedTypeStaff: headerItems?.typeOfStaff?.options?.filter((option: OptionProps) => option.value === position)?.[0] as OptionProps,
+            selectedEmploymentType: typeOfEmployee?.options?.filter((option: OptionProps) => option.value === employmentType)?.[0] as OptionProps,
+            selectedTypeStaff: typeOfStaff?.options?.filter((option: OptionProps) => option.value === position)?.[0] as OptionProps,
         })
     }, [useQuery()])
 
     const onChangeGrade = (event) => {
-        const getSelectOption = headerItems?.grades?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
+        const getSelectOption = grades?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedGrade: getSelectOption }))
         add("grade", getSelectOption.value)
         setOpenGrade(!openGrade)
     }
 
     const onChangeClass = (event) => {
-        const getSelectOption = headerItems?.classes?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
+        const getSelectOption = classes?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedClass: getSelectOption }))
         add("class", getSelectOption.value)
         setOpenClass(!openClass)
@@ -56,21 +58,21 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
     }
 
     const onChangeEmploymentType = (event) => {
-        const getSelectOption = headerItems?.employmentType?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
+        const getSelectOption = typeOfEmployee?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedEmploymentType: getSelectOption }))
         add("employmentType", getSelectOption.value)
         setOpenEmploymentType(!openEmploymentType)
     }
 
     const onChangeTypeStaff = (event) => {
-        const getSelectOption = headerItems?.typeOfStaff?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
+        const getSelectOption = typeOfStaff?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedTypeStaff: getSelectOption }))
         add("position", getSelectOption.value)
         setOpentTypeStaff(!opentTypeStaff)
     }
 
     const onChangeAcademicYear = (event) => {
-        const getSelectOption = headerItems?.academicYears?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
+        const getSelectOption = academicYears?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedAcademicYear: getSelectOption }))
         add("academicYear", getSelectOption.value)
         setOpenAcademicYear(!openAcademicYear)
@@ -78,7 +80,7 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
 
     return (
         <SelectorBar className={style.HeaderContainer}
-            additionalContent={headerItems?.academicYears &&
+            additionalContent={academicYears &&
                 <SelectorBarItem
                     label="Academic year"
                     value={academicYear ?? headerValues?.selectedAcademicYear?.value}
@@ -86,12 +88,12 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                     open={openAcademicYear}
                     setOpen={() => setOpenAcademicYear(!openAcademicYear)}
                 >
-                    <MenuSelect placeholder="" isSeachable={false} values={headerItems?.academicYears.options} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
+                    <MenuSelect placeholder="" isSeachable={false} values={academicYears.options} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
                 </SelectorBarItem>
             }
         >
 
-            {headerItems?.orgunits && <SelectorBarItem
+            {orgunits && <SelectorBarItem
                 value={schoolName ?? headerValues?.selectedOu?.displayName}
                 onClearSelectionClick={() => {
                     setHeaderValues({
@@ -111,12 +113,12 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 open={openOu}
                 setOpen={() => setOpenOu(!openOu)}
             >
-                <DataProvider baseUrl='http://localhost:8080'>
+                <DataProvider baseUrl={baseUrl}>
                     <OrgUnitTreeSearch onChange={onChangeOu} />
                 </DataProvider>
             </SelectorBarItem>}
 
-            {headerItems?.grades && <SelectorBarItem
+            {grades && <SelectorBarItem
                 onClearSelectionClick={() => {
                     setHeaderValues(prevState => ({ ...prevState, selectedGrade: { label: "", value: "" } }))
                     remove("grade")
@@ -127,11 +129,11 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 open={openGrade}
                 setOpen={() => setOpenGrade(!openGrade)}
             >
-                <MenuSelect placeholder="Search for a grade" isSeachable values={headerItems?.grades.options} selected={headerValues?.selectedGrade?.value} onChange={onChangeGrade} />
+                <MenuSelect placeholder="Search for a grade" isSeachable values={grades.options} selected={headerValues?.selectedGrade?.value} onChange={onChangeGrade} />
             </SelectorBarItem>}
 
 
-            {headerItems?.classes && <SelectorBarItem
+            {classes && <SelectorBarItem
                 onClearSelectionClick={() => {
                     setHeaderValues(prevState => ({ ...prevState, selectedClass: { label: "", value: "" } }))
                     remove("class")
@@ -143,10 +145,10 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 open={openClass}
                 setOpen={() => setOpenClass(!openClass)}
             >
-                <MenuSelect placeholder="Search for a class" isSeachable values={headerItems?.classes.options} selected={headerValues?.selectedClass?.value} onChange={onChangeClass} />
+                <MenuSelect placeholder="Search for a class" isSeachable values={classes.options} selected={headerValues?.selectedClass?.value} onChange={onChangeClass} />
             </SelectorBarItem>}
 
-            {headerItems?.employmentType && <SelectorBarItem
+            {employmentType && <SelectorBarItem
                 onClearSelectionClick={() => {
                     setHeaderValues(prevState => ({ ...prevState, selectedEmploymentType: { label: "", value: "" } }))
                     remove("employmentType")
@@ -157,9 +159,9 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 open={openEmploymentType}
                 setOpen={() => setOpenEmploymentType(!openEmploymentType)}
             >
-                <MenuSelect placeholder="Search for a employment type" isSeachable values={headerItems?.employmentType.options} selected={headerValues?.selectedEmploymentType?.value} onChange={onChangeEmploymentType} />
+                <MenuSelect placeholder="Search for a employment type" isSeachable values={typeOfEmployee.options} selected={headerValues?.selectedEmploymentType?.value} onChange={onChangeEmploymentType} />
             </SelectorBarItem>}
-            {headerItems?.typeOfStaff && <SelectorBarItem
+            {typeOfStaff && <SelectorBarItem
                 onClearSelectionClick={() => {
                     setHeaderValues(prevState => ({ ...prevState, selectedTypeStaff: { label: "", value: "" } }))
                     remove("position")
@@ -170,18 +172,19 @@ const SemisHeaderRaw = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                 open={opentTypeStaff}
                 setOpen={() => setOpentTypeStaff(!opentTypeStaff)}
             >
-                <MenuSelect placeholder="Search for a type of staff" isSeachable values={headerItems?.typeOfStaff.options} selected={headerValues?.selectedTypeStaff?.value} onChange={onChangeTypeStaff} />
+                <MenuSelect placeholder="Search for a type of staff" isSeachable values={typeOfStaff.options} selected={headerValues?.selectedTypeStaff?.value} onChange={onChangeTypeStaff} />
             </SelectorBarItem>}
 
         </SelectorBar>
     )
 }
 
-const SemisHeader = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
+
+const SemisHeader = (props: CombinedTypes) => {
 
     return (
         <RecoilRoot>
-            <SemisHeaderRaw headerItems={headerItems} />
+            <SemisHeaderRaw {...props} />
         </RecoilRoot>)
 }
 
