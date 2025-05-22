@@ -9,7 +9,7 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import { GetImageUrl } from "../../../../utils/table/getImageUrl";
 import { MobileRowsProps } from "../../../../types/table/TableContentProps";
 import { getDisplayName } from "../../../../utils/table/getDisplayNameByOption";
-import { Attribute, VariablesTypes } from "dhis2-semis-types/dist/declarations";
+import { Attribute, VariablesTypes } from "dhis2-semis-types";
 import { formatKeyValueTypeHeader } from "../../../../utils/common/formatKeyValueType";
 
 export default function MobileRow(props: MobileRowsProps): React.ReactElement {

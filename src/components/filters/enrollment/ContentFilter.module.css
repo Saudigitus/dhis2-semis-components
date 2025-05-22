@@ -7,6 +7,12 @@
     margin-top: 10px;
 }
 
+@media screen and (max-width:900px) {
+    .container{
+        margin: 10px 0px;
+    }
+}
+
 .moreFilters {
     color: rgb(33, 41, 52) !important;
     font-size: 14px !important;

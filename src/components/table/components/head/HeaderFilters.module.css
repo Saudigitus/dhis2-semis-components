@@ -4,7 +4,7 @@
     height: 64px !important;
 }
 
-.filterContainer > div {
+.filterContainer>div {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -14,9 +14,12 @@
 
 @media screen and (max-width: 900px) {
     .filterContainer {
-        align-items: center;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between !important;
-    } 
+        flex-wrap: wrap !important;
+        align-items: start !important;
+        height: fit-content !important;
+    }
+
+    .filterContainer>div {
+        padding: 0 !important;
+    }
 }
