@@ -72,6 +72,21 @@ interface RenderRowsProps {
     enableInactiveRowSelection?: boolean
 }
 
+interface MobileRowsProps {
+    checkable?: boolean
+    showAction?: boolean
+    helperText?: string
+    checkBox: ReactElement
+    rowIndex: ReactElement
+    headerData: CustomAttributeProps[]
+    rowData: Record<string, any>
+    loading?: boolean
+    rowActions: ReactElement
+    programConfig: ProgramConfig
+    onRowClick?: (args: any) => void
+    onChange?: (selected: any, all?: boolean) => void
+}
+
 interface EnrollmentDetailsComponentProps {
     enrollmentsData: any
     existingAcademicYear: boolean
@@ -133,4 +148,8 @@ interface TableRenderProps {
 type TableDataProps = Record<string, string>;
 
 
-export type { TableRenderProps, TableComponentProps, HeaderCellProps, RowProps, RenderHeaderProps, RenderRowsProps, EnrollmentDetailsComponentProps, TableSortProps, TableDataProps }
+export type {
+    TableRenderProps, TableComponentProps, HeaderCellProps,
+    RowProps, RenderHeaderProps, RenderRowsProps, EnrollmentDetailsComponentProps,
+    TableSortProps, TableDataProps, MobileRowsProps
+}

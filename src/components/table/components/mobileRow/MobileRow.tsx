@@ -1,11 +1,21 @@
 import React from "react";
 import { Card } from "@dhis2/ui";
 import classNames from "classnames";
-import style from "./mobileRow.module.css";
+import RowCell from "../row/RowCell";
 import RowTable from "../row/RowTable";
+import style from "./mobileRow.module.css";
+import { CropOriginal } from "@material-ui/icons";
+import { IconButton, Tooltip } from "@material-ui/core";
+import { GetImageUrl } from "../../../../utils/table/getImageUrl";
+import { MobileRowsProps } from "../../../../types/table/TableContentProps";
+import { getDisplayName } from "../../../../utils/table/getDisplayNameByOption";
+import { Attribute, VariablesTypes } from "dhis2-semis-types";
+import { formatKeyValueTypeHeader } from "../../../../utils/common/formatKeyValueType";
 
-export default function MobileRow(props: any): React.ReactElement {
-  const { header, actions, title, value } = props;
+export default function MobileRow(props: MobileRowsProps): React.ReactElement {
+  const { imageUrl } = GetImageUrl()
+  const { helperText, rowData, headerData, programConfig, rowActions, rowIndex, checkBox, showAction, checkable, } = props;
+
 
   return (
     <Card
@@ -14,20 +24,40 @@ export default function MobileRow(props: any): React.ReactElement {
       <div>
         <div className={style.cardActions}>
           <span className={style.cardMessage}>
-            {title}
+            {helperText ?? (showAction || checkable) ? "Actions" : ""}
           </span>
-          {actions}
+          {rowActions}
+          {checkBox}
         </div>
         <div className={style.cardBody}>
+          <RowTable className={classNames(style.row)}>
+            <RowCell className={classNames(style.cell, style.headerCell)}>#</RowCell>
+            <RowCell className={classNames(style.cell, style.bodyCell)}>{rowIndex}</RowCell>
+          </RowTable>
           {
-            header?.filter((x: any) => x.visible)?.map((column: any) => (
+            headerData?.filter((x: any) => x.visible)?.map((column: any) => (
               <RowTable className={classNames(style.row)}>
-                <td className={classNames(style.cell, style.headerCell)}>
+                <RowCell className={classNames(style.cell, style.headerCell)}>
                   {column.displayName}
-                </td>
-                <td className={classNames(style.cell, style.bodyCell)}>
-                  {value}
-                </td>
+                </RowCell>
+                <RowCell className={classNames(style.cell, style.bodyCell)}>
+                  {
+                    column.type === VariablesTypes.Custom ?
+                      rowData[column.id] :
+                      formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
+                        <a href={imageUrl({ attribute: column.id, trackedEntity: rowData.trackedEntity })} target='_blank'>
+                          {rowData[column.id] &&
+                            <Tooltip title="Click to open in new tab" >
+                              <IconButton> <CropOriginal /></IconButton>
+                            </Tooltip>
+                          }
+                        </a>
+                        :
+                        <div>
+                          {getDisplayName({ metaData: column.id, value: rowData[column.id], program: programConfig })}
+                        </div>
+                  }
+                </RowCell>
               </RowTable>
             ))
           }

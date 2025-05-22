@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
         padding: '0.6rem 0.5rem',
         alignItems: 'center',
         justifyContent: 'space-between',
+        [theme.breakpoints.down('md')]: {
+            alignItems: 'start',
+            flexDirection: 'column'
+        },
     },
     tablebuttons: {
         display: 'flex',
@@ -39,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
         margin: '10px 0px 10px 0px',
         fontSize: 'larger',
         fontWeight: '500',
+        [theme.breakpoints.down('md')]: {
+            margin: '10px 8px',
+        },
     },
     rowCounter: {
         fontSize: '0.75em',
@@ -92,7 +99,7 @@ function Table(props: TableRenderProps): React.ReactElement {
     const filtered = enableInactiveRowSelection ? tableData : tableData.filter(x => !checkCanceled(x.status))
 
     const onRowsPerPageChange = (event: any) => setPagination({ ...pagination, pageSize: parseInt(event.value, 10) })
-    console.log(tableData, 'tableData')
+
     
     const onCheckboxChange = (row: any, all?: boolean) => {
         if (all) {
@@ -153,7 +160,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         showRowIndex={showRowIndex}
                                         createSortHandler={createSortHandler}
                                         order={order}
-                                        indeterminate={selected?.length > 0 && selected.length != tableData?.length}
+                                        indeterminate={selected?.length > 0 && selected.length != filtered?.length}
                                         orderBy={orderBy}
                                         rowsHeader={filteredHeaders.length > 0 ? filteredHeaders : columns}
                                         sortable={sortable}
