@@ -3,10 +3,10 @@ import { SemisHeaderProps } from "../../types/header/headerTypes"
 import HeaderItem from "./components/headerItem"
 
 const SemisHeader = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
-    const { grades, classes, academicYears, orgunits } = headerItems;
+    const { } = headerItems;
     return (
         <>
-            <HeaderItem headerItem={
+            {/* <HeaderItem headerItem={
                 {
                     label: "School",
                     searchInputPlaceholder: "Search for a school",
@@ -39,7 +39,7 @@ const SemisHeader = ({ headerItems }: { headerItems: SemisHeaderProps }) => {
                         isSeachable: false
                     }
                 } />
-            </div>
+            </div> */}
         </>
     )
 }
