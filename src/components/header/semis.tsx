@@ -142,6 +142,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataSoreValues, baseUrl }: { hea
             </SelectorBarItem>}
             {
                 dynamicItems.map((item: ExtendedDynamicHeaderProps, index) => {
+                    console.log([item?.ulrParam], "[item?.ulrParam]")
                     return item?.position === "LEFT" ? (
                         <SelectorBarItem
                             key={index}
