@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         row: { width: "100%" },
         cell: {
+            whiteSpace: "nowrap",
             borderBottomColor: "rgba(224, 224, 224, 1)",
             [theme.breakpoints.down('md')]: {
                 padding: `${theme.spacing(1) * 1}px`,
