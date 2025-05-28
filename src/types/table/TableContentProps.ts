@@ -73,6 +73,7 @@ interface RenderRowsProps {
 }
 
 interface MobileRowsProps {
+    inactive?: boolean
     checkable?: boolean
     showAction?: boolean
     helperText?: string
