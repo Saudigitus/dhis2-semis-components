@@ -1,6 +1,6 @@
 {
   "name": "dhis2-semis-components",
-  "version": "0.6.5-alpha.1",
+  "version": "0.6.5-alpha.2",
   "main": "dist/index.js",
   "types": "dist/declarations/index.d.ts",
   "exports": {
@@ -54,7 +54,7 @@
     "vite": "^5.4.10"
   },
   "peerDependencies": {
-    "@dhis2/ui": "10.7.1",
+    "@dhis2/ui": "10.7.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "7.1.0",
