@@ -11,10 +11,10 @@ import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
 import { getOptionsByDataElement } from './utils/getOptions'
 
-const SemisHeaderRaw = ({ headerItems, program, dataSoreValues, baseUrl }: { headerItems?: SemisHeaderProps, program: any, dataSoreValues?: any, baseUrl?: string }) => {
+const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl }: { headerItems?: SemisHeaderProps, program: any, dataStoreValues?: any, baseUrl?: string }) => {
     const searchParams = new URLSearchParams(window.location.search);
     const { otherItems = [], hideTree = false, hideAcademicYear = false } = headerItems ?? {}
-    const [dynamicItems = [], setDynamicItems] = useState<ExtendedDynamicHeaderProps[]>([...otherItems?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item.options ?? [], open: false, id: crypto.randomUUID() })), ...dataSoreValues?.filters?.dataElements?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item?.options ?? [], open: false, id: crypto.randomUUID() }))])
+    const [dynamicItems = [], setDynamicItems] = useState<ExtendedDynamicHeaderProps[]>([...otherItems?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item.options ?? [], open: false, id: crypto.randomUUID() })), ...dataStoreValues?.filters?.dataElements?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item?.options ?? [], open: false, id: crypto.randomUUID() }))])
     const { add, remove, urlParameters } = useUrlParams()
     const { school, academicYear, schoolName } = urlParameters()
     const [openAcademicYear, setOpenAcademicYear] = useState<boolean>(false)
@@ -42,7 +42,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataSoreValues, baseUrl }: { hea
         })
 
         setHeaderValues({
-            selectedAcademicYear: getOptionsByDataElement(dataSoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
+            selectedAcademicYear: getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
             selectedOu: { displayName: schoolName, id: school, selected: [] },
             ...otherItemsValues
         })
@@ -56,7 +56,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataSoreValues, baseUrl }: { hea
     }
 
     const onChangeAcademicYear = (event: any) => {
-        const getSelectOption = getOptionsByDataElement(dataSoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
+        const getSelectOption = getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedAcademicYear: getSelectOption }))
         add("academicYear", getSelectOption.value)
         setOpenAcademicYear(!openAcademicYear)
@@ -110,7 +110,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataSoreValues, baseUrl }: { hea
                             open={openAcademicYear}
                             setOpen={() => setOpenAcademicYear(!openAcademicYear)}
                         >
-                            <MenuSelect placeholder="Select a academic year" isSeachable={false} values={getOptionsByDataElement(dataSoreValues?.registration?.academicYear, program)} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
+                            <MenuSelect placeholder="Select a academic year" isSeachable={false} values={getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
                         </SelectorBarItem>
                     }
                 </div>
@@ -168,11 +168,11 @@ const SemisHeaderRaw = ({ headerItems, program, dataSoreValues, baseUrl }: { hea
     )
 }
 
-const SemisHeader = ({ headerItems, program, dataSoreValues, baseUrl }: { headerItems?: SemisHeaderProps, program?: any, dataSoreValues?: any, baseUrl?: string }) => {
+const SemisHeader = ({ headerItems, program, dataStoreValues, baseUrl }: { headerItems?: SemisHeaderProps, program?: any, dataStoreValues?: any, baseUrl?: string }) => {
 
     return (
         <RecoilRoot>
-            <SemisHeaderRaw baseUrl={baseUrl} program={program} dataSoreValues={dataSoreValues} headerItems={headerItems} />
+            <SemisHeaderRaw baseUrl={baseUrl} program={program} dataStoreValues={dataStoreValues} headerItems={headerItems} />
         </RecoilRoot>)
 }
 
