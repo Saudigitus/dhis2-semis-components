@@ -5,7 +5,14 @@
     background: #FFFFFF;
     width: 97% !important;
     border-radius: 2px !important;
-    border: 1px solid rgb(244, 244, 244);
+    border: 1px solid rgb(244, 244, 244) !important;
+    box-shadow: rgba(33, 41, 52, 0.06) 0px 0px 1px, rgba(33, 41, 52, 0.1) 0px 0px 3px !important;
+}
+
+.disabledRow {
+    background: rgba(218, 52, 77, .1) !important;
+    cursor: not-allowed !important;
+    color: rgba(0, 0, 0, 0.4) !important;
 }
 
 .cardBody {
@@ -13,12 +20,12 @@
     height: auto;
     display: flex;
     flex-direction: column;
-    background-color: #FFF;
-    border-radius: 4px !important;
-    border-top: solid rgba(224, 224, 224, 1) !important;
+    background-color: transparent;
+    border-top: 1px solid rgba(224, 224, 224, 1) !important;
 }
 
 .cardMessage {
+    font-weight: 500;
     font-style: italic;
     font-size: 13px !important;
     color: rgba(0, 0, 0, 0.67);
@@ -32,8 +39,12 @@
     justify-content: space-between;
 }
 
+.cardActions td {
+    border: none !important;
+}
+
 .row {
-    display: flex;
+    display: flex !important;
     width: 100% !important;
     min-height: 45px !important;
     height: fit-content !important;
