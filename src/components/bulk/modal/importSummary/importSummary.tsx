@@ -4,10 +4,10 @@ import WithPadding from "../../../template/WithPadding";
 import styles from "../modal.module.css";
 import { type ButtonActionProps } from "../../../../types/buttons/ButtonActions";
 import Title from "../../../text/Text";
-import { Collapse, LinearProgress } from "@material-ui/core";
-import { InfoOutlined } from "@material-ui/icons";
 import SummaryCards from "./SummaryCards";
 import SummaryDetails from "./SummaryDetails";
+import { Collapse, LinearProgress } from "@mui/material";
+import { InfoOutlined } from "@mui/icons-material";
 
 interface ModalContentProps {
     setOpen: (value: boolean) => void

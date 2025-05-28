@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import classNames from 'classnames';
 import { RenderRowsProps } from '../../../types/table/TableContentProps';
-import { makeStyles, type Theme, createStyles } from '@material-ui/core/styles';
 import MobileRow from '../components/mobileRow/MobileRow';
 import RowTable from '../components/row/RowTable';
 import RowCell from '../components/row/RowCell';
@@ -13,7 +12,6 @@ import { Attribute } from '../../../types/generated/models';
 import { formatKeyValueTypeHeader } from '../../../utils/common/formatKeyValueType';
 import { GetImageUrl } from '../../../utils/table/getImageUrl';
 import { IconButton, Tooltip } from '@mui/material';
-import { CropOriginal } from '@material-ui/icons';
 import EnrollmentDetailsComponent from '../../../components/searchEnrollment/enrollmentDetailsComponent/EnrollmentDetailsComponent';
 import { checkEnrolledAcademicYear } from '../../../utils/table/checkEnrolledAcademicYear';
 import { Checkbox } from "@dhis2/ui"
@@ -21,6 +19,9 @@ import { useUrlParams } from 'dhis2-semis-functions';
 import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey';
 import { deepEqual } from '../../../utils/table/objectComparison';
 import { VariablesTypes } from '../../../types/variables/AttributeColumns';
+import { createStyles, makeStyles } from '@mui/styles';
+import type { Theme } from '@mui/material/styles';
+import { CropOriginal } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -37,22 +38,21 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         cell: {
             whiteSpace: "nowrap",
-            padding: `${theme.spacing(1) / 2}px ${theme.spacing(1) * 7}px ${theme.spacing(1) /
-                2}px ${theme.spacing(1) * 3}px`,
+            padding: `${Number(theme.spacing(1)) / 2}px ${Number(theme.spacing(1)) * 7}px ${Number(theme.spacing(1)) / 2}px ${Number(theme.spacing(1)) * 3}px`,
             '&:last-child': {
-                paddingRight: theme.spacing(1) * 3
+                paddingRight: Number(theme.spacing(1)) * 3
             },
             borderBottomColor: "rgba(224, 224, 224, 1)",
             [theme.breakpoints.down('md')]: {
-                padding: `${theme.spacing(1) * 1}px`,
+                padding: `${Number(theme.spacing(1)) * 1}px`,
                 '&:last-child': {
-                    paddingRight: `${theme.spacing(1) * 1}px`
+                    paddingRight: `${Number(theme.spacing(1)) * 1}px`
                 },
             },
             [theme.breakpoints.down('sm')]: {
-                padding: `${theme.spacing(1) * 1}px`,
+                padding: `${Number(theme.spacing(1)) * 1}px`,
                 '&:last-child': {
-                    paddingRight: `${theme.spacing(1) * 1}px`
+                    paddingRight: `${Number(theme.spacing(1)) * 1}px`
                 },
             },
         },
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) =>
             }
         },
         actionsCell: {
-            padding: `${theme.spacing(1) / 2}px ${theme.spacing(1) * 7}px ${theme.spacing(1) / 2}px ${theme.spacing(1 + 0.25)}px`,
+            padding: `${Number(theme.spacing(1)) / 2}px ${Number(theme.spacing(1)) * 7}px ${Number(theme.spacing(1)) / 2}px ${Number(theme.spacing(1.25))}px`,
             [theme.breakpoints.down('md')]: {
                 padding: `${theme.spacing(1)}px`,
             },

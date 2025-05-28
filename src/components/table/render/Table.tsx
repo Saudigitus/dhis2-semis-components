@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { Center as CenteredContent, CircularLoader } from "@dhis2/ui";
 import RenderHeader from './RenderHeader'
-import { makeStyles } from '@material-ui/core/styles';
-import { Paper } from '@material-ui/core';
 import WithBorder from '../../template/WithBorder';
 import WithPadding from '../../template/WithPadding';
 import TableComponent from '../components/table/TableComponent';
@@ -17,8 +15,10 @@ import "react-select/dist/react-select.css";
 import { deepEqual } from '../../../utils/table/objectComparison';
 import { useUrlParams } from 'dhis2-semis-functions';
 import { checkCanceled } from '../../../utils/table/checkCanceled';
+import { makeStyles } from '@mui/styles';
+import { Paper } from '@mui/material';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: any) => ({
     tableContainer: {
         overflowX: 'auto'
     },
@@ -100,7 +100,7 @@ function Table(props: TableRenderProps): React.ReactElement {
 
     const onRowsPerPageChange = (event: any) => setPagination({ ...pagination, pageSize: parseInt(event.value, 10) })
 
-    
+
     const onCheckboxChange = (row: any, all?: boolean) => {
         if (all) {
             if (all && filtered.length === selected.length) setSelected([])

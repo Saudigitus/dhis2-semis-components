@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { IconSettings24, NoticeBox } from '@dhis2/ui';
-import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import DialogConfigColumns from './DialogConfigColumns';
 import { type CustomAttributeProps } from 'dhis2-semis-types'
 import styles from "./configTableColumns.module.css"
+import { IconButton, Tooltip } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 interface ConfigTableColumnsProps {
     headers: CustomAttributeProps[]

@@ -1,8 +1,7 @@
-import React from 'react';
 import { Help, MenuItem } from "@dhis2/ui"
-import AmpStoriesIcon from '@material-ui/icons/AmpStories';
 import { OptionProps } from "../../../types/header/headerTypes";
 import "../globalStyle.css"
+import SvgIcon from '@mui/material/SvgIcon';
 
 const MenuItemContainer = ({ options, setSelected, onToggle, onSelectOption }:
     {
@@ -20,6 +19,14 @@ const MenuItemContainer = ({ options, setSelected, onToggle, onSelectOption }:
         setSelected(option)
         onSelectOption()
         onToggle()
+    }
+
+    function AmpStoriesIcon() {
+        return (
+            <SvgIcon>
+                <path d="M17 7h2v10h-2V7zm-3 2h2v6h-2V9zm-3-4h2v14h-2V5z" />
+            </SvgIcon>
+        );
     }
 
     return (

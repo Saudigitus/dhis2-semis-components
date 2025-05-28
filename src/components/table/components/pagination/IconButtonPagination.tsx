@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconButton } from "@material-ui/core";
 import defaultClasses from '../table.module.css';
 import { IconButtonPaginationProps } from "../../../../types/table/PaginationProps";
+import { IconButton } from '@mui/material';
 
 export default function IconButtonPagination(props: IconButtonPaginationProps): React.ReactElement {
     const {Icon, ariaLabel, disabled, onPageChange} = props;

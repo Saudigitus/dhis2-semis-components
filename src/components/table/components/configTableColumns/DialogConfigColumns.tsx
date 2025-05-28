@@ -1,13 +1,9 @@
-import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import { type CustomAttributeProps } from 'dhis2-semis-types'
 import { useEffect } from 'react'
 import DragDropList from '../../../drag&drop/DragDropList';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 interface DialogSelectColumnsProps {
     open: boolean

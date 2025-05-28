@@ -2,9 +2,9 @@ import { useState } from 'react'
 import Calendar from './Calendar';
 import { format } from 'date-fns';
 import style from './datepicker.module.css'
-import { Popover, Typography, Paper, Button } from '@material-ui/core';
 import { DropDownCalendarProps } from '../../types/datePicker/CalendarTypes';
 import { Button as Dhis2Btn } from "@dhis2/ui";
+import { Button, Paper, Popover, Typography } from '@mui/material';
 
 export default function DropDownCalendar(props: DropDownCalendarProps) {
     const { setValue, dateDisabler, label, icon, value, config } = props

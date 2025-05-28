@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, ButtonStrip, NoticeBox } from "@dhis2/ui";
 import styles from "../modal/modal.module.css"
-import { Collapse } from "@material-ui/core";
 import WithBorder from "../template/WithBorder";
 import WithPadding from "../template/WithPadding";
-import { IconButton } from "@material-ui/core";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import CustomForm from "../form/form";
 import { useUrlParams } from 'dhis2-semis-functions'
 import useGetSearchEnrollmentForm from "../../hooks/enrollmentSearch/useGetSearchEnrollmentForm";
@@ -19,6 +16,8 @@ import ModalComponent from "../modal/Modal";
 import { useDataStoreKey } from "../../hooks/dataStore/useDataStoreKey";
 import { formattedQuery } from "../../utils/search/formatQuery";
 import { IconInfo24 } from "@dhis2/ui";
+import { Collapse, IconButton } from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
 function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   const { sectionName, setOpenNewEnrollmentModal, programConfig, open, setOpen, Form, setFormInitialValues } = props;

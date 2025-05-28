@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../button.module.css";
-import { Menu, MenuItem, Button } from "@material-ui/core";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import classNames from "classnames";
 import { SimpleButtonsComponentProps, SimpleButtonType } from "../../../../types/buttons/switchButtonsProps";
+import { Button, Menu, MenuItem } from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
 export default function SimpleDropdownButton(props: SimpleButtonsComponentProps): React.ReactElement {
   const { items, selected, setSelected, onSelect } = props;
@@ -27,7 +27,7 @@ export default function SimpleDropdownButton(props: SimpleButtonsComponentProps)
   }, [selected]);
 
   const handleSelect = (item: SimpleButtonType) => {
-    setSelected(item); 
+    setSelected(item);
     setAnchorEl(null);
     onSelect(item)
   }
@@ -48,11 +48,12 @@ export default function SimpleDropdownButton(props: SimpleButtonsComponentProps)
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleClose}
-        getContentAnchorEl={null}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         transformOrigin={{ vertical: "top", horizontal: "center" }}
-        PaperProps={{
-          style: { boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px", width: menuWidth }
+        slotProps={{
+          paper: {
+            style: { boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px", width: menuWidth }
+          }
         }}
       >
         {items.map((item, i) => (

@@ -1,11 +1,12 @@
 import React from 'react'
 import classNames from 'classnames';
-import { makeStyles, createStyles, type Theme } from '@material-ui/core/styles';
 import { RenderHeaderProps } from '../../../types/table/TableContentProps';
 import { Checkbox } from "@dhis2/ui"
 import SortLabel from '../components/sortLabel/SortLabel';
 import HeaderCell from '../components/head/HeaderCell';
 import RowTable from '../components/row/RowTable';
+import { createStyles, makeStyles } from '@mui/styles';
+import type { Theme } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -13,9 +14,9 @@ const useStyles = makeStyles((theme: Theme) =>
         cell: {
             borderBottomColor: "rgba(224, 224, 224, 1)",
             [theme.breakpoints.down('md')]: {
-                padding: `${theme.spacing(1) * 1}px`,
+                padding: `${theme.spacing(1)}px`,
                 '&:last-child': {
-                    paddingRight: `${theme.spacing(1) * 1}px`
+                    paddingRight: `${theme.spacing(1 * 1)}px`
                 },
                 fontSize: '13px !important',
             },
