@@ -1,25 +1,8 @@
 import { z } from "zod"
 import { atom } from "recoil";
-// import { EventEmitter } from 'events';
 
 const headerValuesSchema = z.object({
     selectedAcademicYear: z.object({
-        label: z.string(),
-        value: z.string()
-    }),
-    selectedClass: z.object({
-        label: z.string(),
-        value: z.string()
-    }),
-    selectedGrade: z.object({
-        label: z.string(),
-        value: z.string()
-    }),
-    selectedEmploymentType: z.object({
-        label: z.string(),
-        value: z.string()
-    }),
-    selectedTypeStaff: z.object({
         label: z.string(),
         value: z.string()
     }),
@@ -36,13 +19,6 @@ export const HeaderValuesState = atom<HeaderValuesProps>({
     key: "header-values-state",
     default: {
         selectedAcademicYear: { label: "", value: "" },
-        selectedClass: { label: "", value: "" },
-        selectedOu: { id: "", displayName: "", selected: [] },
-        selectedGrade: { label: "", value: "" },
-        selectedEmploymentType: { label: "", value: "" },
-        selectedTypeStaff: { label: "", value: "" }
-
+        selectedOu: { id: "", displayName: "", selected: [] }
     }
 })
-
-// export const stateEmitter = new EventEmitter();
