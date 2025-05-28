@@ -1,6 +1,6 @@
 {
   "name": "dhis2-semis-components",
-  "version": "0.6.4-alpha.migartionTest",
+  "version": "0.6.4-migrationTest.1",
   "main": "dist/index.js",
   "types": "dist/declarations/index.d.ts",
   "exports": {
