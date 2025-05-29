@@ -1,8 +1,7 @@
-import React from 'react';
-import { Paper } from '@material-ui/core'
 import styles from "./infoPage.module.css"
 import { type InfoTypes } from '../../types/info/infoPageTypes'
 import Text from '../text/Text'
+import { Paper } from "@mui/material"
 
 export default function InfoPage(props: InfoTypes) {
     const { sections, title, fontWeigth = 'bold' } = props

@@ -1,9 +1,8 @@
-import React from 'react';
-import { IconButton, Tooltip } from "@material-ui/core"
 import style from "../card.module.css"
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { ContentLayoutProps, ContentProps } from "../../../types/cards/cardDashboardProps";
 import classNames from "classnames";
+import { IconButton, Tooltip } from "@mui/material";
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 const CardBody = ({ contents, contentLayout }: { contents?: ContentProps[], contentLayout?: ContentLayoutProps }) => {
 

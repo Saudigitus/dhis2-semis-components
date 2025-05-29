@@ -20,6 +20,7 @@ interface HeaderCellProps {
     table?: TableProps
     colspan?: number
     onClick?: (args: any) => void
+    style?: any
 }
 
 interface RowProps {
@@ -32,6 +33,7 @@ interface RowProps {
     title?: string
     disableHoverListener?: boolean
     tooltip?: boolean
+    style?: any
 }
 
 interface RenderHeaderProps {

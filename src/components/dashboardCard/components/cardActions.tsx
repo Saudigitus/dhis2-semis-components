@@ -1,8 +1,7 @@
-import React from 'react';
-import { IconButton, Tooltip } from "@material-ui/core"
 import style from "../card.module.css"
 import { Action, PositionProps } from "../../../types/cards/cardDashboardProps";
 import classNames from "classnames";
+import { IconButton, Tooltip } from "@mui/material";
 
 
 const CardActions = ({ actions, align }: { actions?: Action[], align: PositionProps }) => {

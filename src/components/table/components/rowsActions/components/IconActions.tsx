@@ -1,7 +1,7 @@
 import React from 'react';
 import style from '../tableRowActions.module.css'
-import { IconButton, Tooltip } from '@material-ui/core';
 import { RowActionsProps, RowActionsType } from '../../../../../types/table/TableRowActionsProps';
+import { IconButton, Tooltip } from '@mui/material';
 
 export default function IconActions(props: RowActionsProps) {
   const { actions, disabled, row } = props;

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { IconButton } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
 import { useField, type FieldRenderProps } from "react-final-form";
 import style from "./OrgUnit.module.css"
 import { OuFieldProps, SelectedOuType } from '../../../../types/orgUnitTree/OrgUnitTreeProps';
 import OrgUnitTreeSearch from '../../../../components/header/components/orgUnitTreeSearch';
+import { IconButton } from '@mui/material';
+import { Close } from '@mui/icons-material';
 
 export default function OrgUnitTreeField(props: OuFieldProps): React.ReactElement {
     const [selectedOu, setSelectedOu] = useState<SelectedOuType>()

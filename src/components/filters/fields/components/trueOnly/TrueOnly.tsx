@@ -1,6 +1,5 @@
-import React from 'react';
 import { Checkbox, spacersNum } from '@dhis2/ui'
-import { withStyles } from '@material-ui/core';
+import { withStyles } from '@mui/styles';
 
 const styles = (theme: any) => ({
     label: theme.typography.formFieldTitle,

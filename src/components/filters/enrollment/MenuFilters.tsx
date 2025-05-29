@@ -1,6 +1,4 @@
-import React from 'react';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import { Menu, MenuItem } from '@mui/material';
 import { type MenuFiltersProps } from '../../../types/table/ContentFiltersProps';
 
 export default function MenuFilters(props: MenuFiltersProps) {
@@ -18,7 +16,6 @@ export default function MenuFilters(props: MenuFiltersProps) {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
-                getContentAnchorEl={null}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'center' }}
             >

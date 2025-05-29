@@ -1,7 +1,5 @@
-import React from 'react';
 import { format } from 'date-fns'
 import MenuFilters from './MenuFilters'
-import { Button } from '@material-ui/core'
 import { useState, useEffect } from 'react'
 import styles from './ContentFilter.module.css'
 import SelectButton from "../selectButton/SelectButton"
@@ -9,6 +7,7 @@ import useViewportWidth from '../../../hooks/common/useViewPort'
 import { convertArrayToObject } from '../../../utils/common/formatArrayToObject'
 import { type CustomAttributeProps } from 'dhis2-semis-types'
 import { EnrollmentFilterProps } from '../../../types/filters/filtersProps'
+import { Button } from '@mui/material'
 
 type FiltersValuesProps = Record<string, any | { endDate: string } | { startDate: string }>
 

@@ -2,15 +2,13 @@ import { Meta, StoryObj } from "@storybook/react";
 import icon from "../../assets/escolha.png"
 import calendar from "../../assets/attendance.png"
 import books from "../../assets/pilha-de-livros.png"
-
-
-import AddIcon from '@material-ui/icons/Add';
-import MenuIcon from '@material-ui/icons/Menu';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import MemoryIcon from '@material-ui/icons/Memory';
-import CameraEnhanceIcon from '@material-ui/icons/CameraEnhance';
 import DashboardCard from "../../components/dashboardCard/dashboardCard";
 import { Action } from "../../types/cards/cardDashboardProps";
+import AddIcon from '@mui/icons-material/Add';
+import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
+import MemoryIcon from '@mui/icons-material/Memory';
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 const meta = {
     title: 'Card/Dashboard Card',

@@ -4,13 +4,13 @@ import classNames from "classnames";
 import RowCell from "../row/RowCell";
 import RowTable from "../row/RowTable";
 import style from "./mobileRow.module.css";
-import { CropOriginal } from "@material-ui/icons";
-import { IconButton, Tooltip } from "@material-ui/core";
 import { GetImageUrl } from "../../../../utils/table/getImageUrl";
 import { MobileRowsProps } from "../../../../types/table/TableContentProps";
 import { getDisplayName } from "../../../../utils/table/getDisplayNameByOption";
 import { Attribute, VariablesTypes } from "dhis2-semis-types";
 import { formatKeyValueTypeHeader } from "../../../../utils/common/formatKeyValueType";
+import { CropOriginal } from "@mui/icons-material";
+import { IconButton, Tooltip } from "@mui/material";
 
 export default function MobileRow(props: MobileRowsProps): React.ReactElement {
   const { imageUrl } = GetImageUrl()

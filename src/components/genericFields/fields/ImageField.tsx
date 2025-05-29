@@ -1,12 +1,11 @@
 
 import { useEffect, useState } from 'react'
 import { IconUpload24, IconCross24 } from "@dhis2/ui"
-import { Button } from '@material-ui/core'
-import { Box } from '@material-ui/core'
 import { useField, type FieldRenderProps } from "react-final-form"
 import style from "./fields.module.css"
 import { FormFieldsProps } from '../../../types/form/GenericFieldsTypes'
 import { useFileResource } from 'dhis2-semis-functions'
+import { Box, Button } from '@mui/material'
 
 interface imageFieldSpecificProps {
     storyBook: boolean

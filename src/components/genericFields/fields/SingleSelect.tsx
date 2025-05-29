@@ -1,10 +1,9 @@
-import { TextField } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
 import { useField, type FieldRenderProps } from "react-final-form";
-import ErrorIcon from '@material-ui/icons/Error';
+import ErrorIcon from '@mui/icons-material/Error';
 import styles from "./fields.module.css"
 import { AutoCompleteProps } from "../../../types/form/GenericFieldsTypes";
 import { useState } from 'react'
+import { Autocomplete, TextField } from "@mui/material";
 
 const OptionSetAutocomplete = (props: AutoCompleteProps & { submitted?: boolean }) => {
   const { input }: FieldRenderProps<any, HTMLElement> = useField(props.name);
@@ -23,10 +22,10 @@ const OptionSetAutocomplete = (props: AutoCompleteProps & { submitted?: boolean 
         {...props}
         options={options}
         fullWidth
-        closeIcon={null}
+        clearIcon={null}
         disabled={props.disabled}
-        getOptionLabel={(option) => option.label}
-        getOptionSelected={(option, value) => option.value === value.value}
+        getOptionLabel={(option) => option.label}        
+        // getOptionSelected={(option, value) => option.value === value.value}
         value={options?.find((element: { value: string }) => element.value === input.value) ?? null}
         renderInput={(params) => (
           <TextField

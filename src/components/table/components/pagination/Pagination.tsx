@@ -1,10 +1,10 @@
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import React from 'react'
 import Select from 'react-select';
 import defaultClasses from '../table.module.css';
 import {  PaginationProps } from '../../../../types/table/PaginationProps';
 import TextPagination from './TextPagination';
 import IconButtonPagination from './IconButtonPagination';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
 
 function Pagination({ page, rowsPerPage, onPageChange, onRowsPerPageChange, disablePreviousPage, disableNextPage, rowsPerPages }: PaginationProps): React.ReactElement {

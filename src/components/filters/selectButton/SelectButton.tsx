@@ -1,10 +1,11 @@
-import { Popover, makeStyles } from '@material-ui/core';
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import RenderWithoutAppliedFilter from './RenderWithoutAppliedFilter';
 import SelectorContents from '../enrollment/content/SelectorContents';
 import RenderWithAppliedFilter from './RenderWithAppliedFilter';
 import { type SelectButtonProps } from '../../../types/table/ContentFiltersProps';
 import WithPadding from '../../template/WithPadding';
+import { makeStyles } from '@mui/styles';
+import { Popover } from '@mui/material';
 
 const POPOVER_ANCHOR_ORIGIN = {
     vertical: 'bottom' as 'bottom',

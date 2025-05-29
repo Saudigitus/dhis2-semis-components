@@ -1,6 +1,6 @@
 import React from 'react'
-import { TableSortLabel } from '@material-ui/core';
 import { TableSortProps } from '../../../../types/table/TableContentProps';
+import { TableSortLabel } from '@mui/material';
 
 function SortLabel(props: TableSortProps): React.ReactElement {
     return (
