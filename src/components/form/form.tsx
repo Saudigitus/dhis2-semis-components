@@ -20,8 +20,8 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
     const [changed, setChanged] = useState(false)
     const [formSubmitted, setFormSubmitted] = useState(false)
 
-    const handleInputChange = (event: any) => {
-        if (onInputChange) onInputChange({ value: event.target.value, field: event, name: event.target.name })
+    const handleInputChange = (values: Record<string, any>, event: any) => {
+        if (onInputChange) onInputChange({ form: values, changed: { value: event.target.value, field: event, name: event.target.name } })
         setFormSubmitted(false)
     }
 
@@ -71,7 +71,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
 
                     return (
                         <form
-                            onChange={(onchangeValue: any) => { handleInputChange(onchangeValue) }}
+                            onChange={(onchangeValue: any) => { handleInputChange(values, onchangeValue) }}
                             onSubmit={(e) => {
                                 e.preventDefault();
                                 handleSubmit(values);
