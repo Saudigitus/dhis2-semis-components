@@ -4,7 +4,7 @@ import defaultClasses from '../table.module.css';
 import { HeaderCellProps } from '../../../../types/table/TableContentProps';
 
 function RowCell(props: HeaderCellProps): React.ReactElement {
-    const { children, className, passOnProps, table, colspan } = props;
+    const { children, className, passOnProps, table, colspan, style } = props;
 
     const classes = classNames(
         defaultClasses.tableCell,
@@ -18,6 +18,7 @@ function RowCell(props: HeaderCellProps): React.ReactElement {
 
     return (
         <td
+            style={style}
             className={classes}
             {...passOnProps}
             colSpan={colspan}

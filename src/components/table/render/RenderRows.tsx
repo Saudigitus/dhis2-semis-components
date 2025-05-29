@@ -19,64 +19,71 @@ import { useUrlParams } from 'dhis2-semis-functions';
 import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey';
 import { deepEqual } from '../../../utils/table/objectComparison';
 import { VariablesTypes } from '../../../types/variables/AttributeColumns';
-import { createStyles, makeStyles } from '@mui/styles';
-import type { Theme } from '@mui/material/styles';
 import { CropOriginal } from '@mui/icons-material';
+import { useTheme } from '@mui/material/styles';
+import { breakpoints } from '../../../constants/breakpoints';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        row: { width: "100%" },
-        historyRow: { backgroundColor: "#FFFF" },
+export const useStyles = () => {
+    const theme = useTheme();
+
+    return {
+        row: {
+            width: '100%',
+        },
+        historyRow: {
+            backgroundColor: '#FFFF',
+        },
         dataRow: {
             cursor: 'pointer',
             '&:hover': {
-                backgroundColor: '#F1FBFF'
-            }
+                backgroundColor: '#F1FBFF',
+            },
         },
         dataRowCollapsed: {
-            backgroundColor: '#F1FBFF'
+            backgroundColor: '#F1FBFF',
         },
         cell: {
-            whiteSpace: "nowrap",
+            whiteSpace: 'nowrap',
             padding: `${Number(theme.spacing(1)) / 2}px ${Number(theme.spacing(1)) * 7}px ${Number(theme.spacing(1)) / 2}px ${Number(theme.spacing(1)) * 3}px`,
             '&:last-child': {
-                paddingRight: Number(theme.spacing(1)) * 3
+                paddingRight: Number(theme.spacing(1)) * 3,
             },
-            borderBottomColor: "rgba(224, 224, 224, 1)",
-            [theme.breakpoints.down('md')]: {
+            borderBottomColor: 'rgba(224, 224, 224, 1)',
+            [breakpoints.down('md')]: {
                 padding: `${Number(theme.spacing(1)) * 1}px`,
                 '&:last-child': {
-                    paddingRight: `${Number(theme.spacing(1)) * 1}px`
+                    paddingRight: `${Number(theme.spacing(1)) * 1}px`,
                 },
             },
-            [theme.breakpoints.down('sm')]: {
+            [breakpoints.down('md')]: {
                 padding: `${Number(theme.spacing(1)) * 1}px`,
                 '&:last-child': {
-                    paddingRight: `${Number(theme.spacing(1)) * 1}px`
+                    paddingRight: `${Number(theme.spacing(1)) * 1}px`,
                 },
             },
         },
         bodyCell: {
-            fontSize: theme.typography.pxToRem(13),
+            fontSize: theme.typography.pxToRem(12),
             color: theme.palette.text.primary,
-            [theme.breakpoints.down('md')]: {
-                fontSize: theme.typography.pxToRem(12),
-            },
-            [theme.breakpoints.down('sm')]: {
+            [breakpoints.down('md')]: {
                 fontSize: theme.typography.pxToRem(11),
-            }
+            },
+            [breakpoints.down('md')]: {
+                fontSize: theme.typography.pxToRem(10),
+            },
         },
         actionsCell: {
             padding: `${Number(theme.spacing(1)) / 2}px ${Number(theme.spacing(1)) * 7}px ${Number(theme.spacing(1)) / 2}px ${Number(theme.spacing(1.25))}px`,
-            [theme.breakpoints.down('md')]: {
+            [breakpoints.down('md')]: {
                 padding: `${theme.spacing(1)}px`,
             },
-            [theme.breakpoints.down('sm')]: {
+            [breakpoints.down('md')]: {
                 padding: `${theme.spacing(1)}px`,
-            }
-        }
-    })
-);
+            },
+        },
+    };
+};
+
 
 function RenderRows(props: RenderRowsProps): React.ReactElement {
     const classes = useStyles()
@@ -85,17 +92,17 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
     const { academicYear, sectionType, school } = urlParameters();
     const { registration } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
     const [showEnrollments, setShowEnrollments] = useState<string>()
-    const { enableInactiveRowSelection, headerData, rowsData = [], pagination, searchActions, showRowIndex, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected } = props;
+    const { headerData, rowsData = [], pagination, searchActions, showRowIndex, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected } = props;
 
     const isSelected = (row: any): boolean => selected?.find((item: any) => deepEqual(item, row));
 
     if (rowsData?.length === 0 && !loading) {
         return (
             <RowTable
-                className={classes.row}
+                style={classes.row}
             >
                 <RowCell
-                    className={classNames(classes.cell, classes.bodyCell)}
+                    style={{ ...classes.cell, ...classes.bodyCell }}
                     colspan={headerData?.filter(x => x.visible)?.length as unknown as number + 1}
                 >
                     {'No data to display'}
@@ -109,7 +116,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
             <>
                 {isCheckbox &&
                     <RowCell
-                        className={classNames(classes.cell, classes.bodyCell)}
+                        style={{ ...classes.cell, ...classes.bodyCell }}
                     >
                         <Checkbox
                             indeterminate={indeterminate}
@@ -129,7 +136,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                     showRowActions &&
                     <RowCell
                         key={"actions"}
-                        className={classNames(classes.cell, classes.bodyCell, classes.actionsCell)}
+                        style={{ ...classes.cell, ...classes.bodyCell, ...classes.actionsCell }}
                     >
                         <TableRowActions
                             actions={
@@ -154,9 +161,9 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
             <>
                 {showRowIndex &&
                     <RowCell
-                        className={classNames(classes.cell, classes.bodyCell)}
+                        style={{ ...classes.cell, ...classes.bodyCell }}
                     >
-                        {(pagination.page - 1) * pagination.pageSize + index + 1}
+                        {(pagination?.page - 1) * pagination?.pageSize + index + 1}
                     </RowCell>
                 }
             </>
@@ -176,7 +183,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 inactive={checkCanceled(row.status)}
                                 title={inactiveRowMessage}
                                 isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
-                                className={classNames(classes.row, classes.dataRow, (searchActions && showEnrollments) ? classes.dataRowCollapsed : null)}
+                                style={{ ...classes.row, ...classes.dataRow, ...((searchActions && showEnrollments) ? classes.dataRowCollapsed : {}) }}
                             >
                                 {renderRowCheckBox({ row })}
                                 {renderRowIndex({ index })}
@@ -184,7 +191,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                     headerData?.filter((x: any) => x.visible)?.map((column: any) => (
                                         <RowCell
                                             key={column.id}
-                                            className={classNames(classes.cell, classes.bodyCell)}
+                                            style={{ ...classes.cell, ...classes.bodyCell }}
                                             onClick={() => onRowClick ? onRowClick(row) : {}}
                                         >
                                             {
@@ -221,9 +228,9 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                         }
 
                         {searchActions && showEnrollments === row.trackedEntity ?
-                            <RowTable className={classNames(classes.row, classes.historyRow)}>
+                            <RowTable style={{ ...classes.row, ...classes.historyRow }}>
                                 <RowCell
-                                    className={classNames(classes.cell, classes.bodyCell)}
+                                    style={{ ...classes.cell, ...classes.bodyCell }}
                                     colspan={headerData?.filter(x => x.visible)?.length as unknown as number + 1}
                                 >
                                     <EnrollmentDetailsComponent programConfig={programConfig} existingAcademicYear={checkEnrolledAcademicYear

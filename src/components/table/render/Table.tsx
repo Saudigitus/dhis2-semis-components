@@ -15,43 +15,47 @@ import "react-select/dist/react-select.css";
 import { deepEqual } from '../../../utils/table/objectComparison';
 import { useUrlParams } from 'dhis2-semis-functions';
 import { checkCanceled } from '../../../utils/table/checkCanceled';
-import { makeStyles } from '@mui/styles';
 import { Paper } from '@mui/material';
+import { breakpoints } from '../../../constants/breakpoints';
 
-const useStyles = makeStyles((theme: any) => ({
-    tableContainer: {
-        overflowX: 'auto'
-    },
-    workingListsContainer: {
-        display: 'flex',
-        padding: '0.6rem 0.5rem',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        [theme.breakpoints.down('md')]: {
-            alignItems: 'start',
-            flexDirection: 'column'
+export const useStyles = () => {
+
+    return {
+        tableContainer: {
+            overflowX: 'auto' as const,
         },
-    },
-    tablebuttons: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        columnGap: '5px',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    h4: {
-        margin: '10px 0px 10px 0px',
-        fontSize: 'larger',
-        fontWeight: '500',
-        [theme.breakpoints.down('md')]: {
-            margin: '10px 8px',
+        workingListsContainer: {
+            display: 'flex',
+            padding: '0.6rem 0.5rem',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            [breakpoints.down('md')]: {
+                alignItems: 'start',
+                flexDirection: 'column',
+            },
         },
-    },
-    rowCounter: {
-        fontSize: '0.75em',
-        color: "gray"
-    }
-}));
+        tablebuttons: {
+            display: 'flex',
+            flexWrap: 'wrap' as 'wrap',
+            columnGap: '5px',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+        },
+        h4: {
+            margin: '10px 0px 10px 0px',
+            fontSize: 'larger',
+            fontWeight: '500',
+            [breakpoints.down('md')]: {
+                margin: '10px 8px',
+            },
+        },
+        rowCounter: {
+            fontSize: '0.75em',
+            color: 'gray',
+        },
+    };
+};
+
 
 function Table(props: TableRenderProps): React.ReactElement {
     const {
@@ -126,12 +130,12 @@ function Table(props: TableRenderProps): React.ReactElement {
 
     return (
         <Paper>
-            {showWorkingListsContainer && <div className={classes.workingListsContainer}>
+            {showWorkingListsContainer && <div style={classes.workingListsContainer}>
                 {
-                    enableRowCounter ? <h4 className={classes.h4}>{title}  {!loading ? <span className={classes.rowCounter}>{` (${tableData.length} ${capitalSectionType()}/${pagination?.totalElements})`}</span> : <></>}</h4> :
-                        <h4 className={classes.h4}>{title}</h4>
+                    enableRowCounter ? <h4 style={classes.h4}>{title}  {!loading ? <span style={classes.rowCounter}>{` (${tableData.length} ${capitalSectionType()}/${pagination?.totalElements})`}</span> : <></>}</h4> :
+                        <h4 style={classes.h4}>{title}</h4>
                 }
-                <div className={classes.tablebuttons}>
+                <div style={classes.tablebuttons}>
                     {rightElements}
                 </div>
             </div>}
@@ -150,7 +154,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                         beforeSettings={beforeSettings}
                     />}
                     <div
-                        className={classes.tableContainer}
+                        style={classes.tableContainer}
                     >
                         <TableComponent>
                             <>
