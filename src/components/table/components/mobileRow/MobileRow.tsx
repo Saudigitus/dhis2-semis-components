@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "@dhis2/ui";
+import { Box } from "@mui/material";
 import classNames from "classnames";
 import RowCell from "../row/RowCell";
 import RowTable from "../row/RowTable";
@@ -14,12 +14,13 @@ import { IconButton, Tooltip } from "@mui/material";
 
 export default function MobileRow(props: MobileRowsProps): React.ReactElement {
   const { imageUrl } = GetImageUrl()
-  const { helperText, rowData, headerData, programConfig, rowActions, rowIndex, checkBox, showAction, checkable, } = props;
+  const { helperText, rowData, headerData, programConfig, rowActions, } = props;
+  const { rowIndex, checkBox, showAction, checkable, inactive } = props;
 
 
   return (
-    <Card
-      className={classNames(style.cardContainer)}
+    <Box
+      className={classNames(style.cardContainer, inactive && style.disabledRow)}
     >
       <div>
         <div className={style.cardActions}>
@@ -29,7 +30,7 @@ export default function MobileRow(props: MobileRowsProps): React.ReactElement {
           {rowActions}
           {checkBox}
         </div>
-        <div className={style.cardBody}>
+        <div className={classNames(style.cardBody)}>
           <RowTable className={classNames(style.row)}>
             <RowCell className={classNames(style.cell, style.headerCell)}>#</RowCell>
             <RowCell className={classNames(style.cell, style.bodyCell)}>{rowIndex}</RowCell>
@@ -63,6 +64,6 @@ export default function MobileRow(props: MobileRowsProps): React.ReactElement {
           }
         </div>
       </div>
-    </Card>
+    </Box>
   );
 }

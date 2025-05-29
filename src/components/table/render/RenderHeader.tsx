@@ -16,9 +16,10 @@ export const useStyles = () => {
             width: '100%',
         },
         cell: {
-            borderBottomColor: 'rgba(224, 224, 224, 1)',
-            [breakpoints.down('md')]: {
-                padding: theme.spacing(1),
+            whiteSpace: "nowrap",
+            borderBottomColor: "rgba(224, 224, 224, 1)",
+            [theme.breakpoints.down('md')]: {
+                padding: `${theme.spacing(1)}`,
                 '&:last-child': {
                     paddingRight: theme.spacing(1),
                 },

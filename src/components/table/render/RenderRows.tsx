@@ -221,6 +221,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 showAction={showRowActions}
                                 programConfig={programConfig}
                                 helperText={inactiveRowMessage}
+                                inactive={checkCanceled(row.status)}
                                 rowIndex={renderRowIndex({ index })}
                                 rowActions={renderRowAction({ row })}
                                 checkBox={renderRowCheckBox({ row })}
