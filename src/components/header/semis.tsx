@@ -2,53 +2,51 @@
 import { SelectorBar, SelectorBarItem } from '@dhis2/ui'
 import { useEffect, useState } from 'react'
 import { DataProvider } from "@dhis2/app-runtime"
-import { OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
+import {ExtendedDynamicHeaderProps, OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
 import { MenuSelect } from './common/common'
 import { RecoilRoot, useRecoilState } from 'recoil'
 import { HeaderValuesState } from '../../schemas/headerDataSchema'
 import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
+import { getOptionsByDataElement } from './utils/getOptions'
 
-type CombinedTypes = SemisHeaderProps & { baseUrl: string };
-
-const SemisHeaderRaw = (props: CombinedTypes) => {
-    const { baseUrl, academicYears, classes, employmentType: typeOfEmployee, grades, orgunits, typeOfStaff } = props
-    const { add, remove, urlParameters, useQuery } = useUrlParams()
-    const { grade, class: section, school, academicYear, schoolName, employmentType, position } = urlParameters()
-    const [openGrade, setOpenGrade] = useState<boolean>(false)
-    const [openClass, setOpenClass] = useState<boolean>(false)
-    const [openEmploymentType, setOpenEmploymentType] = useState<boolean>(false)
-    const [opentTypeStaff, setOpentTypeStaff] = useState<boolean>(false)
+const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl }: { headerItems?: SemisHeaderProps, program: any, dataStoreValues?: any, baseUrl?: string }) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const { otherItems = [], hideTree = false, hideAcademicYear = false } = headerItems ?? {}
+    const [dynamicItems = [], setDynamicItems] = useState<ExtendedDynamicHeaderProps[]>([...otherItems?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item.options ?? [], open: false, id: crypto.randomUUID() })), ...dataStoreValues?.filters?.dataElements?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item?.options ?? [], open: false, id: crypto.randomUUID() }))])
+    const { add, remove, urlParameters } = useUrlParams()
+    const { school, academicYear, schoolName } = urlParameters()
     const [openAcademicYear, setOpenAcademicYear] = useState<boolean>(false)
     const [openOu, setOpenOu] = useState<boolean>(false)
     const [headerValues, setHeaderValues] = useRecoilState(HeaderValuesState)
 
+    const onOpenDynamicItems = (item: ExtendedDynamicHeaderProps) => {
+        const updatedItems = dynamicItems.map((dynamicItem: ExtendedDynamicHeaderProps) => {
+            if (dynamicItem.id === item.id) {
+                return { ...dynamicItem, open: !dynamicItem.open }
+            }
+            return { ...dynamicItem, open: false }
+        })
+        setDynamicItems(updatedItems)
+    }
+
     //RETRIEVE VALUES FROM ULR AND SET TO STATE
     useEffect(() => {
-        setHeaderValues({
-            selectedAcademicYear: academicYears?.options?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
-            selectedClass: classes?.options?.filter((option: OptionProps) => option.value === section)?.[0] as OptionProps,
-            selectedGrade: grades?.options?.filter((option: OptionProps) => option.value === grade)?.[0] as OptionProps,
-            selectedOu: { displayName: schoolName, id: school, selected: [] },
-            selectedEmploymentType: typeOfEmployee?.options?.filter((option: OptionProps) => option.value === employmentType)?.[0] as OptionProps,
-            selectedTypeStaff: typeOfStaff?.options?.filter((option: OptionProps) => option.value === position)?.[0] as OptionProps,
+        const otherItemsValues = {}
+
+        dynamicItems.forEach((item: ExtendedDynamicHeaderProps) => {
+            const getSelectedValue = [...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]
+                .filter((option: OptionProps) => option.value === searchParams.get(item?.ulrParam))?.[0] as OptionProps
+            otherItemsValues[item?.ulrParam] = getSelectedValue
         })
-    }, [useQuery()])
 
-    const onChangeGrade = (event) => {
-        const getSelectOption = grades?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
-        setHeaderValues(prevState => ({ ...prevState, selectedGrade: getSelectOption }))
-        add("grade", getSelectOption.value)
-        setOpenGrade(!openGrade)
-    }
-
-    const onChangeClass = (event) => {
-        const getSelectOption = classes?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
-        setHeaderValues(prevState => ({ ...prevState, selectedClass: getSelectOption }))
-        add("class", getSelectOption.value)
-        setOpenClass(!openClass)
-    }
+        setHeaderValues({
+            selectedAcademicYear: getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
+            selectedOu: { displayName: schoolName, id: school, selected: [] },
+            ...otherItemsValues
+        })
+    }, [])
 
     const onChangeOu = (event: { id: string, displayName: string, selected: any }) => {
         setHeaderValues(prevState => ({ ...prevState, selectedOu: event }))
@@ -57,55 +55,80 @@ const SemisHeaderRaw = (props: CombinedTypes) => {
         setOpenOu(!openOu)
     }
 
-    const onChangeEmploymentType = (event) => {
-        const getSelectOption = typeOfEmployee?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
-        setHeaderValues(prevState => ({ ...prevState, selectedEmploymentType: getSelectOption }))
-        add("employmentType", getSelectOption.value)
-        setOpenEmploymentType(!openEmploymentType)
-    }
-
-    const onChangeTypeStaff = (event) => {
-        const getSelectOption = typeOfStaff?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
-        setHeaderValues(prevState => ({ ...prevState, selectedTypeStaff: getSelectOption }))
-        add("position", getSelectOption.value)
-        setOpentTypeStaff(!opentTypeStaff)
-    }
-
-    const onChangeAcademicYear = (event) => {
-        const getSelectOption = academicYears?.options?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
+    const onChangeAcademicYear = (event: any) => {
+        const getSelectOption = getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedAcademicYear: getSelectOption }))
         add("academicYear", getSelectOption.value)
         setOpenAcademicYear(!openAcademicYear)
     }
 
+    const onChangeDynamicItems = (event: any, options: any[], item: ExtendedDynamicHeaderProps) => {
+        const getSelectOption = options?.filter((option: OptionProps) => option.value === event.selected)?.[0] as OptionProps
+        setHeaderValues(prevState => ({ ...prevState, [item?.ulrParam]: getSelectOption }))
+
+        if (item?.ulrParam) {
+            add(item?.ulrParam, getSelectOption.value)
+        }
+        onOpenDynamicItems(item)
+    }
+
     return (
         <SelectorBar className={style.HeaderContainer}
-            additionalContent={academicYears &&
-                <SelectorBarItem
-                    label="Academic year"
-                    value={academicYear ?? headerValues?.selectedAcademicYear?.value}
-                    noValueMessage="Select a academic year"
-                    open={openAcademicYear}
-                    setOpen={() => setOpenAcademicYear(!openAcademicYear)}
-                >
-                    <MenuSelect placeholder="" isSeachable={false} values={academicYears.options} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
-                </SelectorBarItem>
+            additionalContent={
+                <div style={{ display: "flex" }}>
+                    {
+                        dynamicItems.map((item: ExtendedDynamicHeaderProps, index) => {
+                            return item?.position === "RIGHT" ? (
+                                <SelectorBarItem
+                                    key={index}
+                                    onClearSelectionClick={() => {
+                                        setHeaderValues(prevState => ({ ...prevState, [item?.ulrParam]: { label: "", value: "" } }))
+                                        remove(item?.ulrParam)
+                                    }}
+                                    label={item.label ?? "No Label"}
+                                    value={searchParams.get(item?.ulrParam) ?? headerValues[item?.ulrParam]?.value}
+                                    noValueMessage={item.placehoder ?? `Select a ${item.label ?? "item"}`}
+                                    open={item.open}
+                                    setOpen={() => onOpenDynamicItems(item)}
+                                >
+                                    <MenuSelect
+                                        placeholder={item.placehoder ?? `Search for a ${item.label ?? "item"}`}
+                                        isSeachable={item?.isSeachable ?? true}
+                                        values={[...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]}
+                                        selected={headerValues?.[item?.ulrParam]?.value}
+                                        onChange={(event: any) => onChangeDynamicItems(event, [...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options], item)} />
+                                </SelectorBarItem>
+                            ) : null
+                        })
+                    }
+                    {
+                        !hideAcademicYear &&
+                        <SelectorBarItem
+                            label="Academic year"
+                            value={academicYear ?? headerValues?.selectedAcademicYear?.value}
+                            noValueMessage="Select a academic year"
+                            open={openAcademicYear}
+                            setOpen={() => setOpenAcademicYear(!openAcademicYear)}
+                        >
+                            <MenuSelect placeholder="Select a academic year" isSeachable={false} values={getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
+                        </SelectorBarItem>
+                    }
+                </div>
             }
         >
 
-            {orgunits && <SelectorBarItem
+            {!hideTree && <SelectorBarItem
                 value={schoolName ?? headerValues?.selectedOu?.displayName}
                 onClearSelectionClick={() => {
                     setHeaderValues({
-                        selectedAcademicYear: { label: "", value: "" },
-                        selectedClass: { label: "", value: "" },
-                        selectedGrade: { label: "", value: "" },
                         selectedOu: { displayName: "", id: "", selected: [] },
                     })
-                    remove("class")
-                    remove("grade")
                     remove("school")
                     remove("schoolName")
+
+                    dynamicItems.forEach((item: ExtendedDynamicHeaderProps) => {
+                        remove(item?.ulrParam)
+                    })
 
                 }}
                 label="School"
@@ -113,78 +136,43 @@ const SemisHeaderRaw = (props: CombinedTypes) => {
                 open={openOu}
                 setOpen={() => setOpenOu(!openOu)}
             >
-                <DataProvider baseUrl={baseUrl}>
+                <DataProvider baseUrl={baseUrl ?? 'http://localhost:8080'}>
                     <OrgUnitTreeSearch onChange={onChangeOu} />
                 </DataProvider>
             </SelectorBarItem>}
-
-            {grades && <SelectorBarItem
-                onClearSelectionClick={() => {
-                    setHeaderValues(prevState => ({ ...prevState, selectedGrade: { label: "", value: "" } }))
-                    remove("grade")
-                }}
-                label="Grade"
-                value={grade ?? headerValues?.selectedGrade?.value}
-                noValueMessage="Select a grade"
-                open={openGrade}
-                setOpen={() => setOpenGrade(!openGrade)}
-            >
-                <MenuSelect placeholder="Search for a grade" isSeachable values={grades.options} selected={headerValues?.selectedGrade?.value} onChange={onChangeGrade} />
-            </SelectorBarItem>}
-
-
-            {classes && <SelectorBarItem
-                onClearSelectionClick={() => {
-                    setHeaderValues(prevState => ({ ...prevState, selectedClass: { label: "", value: "" } }))
-                    remove("class")
-
-                }}
-                label="Class/Section"
-                value={section ?? headerValues?.selectedClass?.value}
-                noValueMessage="Select a class"
-                open={openClass}
-                setOpen={() => setOpenClass(!openClass)}
-            >
-                <MenuSelect placeholder="Search for a class" isSeachable values={classes.options} selected={headerValues?.selectedClass?.value} onChange={onChangeClass} />
-            </SelectorBarItem>}
-
-            {employmentType && <SelectorBarItem
-                onClearSelectionClick={() => {
-                    setHeaderValues(prevState => ({ ...prevState, selectedEmploymentType: { label: "", value: "" } }))
-                    remove("employmentType")
-                }}
-                label="Employment Type"
-                value={employmentType ?? headerValues?.selectedEmploymentType?.value}
-                noValueMessage="Select a employment type"
-                open={openEmploymentType}
-                setOpen={() => setOpenEmploymentType(!openEmploymentType)}
-            >
-                <MenuSelect placeholder="Search for a employment type" isSeachable values={typeOfEmployee.options} selected={headerValues?.selectedEmploymentType?.value} onChange={onChangeEmploymentType} />
-            </SelectorBarItem>}
-            {typeOfStaff && <SelectorBarItem
-                onClearSelectionClick={() => {
-                    setHeaderValues(prevState => ({ ...prevState, selectedTypeStaff: { label: "", value: "" } }))
-                    remove("position")
-                }}
-                label="Type of Staff"
-                value={position ?? headerValues?.selectedTypeStaff?.value}
-                noValueMessage="Select a type of staff"
-                open={opentTypeStaff}
-                setOpen={() => setOpentTypeStaff(!opentTypeStaff)}
-            >
-                <MenuSelect placeholder="Search for a type of staff" isSeachable values={typeOfStaff.options} selected={headerValues?.selectedTypeStaff?.value} onChange={onChangeTypeStaff} />
-            </SelectorBarItem>}
-
+            {
+                dynamicItems.map((item: ExtendedDynamicHeaderProps, index) => {
+                    return item?.position === "LEFT" ? (
+                        <SelectorBarItem
+                            key={index}
+                            onClearSelectionClick={() => {
+                                setHeaderValues(prevState => ({ ...prevState, [item?.ulrParam]: { label: "", value: "" } }))
+                                remove(item?.ulrParam)
+                            }}
+                            label={item.label ?? "No Label"}
+                            value={searchParams.get(item?.ulrParam) ?? headerValues[item?.ulrParam]?.value}
+                            noValueMessage={item.placehoder ?? `Select a ${item.label ?? "item"}`}
+                            open={item.open}
+                            setOpen={() => onOpenDynamicItems(item)}
+                        >
+                            <MenuSelect
+                                placeholder={item.placehoder ?? `Search for a ${item.label ?? "item"}`}
+                                isSeachable={item?.isSeachable ?? true}
+                                values={[...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]}
+                                selected={headerValues?.[item?.ulrParam]?.value}
+                                onChange={(event: any) => onChangeDynamicItems(event, [...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options], item)} />
+                        </SelectorBarItem>) : null
+                })
+            }
         </SelectorBar>
     )
 }
 
-
-const SemisHeader = (props: CombinedTypes) => {
+const SemisHeader = ({ headerItems, program, dataStoreValues, baseUrl }: { headerItems?: SemisHeaderProps, program?: any, dataStoreValues?: any, baseUrl?: string }) => {
 
     return (
         <RecoilRoot>
-            <SemisHeaderRaw {...props} />
+            <SemisHeaderRaw baseUrl={baseUrl} program={program} dataStoreValues={dataStoreValues} headerItems={headerItems} />
         </RecoilRoot>)
 }
 

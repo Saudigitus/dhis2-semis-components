@@ -9,13 +9,27 @@ export interface OptionProps {
     icon?: ReactNode
 }
 
+export interface DynamicHeaderProps {
+    label: string,
+    ulrParam: string,
+    placehoder?: string,
+    isSeachable?: boolean,
+    program?: string,
+    options?: OptionProps[],
+    dataElement?: string,
+    loader?: boolean,
+    position?: "LEFT" | "RIGHT"
+}
+
+export interface ExtendedDynamicHeaderProps extends DynamicHeaderProps {
+    open: boolean,
+    id: string,
+}
+
 export interface SemisHeaderProps {
-    grades?: { options?: OptionProps[], loader?: boolean }
-    classes?: { options?: OptionProps[], loader?: boolean }
-    academicYears?: { options?: OptionProps[], loader?: boolean }
-    orgunits?: { options?: OptionProps[], loader?: boolean }
-    typeOfStaff?: { options?: OptionProps[], loader?: boolean }
-    employmentType?: { options?: OptionProps[], loader?: boolean }
+    otherItems?: DynamicHeaderProps[]
+    hideTree?: boolean,
+    hideAcademicYear?: boolean
 }
 
 export interface HeaderItemProps {
