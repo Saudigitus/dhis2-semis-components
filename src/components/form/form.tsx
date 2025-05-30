@@ -15,13 +15,13 @@ interface imageFieldSpecificProps {
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 
-export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive }: CombinedProps) {
+export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues }: CombinedProps) {
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
     const [formSubmitted, setFormSubmitted] = useState(false)
 
-    const handleInputChange = (values: Record<string, any>, event: any) => {
-        if (onInputChange) onInputChange({ form: values, changed: { value: event.target.value, field: event, name: event.target.name } })
+    const handleInputChange = (event: any) => {
+        if (onInputChange) onInputChange({ value: event.target.value, field: event, name: event.target.name })
         setFormSubmitted(false)
     }
 
@@ -71,7 +71,10 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
 
                     return (
                         <form
-                            onChange={(onchangeValue: any) => { handleInputChange(values, onchangeValue) }}
+                            onChange={(onchangeValue: any) => {
+                                setFormValues && setFormValues(values);
+                                handleInputChange(onchangeValue)
+                            }}
                             onSubmit={(e) => {
                                 e.preventDefault();
                                 handleSubmit(values);

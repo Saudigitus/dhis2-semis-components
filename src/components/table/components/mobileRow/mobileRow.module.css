@@ -34,7 +34,7 @@
 
 .cardActions {
     display: grid;
-    padding: 2px 0px 0 18px;
+    padding: 2px 8px 0 18px;
     align-items: center;
     height: fit-content !important;
     grid-template-columns: auto auto;
