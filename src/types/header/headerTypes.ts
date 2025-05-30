@@ -29,6 +29,7 @@ export interface ExtendedDynamicHeaderProps extends DynamicHeaderProps {
 export interface SemisHeaderProps {
     otherItems?: DynamicHeaderProps[]
     hideTree?: boolean,
+    hideDataStoreFilters?: boolean,
     hideAcademicYear?: boolean
 }
 
