@@ -111,7 +111,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
         );
     }
 
-    const renderRowCheckBox = ({ row }: { row: Record<string, any> }) => {
+    const renderRowCheckBox = ({ row, disabled }: { row: Record<string, any>, disabled: boolean }) => {
         return (
             <>
                 {isCheckbox &&
@@ -119,6 +119,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                         style={{ ...classes.cell, ...classes.bodyCell }}
                     >
                         <Checkbox
+                            disabled={disabled}
                             indeterminate={indeterminate}
                             checked={isSelected(row)}
                             onChange={() => onChange && onChange(row)}
@@ -180,12 +181,12 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                         {viewPortWidth > 520 ?
                             <RowTable
                                 key={index}
-                                inactive={checkCanceled(row.status)}
                                 title={inactiveRowMessage}
+                                inactive={checkCanceled(row.status)}
                                 isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
                                 style={{ ...classes.row, ...classes.dataRow, ...((searchActions && showEnrollments) ? classes.dataRowCollapsed : {}) }}
                             >
-                                {renderRowCheckBox({ row })}
+                                {renderRowCheckBox({ row, disabled: checkCanceled(row.status) })}
                                 {renderRowIndex({ index })}
                                 {
                                     headerData?.filter((x: any) => x.visible)?.map((column: any) => (
@@ -224,7 +225,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 inactive={checkCanceled(row.status)}
                                 rowIndex={renderRowIndex({ index })}
                                 rowActions={renderRowAction({ row })}
-                                checkBox={renderRowCheckBox({ row })}
+                                checkBox={renderRowCheckBox({ row, disabled: checkCanceled(row.status) })}
                             />
                         }
 
