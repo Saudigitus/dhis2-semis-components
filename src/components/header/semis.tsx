@@ -2,7 +2,7 @@
 import { SelectorBar, SelectorBarItem } from '@dhis2/ui'
 import { useEffect, useState } from 'react'
 import { DataProvider } from "@dhis2/app-runtime"
-import {ExtendedDynamicHeaderProps, OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
+import { ExtendedDynamicHeaderProps, OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
 import { MenuSelect } from './common/common'
 import { RecoilRoot, useRecoilState } from 'recoil'
 import { HeaderValuesState } from '../../schemas/headerDataSchema'
@@ -36,13 +36,13 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl }: { he
         const otherItemsValues = {}
 
         dynamicItems.forEach((item: ExtendedDynamicHeaderProps) => {
-            const getSelectedValue = [...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]
-                .filter((option: OptionProps) => option.value === searchParams.get(item?.ulrParam))?.[0] as OptionProps
-                console.log(getSelectedValue,"getSelectedValue")
+            const options = [...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]
+            const getSelectedValue = options.filter((option: OptionProps) => option.value === searchParams.get(item?.ulrParam))?.[0] as OptionProps
+            console.log(getSelectedValue, "getSelectedValue", options)
             otherItemsValues[item?.ulrParam] = getSelectedValue
         })
 
-        console.log(otherItemsValues,"otherItemsValues")
+        console.log(otherItemsValues, "otherItemsValues")
 
         setHeaderValues({
             selectedAcademicYear: getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
