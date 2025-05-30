@@ -22,7 +22,7 @@ export default function MobileRow(props: MobileRowsProps): React.ReactElement {
     <Box
       className={classNames(style.cardContainer, inactive && style.disabledRow)}
     >
-      <div>
+      <div style={{width: "100%"}}>
         <div className={style.cardActions}>
           <span className={style.cardMessage}>
             {helperText ?? (showAction || checkable) ? "Actions" : ""}

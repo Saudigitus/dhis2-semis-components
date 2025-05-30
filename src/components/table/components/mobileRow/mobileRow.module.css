@@ -1,5 +1,6 @@
 .cardContainer {
     margin: 10px 1.5%;
+    padding: 10px 0 0;
     display: flex;
     justify-content: center;
     background: #FFFFFF;
