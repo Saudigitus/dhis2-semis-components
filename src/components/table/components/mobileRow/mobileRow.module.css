@@ -33,11 +33,11 @@
 }
 
 .cardActions {
-    display: flex;
-    padding: 2px 18px 0 18px;
+    display: grid;
+    padding: 2px 0px 0 18px;
     align-items: center;
     height: fit-content !important;
-    justify-content: space-between;
+    grid-template-columns: auto auto;
 }
 
 .cardActions td {
