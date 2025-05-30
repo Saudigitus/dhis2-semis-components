@@ -11,12 +11,12 @@ import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
 import { getOptionsByDataElement } from './utils/getOptions'
 
-const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl }: { headerItems?: SemisHeaderProps, program: any, dataStoreValues?: any, baseUrl?: string }) => {
+const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http://localhost:8080" }: { headerItems?: SemisHeaderProps, program: any, dataStoreValues?: any, baseUrl?: string }) => {
     const hash = window.location.hash;
     const queryString = hash.split('?')[1];
     const searchParams = new URLSearchParams(queryString);
-    const { otherItems = [], hideTree = false, hideAcademicYear = false } = headerItems ?? {}
-    const [dynamicItems = [], setDynamicItems] = useState<ExtendedDynamicHeaderProps[]>([...otherItems?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item.options ?? [], open: false, id: crypto.randomUUID() })), ...dataStoreValues?.filters?.dataElements?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item?.options ?? [], open: false, id: crypto.randomUUID() }))])
+    const { otherItems = [], hideTree = false, hideDataStoreFilters = false, hideAcademicYear = false } = headerItems ?? {}
+    const [dynamicItems = [], setDynamicItems] = useState<ExtendedDynamicHeaderProps[]>([...otherItems?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item.options ?? [], open: false, id: crypto.randomUUID() })), (hideDataStoreFilters ? [] : dataStoreValues?.filters?.dataElements?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item?.options ?? [], open: false, id: crypto.randomUUID() })))])
     const { add, remove, urlParameters } = useUrlParams()
     const { school, academicYear, schoolName } = urlParameters()
     const [openAcademicYear, setOpenAcademicYear] = useState<boolean>(false)
@@ -138,7 +138,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl }: { he
                 open={openOu}
                 setOpen={() => setOpenOu(!openOu)}
             >
-                <DataProvider baseUrl={baseUrl ?? 'http://localhost:8080'}>
+                <DataProvider baseUrl={baseUrl}>
                     <OrgUnitTreeSearch onChange={onChangeOu} />
                 </DataProvider>
             </SelectorBarItem>}
