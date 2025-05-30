@@ -12,7 +12,9 @@ import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
 import { getOptionsByDataElement } from './utils/getOptions'
 
 const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl }: { headerItems?: SemisHeaderProps, program: any, dataStoreValues?: any, baseUrl?: string }) => {
-    const searchParams = new URLSearchParams(window.location.search);
+    const hash = window.location.hash;
+    const queryString = hash.split('?')[1];
+    const searchParams = new URLSearchParams(queryString);
     const { otherItems = [], hideTree = false, hideAcademicYear = false } = headerItems ?? {}
     const [dynamicItems = [], setDynamicItems] = useState<ExtendedDynamicHeaderProps[]>([...otherItems?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item.options ?? [], open: false, id: crypto.randomUUID() })), ...dataStoreValues?.filters?.dataElements?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item?.options ?? [], open: false, id: crypto.randomUUID() }))])
     const { add, remove, urlParameters } = useUrlParams()
@@ -38,11 +40,8 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl }: { he
         dynamicItems.forEach((item: ExtendedDynamicHeaderProps) => {
             const options = [...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]
             const getSelectedValue = options.filter((option: OptionProps) => option.value === searchParams.get(item?.ulrParam))?.[0] as OptionProps
-            console.log(getSelectedValue, "getSelectedValue", options)
             otherItemsValues[item?.ulrParam] = getSelectedValue
         })
-
-        console.log(otherItemsValues, "otherItemsValues")
 
         setHeaderValues({
             selectedAcademicYear: getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
