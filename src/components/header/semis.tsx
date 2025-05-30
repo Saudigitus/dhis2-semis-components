@@ -38,8 +38,11 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl }: { he
         dynamicItems.forEach((item: ExtendedDynamicHeaderProps) => {
             const getSelectedValue = [...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]
                 .filter((option: OptionProps) => option.value === searchParams.get(item?.ulrParam))?.[0] as OptionProps
+                console.log(getSelectedValue,"getSelectedValue")
             otherItemsValues[item?.ulrParam] = getSelectedValue
         })
+
+        console.log(otherItemsValues,"otherItemsValues")
 
         setHeaderValues({
             selectedAcademicYear: getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
