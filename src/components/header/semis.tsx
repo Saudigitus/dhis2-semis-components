@@ -2,7 +2,7 @@
 import { SelectorBar, SelectorBarItem } from '@dhis2/ui'
 import { useEffect, useState } from 'react'
 import { DataProvider } from "@dhis2/app-runtime"
-import {ExtendedDynamicHeaderProps, OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
+import { ExtendedDynamicHeaderProps, OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
 import { MenuSelect } from './common/common'
 import { RecoilRoot, useRecoilState } from 'recoil'
 import { HeaderValuesState } from '../../schemas/headerDataSchema'
@@ -12,7 +12,9 @@ import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
 import { getOptionsByDataElement } from './utils/getOptions'
 
 const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl }: { headerItems?: SemisHeaderProps, program: any, dataStoreValues?: any, baseUrl?: string }) => {
-    const searchParams = new URLSearchParams(window.location.search);
+    const hash = window.location.hash;
+    const queryString = hash.split('?')[1];
+    const searchParams = new URLSearchParams(queryString);
     const { otherItems = [], hideTree = false, hideAcademicYear = false } = headerItems ?? {}
     const [dynamicItems = [], setDynamicItems] = useState<ExtendedDynamicHeaderProps[]>([...otherItems?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item.options ?? [], open: false, id: crypto.randomUUID() })), ...dataStoreValues?.filters?.dataElements?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item?.options ?? [], open: false, id: crypto.randomUUID() }))])
     const { add, remove, urlParameters } = useUrlParams()
@@ -36,8 +38,8 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl }: { he
         const otherItemsValues = {}
 
         dynamicItems.forEach((item: ExtendedDynamicHeaderProps) => {
-            const getSelectedValue = [...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]
-                .filter((option: OptionProps) => option.value === searchParams.get(item?.ulrParam))?.[0] as OptionProps
+            const options = [...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]
+            const getSelectedValue = options.filter((option: OptionProps) => option.value === searchParams.get(item?.ulrParam))?.[0] as OptionProps
             otherItemsValues[item?.ulrParam] = getSelectedValue
         })
 
