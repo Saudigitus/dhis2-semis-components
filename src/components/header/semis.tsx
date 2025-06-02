@@ -10,6 +10,7 @@ import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
 import { getOptionsByDataElement } from './utils/getOptions'
+import { it } from 'date-fns/locale'
 
 const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http://localhost:8080" }: { headerItems?: SemisHeaderProps, program: any, dataStoreValues?: any, baseUrl?: string }) => {
     const hash = window.location.hash;
@@ -94,6 +95,8 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                                     setOpen={() => onOpenDynamicItems(item)}
                                 >
                                     <MenuSelect
+                                        dataElelementId={item?.dataElement}
+                                        program={item?.program ?? program}
                                         placeholder={item.placehoder ?? `Search for a ${item.label ?? "item"}`}
                                         isSeachable={item?.isSeachable ?? true}
                                         values={[...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]}
@@ -112,7 +115,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                             open={openAcademicYear}
                             setOpen={() => setOpenAcademicYear(!openAcademicYear)}
                         >
-                            <MenuSelect placeholder="Select a academic year" isSeachable={false} values={getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
+                            <MenuSelect dataElelementId={dataStoreValues?.registration?.academicYear} program={program} placeholder="Select a academic year" isSeachable={false} values={getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
                         </SelectorBarItem>
                     }
                 </div>
@@ -158,6 +161,8 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                             setOpen={() => onOpenDynamicItems(item)}
                         >
                             <MenuSelect
+                                dataElelementId={item?.dataElement}
+                                program={item?.program ?? program}
                                 placeholder={item.placehoder ?? `Search for a ${item.label ?? "item"}`}
                                 isSeachable={item?.isSeachable ?? true}
                                 values={[...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]}

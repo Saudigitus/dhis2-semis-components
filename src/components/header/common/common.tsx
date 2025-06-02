@@ -1,10 +1,36 @@
 import { Menu, MenuItem } from '@dhis2-ui/menu'
 import { Help, Input, OrganisationUnitTree } from '@dhis2/ui'
 import style from "../mainHeader.module.css"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { RulesEngine, useUrlParams } from 'dhis2-semis-functions'
 
-export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholder }) => {
+export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholder, program, dataElelementId }) => {
     const [query, setQuery] = useState<string>("")
+    const { urlParameters } = useUrlParams()
+    const { school } = urlParameters()
+
+    const formattedOptions = values.map(({ label, value }) => ({
+        displayName: label,
+        id: value,
+    }));
+
+
+    const { runRulesEngine, updatedVariables } = RulesEngine({
+        program: program?.id,
+        type: "programStage",
+        values: { ...{}, orgUnit: school },
+        variables: [{
+            "id": dataElelementId,
+            "options": formattedOptions,
+        }]
+    })
+
+    useEffect(() => {
+        runRulesEngine()
+    }, [school])
+
+    console.log(updatedVariables, "updatedVariables")
+
 
     const filteredMenuItems: [] = query.length > 0
         ? values.filter(item => item.label.includes(query)) || []
