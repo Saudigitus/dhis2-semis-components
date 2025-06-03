@@ -7,29 +7,33 @@ import { RulesEngine, useUrlParams } from 'dhis2-semis-functions'
 export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholder, program, dataElelementId }) => {
     const [query, setQuery] = useState<string>("")
     const { urlParameters } = useUrlParams()
-    const { school } = urlParameters()
+    // const { school } = urlParameters()
 
-    const formattedOptions = values.map(({ label, value }) => ({
-        displayName: label,
-        id: value,
-    }));
+    // console.log(values,"values")
+
+    // const formattedOptions: [] = values?.map(({ label, value }) => ({
+    //     displayName: label,
+    //     id: value,
+    // }));
+
+    // console.log(formattedOptions,"formattedOptions")
 
 
-    const { runRulesEngine, updatedVariables } = RulesEngine({
-        program: program?.id,
-        type: "programStage",
-        values: { ...{}, orgUnit: school },
-        variables: [{
-            "id": dataElelementId,
-            "options": formattedOptions,
-        }]
-    })
+    // const { runRulesEngine, updatedVariables } = RulesEngine({
+    //     program: program?.id,
+    //     type: "programStage",
+    //     values: { ...{}, orgUnit: school },
+    //     variables: [{
+    //         "id": dataElelementId,
+    //         "options": formattedOptions,
+    //     }]
+    // })
 
-    useEffect(() => {
-        runRulesEngine()
-    }, [school])
+    // useEffect(() => {
+    //     runRulesEngine()
+    // }, [school])
 
-    console.log(updatedVariables, "updatedVariables")
+    // console.log(updatedVariables, "updatedVariables")
 
 
     const filteredMenuItems: [] = query.length > 0
