@@ -18,7 +18,27 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
     const queryString = hash.split('?')[1];
     const searchParams = new URLSearchParams(queryString);
     const { otherItems = [], hideTree = false, hideDataStoreFilters = false, hideAcademicYear = false } = headerItems ?? {}
-    const [dynamicItems = [], setDynamicItems] = useState<ExtendedDynamicHeaderProps[]>([...otherItems?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item.options ?? [], open: false, id: crypto.randomUUID() })), (hideDataStoreFilters ? [] : dataStoreValues?.filters?.dataElements?.map(item => ({ ...item, position: item?.position ?? "LEFT", options: item?.options ?? [], open: false, id: crypto.randomUUID() })))])
+    const [dynamicItems = [], setDynamicItems] = useState<ExtendedDynamicHeaderProps[]>(
+        [
+            ...(otherItems?.map(item => ({
+                ...item,
+                position: item?.position ?? "LEFT",
+                options: item.options ?? [],
+                open: false,
+                id: crypto.randomUUID(),
+            })) ?? []),
+
+            ...(!hideDataStoreFilters
+                ? dataStoreValues?.filters?.dataElements?.map(item => ({
+                    ...item,
+                    position: item?.position ?? "LEFT",
+                    options: item.options ?? [],
+                    open: false,
+                    id: crypto.randomUUID(),
+                })) ?? []
+                : [])
+        ]
+    )
     const { add, remove, urlParameters } = useUrlParams()
     const { school, academicYear, schoolName } = urlParameters()
     const [openAcademicYear, setOpenAcademicYear] = useState<boolean>(false)
