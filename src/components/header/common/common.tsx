@@ -9,6 +9,8 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
     const { urlParameters } = useUrlParams()
     const { school } = urlParameters()
 
+    const value: any = { ...{ dataElelementId: selected }, orgUnit: school }
+
     const { runRulesEngine, updatedVariables } = RulesEngine({
         program: program?.id,
         type: "programStage",
@@ -30,15 +32,15 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
     })
 
     useEffect(() => {
-        runRulesEngine()
-    }, [school, selected])
+        runRulesEngine(undefined, value)
+    }, [value])
 
     console.log(updatedVariables, "updatedVariables")
 
 
     const filteredMenuItems: [] = query.length > 0
-        ? updatedVariables?.[0]?.optionSet?.options?.filter(item => item.label.includes(query)) || []
-        : updatedVariables?.[0]?.optionSet?.options;
+        ? updatedVariables?.[0]?.options?.optionSet?.options?.filter(item => item.label.includes(query)) || []
+        : updatedVariables?.[0]?.options?.optionSet?.options;
 
     return (
         <div className={style.HeaderMenu}>
