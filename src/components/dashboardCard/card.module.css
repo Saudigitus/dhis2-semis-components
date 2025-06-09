@@ -151,6 +151,11 @@
     /* Largura inicial do card */
 }
 
+.defaultCard {
+    width: 100%;
+    /* Largura inicial do card */
+}
+
 .cardSamll {
     width: 180px;
     /* Largura inicial do card */

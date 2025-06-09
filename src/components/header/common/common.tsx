@@ -16,8 +16,15 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
         variables: [{
             "id": dataElelementId,
             "name": dataElelementId,
-            "optionSet": {
-                "options": values,
+            "options": {
+                "optionSet": {
+                    "options": values,
+                }
+            },
+            "initialOptions": {
+                "optionSet": {
+                    "options": values,
+                }
             }
         }]
     })

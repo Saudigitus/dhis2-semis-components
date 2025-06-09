@@ -14,7 +14,7 @@ const DashboardCard = ({ icon, actions, alignActions, size, contents }: CardDash
       case "small": return "cardSamll";
       case "medium": return "cardMedium";
       case "large": return "cardLarge";
-      default: return "cardSmall";
+      default: return "defaultCard";
     }
   }
 

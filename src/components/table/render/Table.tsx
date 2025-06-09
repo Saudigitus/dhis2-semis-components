@@ -17,6 +17,7 @@ import { useUrlParams } from 'dhis2-semis-functions';
 import { checkCanceled } from '../../../utils/table/checkCanceled';
 import { Paper } from '@mui/material';
 import { breakpoints } from '../../../constants/breakpoints';
+import TopPaginator from '../components/topPaginator/Pagination';
 
 export const useStyles = () => {
 
@@ -132,8 +133,8 @@ function Table(props: TableRenderProps): React.ReactElement {
         <Paper>
             {showWorkingListsContainer && <div style={classes.workingListsContainer}>
                 {
-                    enableRowCounter ? <h4 style={classes.h4}>{title}  {!loading ? <span style={classes.rowCounter}>{` (${tableData.length} ${capitalSectionType()}/${pagination?.totalElements})`}</span> : <></>}</h4> :
-                        <h4 style={classes.h4}>{title}</h4>
+                    // enableRowCounter ? <h4 style={classes.h4}>{title}  {!loading ? <span style={classes.rowCounter}>{` (${tableData.length} ${capitalSectionType()}/${pagination?.totalElements})`}</span> : <></>}</h4> :
+                    <h4 style={classes.h4}>{title}</h4>
                 }
                 <div style={classes.tablebuttons}>
                     {rightElements}
@@ -151,7 +152,23 @@ function Table(props: TableRenderProps): React.ReactElement {
                         defaultFilterNumber={defaultFilterNumber}
                         selectable={selectable}
                         selected={selected?.length ?? 0}
-                        beforeSettings={beforeSettings}
+                        beforeSettings={
+                            <>
+                                {(enableRowCounter && !loading) ? <TopPaginator
+                                    loading={loading}
+                                    onPageChange={onPageChange}
+                                    totalData={tableData.length}
+                                    totalElements={pagination?.totalElements}
+                                    onRowsPerPageChange={onRowsPerPageChange}
+                                    page={pagination.page}
+                                    rowsPerPage={pagination.pageSize}
+                                    disablePreviousPage={pagination.page === 1}
+                                    disableNextPage={pagination.page === pagination.totalPages}
+                                    rowsPerPages={rowsPerPages}
+                                /> : null}
+                                {beforeSettings}
+                            </>
+                        }
                     />}
                     <div
                         style={classes.tableContainer}
