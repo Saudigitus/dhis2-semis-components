@@ -8,12 +8,15 @@ import IconButtonPagination from '../pagination/IconButtonPagination';
 
 
 function TopPaginator({ page, rowsPerPage, onPageChange, totalData, disablePreviousPage, disableNextPage, totalElements }: PaginationProps): React.ReactElement {
+    const start = (page - 1) * rowsPerPage + 1;
+    const end = start + totalData - 1;
+
     return (
         <div className={defaultClasses.pagination}>
             <div />
 
             <div className={defaultClasses.rootPagination}>
-                {TextPagination(`${totalData - (totalData - 1)} - ${totalData} of ${totalElements || 0}`)}
+                {TextPagination(`${start} - ${end} of ${totalElements}`)}
 
                 <div className={defaultClasses.separator} />
 

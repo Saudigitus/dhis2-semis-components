@@ -258,3 +258,8 @@
 .cardMedium .cardActions svg {
     font-size: 1.6rem;
 }
+
+.customDivider{
+    margin: 0 !important;
+    display: flex !important;
+}
