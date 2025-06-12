@@ -42,10 +42,13 @@ function ContentFilter(props: EnrollmentFilterProps) {
     }
 
     const onChangeFilters = (value: any, key: string, type: string, pos: string) => {
+        console.log("onChangeFilters called with value:", value, "key:", key, "type:", type, "pos:", pos);
         let cloneHeader = { ...filtersValues, ...convertArrayToObject(filterState.dataElements) }
+        console.log(type === 'DATE', cloneHeader, key, value, pos)
+        console.log(verifyIsFilled(value), "verifyIsFilled:")
 
         if (type === 'DATE') {
-            let date = cloneHeader[key] ?? {}
+            let date = cloneHeader?.[key] ?? {}
             if (pos === 'start') {
                 verifyIsFilled(value)
                     ? date = { ...date, startDate: format(value, "yyyy-MM-dd") }
@@ -68,7 +71,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
     }
 
     function verifyIsFilled(value: any) {
-        if (value != null && value?.replace(/\s/g, '').length) {
+        if (value != null) {
             return true
         }
         if (value === "") {
@@ -82,6 +85,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
         for (const [key, value] of Object.entries(copyHeader)) {
             const variableType = variables.find((x: any) => x.id === key)?.type
             if (typeof value === 'object') {
+                console.log(value, "value")
                 if (variableType === "dataElement") {
                     dataElementsQuerybuilder.push([`${key}:ge:${value?.startDate}:le:${value?.endDate}`])
                 } else attributesQuerybuilder.push([`${key}:ge:${value?.startDate}:le:${value?.endDate}`])
@@ -103,6 +107,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
                     }
             }
         }
+
         setfieldsFilled(copyHeader)
         setFilterState({
             attributes: attributesQuerybuilder,
@@ -128,30 +133,35 @@ function ContentFilter(props: EnrollmentFilterProps) {
     return (
         <div className={styles.container}>
             {
-                localFilters.filter(x => x.searchable === true).map((colums, index) => (
-                    <SelectButton key={index}
-                        tooltipContent=''
-                        title={colums.displayName}
-                        value={filtersValues[colums.id]}
-                        colum={colums}
-                        onQuerySubmit={onQuerySubmit}
-                        onChange={onChangeFilters}
-                        disabledReset={
-                            typeof filtersValues[colums.id] === "object"
-                                ? filtersValues[colums.id]?.startDate !== undefined && filtersValues[colums.id]?.endDate === undefined
-                                : (filtersValues[colums.id] === undefined && fieldsFilled[colums.id] === undefined)
-                        }
-                        disabled={
-                            typeof filtersValues[colums.id] === "object"
-                                ? fieldsFilled[colums.id]?.startDate === filtersValues[colums.id]?.startDate &&
-                                fieldsFilled[colums.id]?.endDate === filtersValues[colums.id]?.endDate
+                localFilters.filter(x => x.searchable === true).map((colums, index) => {
+                    console.log(fieldsFilled[colums.id], "fieldsFilled[colums.id]")
+                    const filled = (Boolean(fieldsFilled[colums.id])) && fieldsFilled[colums.id]
+                    return (
+                        <SelectButton key={index}
+                            tooltipContent=''
+                            title={colums.displayName}
+                            value={filtersValues[colums.id]}
+                            colum={colums}
+                            onQuerySubmit={onQuerySubmit}
+                            onChange={onChangeFilters}
+                            disabledReset={
+                                typeof filtersValues[colums.id] === "object"
+                                    ? filtersValues[colums.id]?.startDate !== undefined && filtersValues[colums.id]?.endDate === undefined
+                                    : (filtersValues[colums.id] === undefined && fieldsFilled[colums.id] === undefined)
+                            }
+                            disabled={
+                                typeof filtersValues[colums.id] === "object"
+                                    ? fieldsFilled[colums.id]?.startDate === filtersValues[colums.id]?.startDate &&
+                                    fieldsFilled[colums.id]?.endDate === filtersValues[colums.id]?.endDate
 
-                                : fieldsFilled[colums.id] === filtersValues[colums.id]
-                        }
-                        filled={(Boolean(fieldsFilled[colums.id])) && fieldsFilled[colums.id]}
-                        onResetFilters={onResetFilters}
-                    />
-                ))
+                                    : fieldsFilled[colums.id] === filtersValues[colums.id]
+                            }
+                            filled={filled}
+                            onResetFilters={onResetFilters}
+                        />
+                    )
+                }
+                )
             }
             <div className={styles.moreFiltersContainer}>
                 {variables?.filter((x: any) => !localFilters.includes(x) && x.searchable).length > 0 &&

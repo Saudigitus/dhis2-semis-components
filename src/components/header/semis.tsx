@@ -13,7 +13,7 @@ import { getOptionsByDataElement } from './utils/getOptions'
 import { it } from 'date-fns/locale'
 
 const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http://localhost:8080" }: { headerItems?: SemisHeaderProps, program: any, dataStoreValues?: any, baseUrl?: string }) => {
-    console.log("first render")
+    // console.log("first render")
     const hash = window.location.hash;
     const queryString = hash.split('?')[1];
     const searchParams = new URLSearchParams(queryString);
@@ -65,11 +65,11 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
             otherItemsValues[item?.ulrParam] = getSelectedValue
         })
 
-        setHeaderValues({
-            selectedAcademicYear: getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
-            selectedOu: { displayName: schoolName, id: school, selected: [] },
-            ...otherItemsValues
-        })
+        // setHeaderValues({
+        //     selectedAcademicYear: getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
+        //     selectedOu: { displayName: schoolName, id: school, selected: [] },
+        //     ...otherItemsValues
+        // })
     }, [])
 
     const onChangeOu = (event: { id: string, displayName: string, selected: any }) => {

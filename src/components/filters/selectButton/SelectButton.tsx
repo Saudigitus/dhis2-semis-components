@@ -72,13 +72,15 @@ function SelectButton(props: SelectButtonProps) {
         }
     }
 
+    console.log(filled, "filled", filled?.length || Object.keys(filled).length)
+
     return (
         <WithPadding p={"0.25em 0.5em 0.25em 0em"}>
             <div
                 data-test="filter-button-popover-anchor"
                 ref={anchorRef}
             >
-                {(filled?.length > 0)
+                {((filled?.length || Object.keys(filled)?.length) > 0)
                     ? <RenderWithAppliedFilter
                         classes={classes}
                         disabled={false}
