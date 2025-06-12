@@ -14,7 +14,7 @@ const DashboardCard = ({ icon, actions, alignActions, size, contents }: CardDash
       case "small": return "cardSamll";
       case "medium": return "cardMedium";
       case "large": return "cardLarge";
-      default: return "defaultCard";
+      default: return "small";
     }
   }
 
@@ -22,9 +22,9 @@ const DashboardCard = ({ icon, actions, alignActions, size, contents }: CardDash
     <Box className={classNames(style.dinamicBox, style[getCardSize()])}>
       <Card className={classNames(style.cardContainer)}>
         <CardHeader icon={icon} />
-        <Divider />
+        <Divider className={style.customDivider}/>
         <CardBody contents={contents} />
-        {(!actions || actions?.length > 0) && <Divider className={style.divider} />}
+        {(!actions || actions?.length > 0) && <Divider className={style.customDivider} />}
         <CardActions actions={actions} align={alignActions ?? "end"} />
       </Card>
     </Box>
