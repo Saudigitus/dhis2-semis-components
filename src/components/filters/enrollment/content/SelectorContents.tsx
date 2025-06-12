@@ -7,10 +7,10 @@ import type { Theme } from '@mui/material/styles';
 const getStyles = makeStyles((theme: Theme) =>
     createStyles({
         buttonsContainer: {
-            paddingTop: theme.typography.pxToRem(8)
+            paddingTop: 8
         },
         buttonContainer: {
-            paddingRight: theme.typography.pxToRem(8),
+            paddingRight: 8,
             display: 'inline-block'
         }
     })
@@ -50,7 +50,7 @@ function SelectorContents(props: SelectorContentsProps) {
                     <Button
                         primary
                         onClick={onUpdate}
-                        disabled={disabledUpdate || !value?.replace(/\s/g, '').length}
+                        disabled={disabledUpdate || !value}
                     >
                         {('Update')}
                     </Button>

@@ -6,10 +6,10 @@ import type { Theme } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        label: theme.typography.body1,
         checkbox: {
             marginTop: spacersNum.dp8,
-            marginBottom: spacersNum.dp16
+            marginBottom: spacersNum.dp16,
+            fontWeight: 600,
         }
     })
 );

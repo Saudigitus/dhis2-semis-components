@@ -48,13 +48,24 @@ function ActiveFilterButton(props: ActiveFilterButtonProps) {
         onClear();
     }
 
-    const getCappedValue = (value: string) => {
+    const getCappedValue = (value: any) => {
+
         const cappedValue = value.substring(0, MAX_LENGTH_OF_VALUE - 3).trimEnd();
+
         return `${cappedValue}...`;
     }
 
+    // if the value is object that contains startDate and endDate, we need to format it and return it as string
+    function formatValuesToString(value: any) {
+        if (typeof value === 'object' && value !== null && 'startDate' in value && 'endDate' in value) {
+            const valueSplit = `${value.startDate} - ${value.endDate}`.substring(0, MAX_LENGTH_OF_VALUE - 3).trimEnd();
+            return `${valueSplit}...`;
+        }
+        return value;
+    }
+
     const getViewValueForFilter = (buttonText: string) => {
-        const calculatedValue = buttonText?.length > MAX_LENGTH_OF_VALUE ? getCappedValue(buttonText) : buttonText;
+        const calculatedValue = buttonText?.length > MAX_LENGTH_OF_VALUE ? getCappedValue(formatValuesToString(buttonText)) : formatValuesToString(buttonText);
         return `: ${calculatedValue}`;
     }
 

@@ -9,13 +9,8 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
     const { urlParameters } = useUrlParams()
     const { school } = urlParameters()
 
-    const value: any = { ...{ dataElelementId: selected }, orgUnit: school }
-
-    const { runRulesEngine, updatedVariables } = RulesEngine({
-        program: program?.id,
-        type: "programStage",
-        values: { ...{ dataElelementId: selected }, orgUnit: school },
-        variables: [{
+    const value: any = { ...{ [dataElelementId]: selected }, orgUnit: school }
+    const variable = [{
             "id": dataElelementId,
             "name": dataElelementId,
             "options": {
@@ -29,18 +24,27 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
                 }
             }
         }]
-    })
 
-    useEffect(() => {
-        runRulesEngine(undefined, value)
-    }, [value])
+    // const { runRulesEngine, updatedVariables } = RulesEngine({
+    //     program: program?.id,
+    //     type: "programStage",
+    //     values: { ...{ [dataElelementId]: selected }, orgUnit: school },
+    //     variables: variable
+    // })
 
-    console.log(updatedVariables, "updatedVariables")
+    // useEffect(() => {
+    //     console.log("Running rules engine with values:", value)
+    //     runRulesEngine(variable, value)
+    // }, [])
 
+    console.log("program:", program)
+    console.log("Data element ID:", variable)
+    console.log("Updated variables:", variable)
+    console.log("Selected value:", selected)
 
     const filteredMenuItems: [] = query.length > 0
-        ? updatedVariables?.[0]?.options?.optionSet?.options?.filter(item => item.label.includes(query)) || []
-        : updatedVariables?.[0]?.options?.optionSet?.options;
+        ? variable?.[0]?.options?.optionSet?.options?.filter(item => item.label.includes(query)) || []
+        : variable?.[0]?.options?.optionSet?.options;
 
     return (
         <div className={style.HeaderMenu}>
