@@ -27,7 +27,7 @@ export const useStyles = () => {
         },
         workingListsContainer: {
             display: 'flex',
-            padding: '0.6rem 0.5rem',
+            padding: '0.6rem 0.5rem 0rem',
             alignItems: 'center',
             justifyContent: 'space-between',
             [breakpoints.down('md')]: {

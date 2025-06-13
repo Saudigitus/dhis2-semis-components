@@ -32,6 +32,7 @@ import { SimpleLayout, FullLayout, SideBarLayout, HeaderBarLayout } from "./comp
 import SwitchButtonView from './components/buttons/switchButtons/switchButtonsView'
 import DropDownCalendar from './components/calendar/DropDownCalendar'
 import OrgUnitTreeField from './components/genericFields/fields/orgUnitTree/OrgUnitTreeField'
+import TabComponent from "./components/tabs/TabComponent"
 
 export {
     HeaderValuesState,
@@ -70,5 +71,6 @@ export {
     HeaderBarLayout,
     SwitchButtonView,
     DropDownCalendar,
-    OrgUnitTreeField
+    OrgUnitTreeField,
+    TabComponent
 }
