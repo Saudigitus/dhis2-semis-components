@@ -153,6 +153,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                         selected={selected?.length ?? 0}
                         beforeSettings={
                             <>
+                                {beforeSettings}
                                 {(enableRowCounter && !loading) ? <TopPaginator
                                     loading={loading}
                                     onPageChange={onPageChange}
@@ -165,7 +166,6 @@ function Table(props: TableRenderProps): React.ReactElement {
                                     disableNextPage={pagination.page === pagination.totalPages}
                                     rowsPerPages={rowsPerPages}
                                 /> : null}
-                                {beforeSettings}
                             </>
                         }
                     />}
