@@ -13,7 +13,8 @@ import ImageField from './fields/ImageField';
 import { DataProvider } from '@dhis2/app-runtime';
 import OrgUnitTreeField from "./fields/orgUnitTree/OrgUnitTreeField";
 
-function GenericFields({ attribute, disabled, valueType, form, onInputChange, storybook, setChanged, submitted }: GenericFieldsComponentProps) {
+function GenericFields(props: GenericFieldsComponentProps) {
+  const { attribute, disabled, valueType, form, onInputChange, storybook, setChanged, submitted, baseUrl } = props;
 
   switch (valueType) {
     case Attribute.valueType.BOOLEAN as unknown as CustomAttributeProps["valueType"]:
@@ -49,7 +50,7 @@ function GenericFields({ attribute, disabled, valueType, form, onInputChange, st
           storybook ?
             <ImageField storyBook={storybook} disabled={disabled} {...attribute} form={form} />
             : (
-              <DataProvider baseUrl='http://localhost:8080'>
+              <DataProvider baseUrl={baseUrl}>
                 <ImageField storyBook={storybook} disabled={disabled} {...attribute} form={form} />
               </DataProvider>
             )
