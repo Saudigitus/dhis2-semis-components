@@ -31,12 +31,6 @@ interface ExportData {
      * The label wich will appear do identify componet
      */
     label: string
-    /**
-     * Exported file name
-     *
-     * @type {string}
-     */
-    fileName: string
 
     /**
      * Array of program stages id to export data
@@ -131,7 +125,6 @@ interface excelProps {
     headers: any[]
     rows: any[]
     filters: any
-    fileName: string
     metadata: any[]
     module: string
     empty: boolean

@@ -8,15 +8,17 @@ import { dfHeaders } from '../../../../utils/constants/dfHeaders';
 import { Modules } from 'dhis2-semis-types';
 import { generateValidationSheet } from '../../../../utils/common/generateValidationSheet';
 import { convertNumberToLetter } from '../../../../utils/common/convertNumberToLetter';
+import { useGetFileName } from '../../../../hooks/common/useGetFileName';
 
 export function generateFile({ unavailableDays }: { unavailableDays: (date: Date) => boolean }) {
     const password = '#saudigitus_SEMIS_Export#'
+    const { getFileName } = useGetFileName()
 
     async function excelGenerator(props: excelProps) {
         let sheet: any = {};
         const regex = /^\d{4}-\d{2}-\d{2}$/
         const workbook = new Excel.Workbook();
-        const { headers, rows, filters, fileName, metadata, module, empty, defaultLockedHeaders } = props
+        const { headers, rows, filters, metadata, module, empty, defaultLockedHeaders } = props
         const workSheets = { ...(module === Modules.Attendance ? separateByMonth(headers.find(x => x.name === 'Attendance').headers) : { [module]: module }) }
         const { validationHeaders, validationRows } = generateValidationSheet(filters)
 
@@ -177,7 +179,7 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
         sheet.protect(password, lock)
 
         const buf = await workbook.xlsx.writeBuffer()
-        saveAs(new Blob([buf]), fileName + ".xlsx")
+        saveAs(new Blob([buf]), getFileName(module) + ".xlsx")
     }
 
     return { excelGenerator }

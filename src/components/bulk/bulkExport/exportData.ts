@@ -13,7 +13,6 @@ import { useGetEvents, useUrlParams } from "dhis2-semis-functions";
 export function useExportData(props: ExportData) {
     const {
         programConfig,
-        fileName,
         isSchoolDay,
         stagesToExport,
         module,
@@ -116,7 +115,7 @@ export function useExportData(props: ExportData) {
                 }
 
                 try {
-                    await excelGenerator({ headers: formatedHeaders, rows: data, filters, fileName, metadata, module, empty, defaultLockedHeaders })
+                    await excelGenerator({ headers: formatedHeaders, rows: data, filters, metadata, module, empty, defaultLockedHeaders })
                 } catch (error) {
                     onError(`Export error: Occurred an error while generating file!`)
                 } finally {

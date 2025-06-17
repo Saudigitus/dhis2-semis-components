@@ -12,6 +12,7 @@ interface imageFieldSpecificProps {
     trackedEntity?: string,
     destructive?: boolean
     baseUrl?: string
+    setFormValues?: (values: any) => void
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }

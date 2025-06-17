@@ -28,7 +28,6 @@ const renderWithProvider = (args: any) => (
 );
 
 const baseArgs = {
-    fileName: "custom file name",
     orgUnit: "Shc3qNhrPAz",
     orgUnitName: "Albion LBS",
     programConfig: program as any,
