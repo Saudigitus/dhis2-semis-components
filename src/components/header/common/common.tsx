@@ -25,17 +25,17 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
             }
         }]
 
-    // const { runRulesEngine, updatedVariables } = RulesEngine({
-    //     program: program?.id,
-    //     type: "programStage",
-    //     values: { ...{ [dataElelementId]: selected }, orgUnit: school },
-    //     variables: variable
-    // })
+    const { runRulesEngine, updatedVariables } = RulesEngine({
+        program: program?.id,
+        type: "programStage",
+        values: { ...{ [dataElelementId]: selected }, orgUnit: school },
+        variables: variable
+    })
 
-    // useEffect(() => {
-    //     console.log("Running rules engine with values:", value)
-    //     runRulesEngine(variable, value)
-    // }, [])
+    useEffect(() => {
+        console.log("Running rules engine with values:", value)
+        runRulesEngine()
+    }, [])
 
     console.log("program:", program)
     console.log("Data element ID:", variable)
