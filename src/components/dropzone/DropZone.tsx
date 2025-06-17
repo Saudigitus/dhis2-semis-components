@@ -14,7 +14,7 @@ import { DefaultExtensionType, FileIcon, defaultStyles } from "react-file-icon";
 interface IForm { }
 
 function DropZone(props: DropZoneProps) {
-    const { loading, onSave, accept, placeholder, hideUploadIcon, hideLabel, height, width, dialogMode, title, buttonLabel } = props;
+    const { loading, onSave, accept, placeholder, hideUploadIcon, hideLabel, height, width, dialogMode, title, buttonLabel, onCancel } = props;
     const [uploadedFile, setUploadedFile] = useState<any>('');
     const [displayDetails, setdisplayDetails] = useState<{ name: string, extension: string }>({ name: "Drag & drop files or browse", extension: "" });
     const [open, setOpen] = useState<boolean>(false);
@@ -45,7 +45,7 @@ function DropZone(props: DropZoneProps) {
             type: "reset",
             label: "Cancel",
             disabled: loading,
-            onClick: () => { setUploadedFile(undefined); setOpen(false) },
+            onClick: () => { setUploadedFile(undefined); handleClose(); onCancel && onCancel() },
             secondary: true
         }, {
             id: "continue",

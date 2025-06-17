@@ -12,6 +12,7 @@ interface imageFieldSpecificProps {
     trackedEntity?: string,
     destructive?: boolean
     baseUrl?: string
+    setFormValues?: (values: any) => void
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
@@ -28,7 +29,7 @@ export default function CustomForm(props: CombinedProps) {
         setFormSubmitted(false)
     }
 
-    const formActions = (form: any, values: any) => [
+    const formActions = (form: any) => [
         {
             id: "cancel",
             type: "reset",
@@ -110,7 +111,7 @@ export default function CustomForm(props: CombinedProps) {
                             {withButtons && (
                                 <div>
                                     <ButtonStrip end className={styles.btnStrip}>
-                                        {formActions(form, values).map((action: any, i) => (
+                                        {formActions(form).map((action: any, i) => (
                                             <Button key={i} {...action} loading={false}>
                                                 {action.label}
                                             </Button>

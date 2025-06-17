@@ -5,7 +5,7 @@ import { importSummary } from "../../../../utils/common/getImportSummary";
 import { useUploadEvents } from "dhis2-semis-functions";
 import { useGetEvents } from "dhis2-semis-functions";
 
-export function postEnrollmentData({ setStats, setProgress, onError }: { setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
+export function postEnrollmentData({ setStats, setProgress, onError, setOpen }: { setOpen: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { getEvents } = useGetEvents()
     const { uploadValues } = useUploadEvents()
 
@@ -60,7 +60,7 @@ export function postEnrollmentData({ setStats, setProgress, onError }: { setStat
 
                     updateProgressF(updateProgress + 5, updateProgress, teis.length)
                 }).catch((error) => {
-                    setProgress({ progress: 110 })
+                    setOpen(false)
                     onError('Import Error: ' + error)
                 })
             }
@@ -85,8 +85,8 @@ export function postEnrollmentData({ setStats, setProgress, onError }: { setStat
                 updatedStats = importSummary(response, updatedStats)
                 updateProgressF((90 + 5 - updateProgress), (90 - updateProgress), chunks.length)
             }).catch((error) => {
-                setProgress({ progress: 110 })
                 onError('Import Error: ' + error)
+                setOpen(false)
             });
         }
 

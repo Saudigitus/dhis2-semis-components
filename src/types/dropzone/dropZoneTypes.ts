@@ -84,6 +84,7 @@ interface DropZoneProps {
     buttonLabel?: string
 
     loading?: boolean
+    onCancel?: () => void
 }
 
 export type { DropZoneProps }

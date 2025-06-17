@@ -16,7 +16,7 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
         let sheet: any = {};
         const regex = /^\d{4}-\d{2}-\d{2}$/
         const workbook = new Excel.Workbook();
-        const { headers, rows, filters, fileName, metadata, module, empty, defaultLockedHeaders } = props
+        const { headers, rows, filters, metadata, module, empty, defaultLockedHeaders, fileName } = props
         const workSheets = { ...(module === Modules.Attendance ? separateByMonth(headers.find(x => x.name === 'Attendance').headers) : { [module]: module }) }
         const { validationHeaders, validationRows } = generateValidationSheet(filters)
 

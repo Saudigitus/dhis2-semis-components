@@ -14,7 +14,7 @@ export default function ProcessImport(props: importData) {
     const [open, setOpen] = useState(false)
     const [stats, setStats] = useState<any>({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] })
     const [excelData, setExcelData] = useState<any>({ mapping: [], module: "" })
-    const { importData } = useImportData({ setProgress, onError, stats, setStats })
+    const { importData } = useImportData({ setProgress, onError, stats, setStats, setOpen })
     const [openStats, setOpenStats] = useState(false)
     const [openPogress, setOpenProgress] = useState(false)
     const { validador, invalidRecords, validRecords, loader } = useValidateFile(programConfig, updating ? 'UPDATE' : "POST")
@@ -30,6 +30,10 @@ export default function ProcessImport(props: importData) {
             setProgress({ prorocess: "import", progress: 0, buffer: 0 })
         }
     }, [progress.progress])
+
+    useEffect(() => {
+        if (!open) setOpenProgress(false)
+    }, [open])
 
     const onSubmit = async (importMode: "VALIDATE" | "COMMIT") => await importData({ ...props, excelData: excelData, importMode })
 
@@ -60,7 +64,7 @@ export default function ProcessImport(props: importData) {
             </a>
 
             <ModalComponent
-                children={<DropZone loading={loader} accept='.csv,.xlsx' onSave={(file) => onValidation(file)} />}
+                children={<DropZone onCancel={() => setOpen(false)} loading={loader} accept='.csv,.xlsx' onSave={(file) => onValidation(file)} />}
                 handleClose={() => { setOpen(false) }}
                 open={open}
                 title={title}
