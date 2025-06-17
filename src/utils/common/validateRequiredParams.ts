@@ -6,7 +6,6 @@ export function areParamsValid(props: ExportData) {
 
     const {
         programConfig,
-        fileName,
         stagesToExport,
         module,
         selectedSectionDataStore,
@@ -14,7 +13,7 @@ export function areParamsValid(props: ExportData) {
         eventFilters,
     } = props
 
-    if (!fileName || !module || !programConfig || !sectionType || !selectedSectionDataStore) {
+    if (!module || !programConfig || !sectionType || !selectedSectionDataStore) {
         valid = false
         msg = "Please send all required parameters"
     }
