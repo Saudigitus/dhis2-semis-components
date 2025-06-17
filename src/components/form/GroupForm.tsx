@@ -10,12 +10,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 interface customProps {
     setChanged?: any,
     submitted?: boolean
+    baseUrl?: string
 }
 
 interface CombinedProps extends GroupFormProps, customProps { }
 
 function GroupForm(props: CombinedProps) {
     const { setChanged, name, fields, description, form, onInputChange, trackedEntity, storyBook, submitted } = props
+    const { baseUrl } = props
 
     return (
         <>
@@ -56,6 +58,7 @@ function GroupForm(props: CombinedProps) {
                                         storybook={storyBook}
                                         setChanged={setChanged}
                                         submitted={submitted}
+                                        baseUrl={baseUrl}
                                     />
                                     <span className={styles.content}>
                                         {x.content}

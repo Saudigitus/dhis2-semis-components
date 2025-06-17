@@ -9,6 +9,7 @@ interface GenericFieldsComponentProps {
     storybook?: boolean
     setChanged?: any
     submitted?: boolean
+    baseUrl?: string
 }
 
 interface FormFieldsProps {
