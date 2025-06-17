@@ -40,8 +40,7 @@ export function useExportData(props: ExportData) {
     })
     const { msg, valid } = areParamsValid({ ...props })
 
-    async function exportData({ numberOfEmptyRows, startDate, endDate }: { startDate?: any, endDate?: any, numberOfEmptyRows?: number }) {
-
+    async function exportData({ fileName, numberOfEmptyRows, startDate, endDate }: { fileName?: string, startDate?: any, endDate?: any, numberOfEmptyRows?: number }) {
         if (!valid) {
             onError(`Export error: ${msg}`)
         } else {
@@ -115,9 +114,9 @@ export function useExportData(props: ExportData) {
                 }
 
                 try {
-                    await excelGenerator({ headers: formatedHeaders, rows: data, filters, metadata, module, empty, defaultLockedHeaders })
+                    await excelGenerator({ headers: formatedHeaders, rows: data, filters, fileName, metadata, module, empty, defaultLockedHeaders })
                 } catch (error) {
-                    onError(`Export error: Occurred an error while generating file!`)
+                    onError(`Export error: Occurred an error while generating file! - ${error}`)
                 } finally {
                     setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
                 }

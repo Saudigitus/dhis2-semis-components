@@ -125,6 +125,7 @@ interface excelProps {
     headers: any[]
     rows: any[]
     filters: any
+    fileName: string
     metadata: any[]
     module: string
     empty: boolean
