@@ -31,12 +31,6 @@ interface ExportData {
      * The label wich will appear do identify componet
      */
     label: string
-    /**
-     * Exported file name
-     *
-     * @type {string}
-     */
-    fileName: string
 
     /**
      * Array of program stages id to export data

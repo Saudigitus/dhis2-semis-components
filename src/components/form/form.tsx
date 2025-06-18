@@ -11,11 +11,15 @@ interface imageFieldSpecificProps {
     storyBook?: boolean,
     trackedEntity?: string,
     destructive?: boolean
+    baseUrl?: string
+    setFormValues?: (values: any) => void
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 
-export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues }: CombinedProps) {
+export default function CustomForm(props: CombinedProps) {
+    const { storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, baseUrl } = props
+    const { withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues } = props
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
     const [formSubmitted, setFormSubmitted] = useState(false)
@@ -25,7 +29,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
         setFormSubmitted(false)
     }
 
-    const formActions = (form: any, values: any) => [
+    const formActions = (form: any) => [
         {
             id: "cancel",
             type: "reset",
@@ -100,13 +104,14 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                                     storyBook={storyBook}
                                     setChanged={setChanged}
                                     submitted={formSubmitted}
+                                    baseUrl={baseUrl}
                                 />
                             ))}
 
                             {withButtons && (
                                 <div>
                                     <ButtonStrip end className={styles.btnStrip}>
-                                        {formActions(form, values).map((action: any, i) => (
+                                        {formActions(form).map((action: any, i) => (
                                             <Button key={i} {...action} loading={false}>
                                                 {action.label}
                                             </Button>

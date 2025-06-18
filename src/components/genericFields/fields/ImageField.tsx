@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react'
-import { IconUpload24, IconCross24 } from "@dhis2/ui"
+import { IconUpload24, IconCross24, Center, CircularLoader } from "@dhis2/ui"
 import { useField, type FieldRenderProps } from "react-final-form"
 import style from "./fields.module.css"
 import { FormFieldsProps } from '../../../types/form/GenericFieldsTypes'
@@ -60,6 +60,10 @@ function ImageField(props: CombinedProps) {
         input.onChange("")
     }
 
+    if (loading) {
+        return <Center><CircularLoader small /></Center>
+    }
+
     return (
         <Box className={style.image_field_box}>
             {
@@ -85,12 +89,12 @@ function ImageField(props: CombinedProps) {
                                 className={style.customDhis2Button}
                                 component="span"
                                 startIcon={<IconUpload24 />}
+                                loading={loading}
                                 disabled={disabled}
                             >
                                 Choose File
                             </Button>
                         </label>
-
                     </span>
             }
 
@@ -101,6 +105,8 @@ function ImageField(props: CombinedProps) {
                         component="span"
                         startIcon={<IconCross24 />}
                         onClick={onRemove}
+                        loading={loading}
+                        disabled={disabled}
                     >
                         Remove
                     </Button>

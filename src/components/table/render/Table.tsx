@@ -27,7 +27,7 @@ export const useStyles = () => {
         },
         workingListsContainer: {
             display: 'flex',
-            padding: '0.6rem 0.5rem',
+            padding: '0.6rem 0.5rem 0rem',
             alignItems: 'center',
             justifyContent: 'space-between',
             [breakpoints.down('md')]: {
@@ -153,19 +153,19 @@ function Table(props: TableRenderProps): React.ReactElement {
                         selected={selected?.length ?? 0}
                         beforeSettings={
                             <>
+                                {beforeSettings}
                                 {(enableRowCounter && !loading) ? <TopPaginator
                                     loading={loading}
                                     onPageChange={onPageChange}
                                     totalData={tableData.length}
                                     totalElements={pagination?.totalElements}
                                     onRowsPerPageChange={onRowsPerPageChange}
-                                    page={pagination.page}
-                                    rowsPerPage={pagination.pageSize}
-                                    disablePreviousPage={pagination.page === 1}
-                                    disableNextPage={pagination.page === pagination.totalPages}
+                                    page={pagination?.page}
+                                    rowsPerPage={pagination?.pageSize}
+                                    disablePreviousPage={pagination?.page === 1}
+                                    disableNextPage={pagination?.page === pagination?.totalPages}
                                     rowsPerPages={rowsPerPages}
                                 /> : null}
-                                {beforeSettings}
                             </>
                         }
                     />}
@@ -224,10 +224,10 @@ function Table(props: TableRenderProps): React.ReactElement {
                         loading={loading}
                         onPageChange={onPageChange}
                         onRowsPerPageChange={onRowsPerPageChange}
-                        page={pagination.page}
-                        rowsPerPage={pagination.pageSize}
-                        disablePreviousPage={pagination.page === 1}
-                        disableNextPage={pagination.page === pagination.totalPages}
+                        page={pagination?.page}
+                        rowsPerPage={pagination?.pageSize}
+                        disablePreviousPage={pagination?.page === 1}
+                        disableNextPage={pagination?.page === pagination?.totalPages}
                         rowsPerPages={rowsPerPages}
                     />}
                 </WithBorder>

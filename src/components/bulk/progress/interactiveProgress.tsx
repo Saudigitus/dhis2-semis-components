@@ -16,7 +16,7 @@ export default function ModalProgress({ progress, open, setOpen, module }: { pro
         <ModalComponent
             open={open}
             handleClose={() => setOpen(false)}
-            title={progress.prorocess == 'export' ? 'Exporting progress' : 'Importing progress'}
+            title={progress.prorocess == 'export' ? 'Export progress' : 'Import progress'}
             children={
                 <div className={styles.loadingContainer}>
                     <div className={styles.linearProgress}>
