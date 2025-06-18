@@ -160,10 +160,10 @@ function Table(props: TableRenderProps): React.ReactElement {
                                     totalData={tableData.length}
                                     totalElements={pagination?.totalElements}
                                     onRowsPerPageChange={onRowsPerPageChange}
-                                    page={pagination.page}
-                                    rowsPerPage={pagination.pageSize}
-                                    disablePreviousPage={pagination.page === 1}
-                                    disableNextPage={pagination.page === pagination.totalPages}
+                                    page={pagination?.page}
+                                    rowsPerPage={pagination?.pageSize}
+                                    disablePreviousPage={pagination?.page === 1}
+                                    disableNextPage={pagination?.page === pagination?.totalPages}
                                     rowsPerPages={rowsPerPages}
                                 /> : null}
                             </>
@@ -224,10 +224,10 @@ function Table(props: TableRenderProps): React.ReactElement {
                         loading={loading}
                         onPageChange={onPageChange}
                         onRowsPerPageChange={onRowsPerPageChange}
-                        page={pagination.page}
-                        rowsPerPage={pagination.pageSize}
-                        disablePreviousPage={pagination.page === 1}
-                        disableNextPage={pagination.page === pagination.totalPages}
+                        page={pagination?.page}
+                        rowsPerPage={pagination?.pageSize}
+                        disablePreviousPage={pagination?.page === 1}
+                        disableNextPage={pagination?.page === pagination?.totalPages}
                         rowsPerPages={rowsPerPages}
                     />}
                 </WithBorder>
