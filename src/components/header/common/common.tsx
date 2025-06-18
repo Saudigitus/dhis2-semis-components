@@ -34,7 +34,7 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
     })
 
     useEffect(() => {
-        runRulesEngine({})
+        runRulesEngine()
     }, [school])
 
     const filteredMenuItems: [] = query.length > 0
