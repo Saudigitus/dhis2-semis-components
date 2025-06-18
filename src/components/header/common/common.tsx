@@ -11,36 +11,38 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
 
     const value: any = { ...{ [dataElelementId]: selected }, orgUnit: school }
     const variable = [{
-            "id": dataElelementId,
-            "name": dataElelementId,
-            "options": {
-                "optionSet": {
-                    "options": values,
-                }
-            },
-            "initialOptions": {
-                "optionSet": {
-                    "options": values,
-                }
+        "id": dataElelementId,
+        "name": dataElelementId,
+        "options": {
+            "optionSet": {
+                "options": values,
             }
-        }]
+        },
+        "initialOptions": {
+            "optionSet": {
+                "options": values,
+            }
+        }
+    }]
 
     const { runRulesEngine, updatedVariables } = RulesEngine({
         program: program?.id,
         type: "programStage",
         values: { ...{ [dataElelementId]: selected }, orgUnit: school },
-        variables: variable
+        variables: variable || []
     })
 
     useEffect(() => {
         console.log("Running rules engine with values:", value)
-        runRulesEngine()
+        runRulesEngine({ overrideVariables: variable || [] })
     }, [])
 
     console.log("program:", program)
     console.log("Data element ID:", variable)
     console.log("Updated variables:", variable)
     console.log("Selected value:", selected)
+
+    console.log(updatedVariables)
 
     const filteredMenuItems: [] = query.length > 0
         ? variable?.[0]?.options?.optionSet?.options?.filter(item => item.label.includes(query)) || []
