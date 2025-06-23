@@ -13,20 +13,22 @@ type FiltersValuesProps = Record<string, any | { endDate: string } | { startDate
 
 function ContentFilter(props: EnrollmentFilterProps) {
     const { variables = [], defaultFilterNumber = 4, filterState, setFilterState } = props;
-    const [filtersValues, setfiltersValues] = useState<FiltersValuesProps>({})
-    const [localFilters, setlocalFilters] = useState<CustomAttributeProps[]>([])
-    const [fieldsFilled, setfieldsFilled] = useState<FiltersValuesProps>({})
-    const [anchorEl, setAnchorEl] = useState(null)
-    const [resetValues, setresetValues] = useState("")
-    const attributesQuerybuilder: any[][] = []
-    const dataElementsQuerybuilder: any[][] = []
-    const { viewPortWidth } = useViewportWidth()
+
+    const [filtersValues, setFiltersValues] = useState<FiltersValuesProps>({});
+    const [localFilters, setLocalFilters] = useState<CustomAttributeProps[]>([]);
+    const [fieldsFilled, setFieldsFilled] = useState<FiltersValuesProps>({});
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [resetValues, setResetValues] = useState<string>("");
+
+    const attributesQuerybuilder: any[][] = [];
+    const dataElementsQuerybuilder: any[][] = [];
+
+    const { viewPortWidth } = useViewportWidth();
 
     useEffect(() => {
-        const copyHeader = [...variables]
-        const sliceTo = viewPortWidth < 779 ? 1 : defaultFilterNumber
-        setlocalFilters(copyHeader.slice(0, sliceTo))
-    }, [variables, viewPortWidth])
+        const sliceTo = viewPortWidth < 779 ? 1 : defaultFilterNumber;
+        setLocalFilters(variables.slice(0, sliceTo));
+    }, [viewPortWidth, variables, defaultFilterNumber]);
 
     const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
@@ -38,14 +40,11 @@ function ContentFilter(props: EnrollmentFilterProps) {
 
         const pos = copyHeader.findIndex(x => x.id === e.id)
         copyHeaderLocal.push(copyHeader[pos])
-        setlocalFilters(copyHeaderLocal)
+        setLocalFilters(copyHeaderLocal)
     }
 
     const onChangeFilters = (value: any, key: string, type: string, pos: string) => {
-        console.log("onChangeFilters called with value:", value, "key:", key, "type:", type, "pos:", pos);
         let cloneHeader = { ...filtersValues, ...convertArrayToObject(filterState.dataElements) }
-        console.log(type === 'DATE', cloneHeader, key, value, pos)
-        console.log(verifyIsFilled(value), "verifyIsFilled:")
 
         if (type === 'DATE') {
             let date = cloneHeader?.[key] ?? {}
@@ -67,7 +66,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
                 cloneHeader = withoutKey
             }
         }
-        setfiltersValues(cloneHeader);
+        setFiltersValues(cloneHeader);
     }
 
     function verifyIsFilled(value: any) {
@@ -85,7 +84,6 @@ function ContentFilter(props: EnrollmentFilterProps) {
         for (const [key, value] of Object.entries(copyHeader)) {
             const variableType = variables.find((x: any) => x.id === key)?.type
             if (typeof value === 'object') {
-                console.log(value, "value")
                 if (variableType === "dataElement") {
                     dataElementsQuerybuilder.push([`${key}:ge:${value?.startDate}:le:${value?.endDate}`])
                 } else attributesQuerybuilder.push([`${key}:ge:${value?.startDate}:le:${value?.endDate}`])
@@ -108,7 +106,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
             }
         }
 
-        setfieldsFilled(copyHeader)
+        setFieldsFilled(copyHeader)
         setFilterState({
             attributes: attributesQuerybuilder,
             dataElements: dataElementsQuerybuilder
@@ -119,14 +117,14 @@ function ContentFilter(props: EnrollmentFilterProps) {
         const copyHeader = { ...filtersValues }
 
         const { [id]: _, ...withoutID } = copyHeader;
-        setfiltersValues(withoutID)
-        setresetValues(id)
+        setFiltersValues(withoutID)
+        setResetValues(id)
     }
 
     useEffect(() => {
         if (resetValues?.length > 0) {
             onQuerySubmit()
-            setresetValues("")
+            setResetValues("")
         }
     }, [resetValues])
 
@@ -134,7 +132,6 @@ function ContentFilter(props: EnrollmentFilterProps) {
         <div className={styles.container}>
             {
                 localFilters.filter(x => x.searchable === true).map((colums, index) => {
-                    console.log(fieldsFilled[colums.id], "fieldsFilled[colums.id]")
                     const filled = (Boolean(fieldsFilled[colums.id])) && fieldsFilled[colums.id]
                     return (
                         <SelectButton key={index}

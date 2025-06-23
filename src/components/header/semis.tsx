@@ -199,9 +199,10 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
 const SemisHeader = ({ headerItems, program, dataStoreValues, baseUrl }: { headerItems?: SemisHeaderProps, program?: any, dataStoreValues?: any, baseUrl?: string }) => {
 
     return (
-        <RecoilRoot>
+        <>
             <SemisHeaderRaw baseUrl={baseUrl} program={program} dataStoreValues={dataStoreValues} headerItems={headerItems} />
-        </RecoilRoot>)
+        </>
+    )
 }
 
 export default SemisHeader

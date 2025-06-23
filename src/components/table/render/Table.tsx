@@ -13,7 +13,6 @@ import { type CustomAttributeProps } from 'dhis2-semis-types'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-select/dist/react-select.css";
 import { deepEqual } from '../../../utils/table/objectComparison';
-import { useUrlParams } from 'dhis2-semis-functions';
 import { checkCanceled } from '../../../utils/table/checkCanceled';
 import { Paper } from '@mui/material';
 import { breakpoints } from '../../../constants/breakpoints';
@@ -98,13 +97,10 @@ function Table(props: TableRenderProps): React.ReactElement {
 
     const classes = useStyles()
     const [filteredHeaders, setFilteredHeaders] = useState<CustomAttributeProps[]>([])
-    const { urlParameters } = useUrlParams()
-    const { sectionType } = urlParameters()
     const onPageChange = (newPage: number) => setPagination({ ...pagination, page: newPage })
     const filtered = enableInactiveRowSelection ? tableData : tableData.filter(x => !checkCanceled(x.status))
 
     const onRowsPerPageChange = (event: any) => setPagination({ ...pagination, pageSize: parseInt(event.value, 10) })
-
 
     const onCheckboxChange = (row: any, all?: boolean) => {
         if (all) {
@@ -123,10 +119,6 @@ function Table(props: TableRenderProps): React.ReactElement {
                 setSelected((prev: any) => ([...prev, row]))
             }
         }
-    }
-
-    const capitalSectionType = () => {
-        return sectionType?.charAt(0)?.toUpperCase() + sectionType?.slice(1) + 's'
     }
 
     return (
@@ -160,10 +152,10 @@ function Table(props: TableRenderProps): React.ReactElement {
                                     totalData={tableData.length}
                                     totalElements={pagination?.totalElements}
                                     onRowsPerPageChange={onRowsPerPageChange}
-                                    page={pagination.page}
-                                    rowsPerPage={pagination.pageSize}
-                                    disablePreviousPage={pagination.page === 1}
-                                    disableNextPage={pagination.page === pagination.totalPages}
+                                    page={pagination?.page}
+                                    rowsPerPage={pagination?.pageSize}
+                                    disablePreviousPage={pagination?.page === 1}
+                                    disableNextPage={pagination?.page === pagination?.totalPages}
                                     rowsPerPages={rowsPerPages}
                                 /> : null}
                             </>
@@ -224,10 +216,10 @@ function Table(props: TableRenderProps): React.ReactElement {
                         loading={loading}
                         onPageChange={onPageChange}
                         onRowsPerPageChange={onRowsPerPageChange}
-                        page={pagination.page}
-                        rowsPerPage={pagination.pageSize}
-                        disablePreviousPage={pagination.page === 1}
-                        disableNextPage={pagination.page === pagination.totalPages}
+                        page={pagination?.page}
+                        rowsPerPage={pagination?.pageSize}
+                        disablePreviousPage={pagination?.page === 1}
+                        disableNextPage={pagination?.page === pagination?.totalPages}
                         rowsPerPages={rowsPerPages}
                     />}
                 </WithBorder>

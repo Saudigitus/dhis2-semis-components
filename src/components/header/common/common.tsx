@@ -1,7 +1,7 @@
 import { Menu, MenuItem } from '@dhis2-ui/menu'
 import { Help, Input, OrganisationUnitTree } from '@dhis2/ui'
 import style from "../mainHeader.module.css"
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { RulesEngine, useUrlParams } from 'dhis2-semis-functions'
 
 export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholder, program, dataElelementId }) => {
@@ -10,41 +10,36 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
     const { school } = urlParameters()
 
     const value: any = { ...{ [dataElelementId]: selected }, orgUnit: school }
-    const variable = [{
-            "id": dataElelementId,
-            "name": dataElelementId,
-            "options": {
-                "optionSet": {
-                    "options": values,
-                }
-            },
-            "initialOptions": {
-                "optionSet": {
-                    "options": values,
-                }
+
+    const variable = useMemo(() => [{
+        id: dataElelementId,
+        name: dataElelementId,
+        options: {
+            optionSet: {
+                options: values,
             }
-        }]
+        },
+        initialOptions: {
+            optionSet: {
+                options: values,
+            }
+        }
+    }], [dataElelementId, values]);
 
-    // const { runRulesEngine, updatedVariables } = RulesEngine({
-    //     program: program?.id,
-    //     type: "programStage",
-    //     values: { ...{ [dataElelementId]: selected }, orgUnit: school },
-    //     variables: variable
-    // })
+    const { runRulesEngine, updatedVariables } = RulesEngine({
+        program: program?.id,
+        type: "programStage",
+        values: { ...{ [dataElelementId]: selected }, orgUnit: school },
+        variables: variable || []
+    })
 
-    // useEffect(() => {
-    //     console.log("Running rules engine with values:", value)
-    //     runRulesEngine(variable, value)
-    // }, [])
-
-    console.log("program:", program)
-    console.log("Data element ID:", variable)
-    console.log("Updated variables:", variable)
-    console.log("Selected value:", selected)
+    useEffect(() => {
+        runRulesEngine()
+    }, [school])
 
     const filteredMenuItems: [] = query.length > 0
-        ? variable?.[0]?.options?.optionSet?.options?.filter(item => item.label.includes(query)) || []
-        : variable?.[0]?.options?.optionSet?.options;
+        ? updatedVariables?.[0]?.options?.optionSet?.options?.filter(item => item.label.includes(query)) || []
+        : updatedVariables?.[0]?.options?.optionSet?.options;
 
     return (
         <div className={style.HeaderMenu}>
