@@ -136,7 +136,7 @@ interface TableRenderProps {
     }) => void,
     rightElements?: ReactElement
     beforeSettings?: ReactElement
-    programConfig: ProgramConfig
+    programConfig?: ProgramConfig
     inactiveRowMessage?: string
     onRowClick?: (teiData: any) => void
     setPagination?: (args: { page: number, pageSize: number, totalPages: number, totalElements: number }) => void
