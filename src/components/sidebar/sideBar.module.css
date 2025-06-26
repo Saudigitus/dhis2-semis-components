@@ -34,34 +34,43 @@
     width: 4px;
 }
 
-.sideBarMenu {
+.sideBarMenu,
+.sideBarMenuSticked {
     height: 100%;
     overflow-y: auto;
     padding: 10px 15px;
-}
-
-
-.sideBarMenu::-webkit-scrollbar {
-    display: none;
-}
-
-.sideBarMenu {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
+.sideBarMenuSticked .sideBarItemContainer:last-child {
+    position: absolute;
+    left: 15px !important;
+    right: 15px !important;
+    bottom: 5px !important;
+    width: calc(100% - 30px);
+}
 
-.sideBarContainerCollapsed .sideBarMenu .sideBarSubItemLabel {
+
+.sideBarMenu::-webkit-scrollbar,
+.sideBarMenuSticked::-webkit-scrollbar {
+    display: none;
+}
+
+.sideBarContainerCollapsed .sideBarMenu .sideBarSubItemLabel,
+.sideBarContainerCollapsed .sideBarMenuSticked .sideBarSubItemLabel {
     display: none;
     white-space: nowrap;
 }
 
-.sideBarContainerCollapsed .sideBarMenu .badgeContainer {
+.sideBarContainerCollapsed .sideBarMenu .badgeContainer,
+.sideBarContainerCollapsed .sideBarMenuSticked .badgeContainer {
     display: none;
     white-space: nowrap;
 }
 
-.sideBarContainerCollapsed .sideBarMenu .sideBarItemTitle {
+.sideBarContainerCollapsed .sideBarMenu .sideBarItemTitle,
+.sideBarContainerCollapsed .sideBarMenuSticked .sideBarItemTitle {
     display: inline-block !important;
     opacity: 0;
     white-space: nowrap !important;
@@ -92,7 +101,8 @@
     z-index: 2;
 }
 
-.sideBarContainer .sideBarMenu span {
+.sideBarContainer .sideBarMenu span,
+.sideBarContainer .sideBarMenuSticked span {
     display: block;
     white-space: nowrap;
     font-size: 14px;
@@ -312,7 +322,8 @@
         /* height: 36px !important; */
     }
 
-    .sideBarContainerCollapsed .sideBarMenu {
+    .sideBarContainerCollapsed .sideBarMenu,
+    .sideBarContainerCollapsed .sideBarMenuSticked {
         max-width: 0px !important;
         margin: 0 !important;
         border: 0;
@@ -320,12 +331,15 @@
     }
 
     .sideBarMenu,
+    .sideBarMenuSticked,
     .sideBarContainer {
         width: 65px !important;
     }
 
     .sideBarMenu .sideBarItemTitle,
-    .sideBarMenu .sideBarSubItemLabel {
+    .sideBarMenu .sideBarSubItemLabel,
+    .sideBarMenuSticked .sideBarItemTitle,
+    .sideBarMenuSticked .sideBarSubItemLabel {
         display: none !important;
     }
 }

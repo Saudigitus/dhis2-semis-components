@@ -16,6 +16,8 @@ interface SideBarProps {
     sideBarData: SideBarItemProps[]
 
     sideBarBtnPosition?: ButtonPosition
+
+    stickLastItemToBottom?: boolean
 }
 
 interface SideBarItemProps {
