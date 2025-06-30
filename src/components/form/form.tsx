@@ -10,16 +10,13 @@ interface IForm extends Record<string, any> { }
 interface imageFieldSpecificProps {
     storyBook?: boolean,
     trackedEntity?: string,
-    destructive?: boolean
-    baseUrl?: string
-    setFormValues?: (values: any) => void
+    destructive?: boolean,
+    setTrackedValues?: (value: any) => void,
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 
-export default function CustomForm(props: CombinedProps) {
-    const { storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, baseUrl } = props
-    const { withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues } = props
+export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues }: CombinedProps) {
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
     const [formSubmitted, setFormSubmitted] = useState(false)
@@ -29,7 +26,7 @@ export default function CustomForm(props: CombinedProps) {
         setFormSubmitted(false)
     }
 
-    const formActions = (form: any) => [
+    const formActions = (form: any, values: any) => [
         {
             id: "cancel",
             type: "reset",
@@ -66,6 +63,7 @@ export default function CustomForm(props: CombinedProps) {
                     formRef.current = form;
 
                     useEffect(() => {
+                        setTrackedValues && setTrackedValues(values);
                         if (deepEqual(initialValues, values)) {
                             setChanged(false)
                         } else {
@@ -104,14 +102,13 @@ export default function CustomForm(props: CombinedProps) {
                                     storyBook={storyBook}
                                     setChanged={setChanged}
                                     submitted={formSubmitted}
-                                    baseUrl={baseUrl}
                                 />
                             ))}
 
                             {withButtons && (
                                 <div>
                                     <ButtonStrip end className={styles.btnStrip}>
-                                        {formActions(form).map((action: any, i) => (
+                                        {formActions(form, values).map((action: any, i) => (
                                             <Button key={i} {...action} loading={false}>
                                                 {action.label}
                                             </Button>
