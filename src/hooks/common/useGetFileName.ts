@@ -10,9 +10,9 @@ export function useGetFileName() {
         const capitalizedSectionName = sectionName.charAt(0).toUpperCase() + sectionName.slice(1)
         const capitalizedModule = module.charAt(0).toUpperCase() + module.slice(1)        
 
-        let name = `SEMIS - ${capitalizedSectionName}'s ${capitalizedModule}`
+        let name = `SEMIS - ${capitalizedSectionName}s ${capitalizedModule}`
         for (const filter of filters?.dataElements) {
-            name += ' - ' + useQuery().get(filter.code)
+            name += ' - ' + useQuery.get(filter.code)
         }
 
         return name
