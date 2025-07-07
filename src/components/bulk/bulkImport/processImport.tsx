@@ -14,9 +14,9 @@ export default function ProcessImport(props: importData) {
     const [open, setOpen] = useState(false)
     const [stats, setStats] = useState<any>({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] })
     const [excelData, setExcelData] = useState<any>({ mapping: [], module: "" })
-    const { importData } = useImportData({ setProgress, onError, stats, setStats, setOpen })
-    const [openStats, setOpenStats] = useState(false)
     const [openPogress, setOpenProgress] = useState(false)
+    const { importData } = useImportData({ setProgress, onError, stats, setStats, setOpen, setOpenProgress })
+    const [openStats, setOpenStats] = useState(false)
     const { validador, invalidRecords, validRecords, loader } = useValidateFile(programConfig, updating ? 'UPDATE' : "POST")
 
     useEffect(() => {
@@ -50,7 +50,7 @@ export default function ProcessImport(props: importData) {
                 setExcelData(resp)
             })
             .catch((error) => {
-                onError('Import Error: ' + error)
+                onError(error)
             })
     }
 

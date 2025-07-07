@@ -5,7 +5,7 @@ import { splitArrayIntoChunks } from "../../../../utils/common/splitArray"
 import { useGetEvents } from "dhis2-semis-functions";
 import { useUploadEvents } from "dhis2-semis-functions";
 
-export function postAttendanceValues({ setStats, setProgress, onError, setOpen }: { setOpen: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
+export function postAttendanceValues({ setStats, setProgress, onError, setOpen, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setOpen: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { uploadValues } = useUploadEvents()
     const { getEvents } = useGetEvents()
     let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] }
@@ -65,7 +65,8 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpen }
                 updateProgressF(40, 35, excelData.length)
             }).catch((error) => {
                 setOpen(false)
-                onError('Import Error: ' + error)
+                setOpenProgress(false)
+                onError(error)
             })
         }
 
@@ -79,7 +80,8 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpen }
 
                 }).catch((error) => {
                     setOpen(false)
-                    onError('Import Error: ' + error)
+                    setOpenProgress(false)
+                    onError(error)
                 });
             }
         }

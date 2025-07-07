@@ -6,18 +6,18 @@ import {
     DataTableRow,
 } from '@dhis2/ui'
 
-export default function ErrorDetailsTable({ data }: { data: any }) {
-    const keys: any = Object?.keys(data?.[0])
+export default function ErrorDetailsTable({ data, title }: { data: any, title?: string }) {
+    const keys: any = Object?.keys(data?.[0] ?? {})
 
     return (
         <>
             <DataTable>
                 <DataTableHead>
-                    <DataTableRow>
+                    {title && <DataTableRow>
                         <DataTableCell colSpan="3" error>
-                            Validation Errors
+                            {title}
                         </DataTableCell>
-                    </DataTableRow>
+                    </DataTableRow>}
                     <DataTableRow>
                         {
                             keys?.map((x) => <th style={{

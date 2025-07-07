@@ -5,7 +5,7 @@ import { ProgramConfig } from "dhis2-semis-types"
 import { useUploadEvents } from "dhis2-semis-functions";
 import { useGetEvents } from "dhis2-semis-functions";
 
-export function postValues({ setStats, setProgress, onError, setOpen }: { setOpen: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
+export function postValues({ setStats, setProgress, onError, setOpen, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setOpen: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { uploadValues } = useUploadEvents()
     const { getEvents } = useGetEvents()
     let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] }
@@ -46,7 +46,8 @@ export function postValues({ setStats, setProgress, onError, setOpen }: { setOpe
                     updateProgressF(50, 45, excelData.mapping.length * programStages.length)
                 }).catch((error) => {
                     setOpen(false)
-                    onError('Import Error: ' + error)
+                    setOpenProgress(false)
+                    onError(error)
                 })
             }
         }
@@ -59,7 +60,8 @@ export function postValues({ setStats, setProgress, onError, setOpen }: { setOpe
                 updateProgressF(50, 40, chunks.length)
             }).catch((error) => {
                 setOpen(false)
-                onError('Import Error: ' + error)
+                setOpenProgress(false)
+                onError(error)
             });
         }
 

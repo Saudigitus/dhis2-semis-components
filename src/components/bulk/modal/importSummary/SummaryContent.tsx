@@ -47,9 +47,7 @@ export const SummaryTable = (props: SummaryTableProps): React.ReactElement => {
                             doneProcessing ?
                                 <>
                                     {displayData?.length > 0 && <th style={{ textAlign: "center", background: "#eee", fontSize: "15px", padding: "10px", fontWeight: "400" }}></th>}
-                                    <th style={{ textAlign: "center", background: "#eee", fontSize: "15px", padding: "10px", fontWeight: "400" }}>Imported</th>
-                                    <th style={{ textAlign: "center", background: "#eee", fontSize: "15px", padding: "10px", fontWeight: "400" }}>Updated</th>
-                                    <th style={{ textAlign: "center", background: "#eee", fontSize: "15px", padding: "10px", fontWeight: "400" }}>Igonored</th>
+                                    <th style={{ textAlign: "left", background: "#eee", fontSize: "15px", padding: "10px", fontWeight: "400" }}>Import errors</th>
                                 </> :
                                 <>
                                     <th style={{ textAlign: "center", background: "#eee", fontSize: "15px", padding: "10px", fontWeight: "400" }}>Action</th>
@@ -62,7 +60,7 @@ export const SummaryTable = (props: SummaryTableProps): React.ReactElement => {
                 </thead>
                 <DataTableBody>
                     {
-                        doneProcessing ?
+                        (doneProcessing && displayData?.length > 0) ?
                             <DataTableRow
                                 {...(displayData?.length > 0 ? {
                                     expanded: expanded === 'done',
@@ -70,12 +68,10 @@ export const SummaryTable = (props: SummaryTableProps): React.ReactElement => {
                                         if (expanded === 'done') setExpanded('')
                                         else setExpanded('done')
                                     },
-                                    expandableContent: <ErrorDetailsTable data={displayData} />
+                                    expandableContent: <ErrorDetailsTable title='Validation errors' data={displayData} />
                                 } : {})}
                             >
-                                <DataTableCell align="center">{stats?.created}</DataTableCell>
-                                <DataTableCell align="center">{stats?.updated}</DataTableCell>
-                                <DataTableCell align="center">{stats?.ignored}</DataTableCell>
+                                <DataTableCell align="left">{displayData?.length}</DataTableCell>
                             </DataTableRow>
                             :
                             flatArray?.map((data: any, index) => {
