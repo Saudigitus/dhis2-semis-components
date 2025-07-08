@@ -9,7 +9,7 @@ const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programC
     const [pagination, setPagination] = useState<any>({ valid: { page: 1, pageSize: 10 }, invalid: { page: 1, pageSize: 10 } });
     const currentPage = pagination[activeTab]?.page;
     const tabPageSize = pagination[activeTab]?.pageSize;
-    const dataCont = { valid: doneProcessing ? stats?.errorDetails : validRecords, invalid: invalidRecords }
+    const dataCont = { valid: doneProcessing ? [...stats?.errorDetails, ...stats?.exceptions] : validRecords, invalid: invalidRecords }
 
     const handlePageChange = (newPage: number) => {
         setPagination((prev: any) => ({
@@ -41,7 +41,6 @@ const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programC
             <div style={{ height: doneProcessing ? "200px" : "137px", overflow: "auto" }}>
 
                 <SummaryTable
-                    stats={stats?.stats}
                     displayData={data}
                     doneProcessing={doneProcessing}
                     programConfig={programConfig}

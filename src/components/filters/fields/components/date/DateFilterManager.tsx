@@ -20,8 +20,6 @@ const DateFilterManager = (props: DateFilterManagerProps) => {
     const { onChange, value = { startDate: "", endDate: "" }, id } = props;
     const classes = useStyles()
 
-    console.log(value)
-
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <div className={styles.fromToContainer}>

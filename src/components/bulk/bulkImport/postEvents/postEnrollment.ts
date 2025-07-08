@@ -5,7 +5,7 @@ import { importSummary } from "../../../../utils/common/getImportSummary";
 import { useUploadEvents } from "dhis2-semis-functions";
 import { useGetEvents } from "dhis2-semis-functions";
 
-export function postEnrollmentData({ setStats, setProgress, onError, setOpen, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setOpen: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
+export function postEnrollmentData({ setStats, setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { getEvents } = useGetEvents()
     const { uploadValues } = useUploadEvents()
 
@@ -18,15 +18,9 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpen, se
     }
 
     async function postEnrollments(
-        enrollments: any[],
-        excelData: any,
-        importMode: "VALIDATE" | "COMMIT",
-        program: string,
-        updating: boolean,
-        dataStore: selectedDataStoreKey,
-        orgUnit: string
+        enrollments: any[], excelData: any, importMode: "VALIDATE" | "COMMIT", program: string, updating: boolean, dataStore: selectedDataStoreKey, orgUnit: string
     ) {
-        let copyData = [...enrollments], updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] }
+        let copyData = [...enrollments], updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] }
         const updateProgress = updating ? 40 : 0
 
         if (updating) {
@@ -60,7 +54,6 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpen, se
 
                     updateProgressF(updateProgress + 5, updateProgress, teis.length)
                 }).catch((error) => {
-                    setOpen(false)
                     setOpenProgress(false)
                     onError(error)
                 })
@@ -86,9 +79,9 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpen, se
                 updatedStats = importSummary(response, updatedStats)
                 updateProgressF((90 + 5 - updateProgress), (90 - updateProgress), chunks.length)
             }).catch((error) => {
-                onError(error)
-                setOpenProgress(false)
-                setOpen(false)
+                updatedStats = { ...updatedStats, exceptions: [{ "Error message": error?.message }] }
+                onError(error);
+                setOpenProgress(false);
             });
         }
 

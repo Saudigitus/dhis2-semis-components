@@ -6,11 +6,10 @@ interface SummaryTableProps {
     displayData: Record<string, any>[]
     doneProcessing: boolean
     programConfig: any
-    stats: any
 }
 
 export const SummaryTable = (props: SummaryTableProps): React.ReactElement => {
-    const { displayData, doneProcessing, programConfig, stats } = props
+    const { displayData, doneProcessing, programConfig } = props
     const [expanded, setExpanded] = useState<string>("")
     const att = [
         { displayName: "Ref", id: "ref" },
@@ -68,7 +67,7 @@ export const SummaryTable = (props: SummaryTableProps): React.ReactElement => {
                                         if (expanded === 'done') setExpanded('')
                                         else setExpanded('done')
                                     },
-                                    expandableContent: <ErrorDetailsTable title='Validation errors' data={displayData} />
+                                    expandableContent: <ErrorDetailsTable title='Error reports' data={displayData} />
                                 } : {})}
                             >
                                 <DataTableCell align="left">{displayData?.length}</DataTableCell>

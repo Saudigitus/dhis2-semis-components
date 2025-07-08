@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IconCheckmarkCircle16, Tag, ModalActions, Button, ButtonStrip } from "@dhis2/ui";
 import WithPadding from "../../../template/WithPadding";
 import styles from "../modal.module.css";
@@ -8,8 +8,6 @@ import SummaryCards from "./SummaryCards";
 import SummaryDetails from "./SummaryDetails";
 import { Collapse, LinearProgress } from "@mui/material";
 import { InfoOutlined } from "@mui/icons-material";
-import { importSummary } from "../../../../utils/common/getImportSummary";
-import summary from '../../../../summary.json'
 import ErrorDetailsTable from "./ErrorDetailsTable";
 
 interface ModalContentProps {
@@ -18,7 +16,7 @@ interface ModalContentProps {
     validRecords: any[]
     programConfig: any
     onSubmit: (args: "VALIDATE" | "COMMIT") => any
-    stats: { stats: { ignored: number, created: number, updated: number, total: number }, errorDetails: any[], byType: [] }
+    stats: { stats: { ignored: number, created: number, updated: number, total: number }, errorDetails: any[], byType: [], exceptions?: any[] }
 }
 
 const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
@@ -33,12 +31,10 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
         {
             label: "Dry Run",
             loading: false,
-            disabled: validRecords?.length === 0 || doneProcessing.validate || doneProcessing.commit,
+            disabled: stats?.exceptions?.length > 0 || validRecords?.length === 0 || doneProcessing.validate || doneProcessing.commit,
             onClick: async () => {
                 setLoading(true)
                 await onSubmit("VALIDATE").then(() => {
-                    setDoneProcessing({ validate: true, commit: false })
-                }).catch(() => {
                     setDoneProcessing({ validate: true, commit: false })
                 }).finally(() => setLoading(false))
             },
@@ -47,11 +43,9 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             label: "Import data",
             primary: true,
             loading: false,
-            disabled: doneProcessing.commit || validRecords?.length === 0,
+            disabled: stats?.exceptions?.length > 0 || doneProcessing.commit || validRecords?.length === 0,
             onClick: () => {
                 onSubmit("COMMIT").then(() => {
-                    setDoneProcessing((done: any) => ({ ...done, commit: true }))
-                }).catch(() => {
                     setDoneProcessing((done: any) => ({ ...done, commit: true }))
                 })
             },
@@ -101,7 +95,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             <WithPadding />
             <Collapse in={showDetails}>
                 <div className={styles.detailsContainer}>
-                    {(doneProcessing.commit || doneProcessing.validate) &&
+                    {((doneProcessing.commit || doneProcessing.validate) && stats?.byType?.length > 0) &&
                         <>
                             <WithPadding />
                             <Title style={{ fontSize: "18px" }} label={`Summary by tracker type`} type="subtitle" />
@@ -111,7 +105,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
                         </>
                     }
                     <Title style={{ fontSize: "18px" }} label={`Errors list`} type="subtitle" />
-                    <WithPadding p="10px 0 -50px 0" />
+                    <WithPadding p="0px 0 -50px 0" />
                     <SummaryDetails stats={stats} programConfig={programConfig} doneProcessing={doneProcessing.commit || doneProcessing.validate} invalidRecords={invalidRecords} validRecords={validRecords} />
                 </div>
             </Collapse>

@@ -72,8 +72,6 @@ function SelectButton(props: SelectButtonProps) {
         }
     }
 
-    console.log(filled, "filled", filled?.length || Object.keys(filled).length)
-
     return (
         <WithPadding p={"0.25em 0.5em 0.25em 0em"}>
             <div

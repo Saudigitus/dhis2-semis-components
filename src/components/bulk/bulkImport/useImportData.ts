@@ -8,10 +8,10 @@ import { useUrlParams } from "dhis2-semis-functions";
 
 type CombinedTypes = importData & excelData & { importMode: "VALIDATE" | "COMMIT" };
 
-export function useImportData({ setProgress, onError, setStats, stats, setOpen, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setOpen: (args: boolean) => void, stats: any, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (rags: any) => void }) {
-    const { postData } = postValues({ setStats, setProgress, onError, setOpen, setOpenProgress })
-    const { postAttendance } = postAttendanceValues({ setStats, setProgress, onError, setOpen, setOpenProgress })
-    const { postEnrollments } = postEnrollmentData({ setStats, setProgress, onError, setOpen, setOpenProgress })
+export function useImportData({ setProgress, onError, setStats, stats, setOpenProgress, }: { setOpenProgress: (args: boolean) => void, stats: any, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (rags: any) => void }) {
+    const { postData } = postValues({ setStats, setProgress, onError, setOpenProgress })
+    const { postAttendance } = postAttendanceValues({ setStats, setProgress, onError, setOpenProgress })
+    const { postEnrollments } = postEnrollmentData({ setStats, setProgress, onError, setOpenProgress })
     const { urlParameters } = useUrlParams()
     const { school: orgUnit } = urlParameters()
 
@@ -85,6 +85,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpen, 
                         selectedSectionDataStore as unknown as selectedDataStoreKey,
                         orgUnit as unknown as string
                     )
+
                     break
 
                 default:
@@ -95,7 +96,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpen, 
                     break;
             }
         } catch (error) {
-            setOpen(false)
+            setOpenProgress(false)
             onError(error)
         }
     }

@@ -12,11 +12,11 @@ export default function ProcessImport(props: importData) {
     const [progress, setProgress] = useState({ prorocess: "import", progress: 0, buffer: 0 })
     const UseValidation = new useValidation()
     const [open, setOpen] = useState(false)
-    const [stats, setStats] = useState<any>({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] })
+    const [stats, setStats] = useState<any>({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] })
     const [excelData, setExcelData] = useState<any>({ mapping: [], module: "" })
     const [openPogress, setOpenProgress] = useState(false)
-    const { importData } = useImportData({ setProgress, onError, stats, setStats, setOpen, setOpenProgress })
     const [openStats, setOpenStats] = useState(false)
+    const { importData } = useImportData({ setProgress, onError, stats, setStats, setOpenProgress })
     const { validador, invalidRecords, validRecords, loader } = useValidateFile(programConfig, updating ? 'UPDATE' : "POST")
 
     useEffect(() => {
@@ -26,8 +26,8 @@ export default function ProcessImport(props: importData) {
         }
 
         if (progress.progress >= 100) {
-            setOpenProgress(false)
             setProgress({ prorocess: "import", progress: 0, buffer: 0 })
+            setOpenProgress(false)
         }
     }, [progress.progress])
 
@@ -43,6 +43,7 @@ export default function ProcessImport(props: importData) {
         await UseValidation.validation(file[0])
             .then((resp) => {
                 const { mapping, module } = resp
+                console.log(mapping)
                 validador({ module, data: mapping }).then(() => {
                     setOpen(false)
                     setOpenStats(true)
@@ -85,11 +86,11 @@ export default function ProcessImport(props: importData) {
                 open={openStats}
             />}
 
-            <ModalProgress
+            {openPogress && <ModalProgress
                 progress={progress}
                 open={openPogress}
                 setOpen={setOpenProgress}
-            />
+            />}
         </div>
     )
 }
