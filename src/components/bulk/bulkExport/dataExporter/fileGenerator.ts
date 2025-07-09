@@ -8,8 +8,9 @@ import { dfHeaders } from '../../../../utils/constants/dfHeaders';
 import { Modules } from 'dhis2-semis-types';
 import { generateValidationSheet } from '../../../../utils/common/generateValidationSheet';
 import { convertNumberToLetter } from '../../../../utils/common/convertNumberToLetter';
+import { SchoolCalendar } from '../../../../types/datePicker/CalendarTypes';
 
-export function generateFile({ unavailableDays }: { unavailableDays: (date: Date) => boolean }) {
+export function generateFile({ unavailableDays, config }: { unavailableDays: (date: Date, config: SchoolCalendar) => boolean, config: SchoolCalendar }) {
     const password = '#saudigitus_SEMIS_Export#'
 
     async function excelGenerator(props: excelProps) {
@@ -139,13 +140,14 @@ export function generateFile({ unavailableDays }: { unavailableDays: (date: Date
                 sheet.eachRow({ includeEmpty: true }, (row: any) => {
                     row.eachCell({ includeEmpty: true }, (cell: any) => {
                         if (regex.test(cell._column._key) && cell._row._number > 3) {
-                            if (unavailableDays != undefined && unavailableDays(new Date(cell._column._key))) {
+                            if (unavailableDays != undefined && unavailableDays(new Date(cell._column._key), config)) {
 
                                 cell.dataValidation = null
                                 cell.value = 'Non School Day'
                                 cell.fill = { fgColor: { argb: 'f8f9fa' }, ...fill as unknown as any }
                                 cell.border = border as unknown as any
                                 cell.font = { size: 10 };
+                                cell.protection = { locked: true };
 
                             } else cell.protection = { locked: false };
                         } else if (cell._row._number > 3) {

@@ -1,4 +1,5 @@
 import { selectedDataStoreKey, ProgramConfig } from 'dhis2-semis-types';
+import { SchoolCalendar } from '../datePicker/CalendarTypes';
 
 /**
  * Description placeholder
@@ -96,7 +97,7 @@ interface ExportData {
     *
     * @type {function}
     */
-    isSchoolDay?: (date: Date) => boolean
+    isSchoolDay?: (date: Date, config: SchoolCalendar) => boolean
 
     /**
      * Sometimes we may need a blank file to add new data, with just the structure and headers. 
@@ -108,6 +109,8 @@ interface ExportData {
      * @type {?boolean}
      */
     empty?: boolean
+
+    schoolCalendar?: SchoolCalendar
 }
 
 interface GenerateHeaders {

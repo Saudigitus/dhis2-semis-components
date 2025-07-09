@@ -44,4 +44,4 @@ interface SchoolCalendar {
         wednesday: boolean
     }
 }
-export type { CalendarProps, DatePickerProps, DropDownCalendarProps }
+export type { CalendarProps, DatePickerProps, DropDownCalendarProps, SchoolCalendar }

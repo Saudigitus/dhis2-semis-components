@@ -9,6 +9,7 @@ import { generateEmptyRows } from '../../../utils/common/generateData';
 import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
 import { useGetEvents, useUrlParams } from "dhis2-semis-functions";
+import { SchoolCalendar } from "../../../types/datePicker/CalendarTypes";
 
 export function useExportData(props: ExportData) {
     const {
@@ -21,14 +22,15 @@ export function useExportData(props: ExportData) {
         sectionType,
         empty = false,
         setProgress = () => { },
-        onError
+        onError,
+        schoolCalendar = {} as SchoolCalendar
     } = props
     const { getData } = getCommonSheetData({ ...props, onError })
     const { urlParameters } = useUrlParams()
     const { schoolName: orgUnitName, school: orgUnit } = urlParameters()
     const { getEvents } = useGetEvents()
     const { generate } = generateAndReserveIds()
-    const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date) => boolean })
+    const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date, config: SchoolCalendar) => boolean, config: schoolCalendar })
     const { getHeaders } = generateHeaders({
         module,
         programConfig,
@@ -41,9 +43,8 @@ export function useExportData(props: ExportData) {
     const { msg, valid } = areParamsValid({ ...props })
 
     async function exportData({ fileName, numberOfEmptyRows, startDate, endDate }: { fileName?: string, startDate?: any, endDate?: any, numberOfEmptyRows?: number }) {
-        if (!valid) {
-            onError(`Export error: ${msg}`)
-        } else {
+        if (!valid) onError(`Export error: ${msg}`)
+        else {
 
             if (empty && module != Modules.Enrollment) {
                 onError('Export error: The empty variable only applies to the enrollment module!')
