@@ -42,14 +42,14 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
                     const { attributes, ...rest } = copyData[index]
 
                     copyData[index] = {
-                        orgUnit: teis[index]?.orgUnit,
-                        trackedEntity: teis[index]?.tei,
-                        trackedEntityType: dataStore.trackedEntityType,
-                        attributes: attributes,
                         enrollments: [{
                             ...rest,
                             events: [...(thisTeiEvent ? [{ ...copyData[index].events[0], event: thisTeiEvent.event }] : [])]
-                        }]
+                        }],
+                        orgUnit: teis[index]?.orgUnit,
+                        trackedEntity: teis[index]?.tei,
+                        trackedEntityType: dataStore.trackedEntityType,
+                        attributes: attributes
                     }
 
                     updateProgressF(updateProgress + 5, updateProgress, teis.length)

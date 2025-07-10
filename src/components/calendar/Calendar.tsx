@@ -11,7 +11,13 @@ export default function Calendar(props: CalendarProps) {
       <DateCalendar
         value={value.selectedDate}
         onChange={(e: any) => { setValue({ selectedDate: e as Date }) }}
-        shouldDisableDate={(date: any) => !!(dateDisabler && dateDisabler(date, config))}
+        shouldDisableDate={(date: any) => {
+          const today = new Date()
+          today.setHours(0, 0, 0, 0)
+          const isFuture = date > today
+          const isDisabledByCustomLogic = dateDisabler && dateDisabler(date, config)
+          return isFuture || isDisabledByCustomLogic
+        }}
       />
     </LocalizationProvider>
   );

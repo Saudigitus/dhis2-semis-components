@@ -43,7 +43,6 @@ export default function ProcessImport(props: importData) {
         await UseValidation.validation(file[0])
             .then((resp) => {
                 const { mapping, module } = resp
-                console.log(mapping)
                 validador({ module, data: mapping }).then(() => {
                     setOpen(false)
                     setOpenStats(true)
@@ -59,6 +58,7 @@ export default function ProcessImport(props: importData) {
         <div>
             <a style={{ width: "100%", cursor: "pointer", padding: "5px" }} onClick={(e) => {
                 e.preventDefault()
+                setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] })
                 setOpen(true)
             }}>
                 {label}

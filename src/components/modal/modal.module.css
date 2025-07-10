@@ -68,7 +68,7 @@
 
 @media screen and (max-width: 950px) and (min-width: 436px) {
     .modalContainer.large {
-        min-width: 84.21vw !important;
+        min-width: 85vw !important;
     }
     
     .modalContainer.medium {

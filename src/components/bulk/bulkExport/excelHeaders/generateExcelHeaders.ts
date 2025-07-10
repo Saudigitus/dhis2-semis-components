@@ -43,7 +43,7 @@ export function generateHeaders(props: GenerateHeaders) {
                                 header: day.date,
                                 key: day.date,
                                 disabled: !day.schoolDay,
-                                width: 25,
+                                width: day.date.length + 2,
                             }
                         })
                     ]
@@ -62,17 +62,17 @@ export function generateHeaders(props: GenerateHeaders) {
                         {
                             header: 'Ref',
                             key: 'ref',
-                            width: 15,
+                            width: 5,
                         },
                         {
                             header: 'School',
                             key: 'school',
-                            width: 25,
+                            width: 8,
                         },
                         {
                             header: 'Enrollment Date',
                             key: 'enrollmentDate',
-                            width: 25,
+                            width: 14
                         }
                     ]
 
@@ -91,7 +91,7 @@ export function generateHeaders(props: GenerateHeaders) {
                         ...section, headers: [...section.headers, {
                             header: `${de?.dataElement.displayName}${de?.compulsory && empty ? "*" : ""}`,
                             key: `${stageId}.${de?.dataElement?.id}`,
-                            width: de?.dataElement?.displayName.length > 25 ? de?.dataElement.displayName.length : 25,
+                            width: de?.dataElement?.displayName.length + 3
                         }]
                     }
                 })
@@ -101,7 +101,6 @@ export function generateHeaders(props: GenerateHeaders) {
                 else formatedHeaders.push(section)
             }
         }
-
 
         for (const x of programConfig?.programTrackedEntityAttributes || []) {
             if (x?.trackedEntityAttribute?.optionSet?.options?.length > 0) {
@@ -116,7 +115,7 @@ export function generateHeaders(props: GenerateHeaders) {
             att.push({
                 header: `${x.trackedEntityAttribute.displayName}${x.mandatory && empty ? "*" : ""}`,
                 key: x.trackedEntityAttribute.id,
-                width: x.trackedEntityAttribute.displayName.length > 25 ? x.trackedEntityAttribute.displayName : 25,
+                width: x.trackedEntityAttribute.displayName.length + 3,
             });
         }
 
