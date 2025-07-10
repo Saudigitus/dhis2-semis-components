@@ -81,7 +81,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
         )
     }
 
-    return (k
+    return (
         <>
             <NoticeBox
                 title={stats?.stats?.ignored > 0 ? "Errors were found!" : 'No errors!'}
