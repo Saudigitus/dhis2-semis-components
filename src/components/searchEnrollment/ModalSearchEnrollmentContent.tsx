@@ -174,6 +174,8 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                     showRowActions
                     searchActions
                     paginate={false}
+                    showHeaderFilters={false}
+                    showRowIndex={false}
                   />
                 </div> :
                 <NoticeBox className={styles.noticeBox} title={`No ${sectionName} found`}>

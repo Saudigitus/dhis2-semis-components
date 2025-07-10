@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { IconCheckmarkCircle16, Tag, ModalActions, Button, ButtonStrip } from "@dhis2/ui";
+import React, { useEffect, useState } from "react";
+import { ModalActions, Button, ButtonStrip, NoticeBox } from "@dhis2/ui";
 import WithPadding from "../../../template/WithPadding";
 import styles from "../modal.module.css";
 import { type ButtonActionProps } from "../../../../types/buttons/ButtonActions";
@@ -23,9 +23,13 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
     const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, stats } = props;
     const [showDetails, setShowDetails] = useState(false)
     const [load, setLoading] = useState(false)
-    const [doneProcessing, setDoneProcessing] = useState({ validate: false, commit: false })
+    const [doneProcessing, setDoneProcessing] = useState<any>({ validate: false, commit: false })
 
     const handleShowDetails = () => { setShowDetails(!showDetails); }
+
+    useEffect(() => {
+        setDoneProcessing({ validate: false, commit: false })
+    }, [])
 
     const modalActions: ButtonActionProps[] = [
         {
@@ -77,9 +81,22 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
         )
     }
 
-    return (
+    return (k
         <>
-            <Tag positive icon={< IconCheckmarkCircle16 />} className={styles.tagContainer} >  <Title style={{ fontSize: "15px", fontWeight: "400" }} label={`Import data preview `} type="title" /></Tag>
+            <NoticeBox
+                title={stats?.stats?.ignored > 0 ? "Errors were found!" : 'No errors!'}
+                warning={stats?.stats?.ignored > 0}
+                valid={stats?.stats?.ignored == 0}
+            >
+                {stats?.stats?.ignored > 0 ?
+                    doneProcessing.validate ?
+                        "Erros were found, please review your file!" :
+                        "Occurred errors during the import process, please review your file!"
+                    : doneProcessing.commit ?
+                        "Date imported successfully!" :
+                        "No errors were found during dry run process, you can proceed with the import."
+                }
+            </NoticeBox >
 
             <WithPadding />
             <Title style={{ fontSize: "18px" }} label={`Summary`} type="title" />
@@ -104,9 +121,14 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
                             <WithPadding />
                         </>
                     }
-                    <Title style={{ fontSize: "18px" }} label={`Errors list`} type="subtitle" />
-                    <WithPadding p="0px 0 -50px 0" />
-                    <SummaryDetails stats={stats} programConfig={programConfig} doneProcessing={doneProcessing.commit || doneProcessing.validate} invalidRecords={invalidRecords} validRecords={validRecords} />
+                    {
+                        stats?.stats?.ignored > 0 &&
+                        <>
+                            <Title style={{ fontSize: "18px" }} label={`Errors list`} type="subtitle" />
+                            <WithPadding p="0px 0 -50px 0" />
+                            <SummaryDetails stats={stats} programConfig={programConfig} doneProcessing={doneProcessing.commit || doneProcessing.validate} invalidRecords={invalidRecords} validRecords={validRecords} />
+                        </>
+                    }
                 </div>
             </Collapse>
             {load && <LinearProgress />}

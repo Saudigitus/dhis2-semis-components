@@ -92,11 +92,10 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                 const columnHeader = headerCell.value;
                 const colKey = sheet.getColumn(colIndex)._key
                 const index = dfHeaders.findIndex((x: any) => x.key === colKey)
+                const col = sheet.getColumn(colIndex)
+                col.numFmt = '@'
 
-                if (index !== -1 || colKey === 'dataElements') {
-                    const col = sheet.getColumn(colIndex)
-                    col.hidden = true
-                }
+                if (index !== -1 || colKey === 'dataElements') col.hidden = true
 
                 sheet.eachRow((row: any, index: number) => {
                     const dataElementId = colKey.split(".")
