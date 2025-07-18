@@ -80,21 +80,25 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             </ModalActions>
         )
     }
-
+    console.log(stats, invalidRecords, (stats?.stats?.ignored ?? 0) + invalidRecords.length)
     return (
         <>
             <NoticeBox
-                title={stats?.stats?.ignored > 0 ? "Errors were found!" : 'No errors!'}
-                warning={stats?.stats?.ignored > 0}
-                valid={stats?.stats?.ignored == 0}
+                title={((stats?.stats?.ignored ?? 0) + invalidRecords.length + stats?.exceptions?.length) > 0 ? "Errors were found!" : 'No errors!'}
+                warning={((stats?.stats?.ignored ?? 0) + invalidRecords.length + stats?.exceptions?.length) > 0}
+                valid={((stats?.stats?.ignored ?? 0) + invalidRecords.length + stats?.exceptions?.length) == 0}
             >
-                {stats?.stats?.ignored > 0 ?
+                {((stats?.stats?.ignored ?? 0) + invalidRecords.length + stats?.exceptions?.length) > 0 ?
                     doneProcessing.validate ?
                         "Erros were found, please review your file!" :
-                        "Occurred errors during the import process, please review your file!"
+                        (invalidRecords.length > 0 || stats?.exceptions?.length) ? "Invalid records were found, please review your file!" :
+                            "Occurred errors during the import process, please review your file!"
                     : doneProcessing.commit ?
                         "Date imported successfully!" :
-                        "No errors were found during dry run process, you can proceed with the import."
+                        doneProcessing.validate ?
+                            "No errors were found during dry run process, you can proceed with the import." :
+                            "No errors were found during file validation process, you can proceed with the dry run/import."
+
                 }
             </NoticeBox >
 
@@ -122,9 +126,8 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
                         </>
                     }
                     {
-                        stats?.stats?.ignored > 0 &&
+                        ((stats?.stats?.ignored ?? 0) + invalidRecords.length + ((doneProcessing.commit || doneProcessing.validate) ? 0 : validRecords.length)) > 0 &&
                         <>
-                            <Title style={{ fontSize: "18px" }} label={`Errors list`} type="subtitle" />
                             <WithPadding p="0px 0 -50px 0" />
                             <SummaryDetails stats={stats} programConfig={programConfig} doneProcessing={doneProcessing.commit || doneProcessing.validate} invalidRecords={invalidRecords} validRecords={validRecords} />
                         </>

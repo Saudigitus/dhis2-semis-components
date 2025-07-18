@@ -1,9 +1,9 @@
 .modalContainer {
-    padding: 10px !important;
+    padding: 5px !important;
 }
 
 .modalContainer.large {
-    min-width: 1000px !important;
+    min-width: 1050px !important;
 }
 
 .modalContainer.medium {

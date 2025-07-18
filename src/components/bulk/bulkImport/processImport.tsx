@@ -50,6 +50,8 @@ export default function ProcessImport(props: importData) {
                 setExcelData(resp)
             })
             .catch((error) => {
+                setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [{ "Error message": error?.message }], byType: [] })
+                setOpenProgress(false)
                 onError(error)
             })
     }

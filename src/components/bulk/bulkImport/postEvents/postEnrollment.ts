@@ -25,7 +25,7 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
 
         if (updating) {
             const teis = excelData.map((x: any) => {
-                return { tei: x.Ids.trackedEntity, orgUnit: x.Ids.orgUnit, enrollment: x.Ids.enrollment }
+                return { tei: x?.Ids?.trackedEntity, orgUnit: x.Ids.orgUnit, enrollment: x.Ids.enrollment }
             })
 
             for (let index = 0; index < teis.length; index++) {
@@ -80,8 +80,8 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
                 updateProgressF((90 + 5 - updateProgress), (90 - updateProgress), chunks.length)
             }).catch((error) => {
                 updatedStats = { ...updatedStats, exceptions: [{ "Error message": error?.message }] }
-                onError(error);
                 setOpenProgress(false);
+                onError(error);
             });
         }
 

@@ -100,7 +100,7 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
                 status: "ACTIVE",
                 occurredAt: format(new Date(), 'yyyy-MM-dd'),
                 programStage: stage.id,
-                ...(updating ? { trackedEntity: student.Ids.trackedEntity } : {})
+                ...(updating ? { trackedEntity: student?.Ids?.trackedEntity } : {})
             })
         }
 

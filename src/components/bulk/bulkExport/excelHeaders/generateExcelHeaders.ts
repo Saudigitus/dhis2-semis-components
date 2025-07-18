@@ -91,7 +91,7 @@ export function generateHeaders(props: GenerateHeaders) {
                         ...section, headers: [...section.headers, {
                             header: `${de?.dataElement.displayName}${de?.compulsory && empty ? "*" : ""}`,
                             key: `${stageId}.${de?.dataElement?.id}`,
-                            width: de?.dataElement?.displayName.length + 3
+                            width: de?.dataElement?.displayName.length + 2
                         }]
                     }
                 })
@@ -115,7 +115,7 @@ export function generateHeaders(props: GenerateHeaders) {
             att.push({
                 header: `${x.trackedEntityAttribute.displayName}${x.mandatory && empty ? "*" : ""}`,
                 key: x.trackedEntityAttribute.id,
-                width: x.trackedEntityAttribute.displayName.length + 3,
+                width: x.trackedEntityAttribute.displayName.length + 2,
             });
         }
 

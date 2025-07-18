@@ -97,6 +97,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
             }
         } catch (error) {
             setOpenProgress(false)
+            setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [{ "Error message": error?.message || error || 'Unkknown error' }], byType: [] })
             onError(error)
         }
     }
