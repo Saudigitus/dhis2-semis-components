@@ -21,9 +21,15 @@ const CardActions = ({ actions, align }: { actions?: Action[], align: PositionPr
                 actions?.length === 0 ? <></> :
                     actions?.map((action) => (
                         <Tooltip title={action?.label ?? ""}>
-                            <IconButton onClick={action?.onAction} size="small">
-                                {action.icon ?? <></>}
-                            </IconButton>
+                            <span>
+                                <IconButton
+                                    size="small"
+                                    onClick={action?.onAction}
+                                    disabled={action?.disabled}
+                                >
+                                    {action.icon ?? <></>}
+                                </IconButton>
+                            </span>
                         </Tooltip>
                     ))
             }
