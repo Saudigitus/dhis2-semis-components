@@ -62,12 +62,12 @@ const AppWrapperRaw = ({ children, dataStoreKey, validate }: AppWrapperProps) =>
 
 type CombinedTypes = AppWrapperProps & { baseUrl: string };
 
-const AppWrapper = ({ children, dataStoreKey, baseUrl }: CombinedTypes) => {
+const AppWrapper = ({ children, dataStoreKey, baseUrl, validate }: CombinedTypes) => {
 
   return (
     <DataProvider baseUrl={baseUrl}>
       <RecoilRoot>
-        <AppWrapperRaw dataStoreKey={dataStoreKey}>
+        <AppWrapperRaw validate={validate} dataStoreKey={dataStoreKey}>
           {children}
         </AppWrapperRaw>
       </RecoilRoot>
