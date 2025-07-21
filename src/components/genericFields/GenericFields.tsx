@@ -12,6 +12,7 @@ import DateRangePicker from './fields/datepicker/improvedDateRage';
 import ImageField from './fields/ImageField';
 import { DataProvider } from '@dhis2/app-runtime';
 import OrgUnitTreeField from "./fields/orgUnitTree/OrgUnitTreeField";
+import SelectMultiple from "./fields/MultiSelect";
 
 function GenericFields(props: GenericFieldsComponentProps) {
   const { attribute, disabled, valueType, form, onInputChange, storybook, setChanged, submitted, baseUrl } = props;
@@ -43,6 +44,9 @@ function GenericFields(props: GenericFieldsComponentProps) {
 
     case Attribute.valueType.LIST as unknown as CustomAttributeProps["valueType"]:
       return <SingleSelectField submitted={submitted} setChanged={setChanged} options={attribute.options} onChange={onInputChange} {...attribute} disabled={attribute.disabled} />;
+
+    case 'MULTI_SELECT' as unknown as CustomAttributeProps["valueType"]:
+      return <SelectMultiple setChanged={setChanged} options={attribute.options} onChange={onInputChange} {...attribute} disabled={attribute.disabled} />;
 
     case Attribute.valueType.IMAGE as unknown as CustomAttributeProps["valueType"]:
       return <>

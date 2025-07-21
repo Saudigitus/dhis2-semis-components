@@ -25,7 +25,6 @@ const OptionSetAutocomplete = (props: AutoCompleteProps & { submitted?: boolean 
         clearIcon={null}
         disabled={props.disabled}
         getOptionLabel={(option) => option.label}        
-        // getOptionSelected={(option, value) => option.value === value.value}
         value={options?.find((element: { value: string }) => element.value === input.value) ?? null}
         renderInput={(params) => (
           <TextField

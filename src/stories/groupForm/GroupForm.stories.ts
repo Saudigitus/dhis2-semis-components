@@ -183,9 +183,38 @@ export const Group_form: Story = {
                     }
                 ]
             },
+            {
+                name: "Multi-select Input",
+                description: "No description",
+                fields: [
+                    {
+                        required: true,
+                        name: "Multi-select",
+                        labelName: "Multi-select Input",
+                        valueType: "MULTI_SELECT" as unknown as CustomAttributeProps["valueType"],
+                        disabled: false,
+                        visible: true,
+                        options: {
+                            optionSet: {
+                                id: "option set id",
+                                options: [
+                                    { label: "Option 1", value: "Option1" },
+                                    { label: "Option 2", value: "Option2" },
+                                    { label: "Option 3", value: "Option3" },
+                                    { label: "Option 4", value: "Option4" }
+                                ]
+                            }
+                        },
+                        description: "Multi-select",
+                        id: "Multi-select",
+                        displayName: "Multi-select",
+                        type: VariablesTypes.DataElement
+                    }
+                ]
+            },
         ],
-        onFormSubtmit: (e) => { console.log(e, "lllll") },
-        onInputChange: (e) => { console.log(e, "ll") },
+        onFormSubtmit: (e) => { },
+        onInputChange: (e) => { },
         initialValues: {},
         style: { width: "900px" },
         loading: false

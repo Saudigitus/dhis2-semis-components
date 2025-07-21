@@ -1,17 +1,12 @@
-import React from 'react';
 import {
     ReactFinalForm,
     InputFieldFF,
-    composeValidators,
     hasValue,
-    string
 } from '@dhis2/ui'
 import style from "./fields.module.css";
 import { FormFieldsProps } from '../../../types/form/GenericFieldsTypes';
 
 const { Field } = ReactFinalForm
-
-const VALIDATOR = composeValidators(string, hasValue)
 
 function InputText(props: FormFieldsProps) {
     return (
