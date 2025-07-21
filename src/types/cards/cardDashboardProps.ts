@@ -12,6 +12,8 @@ export interface Action {
     onAction?: () => void;
     /**Tooltip label displayed on action icon hover*/
     label?: string;
+    /** To define when the action has to be disabled */
+    disabled?: boolean;
 }
 
 export interface ContentProps {
