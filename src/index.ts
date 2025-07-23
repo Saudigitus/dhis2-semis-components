@@ -34,12 +34,14 @@ import DropDownCalendar from './components/calendar/DropDownCalendar'
 import OrgUnitTreeField from './components/genericFields/fields/orgUnitTree/OrgUnitTreeField'
 import TabComponent from "./components/tabs/TabComponent"
 import { DataStoreState } from './schemas/dataStore'
+import { useDataStore } from './hooks/appWrapper/useDataStore'
 
 export {
     HeaderValuesState,
     DataStoreState,
     useGetUsedProgramStages,
     useDataStoreKey,
+    useDataStore,
     useHeaderKey,
     Table,
     SingleSelectField,
