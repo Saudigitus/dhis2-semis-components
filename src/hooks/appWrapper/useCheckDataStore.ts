@@ -50,7 +50,7 @@ export function useCheckDataStore(keySpace: string) {
             await getDataStore(validate).then(async (resp) => {
                 let programs: any = []
 
-                for (let i = 0; i < resp; i++) {
+                for (let i = 0; i < resp?.length; i++) {
                     const result = await getProgram(resp?.[i].program)
                     programs.push(result)
                 }
