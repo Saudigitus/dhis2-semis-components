@@ -1,19 +1,27 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Center, CircularLoader } from "@dhis2/ui"
 import { DataStoreNotFound, DataStoreNotValidated, ProgramNotFound } from './components/dataStoreErrors';
 import { AppWrapperProps } from '../../types/appWrapper/AppWrapperProps';
 import { DataProvider } from '@dhis2/app-runtime';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useSetRecoilState } from 'recoil';
 import { useCheckDataStore } from '../../hooks/appWrapper/useCheckDataStore';
+import useDataStore from '../../hooks/appWrapper/useDataStore';
+import { SchoolCalendarData } from '../../schemas/schoolCalendar';
 
 const AppWrapperRaw = ({ children, dataStoreKey, validate }: AppWrapperProps) => {
+  const [loadingCalendar, setLoading] = useState<boolean>(true)
   const { createError, error, loading, startCheck, errorProgram, validationError } = useCheckDataStore(dataStoreKey)
+  const { error: errorSchoolCalendar, getDataStore: getCallendar } = useDataStore({ keySpace: "dataStore/semis/schoolCalendar", setLoading });
+  const setCalendarValues = useSetRecoilState(SchoolCalendarData)
 
   useEffect(() => {
     void startCheck(validate)
+    void getCallendar(false).then((resp) => {
+      setCalendarValues(resp)
+    })
   }, [])
 
-  if (loading) {
+  if (loading || loadingCalendar) {
     return (
       <Center>
         <CircularLoader />
@@ -21,7 +29,7 @@ const AppWrapperRaw = ({ children, dataStoreKey, validate }: AppWrapperProps) =>
     )
   }
 
-  if (error || createError) {
+  if (error || createError || errorSchoolCalendar) {
     return (<DataStoreNotFound error={error ?? errorProgram} />)
   }
 

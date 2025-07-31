@@ -35,10 +35,14 @@ import OrgUnitTreeField from './components/genericFields/fields/orgUnitTree/OrgU
 import TabComponent from "./components/tabs/TabComponent"
 import { DataStoreState } from './schemas/dataStore'
 import { useDataStore } from './hooks/appWrapper/useDataStore'
+import { SchoolCalendarData } from './schemas/schoolCalendar'
+import { useSchoolCalendar } from "./hooks/dataStore/useSchoolCalendar"
 
 export {
     HeaderValuesState,
     DataStoreState,
+    SchoolCalendarData,
+    useSchoolCalendar,
     useGetUsedProgramStages,
     useDataStoreKey,
     useDataStore,

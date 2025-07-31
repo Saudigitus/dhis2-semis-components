@@ -1,27 +1,5 @@
-interface DatePickerProps {
-    setValue: (args: any) => void
-    value: any[]
-    disabled: boolean
-}
-
-interface DropDownCalendarProps {
-    setValue: ({ selectedDate }: { selectedDate: Date }) => void
-    dateDisabler?: (date: Date, config: SchoolCalendar) => boolean
-    label: string
-    icon?: any
-    value?: string
-    config?: SchoolCalendar
-}
-
-interface CalendarProps {
-    value: { selectedDate: Date }
-    dateDisabler?: (date: Date, config: SchoolCalendar) => boolean
-    setValue: ({ selectedDate }: { selectedDate: Date }) => void
-    config?: SchoolCalendar
-}
-
 interface defaults {
-    currentAcademicYear: string
+    academicYear: string
 }
 
 interface ClassPeriodType {
@@ -37,7 +15,7 @@ interface HolidayType {
     type: string
 }
 
-interface SchoolCalendar {
+interface schoolCalendar {
     id: string
     key: string
     defaults: defaults
@@ -62,4 +40,12 @@ interface SchoolCalendar {
     }
 }
 
-export type { CalendarProps, DatePickerProps, DropDownCalendarProps, SchoolCalendar }
+interface dataStoreRecord {
+    academicYear: string
+    defaults: {
+        academicYear: string
+    },
+    schoolCalendar: schoolCalendar[]
+}
+
+export type { dataStoreRecord, ClassPeriodType, HolidayType, schoolCalendar }
