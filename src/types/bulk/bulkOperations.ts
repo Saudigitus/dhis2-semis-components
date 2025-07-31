@@ -109,8 +109,6 @@ interface ExportData {
      * @type {?boolean}
      */
     empty?: boolean
-
-    schoolCalendar?: SchoolCalendar
 }
 
 interface GenerateHeaders {

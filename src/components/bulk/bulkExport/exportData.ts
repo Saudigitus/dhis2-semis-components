@@ -10,6 +10,7 @@ import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
 import { useGetEvents, useUrlParams } from "dhis2-semis-functions";
 import { SchoolCalendar } from "../../../types/datePicker/CalendarTypes";
+import { useSchoolCalendar } from "../../../hooks/dataStore/useSchoolCalendar";
 
 export function useExportData(props: ExportData) {
     const {
@@ -23,14 +24,15 @@ export function useExportData(props: ExportData) {
         empty = false,
         setProgress = () => { },
         onError,
-        schoolCalendar = {} as SchoolCalendar
     } = props
     const { getData } = getCommonSheetData({ ...props, onError })
     const { urlParameters } = useUrlParams()
     const { schoolName: orgUnitName, school: orgUnit } = urlParameters()
     const { getEvents } = useGetEvents()
     const { generate } = generateAndReserveIds()
-    const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date, config: SchoolCalendar) => boolean, config: schoolCalendar })
+    const { defaults, schoolCalendar } = useSchoolCalendar()
+    const selectedCalendar = schoolCalendar?.find(x => x?.academicYear?.code == defaults?.academicYear)
+    const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date, config: SchoolCalendar) => boolean, config: selectedCalendar })
     const { getHeaders } = generateHeaders({
         module,
         programConfig,

@@ -21,7 +21,7 @@ interface CalendarProps {
 }
 
 interface defaults {
-    currentAcademicYear: string
+    academicYear: string
 }
 
 interface ClassPeriodType {
