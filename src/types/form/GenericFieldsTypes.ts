@@ -38,6 +38,7 @@ interface AutoCompleteProps {
 }
 
 interface SwitchFieldProps {
+    name: string
     disabled: boolean
     required: string | boolean
 }

@@ -13,13 +13,18 @@ import ImageField from './fields/ImageField';
 import { DataProvider } from '@dhis2/app-runtime';
 import OrgUnitTreeField from "./fields/orgUnitTree/OrgUnitTreeField";
 import SelectMultiple from "./fields/MultiSelect";
+import SwitchInput from "./fields/SwitchInput";
 
 function GenericFields(props: GenericFieldsComponentProps) {
   const { attribute, disabled, valueType, form, onInputChange, storybook, setChanged, submitted, baseUrl } = props;
 
   switch (valueType) {
     case Attribute.valueType.BOOLEAN as unknown as CustomAttributeProps["valueType"]:
-      return <RadioButton {...attribute} disabled={disabled} />;
+      return <> {
+        attribute?.radio
+          ? <RadioButton {...attribute} disabled={disabled} />
+          : <SwitchInput {...attribute} disabled={disabled || attribute.disabled} required={false} />
+      }</>
 
     case Attribute.valueType.PHONE_NUMBER as unknown as CustomAttributeProps["valueType"]:
     case Attribute.valueType.EMAIL as unknown as CustomAttributeProps["valueType"]:

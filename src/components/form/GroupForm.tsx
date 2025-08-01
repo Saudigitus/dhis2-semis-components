@@ -16,8 +16,8 @@ interface customProps {
 interface CombinedProps extends GroupFormProps, customProps { }
 
 function GroupForm(props: CombinedProps) {
+    const { baseUrl, fieldsOrientation = "horizontal" } = props
     const { setChanged, name, fields, description, form, onInputChange, trackedEntity, storyBook, submitted } = props
-    const { baseUrl } = props
 
     return (
         <>
@@ -38,17 +38,23 @@ function GroupForm(props: CombinedProps) {
                 }
 
 
-                <WithPadding p={"5px 12px"}>
+                <WithPadding p={"5px 10px"}>
                     {fields?.filter((x: any) => x.visible)?.map((x: any, i: number) => {
                         return (
-                            <div className={classNames("row d-flex align-items-center", x.error ? styles.fieldError : x.warning ? styles.fieldWarning : styles.fieldNormal)} key={i}
-                                style={{ display: "flex" }}>
-                                <div className="col-12 col-md-6 d-flex">
+                            <div
+                                key={i}
+                                className={classNames(
+                                    "d-flex align-items-center",
+                                    fieldsOrientation === "horizontal" ? "flex-row" : "flex-column",
+                                    x.error ? styles.fieldError : x.warning ? styles.fieldWarning : styles.fieldNormal
+                                )}
+                            >
+                                <div className={classNames(fieldsOrientation === "horizontal" ? "col-12 col-md-6 d-flex" : "w-100 d-flex")}>
                                     <Label className={styles.label}>
                                         {`${x.labelName}${x.required ? " *" : ""}`}
                                     </Label>
                                 </div>
-                                <div className="col-12 col-md-6">
+                                <div className={classNames(fieldsOrientation === "horizontal" ? "col-12 col-md-6" : "w-100")}>
                                     <GenericFields
                                         attribute={{ ...x, trackedEntity }}
                                         disabled={!!(x.disabled)}

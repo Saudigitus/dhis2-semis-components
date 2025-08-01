@@ -1,8 +1,8 @@
 import React from 'react';
 import { Center as CenteredContent } from '@dhis2/ui'
+import { MoreHoriz, MoreVert } from '@mui/icons-material';
 import { RowActionsProps } from '../../../../../types/table/TableRowActionsProps';
 import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
-import { MoreVert } from '@mui/icons-material';
 
 
 export default function MenuActions(props: RowActionsProps) {
@@ -30,7 +30,7 @@ export default function MenuActions(props: RowActionsProps) {
           aria-controls={open ? 'basic-menu' : undefined}
           style={{ color: "#212121", opacity: disabled ? "0.5" : "1" }}
         >
-          <MoreVert />
+          <MoreHoriz />
         </IconButton>
       </CenteredContent>
       <Menu

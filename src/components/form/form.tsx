@@ -16,10 +16,12 @@ interface imageFieldSpecificProps {
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 
-export default function CustomForm({ storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues }: CombinedProps) {
-    const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
+export default function CustomForm(props: CombinedProps) {
     const [changed, setChanged] = useState(false)
     const [formSubmitted, setFormSubmitted] = useState(false)
+    const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
+    const { storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, onCancel, Form } = props
+    const { submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues, onFormBlur, CustomControls } = props
 
     const handleInputChange = (event: any) => {
         if (onInputChange) onInputChange({ value: event.target.value, field: event, name: event.target.name })
@@ -89,6 +91,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                                     setFormSubmitted(true)
                                 }
                             }}
+                            onBlur={(e) => { onFormBlur && onFormBlur(values) }}
                         >
                             {formFields?.map((section: any, i: number) => (
                                 <GroupForm
@@ -116,6 +119,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                                     </ButtonStrip>
                                 </div>
                             )}
+                            {CustomControls && <>{CustomControls}</>}
                         </form>
                     );
                 }}

@@ -29,42 +29,6 @@ export const Group_form: Story = {
         formFields: [
             {
                 storyBook: true,
-                name: "Text Inputs",
-                description: "No description",
-                fields: [
-                    {
-                        required: false,
-                        name: "label",
-                        labelName: "Input Label",
-                        valueType: "TEXT" as unknown as CustomAttributeProps["valueType"],
-                        disabled: false,
-                        visible: true,
-                        description: "label",
-                        id: "label",
-                        displayName: "label",
-                        type: VariablesTypes.DataElement
-                    },
-                ]
-            },
-            {
-                name: "Number Input",
-                description: "No description",
-                fields: [
-                    {
-                        required: true,
-                        name: "Number",
-                        labelName: "Number Input",
-                        valueType: "NUMBER" as unknown as CustomAttributeProps["valueType"],
-                        disabled: false,
-                        visible: true,
-                        description: "Number",
-                        id: "Number",
-                        displayName: "Number",
-                        type: VariablesTypes.DataElement
-                    }
-                ]
-            },
-            {
                 name: "Radio input",
                 description: "No description",
                 fields: [
@@ -83,6 +47,84 @@ export const Group_form: Story = {
                 ]
             },
             {
+                storyBook: true,
+                name: "Boolean Inputs",
+                description: "No description",
+                fields: [
+                    {
+                        required: false,
+                        name: "label",
+                        labelName: "Input Label",
+                        valueType: "BOOLEAN" as unknown as CustomAttributeProps["valueType"],
+                        disabled: false,
+                        visible: true,
+                        description: "label",
+                        id: "label",
+                        displayName: "label",
+                        type: VariablesTypes.DataElement,
+                        radio: true,
+                    },
+                ]
+            },
+            {
+                storyBook: true,
+                name: "Text Inputs",
+                description: "No description",
+                fields: [
+                    {
+                        required: false,
+                        name: "label",
+                        labelName: "Input Label",
+                        valueType: "TEXT" as unknown as CustomAttributeProps["valueType"],
+                        disabled: false,
+                        visible: true,
+                        description: "label",
+                        id: "label",
+                        displayName: "label",
+                        type: VariablesTypes.DataElement
+                    },
+                ]
+            },
+            {
+                storyBook: true,
+                name: "Number Input",
+                description: "No description",
+                fields: [
+                    {
+                        required: true,
+                        name: "Number",
+                        labelName: "Number Input",
+                        valueType: "NUMBER" as unknown as CustomAttributeProps["valueType"],
+                        disabled: false,
+                        visible: true,
+                        description: "Number",
+                        id: "Number",
+                        displayName: "Number",
+                        type: VariablesTypes.DataElement
+                    }
+                ]
+            },
+            {
+                storyBook: true,
+                name: "Radio input",
+                description: "No description",
+                fields: [
+                    {
+                        required: true,
+                        name: "boolean",
+                        labelName: "Boolean Input",
+                        valueType: "BOOLEAN" as unknown as CustomAttributeProps["valueType"],
+                        disabled: false,
+                        visible: true,
+                        description: "Boolean",
+                        id: "Boolean",
+                        displayName: "Boolean",
+                        type: VariablesTypes.DataElement
+                    }
+                ]
+            },
+            {
+                storyBook: true,
                 name: "Long text Input",
                 description: "No description",
                 fields: [
@@ -101,6 +143,7 @@ export const Group_form: Story = {
                 ]
             },
             {
+                storyBook: true,
                 name: "Date Input",
                 description: "No description",
                 fields: [
@@ -119,6 +162,7 @@ export const Group_form: Story = {
                 ]
             },
             {
+                storyBook: true,
                 name: "Check Input",
                 description: "No description",
                 fields: [
@@ -137,6 +181,7 @@ export const Group_form: Story = {
                 ]
             },
             {
+                storyBook: true,
                 name: "Image Field",
                 description: "No description",
                 fields: [
@@ -155,6 +200,7 @@ export const Group_form: Story = {
                 ]
             },
             {
+                storyBook: true,
                 name: "List Input",
                 description: "No description",
                 fields: [
@@ -184,6 +230,7 @@ export const Group_form: Story = {
                 ]
             },
             {
+                storyBook: true,
                 name: "Multi-select Input",
                 description: "No description",
                 fields: [
