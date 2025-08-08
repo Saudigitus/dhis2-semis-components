@@ -1,18 +1,21 @@
 import { useDataMutation } from '@dhis2/app-runtime'
 import useDataStore from './useDataStore';
 import useShowAlerts from '../common/useShowAlert';
+import { useState } from 'react';
 
-export function useCreateDsDir({ keySpace, setLoading }: { keySpace: string, setLoading: (args: boolean) => void }) {
+export function useCreateDsDir({ keySpace }: { keySpace: string }) {
     const { hide, show } = useShowAlerts()
-    const { error, getDataStore } = useDataStore({ keySpace, setLoading });
+    const { error, getDataStore } = useDataStore({ keySpace });
+    const [loading, setLoading] = useState(false);
 
-    const [mutate] = useDataMutation({
+    const [mutate,] = useDataMutation({
         resource: `${keySpace}`,
         data: () => [],
-        type: 'create'
+        type: 'create', 
     },
         {
             onError(error) {
+                setLoading(false);
                 show({
                     message: `Could not get data: ${error.message}`,
                     type: { critical: true }
@@ -20,13 +23,16 @@ export function useCreateDsDir({ keySpace, setLoading }: { keySpace: string, set
                 setTimeout(hide, 5000);
             },
             onComplete: async (data) => {
+                setLoading(false);
                 await getDataStore(false)
-                setLoading(false)
             }
         }
     )
 
+    const createDir = async (...args: any[]) => {
+        setLoading(true);
+        await mutate(...args);
+    }
 
-
-    return { createDir: mutate, error }
+    return { createDir, error, loading }
 }

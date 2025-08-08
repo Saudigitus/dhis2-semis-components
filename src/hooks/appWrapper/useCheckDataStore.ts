@@ -22,13 +22,14 @@ export function useCheckDataStore(keySpace: string) {
     const { hide, show } = useShowAlerts()
     const engine = useDataEngine()
     const [loading, setLoading] = useState<boolean>(true)
-    const { createDir, error: createError } = useCreateDsDir({ keySpace, setLoading })
-    const { error, validationError, getDataStore } = useDataStore({ keySpace, setLoading });
+    const { createDir, error: createError, loading: creatingDir } = useCreateDsDir({ keySpace })
+    const { error, validationError, getDataStore } = useDataStore({ keySpace });
     const nameSpace = keySpace.substring(0, keySpace.lastIndexOf("/"))
-    const { getProgram, error: errorProgram } = useProgramConfig()
+    const { getProgram, error: errorProgram, loading: loadingProgram } = useProgramConfig()
     const setProgramsValues = useSetRecoilState(ProgramConfigState)
 
     const startCheck = async (validate: boolean) => {
+        setLoading(true)
         await engine.query(DATASTORE_QUERY(nameSpace), {
             onError(error) {
                 setLoading(false)
@@ -40,6 +41,17 @@ export function useCheckDataStore(keySpace: string) {
             },
             onComplete(data) {
                 checkDataStore(data?.result, validate)
+                    .then(() => {
+                        setLoading(false)
+                    })
+                    .catch((error) => {
+                        setLoading(false)
+                        show({
+                            message: `Error checking data store: ${error.message}`,
+                            type: { critical: true }
+                        });
+                        setTimeout(hide, 5000);
+                    });
             }
         })
     }
@@ -47,7 +59,7 @@ export function useCheckDataStore(keySpace: string) {
     const checkDataStore = async (data: any, validate: boolean) => {
         const hasTemplatesKey = data?.entries?.some((entry: any) => entry.key == keySpace?.split('/')?.[keySpace?.split('/').length - 1]);
         if (data?.entries?.length && hasTemplatesKey) {
-            await getDataStore(validate).then(async (resp) => {
+            return await getDataStore(validate).then(async (resp) => {
                 let programs: any = []
 
                 for (let i = 0; i < resp?.length; i++) {
@@ -58,12 +70,12 @@ export function useCheckDataStore(keySpace: string) {
                 setProgramsValues(programs);
             })
         } else {
-            await createDir()
+            return await createDir()
         }
     }
 
     return {
-        loading,
+        loading: loading || loadingProgram || creatingDir,
         error,
         createError,
         validationError,

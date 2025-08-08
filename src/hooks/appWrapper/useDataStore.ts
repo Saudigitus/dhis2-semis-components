@@ -1,7 +1,8 @@
-import { dataStoreSchemaValidator, DataStoreState } from "../../schemas/dataStore"
 import { useState } from "react"
+import { dataStoreSchemaValidator, DataStoreState } from "../../schemas/dataStore"
 import { useDataEngine } from "@dhis2/app-runtime"
 import { useSetRecoilState } from "recoil"
+import { l } from "vite/dist/node/types.d-aGj9QkWt"
 
 const DATASTORE_QUERY = (keySpace: string) => {
   return {
@@ -14,14 +15,16 @@ const DATASTORE_QUERY = (keySpace: string) => {
   }
 }
 
-export const useDataStore = ({ keySpace, setLoading }: { keySpace: string, setLoading: (args: boolean) => void }) => {
+export const useDataStore = ({ keySpace }: { keySpace: string }) => {
   const engine = useDataEngine()
   const [error, setError] = useState<unknown>(null)
+  const [loading, setLoading] = useState<boolean>(false)
   const [validationError, setValidationError] = useState<object | null>(null)
   const setDataStoreValues = useSetRecoilState(DataStoreState)
 
   const getDataStore = async (validate: boolean) => {
     try {
+      setLoading(true)
       const response: any = await engine.query(DATASTORE_QUERY(keySpace))
 
       if (typeof dataStoreSchemaValidator(response?.result) === "object" && validate === true) {
@@ -38,7 +41,7 @@ export const useDataStore = ({ keySpace, setLoading }: { keySpace: string, setLo
     }
   }
 
-  return { error, validationError, getDataStore }
+  return { error, validationError, getDataStore, loading }
 }
 
 export default useDataStore

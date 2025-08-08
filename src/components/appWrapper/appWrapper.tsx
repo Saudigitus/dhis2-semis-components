@@ -9,9 +9,8 @@ import useDataStore from '../../hooks/appWrapper/useDataStore';
 import { SchoolCalendarData } from '../../schemas/schoolCalendar';
 
 const AppWrapperRaw = ({ children, dataStoreKey, validate }: AppWrapperProps) => {
-  const [loadingCalendar, setLoading] = useState<boolean>(true)
-  const { createError, error, loading, startCheck, errorProgram, validationError } = useCheckDataStore(dataStoreKey)
-  const { error: errorSchoolCalendar, getDataStore: getCallendar } = useDataStore({ keySpace: "dataStore/semis/schoolCalendar", setLoading });
+  const { createError, error, loading, startCheck, errorProgram, validationError, } = useCheckDataStore(dataStoreKey)
+  const { error: errorSchoolCalendar, getDataStore: getCallendar, loading: loadingCalendar } = useDataStore({ keySpace: "dataStore/semis/schoolCalendar" });
   const setCalendarValues = useSetRecoilState(SchoolCalendarData)
 
   useEffect(() => {
@@ -21,7 +20,7 @@ const AppWrapperRaw = ({ children, dataStoreKey, validate }: AppWrapperProps) =>
     })
   }, [])
 
-  if (loading || loadingCalendar) {
+  if (loading || loadingCalendar ) {
     return (
       <Center>
         <CircularLoader />
