@@ -90,20 +90,24 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                                 }
                             }}
                         >
-                            {formFields?.map((section: any, i: number) => (
-                                <GroupForm
-                                    key={i}
-                                    name={section.name}
-                                    description={section.description}
-                                    fields={section.fields}
-                                    form={form}
-                                    onInputChange={onInputChange}
-                                    trackedEntity={trackedEntity}
-                                    storyBook={storyBook}
-                                    setChanged={setChanged}
-                                    submitted={formSubmitted}
-                                />
-                            ))}
+                            {
+                                formFields
+                                    ?.filter((section) => section?.visible !== false)
+                                    ?.map((section: any, i: number) => (
+                                        <GroupForm
+                                            key={i}
+                                            name={section.name}
+                                            description={section.description}
+                                            fields={section.fields}
+                                            form={form}
+                                            onInputChange={onInputChange}
+                                            trackedEntity={trackedEntity}
+                                            storyBook={storyBook}
+                                            setChanged={setChanged}
+                                            submitted={formSubmitted}
+                                        />
+                                    ))
+                            }
 
                             {withButtons && (
                                 <div>
