@@ -41,17 +41,15 @@ export function useCheckDataStore(keySpace: string) {
             },
             onComplete(data) {
                 checkDataStore(data?.result, validate)
-                    .then(() => {
-                        setLoading(false)
-                    })
                     .catch((error) => {
-                        setLoading(false)
                         show({
                             message: `Error checking data store: ${error.message}`,
                             type: { critical: true }
                         });
                         setTimeout(hide, 5000);
-                    });
+                    }).finally(() => {
+                        setLoading(false);
+                    })
             }
         })
     }

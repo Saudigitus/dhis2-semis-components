@@ -2,7 +2,6 @@ import { useState } from "react"
 import { dataStoreSchemaValidator, DataStoreState } from "../../schemas/dataStore"
 import { useDataEngine } from "@dhis2/app-runtime"
 import { useSetRecoilState } from "recoil"
-import { l } from "vite/dist/node/types.d-aGj9QkWt"
 
 const DATASTORE_QUERY = (keySpace: string) => {
   return {
