@@ -1,3 +1,5 @@
+import { schoolCalendar } from "../../../types/dataStore/schoolCalendar";
+
 const getOptionsByDataElement = (dataElement: string, program: any) => {
     const options = [];
     if (dataElement && program) {
@@ -12,4 +14,11 @@ const getOptionsByDataElement = (dataElement: string, program: any) => {
     return options
 }
 
-export { getOptionsByDataElement }
+const getAcademicYearOptions = ({ schoolCalendar }: { schoolCalendar: schoolCalendar["schoolCalendar"] }) => {
+    return schoolCalendar.map(calendar => ({
+        label: calendar?.academicYear?.label,
+        value: calendar?.academicYear?.code
+    }));
+}
+
+export { getOptionsByDataElement, getAcademicYearOptions }

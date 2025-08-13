@@ -4,16 +4,15 @@ import { useEffect, useState } from 'react'
 import { DataProvider } from "@dhis2/app-runtime"
 import { ExtendedDynamicHeaderProps, OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
 import { MenuSelect } from './common/common'
-import { RecoilRoot, useRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { HeaderValuesState } from '../../schemas/headerDataSchema'
 import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
-import { getOptionsByDataElement } from './utils/getOptions'
-import { it } from 'date-fns/locale'
+import { getAcademicYearOptions, getOptionsByDataElement } from './utils/getOptions'
+import { schoolCalendar } from '../../types/dataStore/schoolCalendar'
 
-const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http://localhost:8080" }: { headerItems?: SemisHeaderProps, program: any, dataStoreValues?: any, baseUrl?: string }) => {
-    // console.log("first render")
+const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http://localhost:8080", schoolCalendar }: { headerItems?: SemisHeaderProps, program: any, schoolCalendar: schoolCalendar["schoolCalendar"], dataStoreValues?: any, baseUrl?: string }) => {
     const hash = window.location.hash;
     const queryString = hash.split('?')[1];
     const searchParams = new URLSearchParams(queryString);
@@ -40,7 +39,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
         ]
     )
     const { add, remove, urlParameters } = useUrlParams()
-    const { school, academicYear, schoolName } = urlParameters()
+    const { school, academicYear, schoolName, } = urlParameters()
     const [openAcademicYear, setOpenAcademicYear] = useState<boolean>(false)
     const [openOu, setOpenOu] = useState<boolean>(false)
     const [headerValues, setHeaderValues] = useRecoilState(HeaderValuesState)
@@ -64,12 +63,6 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
             const getSelectedValue = options.filter((option: OptionProps) => option.value === searchParams.get(item?.ulrParam))?.[0] as OptionProps
             otherItemsValues[item?.ulrParam] = getSelectedValue
         })
-
-        // setHeaderValues({
-        //     selectedAcademicYear: getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
-        //     selectedOu: { displayName: schoolName, id: school, selected: [] },
-        //     ...otherItemsValues
-        // })
     }, [])
 
     const onChangeOu = (event: { id: string, displayName: string, selected: any }) => {
@@ -80,7 +73,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
     }
 
     const onChangeAcademicYear = (event: any) => {
-        const getSelectOption = getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
+        const getSelectOption = getAcademicYearOptions({ schoolCalendar })?.filter((option: OptionProps) => option.value === event.selected)[0] as OptionProps
         setHeaderValues(prevState => ({ ...prevState, selectedAcademicYear: getSelectOption }))
         add("academicYear", getSelectOption.value)
         setOpenAcademicYear(!openAcademicYear)
@@ -136,7 +129,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                             open={openAcademicYear}
                             setOpen={() => setOpenAcademicYear(!openAcademicYear)}
                         >
-                            <MenuSelect dataElelementId={dataStoreValues?.registration?.academicYear} program={program} placeholder="Select a academic year" isSeachable={false} values={getOptionsByDataElement(dataStoreValues?.registration?.academicYear, program)} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
+                            <MenuSelect dataElelementId={dataStoreValues?.registration?.academicYear} program={program} placeholder="Select a academic year" isSeachable={false} values={getAcademicYearOptions({ schoolCalendar })} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} noOptionsMessage='No options. Make sure you have configured an academic year.' />
                         </SelectorBarItem>
                     }
                 </div>
@@ -196,11 +189,19 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
     )
 }
 
-const SemisHeader = ({ headerItems, program, dataStoreValues, baseUrl }: { headerItems?: SemisHeaderProps, program?: any, dataStoreValues?: any, baseUrl?: string }) => {
+type SemisHeaderTypeProps = {
+    program?: any,
+    baseUrl?: string
+    dataStoreValues?: any,
+    headerItems?: SemisHeaderProps,
+    schoolCalendar: schoolCalendar
+}
+
+const SemisHeader = ({ headerItems, program, dataStoreValues, baseUrl, schoolCalendar }: SemisHeaderTypeProps) => {
 
     return (
         <>
-            <SemisHeaderRaw baseUrl={baseUrl} program={program} dataStoreValues={dataStoreValues} headerItems={headerItems} />
+            <SemisHeaderRaw baseUrl={baseUrl} program={program} dataStoreValues={dataStoreValues} headerItems={headerItems} schoolCalendar={schoolCalendar?.schoolCalendar} />
         </>
     )
 }

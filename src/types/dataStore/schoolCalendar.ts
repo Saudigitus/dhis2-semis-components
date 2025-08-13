@@ -15,10 +15,7 @@ interface HolidayType {
     type: string
 }
 
-interface schoolCalendar {
-    id: string
-    key: string
-    defaults: defaults
+type SchoolCalendarType = {
     academicYear: {
         "endDate": string
         "startDate": string
@@ -38,6 +35,14 @@ interface schoolCalendar {
         "tuesday": boolean
         "wednesday": boolean
     }
+}
+interface schoolCalendar {
+    id: string
+    key: string
+    academicYear: string,
+    defaults: defaults,
+    schoolCalendar: SchoolCalendarType[]
+    
 }
 
 interface dataStoreRecord {

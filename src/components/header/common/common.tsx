@@ -4,7 +4,7 @@ import style from "../mainHeader.module.css"
 import { useEffect, useMemo, useState } from 'react'
 import { RulesEngine, useUrlParams } from 'dhis2-semis-functions'
 
-export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholder, program, dataElelementId }) => {
+export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholder, program, dataElelementId, noOptionsMessage = "No options" }) => {
     const [query, setQuery] = useState<string>("")
     const { urlParameters } = useUrlParams()
     const { school } = urlParameters()
@@ -57,7 +57,7 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
                 ))
                     :
                     <div className={style.NoOPtionArea} onClick={(e) => e.stopPropagation()}>
-                        <Help>No options</Help>
+                        <Help>{noOptionsMessage}</Help>
                     </div>}
             </Menu>
         </div>
