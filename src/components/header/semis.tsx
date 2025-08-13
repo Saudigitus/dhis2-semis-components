@@ -11,6 +11,7 @@ import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
 import { getAcademicYearOptions, getOptionsByDataElement } from './utils/getOptions'
 import { schoolCalendar } from '../../types/dataStore/schoolCalendar'
+import { formatStringToLowerCase, formatStringToTitleCase } from "dhis2-semis-functions"
 
 const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http://localhost:8080", schoolCalendar }: { headerItems?: SemisHeaderProps, program: any, schoolCalendar: schoolCalendar["schoolCalendar"], dataStoreValues?: any, baseUrl?: string }) => {
     const hash = window.location.hash;
@@ -102,16 +103,16 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                                         setHeaderValues(prevState => ({ ...prevState, [item?.ulrParam]: { label: "", value: "" } }))
                                         remove(item?.ulrParam)
                                     }}
-                                    label={item.label ?? "No Label"}
-                                    value={searchParams.get(item?.ulrParam) ?? headerValues[item?.ulrParam]?.value}
-                                    noValueMessage={item.placehoder ?? `Select a ${item.label ?? "item"}`}
+                                    label={formatStringToTitleCase(item.label) ?? "No Label"}
+                                    value={searchParams.get(item?.ulrParam) ? headerValues[item?.ulrParam]?.value : ""}
+                                    noValueMessage={item.placehoder ?? `Select a ${formatStringToLowerCase(item.label) ?? "item"}`}
                                     open={item.open}
                                     setOpen={() => onOpenDynamicItems(item)}
                                 >
                                     <MenuSelect
                                         dataElelementId={item?.dataElement}
                                         program={item?.program ?? program}
-                                        placeholder={item.placehoder ?? `Search for a ${item.label ?? "item"}`}
+                                        placeholder={item.placehoder ?? `Search for a ${formatStringToLowerCase(item.label) ?? "item"}`}
                                         isSeachable={item?.isSeachable ?? true}
                                         values={[...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]}
                                         selected={headerValues?.[item?.ulrParam]?.value}
@@ -168,16 +169,16 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                                 setHeaderValues(prevState => ({ ...prevState, [item?.ulrParam]: { label: "", value: "" } }))
                                 remove(item?.ulrParam)
                             }}
-                            label={item.label ?? "No Label"}
-                            value={searchParams.get(item?.ulrParam) ?? headerValues[item?.ulrParam]?.value}
-                            noValueMessage={item.placehoder ?? `Select a ${item.label ?? "item"}`}
+                            label={formatStringToTitleCase(item.label) ?? "No Label"}
+                            value={searchParams.get(item?.ulrParam) ? headerValues[item?.ulrParam]?.value : ""}
+                            noValueMessage={item.placehoder ?? `Select a ${formatStringToLowerCase(item.label) ?? "item"}`}
                             open={item.open}
                             setOpen={() => onOpenDynamicItems(item)}
                         >
                             <MenuSelect
                                 dataElelementId={item?.dataElement}
                                 program={item?.program ?? program}
-                                placeholder={item.placehoder ?? `Search for a ${item.label ?? "item"}`}
+                                placeholder={item.placehoder ?? `Search for a ${formatStringToLowerCase(item.label) ?? "item"}`}
                                 isSeachable={item?.isSeachable ?? true}
                                 values={[...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]}
                                 selected={headerValues?.[item?.ulrParam]?.value}
