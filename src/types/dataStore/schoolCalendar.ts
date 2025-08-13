@@ -50,7 +50,7 @@ interface schoolCalendarDataStoreRecord {
     defaults: {
         academicYear: string
     },
-    schoolCalendar: schoolCalendar[]
+    schoolCalendar: SchoolCalendarType[]
 }
 
-export type { schoolCalendarDataStoreRecord, ClassPeriodType, HolidayType, schoolCalendar }
+export type { schoolCalendarDataStoreRecord, ClassPeriodType, HolidayType, schoolCalendar, SchoolCalendarType }

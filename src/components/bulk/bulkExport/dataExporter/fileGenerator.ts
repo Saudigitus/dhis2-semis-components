@@ -8,9 +8,9 @@ import { dfHeaders } from '../../../../utils/constants/dfHeaders';
 import { Modules } from 'dhis2-semis-types';
 import { generateValidationSheet } from '../../../../utils/common/generateValidationSheet';
 import { convertNumberToLetter } from '../../../../utils/common/convertNumberToLetter';
-import { SchoolCalendar } from '../../../../types/datePicker/CalendarTypes';
+import { SchoolCalendarType } from '../../../../types/dataStore/schoolCalendar';
 
-export function generateFile({ unavailableDays, config }: { unavailableDays: (date: Date, config: SchoolCalendar) => boolean, config: SchoolCalendar }) {
+export function generateFile({ unavailableDays, config }: { unavailableDays: (date: Date, config: SchoolCalendarType) => boolean, config: SchoolCalendarType }) {
     const password = '#saudigitus_SEMIS_Export#'
 
     async function excelGenerator(props: excelProps) {
