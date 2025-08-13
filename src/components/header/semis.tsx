@@ -125,7 +125,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                         !hideAcademicYear &&
                         <SelectorBarItem
                             label="Academic year"
-                            value={academicYear ?? headerValues?.selectedAcademicYear?.value}
+                            value={academicYear ? headerValues?.selectedAcademicYear?.value : ""}
                             noValueMessage="Select a academic year"
                             open={openAcademicYear}
                             setOpen={() => setOpenAcademicYear(!openAcademicYear)}
@@ -138,7 +138,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
         >
 
             {!hideTree && <SelectorBarItem
-                value={schoolName ?? headerValues?.selectedOu?.displayName}
+                value={schoolName ? headerValues?.selectedOu?.displayName : ""}
                 onClearSelectionClick={() => {
                     setHeaderValues({
                         selectedOu: { displayName: "", id: "", selected: [] },
