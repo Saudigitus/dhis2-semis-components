@@ -10,10 +10,10 @@ import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
 import { getAcademicYearOptions, getOptionsByDataElement } from './utils/getOptions'
-import { schoolCalendar } from '../../types/dataStore/schoolCalendar'
+import { schoolCalendar, schoolCalendarDataStoreRecord } from '../../types/dataStore/schoolCalendar'
 import { formatStringToLowerCase, formatStringToTitleCase } from "dhis2-semis-functions"
 
-const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http://localhost:8080", schoolCalendar }: { headerItems?: SemisHeaderProps, program: any, schoolCalendar: schoolCalendar["schoolCalendar"], dataStoreValues?: any, baseUrl?: string }) => {
+const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http://localhost:8080", schoolCalendar }: { headerItems?: SemisHeaderProps, program: any, schoolCalendar: schoolCalendarDataStoreRecord["schoolCalendar"], dataStoreValues?: any, baseUrl?: string }) => {
     const hash = window.location.hash;
     const queryString = hash.split('?')[1];
     const searchParams = new URLSearchParams(queryString);
@@ -195,7 +195,7 @@ type SemisHeaderTypeProps = {
     baseUrl?: string
     dataStoreValues?: any,
     headerItems?: SemisHeaderProps,
-    schoolCalendar: schoolCalendar
+    schoolCalendar: schoolCalendarDataStoreRecord
 }
 
 const SemisHeader = ({ headerItems, program, dataStoreValues, baseUrl, schoolCalendar }: SemisHeaderTypeProps) => {

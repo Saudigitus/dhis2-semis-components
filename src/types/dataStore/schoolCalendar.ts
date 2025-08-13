@@ -41,11 +41,11 @@ interface schoolCalendar {
     key: string
     academicYear: string,
     defaults: defaults,
-    schoolCalendar: SchoolCalendarType[]
+    schoolCalendar: SchoolCalendarType
     
 }
 
-interface dataStoreRecord {
+interface schoolCalendarDataStoreRecord {
     academicYear: string
     defaults: {
         academicYear: string
@@ -53,4 +53,4 @@ interface dataStoreRecord {
     schoolCalendar: schoolCalendar[]
 }
 
-export type { dataStoreRecord, ClassPeriodType, HolidayType, schoolCalendar }
+export type { schoolCalendarDataStoreRecord, ClassPeriodType, HolidayType, schoolCalendar }

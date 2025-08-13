@@ -1,7 +1,7 @@
 import { atom } from "recoil";
-import { dataStoreRecord } from "../types/dataStore/schoolCalendar";
+import { schoolCalendarDataStoreRecord } from "../types/dataStore/schoolCalendar";
 
-export const SchoolCalendarData = atom<dataStoreRecord>({
+export const SchoolCalendarData = atom<schoolCalendarDataStoreRecord>({
     key: "school-calendar-data-store-state",
     default: undefined
 })

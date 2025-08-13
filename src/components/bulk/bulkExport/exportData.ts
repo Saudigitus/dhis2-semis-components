@@ -31,7 +31,7 @@ export function useExportData(props: ExportData) {
     const { getEvents } = useGetEvents()
     const { generate } = generateAndReserveIds()
     const { defaults, schoolCalendar } = useSchoolCalendar()
-    const selectedCalendar = schoolCalendar?.find(x => x?.academicYear?.code == defaults?.academicYear)
+    const selectedCalendar = schoolCalendar?.find(x => x?.schoolCalendar?.academicYear?.code== defaults?.academicYear)
     const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date, config: SchoolCalendar) => boolean, config: selectedCalendar })
     const { getHeaders } = generateHeaders({
         module,

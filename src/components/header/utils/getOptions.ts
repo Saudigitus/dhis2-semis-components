@@ -1,4 +1,4 @@
-import { schoolCalendar } from "../../../types/dataStore/schoolCalendar";
+import { schoolCalendarDataStoreRecord } from "../../../types/dataStore/schoolCalendar";
 
 const getOptionsByDataElement = (dataElement: string, program: any) => {
     const options = [];
@@ -14,10 +14,14 @@ const getOptionsByDataElement = (dataElement: string, program: any) => {
     return options
 }
 
-const getAcademicYearOptions = ({ schoolCalendar }: { schoolCalendar: schoolCalendar["schoolCalendar"] }) => {
+const getAcademicYearOptions = ({ schoolCalendar }: { schoolCalendar: schoolCalendarDataStoreRecord["schoolCalendar"] }) => {
+    if (!schoolCalendar || !Array.isArray(schoolCalendar) || schoolCalendar.length === 0) {
+        return [];
+    }
+
     return schoolCalendar.map(calendar => ({
-        label: calendar?.academicYear?.label,
-        value: calendar?.academicYear?.code
+        label: calendar?.schoolCalendar?.academicYear?.label,
+        value: calendar?.schoolCalendar?.academicYear?.code
     }));
 }
 

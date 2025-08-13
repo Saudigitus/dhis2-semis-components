@@ -1,9 +1,9 @@
 import { useRecoilValue } from "recoil"
-import { type dataStoreRecord } from "../../types/dataStore/schoolCalendar"
+import { type schoolCalendarDataStoreRecord } from "../../types/dataStore/schoolCalendar"
 import { SchoolCalendarData } from "../../schemas/schoolCalendar"
 
-export const useSchoolCalendar = (): dataStoreRecord => {
+export const useSchoolCalendar = (): schoolCalendarDataStoreRecord => {
     const schoolCalendar = useRecoilValue(SchoolCalendarData)
 
-    return schoolCalendar as unknown as dataStoreRecord
+    return schoolCalendar as unknown as schoolCalendarDataStoreRecord
 }
