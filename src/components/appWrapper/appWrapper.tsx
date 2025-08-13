@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Center, CircularLoader } from "@dhis2/ui"
 import { DataStoreNotFound, DataStoreNotValidated, ProgramNotFound } from './components/dataStoreErrors';
 import { AppWrapperProps } from '../../types/appWrapper/AppWrapperProps';
@@ -8,11 +8,10 @@ import { useCheckDataStore } from '../../hooks/appWrapper/useCheckDataStore';
 import useDataStore from '../../hooks/appWrapper/useDataStore';
 import { SchoolCalendarData } from '../../schemas/schoolCalendar';
 
-const AppWrapperRaw = ({ children, dataStoreKey, validate }: AppWrapperProps) => {
-  const [loadingCalendar, setLoading] = useState<boolean>(true)
-  const { createError, error, loading, startCheck, errorProgram, validationError } = useCheckDataStore(dataStoreKey)
-  const { error: errorSchoolCalendar, getDataStore: getCallendar } = useDataStore({ keySpace: "dataStore/semis/schoolCalendar", setLoading });
+const AppWrapperRaw = ({ children, dataStoreKey, validate, schoolCalendarKey }: AppWrapperProps) => {
   const setCalendarValues = useSetRecoilState(SchoolCalendarData)
+  const { createError, error, loading, startCheck, errorProgram, validationError, } = useCheckDataStore(dataStoreKey)
+  const { error: errorSchoolCalendar, getDataStore: getCallendar, loading: loadingCalendar } = useDataStore({ keySpace: schoolCalendarKey });
 
   useEffect(() => {
     void startCheck(validate)
@@ -21,7 +20,7 @@ const AppWrapperRaw = ({ children, dataStoreKey, validate }: AppWrapperProps) =>
     })
   }, [])
 
-  if (loading || loadingCalendar) {
+  if (loading || loadingCalendar ) {
     return (
       <Center>
         <CircularLoader />
@@ -50,12 +49,12 @@ const AppWrapperRaw = ({ children, dataStoreKey, validate }: AppWrapperProps) =>
 
 type CombinedTypes = AppWrapperProps & { baseUrl: string };
 
-const AppWrapper = ({ children, dataStoreKey, baseUrl, validate }: CombinedTypes) => {
+const AppWrapper = ({ children, dataStoreKey,  baseUrl, validate, schoolCalendarKey }: CombinedTypes) => {
 
   return (
     <DataProvider baseUrl={baseUrl}>
       <RecoilRoot>
-        <AppWrapperRaw validate={validate} dataStoreKey={dataStoreKey}>
+        <AppWrapperRaw validate={validate} dataStoreKey={dataStoreKey} schoolCalendarKey={schoolCalendarKey}>
           {children}
         </AppWrapperRaw>
       </RecoilRoot>
