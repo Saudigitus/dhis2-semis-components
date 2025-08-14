@@ -26,11 +26,11 @@ export const useDataStore = ({ keySpace }: { keySpace: string }) => {
       setLoading(true)
       const response: any = await engine.query(DATASTORE_QUERY(keySpace))
 
-      if (typeof dataStoreSchemaValidator(response?.result) === "object" && validate === true) {
-        setValidationError(dataStoreSchemaValidator(response?.result) as object)
-      } else {
-        setDataStoreValues(response?.result as any)
-      }
+      // if (typeof dataStoreSchemaValidator(response?.result) === "object" && validate === true) {
+      //   setValidationError(dataStoreSchemaValidator(response?.result) as object)
+      // } else {
+        // setDataStoreValues(response?.result as any)
+      // }
 
       return response?.result
     } catch (error) {

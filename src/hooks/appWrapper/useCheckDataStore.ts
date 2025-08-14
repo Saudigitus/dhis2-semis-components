@@ -6,6 +6,7 @@ import { useState } from 'react'
 import useProgramConfig from "./useProgramConfig";
 import { ProgramConfigState } from "../../schemas/programSchema";
 import { useSetRecoilState } from "recoil";
+import { DataStoreState } from "../../schemas/dataStore";
 
 const DATASTORE_QUERY = (keySpace: string) => {
     return {
@@ -27,6 +28,7 @@ export function useCheckDataStore(keySpace: string) {
     const nameSpace = keySpace.substring(0, keySpace.lastIndexOf("/"))
     const { getProgram, error: errorProgram, loading: loadingProgram } = useProgramConfig()
     const setProgramsValues = useSetRecoilState(ProgramConfigState)
+    const setDataStoreValues = useSetRecoilState(DataStoreState)
 
     const startCheck = async (validate: boolean) => {
         setLoading(true)
@@ -66,6 +68,7 @@ export function useCheckDataStore(keySpace: string) {
                 }
 
                 setProgramsValues(programs);
+                setDataStoreValues(resp)
             })
         } else {
             return await createDir()
