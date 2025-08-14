@@ -46,7 +46,7 @@ function GenericFields(props: GenericFieldsComponentProps) {
       return <SingleSelectField submitted={submitted} setChanged={setChanged} options={attribute.options} onChange={onInputChange} {...attribute} disabled={attribute.disabled} />;
 
     case 'MULTI_SELECT' as unknown as CustomAttributeProps["valueType"]:
-      return <SelectMultiple setChanged={setChanged} options={attribute.options} onChange={onInputChange} {...attribute} disabled={attribute.disabled} />;
+      return <SelectMultiple setChanged={setChanged} options={attribute?.options || [] as unknown as CustomAttributeProps["options"]} onChange={onInputChange} {...attribute} disabled={attribute.disabled} />;
 
     case Attribute.valueType.IMAGE as unknown as CustomAttributeProps["valueType"]:
       return <>
