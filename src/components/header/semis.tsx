@@ -5,7 +5,7 @@ import { DataProvider } from "@dhis2/app-runtime"
 import { ExtendedDynamicHeaderProps, OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
 import { MenuSelect } from './common/common'
 import { useRecoilState } from 'recoil'
-import { HeaderValuesState } from '../../schemas/headerDataSchema'
+import { HeaderValuesProps, HeaderValuesState } from '../../schemas/headerDataSchema'
 import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
@@ -44,6 +44,21 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
     const [openAcademicYear, setOpenAcademicYear] = useState<boolean>(false)
     const [openOu, setOpenOu] = useState<boolean>(false)
     const [headerValues, setHeaderValues] = useRecoilState(HeaderValuesState)
+
+    useEffect(() => {
+        const initialValues: HeaderValuesProps = {
+            selectedOu: { displayName: schoolName ?? "", id: school ?? "", selected: [] },
+            selectedAcademicYear: getAcademicYearOptions({ schoolCalendar })?.find((option: OptionProps) => option.value === academicYear)
+        }
+        dynamicItems.forEach((item: ExtendedDynamicHeaderProps) => {
+            const value = searchParams.get(item?.ulrParam)
+            if (value) {
+                initialValues[item?.ulrParam] = { label: value, value }
+            }
+        })
+        setHeaderValues(prevState => ({ ...prevState, ...initialValues }))
+    }, [])
+
 
     const onOpenDynamicItems = (item: ExtendedDynamicHeaderProps) => {
         const updatedItems = dynamicItems.map((dynamicItem: ExtendedDynamicHeaderProps) => {
