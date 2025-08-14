@@ -24,7 +24,7 @@ export function useCreateDsDir({ keySpace }: { keySpace: string }) {
             },
             onComplete: async (data) => {
                 setLoading(false);
-                await getDataStore(false)
+                await getDataStore()
             }
         }
     )

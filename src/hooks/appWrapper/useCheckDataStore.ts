@@ -30,7 +30,7 @@ export function useCheckDataStore(keySpace: string) {
     const setProgramsValues = useSetRecoilState(ProgramConfigState)
     const setDataStoreValues = useSetRecoilState(DataStoreState)
 
-    const startCheck = async (validate: boolean) => {
+    const startCheck = async () => {
         setLoading(true)
         await engine.query(DATASTORE_QUERY(nameSpace), {
             onError(error) {
@@ -42,7 +42,7 @@ export function useCheckDataStore(keySpace: string) {
                 setTimeout(hide, 5000);
             },
             onComplete(data) {
-                checkDataStore(data?.result, validate)
+                checkDataStore(data?.result)
                     .catch((error) => {
                         show({
                             message: `Error checking data store: ${error.message}`,
@@ -56,10 +56,10 @@ export function useCheckDataStore(keySpace: string) {
         })
     }
 
-    const checkDataStore = async (data: any, validate: boolean) => {
+    const checkDataStore = async (data: any) => {
         const hasTemplatesKey = data?.entries?.some((entry: any) => entry.key == keySpace?.split('/')?.[keySpace?.split('/').length - 1]);
         if (data?.entries?.length && hasTemplatesKey) {
-            return await getDataStore(validate).then(async (resp) => {
+            return await getDataStore().then(async (resp) => {
                 let programs: any = []
 
                 for (let i = 0; i < resp?.length; i++) {
