@@ -18,18 +18,9 @@
     cursor: pointer;
 }
 
-/* Dropdown options */
 .multiselect-options {
-    position: absolute;
-    top: 100%;
-    left: 0;
     width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: white;
-    margin-top: 2px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-    z-index: 10;
+    max-height: 200px;
 }
 
 .error {
