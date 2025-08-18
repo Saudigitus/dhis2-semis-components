@@ -92,7 +92,7 @@ export default function CustomForm({ storyBook, formFields, style, onInputChange
                         >
                             {
                                 formFields
-                                    ?.filter((section) => section?.visible !== false)
+                                    ?.filter((section: any) => section?.visible !== false)
                                     ?.map((section: any, i: number) => (
                                         <GroupForm
                                             key={i}
