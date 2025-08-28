@@ -1,8 +1,8 @@
 import useDataStore from "./useGetDataStore";
 import useProgramConfig from "./useProgramConfig";
 import { ProgramConfigState } from "../../schemas/programSchema";
-import { useSetRecoilState } from "recoil";
-import { DataStoreState } from "../../schemas/dataStore";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { DataStoreState, DataStoreStatusState } from "../../schemas/dataStore";
 import { useState } from "react";
 import { SchoolCalendarData } from "../../schemas/schoolCalendar";
 
@@ -15,7 +15,8 @@ const useSetupDataStore = (
     const setProgramsValues = useSetRecoilState(ProgramConfigState)
     const setDataStoreValues = useSetRecoilState(DataStoreState)
     const setCalendarValues = useSetRecoilState(SchoolCalendarData)
-    const { getProgram, error: errorProgram} = useProgramConfig()
+    const [dataStoreStatus, setDataStoreStatus] = useRecoilState(DataStoreStatusState)
+    const { getProgram, error: errorProgram } = useProgramConfig()
 
     const setupDataStore = async () => {
         setLoading(true)
@@ -29,9 +30,20 @@ const useSetupDataStore = (
             setProgramsValues(programs);
             setDataStoreValues(configs)
 
+            setDataStoreStatus({
+                ...dataStoreStatus,
+                not_found_config: false
+            })
+
             //IF THERE A CONFIG CREATED, TRY TO GET SCHOOL CALENDAR DATASTORE
             await getDataStore(schoolCalendarKey).then((callendar) => {
                 setCalendarValues(callendar)
+
+                setDataStoreStatus({
+                    not_found_calendar: false,
+                    not_found_config: false
+                })
+            }).catch(() => {
             }).finally(() => {
                 setLoading(false)
             })
@@ -39,10 +51,6 @@ const useSetupDataStore = (
             setLoading(false)
         })
     }
-
     return { setupDataStore, loading, error, errorProgram }
-
 }
-
 export { useSetupDataStore }
-

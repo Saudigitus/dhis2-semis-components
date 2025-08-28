@@ -24,6 +24,7 @@ export const useGetDataStore = () => {
       return response?.result
     } catch (error) {
       setError(error)
+      throw error;
     } finally {
       setLoading(false)
     }

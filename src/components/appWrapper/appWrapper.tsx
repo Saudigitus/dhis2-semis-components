@@ -21,10 +21,6 @@ const AppWrapperRaw = ({ children, dataStoreKey, schoolCalendarKey }: AppWrapper
     )
   }
 
-  if (error) {
-    return (<DataStoreNotFound error={error ?? errorProgram} />)
-  }
-
   if (errorProgram) {
     return (<ProgramNotFound error={error ?? errorProgram} />)
   }

@@ -10,7 +10,7 @@ import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
 import { useGetEvents, useUrlParams } from "dhis2-semis-functions";
 import { SchoolCalendar } from "../../../types/datePicker/CalendarTypes";
-import { useSchoolCalendar } from "../../../hooks/dataStore/useSchoolCalendar";
+import { useSchoolCalendarKey } from "../../../hooks/dataStore/useSchoolCalendarKey";
 import { SchoolCalendarType } from "../../../types/dataStore/schoolCalendar";
 
 export function useExportData(props: ExportData) {
@@ -31,7 +31,7 @@ export function useExportData(props: ExportData) {
     const { schoolName: orgUnitName, school: orgUnit } = urlParameters()
     const { getEvents } = useGetEvents()
     const { generate } = generateAndReserveIds()
-    const { defaults, schoolCalendar } = useSchoolCalendar()
+    const { defaults, schoolCalendar } = useSchoolCalendarKey()
     const selectedCalendar = schoolCalendar?.find(x => x?.academicYear?.code== defaults?.academicYear)
     const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date, config: SchoolCalendarType) => boolean, config: selectedCalendar })
     const { getHeaders } = generateHeaders({
