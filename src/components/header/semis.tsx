@@ -82,19 +82,18 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
 
         const nonNullAcademicYear = academicYear ?? schoolCalendar?.defaults?.academicYear ?? ""
 
-        console.log(academicYear, "academicYear")
-
         setHeaderValues({
             selectedAcademicYear: getOptionsByDataElement(schoolCalendar?.academicYear, program)?.filter((option: OptionProps) => option.value === nonNullAcademicYear)?.[0] as OptionProps,
             selectedOu: { displayName: schoolName, id: school, selected: [] },
             ...otherItemsValues
         })
+    }, [])
 
+    useEffect(() => {
         if (!academicYear) {
-            console.log("Nao tem academic year", schoolCalendar?.defaults?.academicYear)
             add("academicYear", schoolCalendar?.defaults?.academicYear)
         }
-    }, [])
+    }, [searchParams])
 
     const onChangeOu = (event: { id: string, displayName: string, selected: any }) => {
         setHeaderValues(prevState => ({ ...prevState, selectedOu: event }))
