@@ -8,7 +8,6 @@ interface AppWrapperProps {
     */
     dataStoreKey: string
     schoolCalendarKey: string
-    validate?: boolean
 }
 
 export type { AppWrapperProps }

@@ -47,4 +47,17 @@ const DataStoreState = atom<DataStoreProps>({
     default: []
 })
 
-export { dataStoreSchema, dataStoreSchemaValidator, DataStoreState };
+type DataStoreStatusProps = {
+    not_found_config: boolean,
+    not_found_calendar: boolean
+}
+
+const DataStoreStatusState = atom<DataStoreStatusProps>({
+    key: "DataStoreStatusState",
+    default: {
+        not_found_config: true,
+        not_found_calendar: true
+    }
+});
+
+export { dataStoreSchema, dataStoreSchemaValidator, DataStoreState, DataStoreStatusState };

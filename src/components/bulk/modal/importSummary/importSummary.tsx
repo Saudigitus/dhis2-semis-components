@@ -80,7 +80,6 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             </ModalActions>
         )
     }
-    console.log(stats, invalidRecords, (stats?.stats?.ignored ?? 0) + invalidRecords.length)
     return (
         <>
             <NoticeBox
