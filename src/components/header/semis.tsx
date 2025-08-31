@@ -39,26 +39,38 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                 : [])
         ]
     )
-    const { add, remove, urlParameters } = useUrlParams()
+    const { add, remove, urlParameters, useQuery } = useUrlParams()
     const { school, academicYear, schoolName, } = urlParameters()
     const [openAcademicYear, setOpenAcademicYear] = useState<boolean>(false)
     const [openOu, setOpenOu] = useState<boolean>(false)
     const [headerValues, setHeaderValues] = useRecoilState(HeaderValuesState)
 
-    // useEffect(() => {
-    //     const initialValues: HeaderValuesProps = {
-    //         selectedOu: { displayName: schoolName ?? "", id: school ?? "", selected: [] },
-    //         selectedAcademicYear: getAcademicYearOptions({ schoolCalendar })?.find((option: OptionProps) => option.value === academicYear)
-    //     }
-    //     dynamicItems.forEach((item: ExtendedDynamicHeaderProps) => {
-    //         const value = searchParams.get(item?.ulrParam)
-    //         if (value) {
-    //             initialValues[item?.ulrParam] = { label: value, value }
-    //         }
-    //     })
-    //     setHeaderValues(prevState => ({ ...prevState, ...initialValues }))
-    // }, [])
+    const sectionType = useQuery.get("sectionType")
 
+    //UPDATE DYNAMIC ITEM WHEN MODULE CHANGE
+    useEffect(() => {
+        const newDynamicItems: ExtendedDynamicHeaderProps[] = [
+            ...(otherItems?.map(item => ({
+                ...item,
+                position: item?.position ?? "LEFT",
+                options: item.options ?? [],
+                open: false,
+                id: crypto.randomUUID(),
+            })) ?? []),
+
+            ...(!hideDataStoreFilters
+                ? dataStoreValues?.filters?.dataElements?.map(item => ({
+                    ...item,
+                    position: item?.position ?? "LEFT",
+                    options: item.options ?? [],
+                    open: false,
+                    id: crypto.randomUUID(),
+                })) ?? []
+                : [])
+        ]
+
+        setDynamicItems(newDynamicItems)
+    }, [sectionType])
 
     const onOpenDynamicItems = (item: ExtendedDynamicHeaderProps) => {
         const updatedItems = dynamicItems.map((dynamicItem: ExtendedDynamicHeaderProps) => {
@@ -80,20 +92,12 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
             otherItemsValues[item?.ulrParam] = getSelectedValue
         })
 
-        const nonNullAcademicYear = academicYear ?? schoolCalendar?.defaults?.academicYear ?? ""
-
         setHeaderValues({
-            selectedAcademicYear: getOptionsByDataElement(schoolCalendar?.academicYear, program)?.filter((option: OptionProps) => option.value === nonNullAcademicYear)?.[0] as OptionProps,
+            selectedAcademicYear: getOptionsByDataElement(schoolCalendar?.academicYear, program)?.filter((option: OptionProps) => option.value === academicYear)?.[0] as OptionProps,
             selectedOu: { displayName: schoolName, id: school, selected: [] },
             ...otherItemsValues
         })
     }, [])
-
-    useEffect(() => {
-        if (!academicYear) {
-            add("academicYear", schoolCalendar?.defaults?.academicYear)
-        }
-    }, [searchParams])
 
     const onChangeOu = (event: { id: string, displayName: string, selected: any }) => {
         setHeaderValues(prevState => ({ ...prevState, selectedOu: event }))
