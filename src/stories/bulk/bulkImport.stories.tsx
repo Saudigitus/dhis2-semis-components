@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import student from '../../utils/constants/student.json'
-import program from '../../utils/constants/programConfig.json'
+// import student from '../../utils/constants/student.json'
+// import program from '../../utils/constants/programConfig.json'
 import ProcessImport from '../../components/bulk/bulkImport/processImport'
 
 const meta = {
@@ -22,9 +22,9 @@ type Story = StoryObj<typeof meta>;
 export const Data_Import: Story = {
     args: {
         orgUnit: 'Shc3qNhrPAz',
-        programConfig: program as unknown as any,
+        // programConfig: program as unknown as any,
         sectionType: 'student',
-        selectedSectionDataStore: student as unknown as any,
+        // selectedSectionDataStore: student as unknown as any,
         module: "enrollment",
         label: "Click me to open drop zone",
         baseURL: "",

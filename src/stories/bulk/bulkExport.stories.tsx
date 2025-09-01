@@ -1,7 +1,7 @@
 import DataExporter from "../../components/bulk/bulkExport/DataExporter";
 import type { Meta, StoryObj } from '@storybook/react';
-import student from '../../utils/constants/student.json';
-import program from '../../utils/constants/programConfig.json';
+// import student from '../../utils/constants/student.json';
+// import program from '../../utils/constants/programConfig.json';
 import { DataProvider } from "@dhis2/app-runtime";
 import React from "react";
 import ProcessExport from "../../components/bulk/bulkExport/processExport";
@@ -30,9 +30,9 @@ const renderWithProvider = (args: any) => (
 const baseArgs = {
     orgUnit: "Shc3qNhrPAz",
     orgUnitName: "Albion LBS",
-    programConfig: program as any,
+    // programConfig: program as any,
     sectionType: "student",
-    selectedSectionDataStore: student as any,
+    // selectedSectionDataStore: student as any,
     baseURL: "",
 };
 
@@ -40,7 +40,7 @@ export const Data_export: Story = {
     args: {
         ...baseArgs as unknown as any,
         eventFilters: [`iDSrFrrVgmX:in:2023`],
-        stagesToExport: [student["final-result"].programStage],
+        // stagesToExport: [student["final-result"].programStage],
         label: "Click me to export data",
         module: "final-result",
     },
@@ -51,7 +51,7 @@ export const Attendance_export: Story = {
     args: {
         ...baseArgs as unknown as any,
         eventFilters: [`iDSrFrrVgmX:in:2023`, `kNNoif9gASf:in:Grade 1`, `RhABRLO2Fae:in:A`],
-        stagesToExport: [student.attendance.programStage],
+        // stagesToExport: [student.attendance.programStage],
         label: "Click me to export Attendance Data",
         module: "attendance",
 
@@ -63,7 +63,7 @@ export const Empty_enrollment_template: Story = {
     args: {
         ...baseArgs as unknown as any,
         eventFilters: [`iDSrFrrVgmX:in:2023`],
-        stagesToExport: [student.registration.programStage],
+        // stagesToExport: [student.registration.programStage],
         label: "Click me to export empty sheet",
         module: "enrollment",
         empty: true,

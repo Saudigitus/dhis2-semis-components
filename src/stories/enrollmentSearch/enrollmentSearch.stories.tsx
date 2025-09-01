@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ModalSearchEnrollmentContent from "../../components/searchEnrollment/ModalSearchEnrollmentContent";
-import program from '../../utils/constants/programConfig.json'
+// import program from '../../utils/constants/programConfig.json'
 import { ProgramConfig } from 'dhis2-semis-types';
 
 const meta = {
@@ -23,6 +23,6 @@ export const Enrollment_search: Story = {
         open: true,
         sectionName: 'student',
         setOpen: () => { },
-        programConfig: program as unknown as ProgramConfig,
+        // programConfig: program as unknown as ProgramConfig,
     },
 };

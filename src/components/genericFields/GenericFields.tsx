@@ -12,7 +12,7 @@ import DateRangePicker from './fields/datepicker/improvedDateRage';
 import ImageField from './fields/ImageField';
 import { DataProvider } from '@dhis2/app-runtime';
 import OrgUnitTreeField from "./fields/orgUnitTree/OrgUnitTreeField";
-import SelectMultiple from "./fields/MultiSelect";
+import { SelectMultiple } from "./fields/MultiSelect";
 
 function GenericFields(props: GenericFieldsComponentProps) {
   const { attribute, disabled, valueType, form, onInputChange, storybook, setChanged, submitted, baseUrl } = props;
