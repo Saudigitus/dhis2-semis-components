@@ -19,6 +19,11 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
         setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
         const { onError, excelData, importMode, updating = false, programConfig, selectedSectionDataStore, sectionType } = props
 
+        const closeDialog = () => {
+            setProgress({ prorocess: "import", progress: 0, buffer: 0 })
+            setOpenProgress(false)
+        }
+
         try {
             const studentsData = excelData.mapping
             const profile = sectionType.substring(0, 1).toUpperCase() + sectionType.substring(1, sectionType.length) + ' profile'
@@ -43,11 +48,11 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     await postAttendance(
                         attendanceEvents,
                         attendanceDisplayName as unknown as string,
-                        selectedSectionDataStore?.attendance.programStage as unknown as string,
-                        excelData.mapping,
-                        programConfig.id,
+                        selectedSectionDataStore?.attendance?.programStage as unknown as string,
+                        excelData?.mapping,
+                        programConfig?.id,
                         importMode
-                    )
+                    ).finally(() => closeDialog())
                     break;
 
                 case Modules.Enrollment:
@@ -84,7 +89,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                         updating,
                         selectedSectionDataStore as unknown as selectedDataStoreKey,
                         orgUnit as unknown as string
-                    )
+                    ).finally(() => closeDialog())
 
                     break
 
@@ -92,7 +97,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     const { events } = generateEventObjects(displayNames, studentsData, programConfig)
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
-                    await postData(events, excelData, importMode, programConfig, programStages)
+                    await postData(events, excelData, importMode, programConfig, programStages).finally(() => closeDialog())
                     break;
             }
         } catch (error) {

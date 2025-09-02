@@ -8,7 +8,7 @@ import { useValidateFile, useValidation } from "dhis2-semis-functions";
 import ModalSummaryContent from "../modal/importSummary/importSummary";
 
 export default function ProcessImport(props: importData) {
-    const { label, onError, title, updating, programConfig, module } = props
+    const { label, onError, title, updating, programConfig, module, onClose } = props
     const [progress, setProgress] = useState({ prorocess: "import", progress: 0, buffer: 0 })
     const UseValidation = new useValidation()
     const [open, setOpen] = useState(false)
@@ -23,11 +23,6 @@ export default function ProcessImport(props: importData) {
         if (progress.progress > 0) {
             setOpen(false)
             setOpenProgress(true)
-        }
-
-        if (progress.progress >= 100) {
-            setProgress({ prorocess: "import", progress: 0, buffer: 0 })
-            setOpenProgress(false)
         }
     }, [progress.progress])
 
@@ -82,6 +77,7 @@ export default function ProcessImport(props: importData) {
                         invalidRecords={invalidRecords}
                         validRecords={validRecords}
                         stats={stats}
+                        onClose={onClose}
                     />
                 }
                 handleClose={() => { setOpenStats(false) }}
