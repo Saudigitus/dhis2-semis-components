@@ -24,11 +24,11 @@ export default function CustomForm(props: CombinedProps) {
     const [formSubmitted, setFormSubmitted] = useState(false)
 
     const handleInputChange = (event: any) => {
-        if (onInputChange) onInputChange({ value: event.target.value, field: event, name: event.target.name })
+        if (onInputChange) onInputChange({ value: event.target.value, name: event.target.name, field: event })
         setFormSubmitted(false)
     }
 
-    const formActions = (form: any, values: any) => [
+    const formActions = ({ form, changed }: { form: any, changed: boolean }) => [
         {
             id: "cancel",
             type: "reset",
@@ -59,9 +59,9 @@ export default function CustomForm(props: CombinedProps) {
                     setFormSubmitted(true)
                     onFormSubtmit(values)
                 }}
-                initialValues={{...initialValues, ...formValues}}
+                initialValues={{ ...initialValues, ...formValues }}
             >
-                {({ form, handleSubmit, values }) => {
+                {({ form, handleSubmit, values, pristine }) => {
                     formRef.current = form;
 
                     useEffect(() => {
@@ -114,7 +114,7 @@ export default function CustomForm(props: CombinedProps) {
                             {withButtons && (
                                 <div>
                                     <ButtonStrip end className={styles.btnStrip}>
-                                        {formActions(form, values).map((action: any, i) => (
+                                        {formActions({ form, changed: true }).map((action: any, i) => (
                                             <Button key={i} {...action} loading={false}>
                                                 {action.label}
                                             </Button>
