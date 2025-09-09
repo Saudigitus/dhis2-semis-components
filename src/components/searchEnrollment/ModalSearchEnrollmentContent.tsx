@@ -185,8 +185,8 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
           </Collapse>
           {!showResults &&
             <ButtonStrip end>
-              <Button key={"fechar"} onClick={() => setOpen(false)} loading={false}>
-                Fechar
+              <Button key={"Close"} onClick={() => setOpen(false)} loading={false}>
+                Close
               </Button>
             </ButtonStrip>
           }
