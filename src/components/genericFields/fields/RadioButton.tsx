@@ -29,9 +29,9 @@ function RadioButton(props: FormFieldsProps) {
         input.onChange(event?.target?.value);
       }}
     >
-     <FormControlLabel style={props.disabled ? { cursor: "not-allowed" } : {}} value={"true"} control={<CustomRadio disabled={props.disabled} />} label={<Label className="mt-2">Yes</Label>} />
-      <FormControlLabel style={props.disabled ? { cursor: "not-allowed" } : {}} value={"false"} control={<CustomRadio disabled={props.disabled} />} label={<Label className="mt-2">No</Label>} />
-  </RadioGroup>
+      <FormControlLabel style={props.disabled ? { cursor: "not-allowed" } : {}} value={true} control={<CustomRadio disabled={props.disabled} />} label={<Label className="mt-2">Yes</Label>} />
+      <FormControlLabel style={props.disabled ? { cursor: "not-allowed" } : {}} value={false} control={<CustomRadio disabled={props.disabled} />} label={<Label className="mt-2">No</Label>} />
+    </RadioGroup>
   );
 }
 

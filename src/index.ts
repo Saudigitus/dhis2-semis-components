@@ -38,8 +38,10 @@ import { useGetDataStore } from './hooks/appWrapper/useGetDataStore'
 import { SchoolCalendarData } from './schemas/schoolCalendar'
 import { useSchoolCalendarKey } from "./hooks/dataStore/useSchoolCalendarKey"
 import { useDataStoreStatus } from "./hooks/dataStore/useDataStoreStatus"
+import TestForm from "./components/form/testeForm"
 
 export {
+    TestForm,
     HeaderValuesState,
     DataStoreState,
     SchoolCalendarData,

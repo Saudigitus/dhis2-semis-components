@@ -16,11 +16,12 @@ interface ModalContentProps {
     validRecords: any[]
     programConfig: any
     onSubmit: (args: "VALIDATE" | "COMMIT") => any
+    onClose?: () => any
     stats: { stats: { ignored: number, created: number, updated: number, total: number }, errorDetails: any[], byType: [], exceptions?: any[] }
 }
 
 const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
-    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, stats } = props;
+    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, stats, onClose } = props;
     const [showDetails, setShowDetails] = useState(false)
     const [load, setLoading] = useState(false)
     const [doneProcessing, setDoneProcessing] = useState<any>({ validate: false, commit: false })
@@ -58,7 +59,10 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             label: "Close",
             disabled: false,
             loading: false,
-            onClick: () => setOpen(false)
+            onClick: () => {
+                if (onClose && doneProcessing.commit) onClose()
+                setOpen(false)
+            }
         }
     ];
 

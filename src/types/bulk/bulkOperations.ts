@@ -206,6 +206,8 @@ interface importData {
      * Data store configuration for SEMIS
      */
     selectedSectionDataStore: selectedDataStoreKey
+
+    onClose?: () => void
 }
 
 export type { ExportData, GenerateHeaders, excelProps, importData, excelData }
