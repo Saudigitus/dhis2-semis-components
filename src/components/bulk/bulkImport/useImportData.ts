@@ -13,7 +13,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
     const { postAttendance } = postAttendanceValues({ setStats, setProgress, onError, setOpenProgress })
     const { postEnrollments } = postEnrollmentData({ setStats, setProgress, onError, setOpenProgress })
     const { urlParameters } = useUrlParams()
-    const { school: orgUnit } = urlParameters()
+    const { school: orgUnit } = urlParameters
 
     async function importData(props: CombinedTypes) {
         setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))

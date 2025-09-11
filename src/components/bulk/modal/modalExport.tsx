@@ -8,7 +8,7 @@ import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey';
 
 export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form }: { Form: any, onSubmit: (rows: any) => void, open: boolean, setOpen: (args: boolean) => void, module: "attendance" | "final-result" | "enrollment" | "performance" }) {
     const { urlParameters } = useUrlParams()
-    const { schoolName: orgUnitName, academicYear, class: section, grade, sectionType } = urlParameters()
+    const { schoolName: orgUnitName, academicYear, class: section, grade, sectionType } = urlParameters
     const { filters } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
     const { getFileName } = useGetFileName()
     const fileName = getFileName(module)

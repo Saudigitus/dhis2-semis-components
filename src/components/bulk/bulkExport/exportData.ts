@@ -27,7 +27,7 @@ export function useExportData(props: ExportData) {
     } = props
     const { getData } = getCommonSheetData({ ...props, onError })
     const { urlParameters } = useUrlParams()
-    const { schoolName: orgUnitName, school: orgUnit } = urlParameters()
+    const { schoolName: orgUnitName, school: orgUnit } = urlParameters
     const { getEvents } = useGetEvents()
     const { generate } = generateAndReserveIds()
     const { defaults, schoolCalendar } = useSchoolCalendarKey()

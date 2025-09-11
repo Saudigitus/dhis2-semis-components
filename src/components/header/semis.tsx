@@ -5,12 +5,12 @@ import { DataProvider } from "@dhis2/app-runtime"
 import { ExtendedDynamicHeaderProps, OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
 import { MenuSelect } from './common/common'
 import { useRecoilState } from 'recoil'
-import { HeaderValuesProps, HeaderValuesState } from '../../schemas/headerDataSchema'
+import { HeaderValuesState } from '../../schemas/headerDataSchema'
 import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
-import { getAcademicYearOptions, getOptionsByDataElement } from './utils/getOptions'
-import { schoolCalendar, schoolCalendarDataStoreRecord } from '../../types/dataStore/schoolCalendar'
+import { getOptionsByDataElement } from './utils/getOptions'
+import { schoolCalendarDataStoreRecord } from '../../types/dataStore/schoolCalendar'
 import { formatStringToLowerCase, formatStringToTitleCase } from "dhis2-semis-functions"
 
 const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http://localhost:8080", schoolCalendar }: { headerItems?: SemisHeaderProps, program: any, schoolCalendar: schoolCalendarDataStoreRecord, dataStoreValues?: any, baseUrl?: string }) => {
@@ -40,7 +40,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
         ]
     )
     const { add, remove, urlParameters, useQuery } = useUrlParams()
-    const { school, academicYear, schoolName, } = urlParameters()
+    const { school, academicYear, schoolName, } = urlParameters
     const [openAcademicYear, setOpenAcademicYear] = useState<boolean>(false)
     const [openOu, setOpenOu] = useState<boolean>(false)
     const [headerValues, setHeaderValues] = useRecoilState(HeaderValuesState)
