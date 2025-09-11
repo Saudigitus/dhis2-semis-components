@@ -1,6 +1,6 @@
 {
   "name": "dhis2-semis-components",
-  "version": "0.6.7-alpha.90",
+  "version": "0.6.7-aplha.56",
   "main": "dist/index.js",
   "private": false,
   "types": "dist/declarations/index.d.ts",
@@ -81,7 +81,6 @@
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
     "date-fns": "2.29.3",
-    "dhis2-semis-components": "^0.6.7-alpha.66",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "lottie-react": "^2.4.0",
