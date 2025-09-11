@@ -163,7 +163,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                             open={openAcademicYear}
                             setOpen={() => setOpenAcademicYear(!openAcademicYear)}
                         >
-                            <MenuSelect dataElelementId={schoolCalendar?.academicYear} program={program} placeholder="Select a academic year" isSeachable={false} values={getOptionsByDataElement(schoolCalendar?.academicYear, program)} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
+                            <MenuSelect dataElelementId={schoolCalendar?.academicYear} program={program} placeholder="Select a academic year" isSeachable={false} values={getAcademicYearOptions(schoolCalendar)} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
                         </SelectorBarItem>
                     }
                 </div>
