@@ -10,7 +10,7 @@ export function useGetEnrollmentData(props: ExportData) {
     const { getEvents } = useGetEvents()
     const { onError, eventFilters, withSocioEconomics, selectedSectionDataStore, module, setProgress = () => { } } = props
     const { urlParameters } = useUrlParams()
-    const { schoolName: orgUnitName, school: orgUnit, } = urlParameters()
+    const { schoolName: orgUnitName, school: orgUnit, } = urlParameters
 
     const getEnrollmentDetails = async (events: any) => {
         const percentagem = module === Modules.Enrollment ? 80 : 40

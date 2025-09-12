@@ -2,12 +2,15 @@ import ModalComponent from '../../../components/modal/Modal'
 import CustomForm from '../../../components/form/form'
 import { exportFields } from '../../../utils/constants/exportFields'
 import { format } from 'date-fns'
-import { useUrlParams } from 'dhis2-semis-functions';
+import { useCheckFilters, useUrlParams } from 'dhis2-semis-functions';
 import { useGetFileName } from '../../../hooks/common/useGetFileName';
+import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey';
 
 export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form }: { Form: any, onSubmit: (rows: any) => void, open: boolean, setOpen: (args: boolean) => void, module: "attendance" | "final-result" | "enrollment" | "performance" }) {
     const { urlParameters } = useUrlParams()
-    const { schoolName: orgUnitName, academicYear, class: section, grade } = urlParameters()
+    const { schoolName: orgUnitName, academicYear, sectionType } = urlParameters
+    const { filters } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
+    const { getUrlParamsAsObject } = useCheckFilters({ filters: (filters?.dataElements ?? []) as unknown as any })
     const { getFileName } = useGetFileName()
     const fileName = getFileName(module)
 
@@ -21,7 +24,7 @@ export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form
                 <CustomForm
                     storyBook={false}
                     Form={Form}
-                    initialValues={{ orgUnitName: orgUnitName, academicYear: academicYear, class: section, grade: grade }}
+                    initialValues={{ orgUnitName: orgUnitName, academicYear: academicYear, ...getUrlParamsAsObject() }}
                     onFormSubtmit={(e) => {
                         void onSubmit({
                             fileName: fileName,
@@ -37,7 +40,7 @@ export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form
                             "storyBook": false,
                             "description": "This file will allow the import of new student data into the system.",
                             "fields": [
-                                ...exportFields(module)
+                                ...exportFields(module, filters)
                             ]
                         },
                     ]}

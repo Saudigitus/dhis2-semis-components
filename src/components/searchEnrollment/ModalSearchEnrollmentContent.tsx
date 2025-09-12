@@ -28,7 +28,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   const { enrollmentValues, setEnrollmentValues, loading, getEnrollmentsData } = useSearchEnrollments({ sectionType: sectionName })
   const [collapseAttributes, setCollapseAttributes] = useState(0)
   const { urlParameters } = useUrlParams();
-  const { school: orgUnit, schoolName: orgUnitName, academicYear } = urlParameters();
+  const { school: orgUnit, schoolName: orgUnitName, academicYear } = urlParameters
 
   const rowsActions: any = [
     { icon: <IconInfo24 />, color: '#144b73', label: `View history`, disabled: false },
@@ -185,8 +185,8 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
           </Collapse>
           {!showResults &&
             <ButtonStrip end>
-              <Button key={"fechar"} onClick={() => setOpen(false)} loading={false}>
-                Fechar
+              <Button key={"Close"} onClick={() => setOpen(false)} loading={false}>
+                Close
               </Button>
             </ButtonStrip>
           }

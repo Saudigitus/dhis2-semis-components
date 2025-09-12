@@ -7,7 +7,7 @@ export function getCommonSheetData(props: ExportData) {
     const { eventFilters = [], selectedSectionDataStore, setProgress = () => { }, onError } = props
     const { getEnrollmentDetails } = useGetEnrollmentData({ ...props, setProgress })
     const { urlParameters } = useUrlParams()
-    const { school: orgUnit } = urlParameters()
+    const { school: orgUnit } = urlParameters
 
     async function getData() {
         const events = await getEvents({

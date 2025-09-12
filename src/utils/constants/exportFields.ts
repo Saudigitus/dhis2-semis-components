@@ -1,7 +1,9 @@
 import { Modules } from 'dhis2-semis-types';
 import { CustomAttributeProps, VariablesTypes } from 'dhis2-semis-types';
+import { DataStoreProps } from '../../types/dataStore/DataStoreConfig';
+import { formatStringToTitleCase } from 'dhis2-semis-functions';
 
-export function exportFields(module: "attendance" | "final-result" | "enrollment" | "performance"): any[] {
+export function exportFields(module: "attendance" | "final-result" | "enrollment" | "performance", filters: DataStoreProps['filters']): any[] {
 
     const commonFields = [
         {
@@ -46,30 +48,17 @@ export function exportFields(module: "attendance" | "final-result" | "enrollment
     ]
 
     const attendanceFields = [
-        {
+        ...(filters?.dataElements?.length > 0 ? filters?.dataElements?.map((de: any) => ({
             "required": true,
-            "name": "grade",
-            "labelName": "Grade",
+            "name": de?.ulrParam,
+            "labelName": formatStringToTitleCase(de?.label),
             "valueType": "TEXT" as unknown as CustomAttributeProps['valueType'],
             "disabled": true,
             "visible": true,
-            "description": "label",
             "id": "label",
-            "displayName": "label",
+            "displayName": formatStringToTitleCase(de?.label),
             "type": VariablesTypes.DataElement
-        },
-        {
-            "required": true,
-            "name": "class",
-            "labelName": "Class/section",
-            "valueType": "TEXT" as unknown as CustomAttributeProps['valueType'],
-            "disabled": true,
-            "visible": true,
-            "description": "label",
-            "id": "label",
-            "displayName": "label",
-            "type": VariablesTypes.DataElement
-        },
+        })) : []),
         {
             "required": true,
             "name": "dateRange",

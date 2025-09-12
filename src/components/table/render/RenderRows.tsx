@@ -89,7 +89,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
     const classes = useStyles()
     const { imageUrl } = GetImageUrl()
     const { urlParameters } = useUrlParams()
-    const { academicYear, sectionType, school } = urlParameters();
+    const { academicYear, sectionType, school } = urlParameters
     const { registration } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
     const [showEnrollments, setShowEnrollments] = useState<string>()
     const { headerData, rowsData = [], pagination, searchActions, showRowIndex, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected } = props;

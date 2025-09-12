@@ -7,7 +7,7 @@ import { RulesEngine, useUrlParams } from 'dhis2-semis-functions'
 export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholder, program, dataElelementId, noOptionsMessage = "No options" }) => {
     const [query, setQuery] = useState<string>("")
     const { urlParameters } = useUrlParams()
-    const { school } = urlParameters()
+    const { school } = urlParameters
 
     const value: any = { ...{ [dataElelementId]: selected }, orgUnit: school }
 

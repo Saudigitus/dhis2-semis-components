@@ -9,7 +9,6 @@ import { generateEmptyRows } from '../../../utils/common/generateData';
 import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
 import { useGetEvents, useUrlParams } from "dhis2-semis-functions";
-import { SchoolCalendar } from "../../../types/datePicker/CalendarTypes";
 import { useSchoolCalendarKey } from "../../../hooks/dataStore/useSchoolCalendarKey";
 import { SchoolCalendarType } from "../../../types/dataStore/schoolCalendar";
 
@@ -28,7 +27,7 @@ export function useExportData(props: ExportData) {
     } = props
     const { getData } = getCommonSheetData({ ...props, onError })
     const { urlParameters } = useUrlParams()
-    const { schoolName: orgUnitName, school: orgUnit } = urlParameters()
+    const { schoolName: orgUnitName, school: orgUnit } = urlParameters
     const { getEvents } = useGetEvents()
     const { generate } = generateAndReserveIds()
     const { defaults, schoolCalendar } = useSchoolCalendarKey()
