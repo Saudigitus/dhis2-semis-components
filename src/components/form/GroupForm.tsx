@@ -2,7 +2,7 @@ import { Label } from "@dhis2/ui";
 import WithPadding from "../template/WithPadding";
 import GenericFields from "../genericFields/GenericFields";
 import styles from './groupform.module.css'
-import { type GroupFormProps } from "dhis2-semis-types";
+import { CustomAttributeProps, type GroupFormProps } from "dhis2-semis-types";
 import classNames from "classnames";
 import Text from "../text/Text";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -39,7 +39,7 @@ function GroupForm(props: CombinedProps) {
 
 
                 <WithPadding p={"5px 12px"}>
-                    {fields?.filter((x: any) => x.visible)?.map((x: any, i: number) => {
+                    {fields?.filter((x: CustomAttributeProps) => x.visible)?.map((x: CustomAttributeProps, i: number) => {
                         return (
                             <div className={classNames("row d-flex align-items-center", x.error ? styles.fieldError : x.warning ? styles.fieldWarning : styles.fieldNormal)} key={i}
                                 style={{ display: "flex" }}>
