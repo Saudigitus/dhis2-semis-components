@@ -18,11 +18,6 @@ const getAcademicYearOptions = ({ schoolCalendar }: { schoolCalendar: schoolCale
     if (!schoolCalendar || !Array.isArray(schoolCalendar) || schoolCalendar.length === 0) {
         return [];
     }
-    
-    // return schoolCalendar.map(calendar => ({
-    //     label: calendar?.schoolCalendar?.academicYear?.label,
-    //     value: calendar?.schoolCalendar?.academicYear?.code
-    // }));
 
     return schoolCalendar.map(calendar => ({
         label: calendar?.academicYear?.label,
