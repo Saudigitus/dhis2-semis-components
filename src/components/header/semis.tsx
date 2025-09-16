@@ -9,7 +9,7 @@ import { HeaderValuesState } from '../../schemas/headerDataSchema'
 import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
 import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
-import { getOptionsByDataElement } from './utils/getOptions'
+import { getAcademicYearOptions, getOptionsByDataElement } from './utils/getOptions'
 import { schoolCalendarDataStoreRecord } from '../../types/dataStore/schoolCalendar'
 import { formatStringToLowerCase, formatStringToTitleCase } from "dhis2-semis-functions"
 
