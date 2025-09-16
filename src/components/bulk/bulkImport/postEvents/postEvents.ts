@@ -41,7 +41,7 @@ export function postValues({ setStats, setProgress, onError, setOpenProgress }: 
                 }).then((resp: any) => {
                     let event = resp.find((x: any) => x.enrollment === enrollment && x.programStage == stage)?.event
                     const index = copyData.findIndex(x => x.enrollment === enrollment && x.programStage == stage)
-                    copyData[index] = { ...copyData[index], event: event }
+                    copyData[index] = { ...copyData[index], ...(event ? { event: event } : {}) }
 
                     updateProgressF(50, 45, excelData.mapping.length * programStages.length)
                 }).catch((error) => {
