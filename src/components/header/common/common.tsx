@@ -47,7 +47,7 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
                 {isSeachable && <div className={style.SimpleSearcInputContainer} onClick={(e) => e.stopPropagation()} >
                     <Input initialFocus onChange={(event) => setQuery(event.value)} placeholder={placeholder} name="input" />
                 </div>}
-                {filteredMenuItems.length > 0 ? filteredMenuItems.map(({ value, label }) => (
+                {filteredMenuItems?.length ? filteredMenuItems?.map(({ value, label }) => (
                     <MenuItem
                         key={value}
                         label={label}
