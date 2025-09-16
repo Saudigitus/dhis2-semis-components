@@ -5,7 +5,7 @@ const useGetUsedProgramStages = ({ sectionType }: { sectionType: "student" | "st
 
     const performanceProgramStages = performance?.programStages?.map((programStage) => programStage?.programStage) ?? [];
 
-    return [...performanceProgramStages, finalResult?.programStage]
+    return [...performanceProgramStages, finalResult?.programStage]?.filter(Boolean)
 }
 
 export { useGetUsedProgramStages }
