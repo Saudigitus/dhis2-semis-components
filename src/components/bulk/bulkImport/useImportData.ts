@@ -67,7 +67,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                         ...(updating ? [
                             selectedSectionDataStore?.["final-result"].programStage as unknown as string,
                             selectedSectionDataStore?.registration.programStage as unknown as string,
-                            ...(selectedSectionDataStore?.performance.programStages?.map(x => x.programStage))
+                            ...(selectedSectionDataStore?.performance?.programStages?.map(x => x.programStage) || [])
                         ] : [""])
                     ]
 
@@ -78,6 +78,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                         studentsData,
                         orgUnit as unknown as string,
                         updating,
+                        selectedSectionDataStore
                     )
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
