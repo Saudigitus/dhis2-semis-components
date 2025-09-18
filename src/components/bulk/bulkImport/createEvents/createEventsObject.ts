@@ -63,9 +63,9 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
     return { attendanceEvents }
 }
 
-export function generateEnrollmentData(profile: string, programConfig: ProgramConfig, stagesToIgnore: string[], data: any, orgUnit: string, updating: boolean) {
+export function generateEnrollmentData(profile: string, programConfig: ProgramConfig, stagesToIgnore: string[], data: any, orgUnit: string, updating: boolean, dataStore: selectedDataStoreKey) {
     let enrollments: any = []
-    const programStages = programConfig.programStages.map((x) => {
+    const programStages = programConfig?.programStages.map((x) => {
         if (!stagesToIgnore.includes(x.id)) return { id: x.id, name: x.displayName }
     }).filter(x => x != undefined)
 
@@ -75,33 +75,39 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
         for (const stage of programStages) {
             let dataValues: any = []
 
-            if (student[stage.name]) {
-                for (const key of Object.keys(student[stage.name])) {
-                    if (student[stage.name][key] && key.split('.')[1] || key === 'enrollmentDate') {
-                        if (key === 'enrollmentDate') {
-                            enrollmentDate = student[stage.name]['enrollmentDate']
-                        } else {
-                            dataValues = [
-                                ...dataValues,
-                                {
-                                    dataElement: key.split(".")[1],
-                                    value: student[stage.name][key]
-                                }
-                            ]
+            if (
+                Object.values(dataStore)?.some((dataStoreKey: any) =>
+                    dataStoreKey?.programStage === stage.id || dataStoreKey?.programStages?.includes(stage.id)
+                )
+            ) {
+                if (student[stage.name]) {
+                    for (const key of Object.keys(student[stage.name])) {
+                        if (student[stage.name][key] && key.split('.')[1] || key === 'enrollmentDate') {
+                            if (key === 'enrollmentDate') {
+                                enrollmentDate = student[stage.name]['enrollmentDate']
+                            } else {
+                                dataValues = [
+                                    ...dataValues,
+                                    {
+                                        dataElement: key.split(".")[1],
+                                        value: student[stage.name][key]
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
-            }
 
-            events.push({
-                program: programConfig.id,
-                orgUnit: orgUnit,
-                dataValues: dataValues,
-                status: "ACTIVE",
-                occurredAt: format(new Date(), 'yyyy-MM-dd'),
-                programStage: stage.id,
-                ...(updating ? { trackedEntity: student?.Ids?.trackedEntity } : {})
-            })
+                events.push({
+                    program: programConfig.id,
+                    orgUnit: orgUnit,
+                    dataValues: dataValues,
+                    status: "ACTIVE",
+                    occurredAt: format(new Date(), 'yyyy-MM-dd'),
+                    programStage: stage.id,
+                    ...(updating ? { trackedEntity: student?.Ids?.trackedEntity } : {})
+                })
+            }
         }
 
 
