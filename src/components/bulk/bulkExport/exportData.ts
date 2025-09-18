@@ -8,7 +8,7 @@ import { generateFile } from './dataExporter/fileGenerator';
 import { generateEmptyRows } from '../../../utils/common/generateData';
 import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
-import { useGetEvents, useUrlParams } from "dhis2-semis-functions";
+import { useGetEvents, useIncrementDays, useUrlParams } from "dhis2-semis-functions";
 import { useSchoolCalendarKey } from "../../../hooks/dataStore/useSchoolCalendarKey";
 import { SchoolCalendarType } from "../../../types/dataStore/schoolCalendar";
 
@@ -31,7 +31,7 @@ export function useExportData(props: ExportData) {
     const { getEvents } = useGetEvents()
     const { generate } = generateAndReserveIds()
     const { defaults, schoolCalendar } = useSchoolCalendarKey()
-    const selectedCalendar = schoolCalendar?.find(x => x?.academicYear?.code== defaults?.academicYear)
+    const selectedCalendar = schoolCalendar?.find(x => x?.academicYear?.code == defaults?.academicYear)
     const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date, config: SchoolCalendarType) => boolean, config: selectedCalendar })
     const { getHeaders } = generateHeaders({
         module,
@@ -43,6 +43,7 @@ export function useExportData(props: ExportData) {
         empty
     })
     const { msg, valid } = areParamsValid({ ...props })
+    const { getDate } = useIncrementDays()
 
     async function exportData({ fileName, numberOfEmptyRows, startDate, endDate }: { fileName?: string, startDate?: any, endDate?: any, numberOfEmptyRows?: number }) {
         if (!valid) onError(`Export error: ${msg}`)
@@ -65,7 +66,7 @@ export function useExportData(props: ExportData) {
                                 program: selectedSectionDataStore?.program as unknown as string,
                                 ...(module === Modules.Attendance ? {
                                     occurredAfter: startDate,
-                                    occurredBefore: endDate
+                                    occurredBefore: getDate({ selectedDate: new Date(endDate) }),
                                 } : {}),
                                 orgUnit,
                                 ouMode: "SELECTED",
