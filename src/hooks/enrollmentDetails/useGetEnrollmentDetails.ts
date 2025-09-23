@@ -2,11 +2,10 @@ import { ExportData } from '../../types/bulk/bulkOperations';
 import { attributes, dataValues } from '../../utils/format/formatData';
 import { Modules } from 'dhis2-semis-types';
 import { format } from 'date-fns';
-import { useGetTei } from '../tei/useGetTei';
-import { useGetEvents, useUrlParams } from "dhis2-semis-functions";
+import { useGetEvents, useGetTeis, useUrlParams } from "dhis2-semis-functions";
 
 export function useGetEnrollmentData(props: ExportData) {
-    const { getTei } = useGetTei()
+    const { getTeis } = useGetTeis()
     const { getEvents } = useGetEvents()
     const { onError, eventFilters, withSocioEconomics, selectedSectionDataStore, module, setProgress = () => { } } = props
     const { urlParameters } = useUrlParams()
@@ -17,12 +16,12 @@ export function useGetEnrollmentData(props: ExportData) {
         const trackedEntityIds = events?.map((x: { trackedEntity: string }) => x.trackedEntity).join(';')
 
         try {
-            return getTei(selectedSectionDataStore?.program as unknown as string, trackedEntityIds, orgUnit)
-                .then(async (trackedEntityInstance: any) => {
+            return getTeis({ program: selectedSectionDataStore?.program as unknown as string, trackedEntity: trackedEntityIds, orgUnit })
+                .then(async (trackedEntityInstances: any) => {
                     let rows: any = []
                     let counter = 0
 
-                    for (const tei of trackedEntityInstance?.results?.instances) {
+                    for (const tei of trackedEntityInstances) {
                         counter++
                         let enrollment = events.find((x: any) => x.trackedEntity == tei?.trackedEntity)?.enrollment
                         let socioEconomiscData: any = []
@@ -69,8 +68,8 @@ export function useGetEnrollmentData(props: ExportData) {
 
                         setProgress((progress: any) => ({
                             ...progress,
-                            progress: progress.progress + (percentagem / trackedEntityInstance?.results?.instances?.length),
-                            buffer: progress.buffer + ((percentagem + 4) / trackedEntityInstance.results?.instances?.length)
+                            progress: progress.progress + (percentagem / trackedEntityInstances?.length),
+                            buffer: progress.buffer + ((percentagem + 4) / trackedEntityInstances?.length)
                         }))
                     }
 

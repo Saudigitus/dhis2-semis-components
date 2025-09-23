@@ -51,7 +51,7 @@
 }
 
 .detailsCard {
-  height: 90px;
+  min-height: 90px;
   padding: 6px 10px;
   border: 1px solid rgba(41, 160, 186, 0.2);
   background-color: #F1FBFF;
