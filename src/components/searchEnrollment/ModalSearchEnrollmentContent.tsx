@@ -4,13 +4,12 @@ import styles from "../modal/modal.module.css"
 import WithBorder from "../template/WithBorder";
 import WithPadding from "../template/WithPadding";
 import CustomForm from "../form/form";
-import { useUrlParams } from 'dhis2-semis-functions'
+import { useSearchEnrollments, useUrlParams } from 'dhis2-semis-functions'
 import useGetSearchEnrollmentForm from "../../hooks/enrollmentSearch/useGetSearchEnrollmentForm";
 import { ModalSearchTemplateProps } from '../../types/modal/ModalProps'
 import { useGetProgramsAttributes } from "../../utils/tei/useGetProgramsAttributes";
 import { formFields } from "../../utils/constants/searchEnrollmentForm";
 import { getRecentEnrollment } from "../../utils/tei/getRecentEnrollment";
-import useSearchEnrollments from "../../hooks/tei/useSearchEnrollments";
 import Table from "../table/render/Table";
 import ModalComponent from "../modal/Modal";
 import { useDataStoreKey } from "../../hooks/dataStore/useDataStoreKey";
@@ -22,10 +21,10 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   const { sectionName, setOpenNewEnrollmentModal, programConfig, open, setOpen, Form, setFormInitialValues } = props;
   const { searchEnrollmentFields } = useGetSearchEnrollmentForm({ programConfig });
-  const { registration } = useDataStoreKey({ sectionType: sectionName })
   const [showResults, setShowResults] = useState<boolean>(false)
   const { teiAttributes, searchableAttributes } = useGetProgramsAttributes({ programConfig });
-  const { enrollmentValues, setEnrollmentValues, loading, getEnrollmentsData } = useSearchEnrollments({ sectionType: sectionName })
+  const { registration, program, "socio-economics": socioEconomics } = useDataStoreKey({ sectionType: sectionName })
+  const { enrollmentValues, setEnrollmentValues, loading, getEnrollmentsData } = useSearchEnrollments({ program, registration, socioEconomics })
   const [collapseAttributes, setCollapseAttributes] = useState(0)
   const { urlParameters } = useUrlParams();
   const { school: orgUnit, schoolName: orgUnitName, academicYear } = urlParameters
@@ -67,12 +66,16 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
       collapseAttributes,
       queryForm
     ).length > 0) {
-      getEnrollmentsData(formattedQuery(
-        teiAttributes,
-        searchEnrollmentFields,
-        collapseAttributes,
-        queryForm
-      ), setShowResults, orgUnit)
+      getEnrollmentsData({
+        filters: formattedQuery(
+          teiAttributes,
+          searchEnrollmentFields,
+          collapseAttributes,
+          queryForm
+        ),
+        orgUnit,
+        setShowResults
+      })
     }
   };
 
