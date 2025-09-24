@@ -5,30 +5,32 @@ import styles from './groupform.module.css'
 import { useEffect, useRef, useState } from "react";
 import { FormApi } from "final-form"
 import { deepEqual } from "../../utils/table/objectComparison";
+import { FormSpy } from "react-final-form/typescript";
 
 interface IForm extends Record<string, any> { }
 interface imageFieldSpecificProps {
+    baseUrl?: string
     storyBook?: boolean,
-    trackedEntity?: string,
     destructive?: boolean,
+    trackedEntity?: string,
     setTrackedValues?: (value: any) => void,
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 
 export default function CustomForm(props: CombinedProps) {
-    const { storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons } = props
-    const { onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues, formValues } = props
-    const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
     const [formSubmitted, setFormSubmitted] = useState(false)
+    const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
+    const { storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons } = props
+    const { onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues, baseUrl } = props
 
     const handleInputChange = (event: any) => {
         if (onInputChange) onInputChange({ value: event.target.value, name: event.target.name, field: event })
         setFormSubmitted(false)
     }
 
-    const formActions = ({ form, changed }: { form: any, changed: boolean }) => [
+    const formActions = ({ form }: { form: any }) => [
         {
             id: "cancel",
             type: "reset",
@@ -59,19 +61,10 @@ export default function CustomForm(props: CombinedProps) {
                     setFormSubmitted(true)
                     onFormSubtmit(values)
                 }}
-                initialValues={{ ...initialValues, ...formValues }}
+                initialValues={{ ...initialValues }}
             >
-                {({ form, handleSubmit, values, pristine }) => {
+                {({ form, handleSubmit, values }) => {
                     formRef.current = form;
-
-                    useEffect(() => {
-                        setTrackedValues && setTrackedValues(values);
-                        if (deepEqual(initialValues, values)) {
-                            setChanged(false)
-                        } else {
-                            setChanged(true)
-                        }
-                    }, [values])
 
                     return (
                         <form
@@ -92,6 +85,16 @@ export default function CustomForm(props: CombinedProps) {
                                 }
                             }}
                         >
+                            <FormSpy subscription={{ values: true, }} >
+                                {({ values }) => {
+                                    useEffect(() => {
+                                        setFormValues?.(values);
+                                        setTrackedValues?.(values);
+                                        setChanged(!deepEqual(initialValues, values));
+                                    }, [values]);
+                                    return null;
+                                }}
+                            </FormSpy>
                             {
                                 formFields
                                     ?.filter((section: any) => section?.visible !== false)
@@ -99,6 +102,7 @@ export default function CustomForm(props: CombinedProps) {
                                         <GroupForm
                                             key={i}
                                             name={section.name}
+                                            baseUrl={baseUrl}
                                             description={section.description}
                                             fields={section.fields}
                                             form={form}
@@ -114,7 +118,7 @@ export default function CustomForm(props: CombinedProps) {
                             {withButtons && (
                                 <div>
                                     <ButtonStrip end className={styles.btnStrip}>
-                                        {formActions({ form, changed: true }).map((action: any, i) => (
+                                        {formActions({ form }).map((action: any, i) => (
                                             <Button key={i} {...action} loading={false}>
                                                 {action.label}
                                             </Button>
