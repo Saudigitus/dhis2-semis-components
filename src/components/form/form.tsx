@@ -5,7 +5,7 @@ import styles from './groupform.module.css'
 import { useEffect, useRef, useState } from "react";
 import { FormApi } from "final-form"
 import { deepEqual } from "../../utils/table/objectComparison";
-import { FormSpy } from "react-final-form/typescript";
+import { FormSpy } from "react-final-form";
 
 interface IForm extends Record<string, any> { }
 interface imageFieldSpecificProps {
