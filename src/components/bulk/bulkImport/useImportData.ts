@@ -26,23 +26,23 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
 
         try {
             const studentsData = excelData.mapping
-            const profile = sectionType.substring(0, 1).toUpperCase() + sectionType.substring(1, sectionType.length) + ' profile'
+            const profile = sectionType?.substring(0, 1)?.toUpperCase() + sectionType?.substring(1, sectionType?.length) + ' profile'
             const programStages = [
                 ...(
-                    excelData.module != Modules.Enrollment ?
-                        (selectedSectionDataStore as unknown as any)?.[excelData.module].programStage ?
-                            [(selectedSectionDataStore as unknown as any)?.[excelData.module].programStage] :
-                            (selectedSectionDataStore as unknown as any)?.[excelData.module].programStages.map((x: any) => x.programStage)
+                    excelData?.module != Modules?.Enrollment ?
+                        (selectedSectionDataStore as unknown as any)?.[excelData?.module].programStage ?
+                            [(selectedSectionDataStore as unknown as any)?.[excelData?.module].programStage] :
+                            (selectedSectionDataStore as unknown as any)?.[excelData?.module].programStages.map((x: any) => x.programStage)
                         : []
                 )
             ]
 
-            const displayNames = programConfig.programStages.filter(x => programStages.includes(x.id)).map(x => x.displayName)
+            const displayNames = programConfig?.programStages.filter(x => programStages.includes(x.id)).map(x => x.displayName)
 
-            switch (excelData.module) {
+            switch (excelData?.module) {
                 case Modules.Attendance:
                     const { attendanceEvents } = generateAttendanceEventObjects(displayNames, studentsData, selectedSectionDataStore as unknown as selectedDataStoreKey)
-                    const attendanceDisplayName = programConfig.programStages.find(x => x.id === selectedSectionDataStore?.attendance.programStage)?.displayName
+                    const attendanceDisplayName = programConfig?.programStages.find(x => x.id === selectedSectionDataStore?.attendance?.programStage)?.displayName
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
                     await postAttendance(
@@ -62,11 +62,11 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                      * program stages que devem ser ignorados na hora de actualizar e/ou registar um novo estudante
                      */
                     const stagesToIgnore = [
-                        selectedSectionDataStore?.attendance.programStage as unknown as string,
-                        selectedSectionDataStore?.transfer.programStage as unknown as string,
+                        selectedSectionDataStore?.attendance?.programStage as unknown as string,
+                        selectedSectionDataStore?.transfer?.programStage as unknown as string,
                         ...(updating ? [
-                            selectedSectionDataStore?.["final-result"].programStage as unknown as string,
-                            selectedSectionDataStore?.registration.programStage as unknown as string,
+                            selectedSectionDataStore?.["final-result"]?.programStage as unknown as string,
+                            selectedSectionDataStore?.registration?.programStage as unknown as string,
                             ...(selectedSectionDataStore?.performance?.programStages?.map(x => x.programStage) || [])
                         ] : [""])
                     ]
@@ -86,7 +86,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                         enrollments,
                         studentsData,
                         importMode,
-                        programConfig.id,
+                        programConfig?.id,
                         updating,
                         selectedSectionDataStore as unknown as selectedDataStoreKey,
                         orgUnit as unknown as string

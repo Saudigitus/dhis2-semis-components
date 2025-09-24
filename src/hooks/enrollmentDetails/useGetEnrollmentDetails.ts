@@ -28,24 +28,24 @@ export function useGetEnrollmentData(props: ExportData) {
 
                         const registrationData: any = await getEvents({
                             program: selectedSectionDataStore?.program as unknown as string,
-                            programStage: selectedSectionDataStore?.registration.programStage as unknown as string,
+                            programStage: selectedSectionDataStore?.registration?.programStage as unknown as string,
                             ouMode: "SELECTED",
                             fields: "*",
                             filter: eventFilters,
                             skipPaging: true,
-                            trackedEntity: tei.trackedEntity,
+                            trackedEntity: tei?.trackedEntity,
                             orgUnit: orgUnit
                         })
 
                         if (withSocioEconomics || module === Modules.Enrollment) {
                             socioEconomiscData = await getEvents({
                                 program: selectedSectionDataStore?.program as unknown as string,
-                                programStage: selectedSectionDataStore?.['socio-economics'].programStage as unknown as string,
+                                programStage: selectedSectionDataStore?.['socio-economics']?.programStage as unknown as string,
                                 ouMode: "SELECTED",
                                 fields: "*",
                                 filter: eventFilters,
                                 skipPaging: true,
-                                trackedEntity: tei.trackedEntity,
+                                trackedEntity: tei?.trackedEntity,
                                 orgUnit: orgUnit
                             })
                         }
@@ -62,8 +62,8 @@ export function useGetEnrollmentData(props: ExportData) {
                             trackedEntity: tei.trackedEntity,
                             enrollmentStatus: tei?.enrollments?.find((x: any) => x.enrollment === enrollment)?.status,
                             ...attributes(tei?.attributes ?? []),
-                            ...dataValues(currEnrollmentRegistration?.dataValues ?? [], selectedSectionDataStore?.registration.programStage as unknown as string),
-                            ...dataValues(currEnrollmentSocioEconomics?.dataValues ?? [], selectedSectionDataStore?.['socio-economics'].programStage as unknown as string),
+                            ...dataValues(currEnrollmentRegistration?.dataValues ?? [], selectedSectionDataStore?.registration?.programStage as unknown as string),
+                            ...dataValues(currEnrollmentSocioEconomics?.dataValues ?? [], selectedSectionDataStore?.['socio-economics']?.programStage as unknown as string),
                         }]
 
                         setProgress((progress: any) => ({
