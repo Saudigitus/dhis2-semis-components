@@ -16,8 +16,9 @@ interface CombinedProps extends FormFieldsProps, imageFieldSpecificProps { }
 
 function ImageField(props: CombinedProps) {
     const { disabled, name, form, storyBook } = props
-    const { input }: FieldRenderProps<any, HTMLElement> = useField(name)
+    const [errorImage, setErrorImage] = useState<any>()
     const [uploadedImage, setUploadedImage] = useState<any>()
+    const { input }: FieldRenderProps<any, HTMLElement> = useField(name)
     const { createFileResource, getFileResource, loading } = useFileResource()
 
     const handleFileChange = async (event: any) => {
@@ -40,12 +41,17 @@ function ImageField(props: CombinedProps) {
     }
 
     async function getImage() {
-        await getFileResource({ trackedEntity: props.trackedEntity, attribute: input.name }).then((response: { file: any }) => {
+        await getFileResource({ trackedEntity: props.trackedEntity, attribute: input.name }).then((response: { file: any, error: any }) => {
             const reader = new FileReader()
             reader.onloadend = () => {
                 setUploadedImage(reader.result)
             }
-            reader.readAsDataURL(response.file)
+            if (response.file)
+                reader.readAsDataURL(response.file)
+            if (response.error) {
+                setUploadedImage(null)
+                setErrorImage("File could not be loaded: " + response.error)
+            }
         })
     }
 
@@ -74,28 +80,31 @@ function ImageField(props: CombinedProps) {
                         }
                     </span>
                 ) :
-                    <span>
-                        <input
-                            accept="image/*"
-                            style={{ display: 'none' }}
-                            id="contained-button-file"
-                            multiple
-                            type="file"
-                            onChange={handleFileChange}
-                            disabled={disabled}
-                        />
-                        <label htmlFor="contained-button-file">
-                            <Button
-                                className={style.customDhis2Button}
-                                component="span"
-                                startIcon={<IconUpload24 />}
-                                loading={loading}
+                    !errorImage &&
+                    (
+                        <span>
+                            <input
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                id="contained-button-file"
+                                multiple
+                                type="file"
+                                onChange={handleFileChange}
                                 disabled={disabled}
-                            >
-                                Choose File
-                            </Button>
-                        </label>
-                    </span>
+                            />
+                            <label htmlFor="contained-button-file">
+                                <Button
+                                    className={style.customDhis2Button}
+                                    component="span"
+                                    startIcon={<IconUpload24 />}
+                                    loading={loading}
+                                    disabled={disabled}
+                                >
+                                    Choose File
+                                </Button>
+                            </label>
+                        </span>
+                    )
             }
 
             {uploadedImage &&
@@ -112,6 +121,8 @@ function ImageField(props: CombinedProps) {
                     </Button>
                 </div>
             }
+            {/* {errorImage && <span className={style.errorMessage}>{errorImage}</span>} */}
+            {errorImage && <span className={style.errorMessage}>File could not be loaded: An unknown error occurred.</span>}
         </Box>
     )
 }
