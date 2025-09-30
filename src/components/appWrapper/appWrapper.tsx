@@ -39,7 +39,7 @@ type CombinedTypes = AppWrapperProps & { baseUrl: string };
 const AppWrapper = ({ children, dataStoreKey, baseUrl, schoolCalendarKey }: CombinedTypes) => {
 
   return (
-    <DataProvider baseUrl={baseUrl}>
+    <DataProvider baseUrl={baseUrl} apiVersion={39}>
       <RecoilRoot>
         <AppWrapperRaw dataStoreKey={dataStoreKey} schoolCalendarKey={schoolCalendarKey}>
           {children}

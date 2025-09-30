@@ -54,7 +54,7 @@ function GenericFields(props: GenericFieldsComponentProps) {
           storybook ?
             <ImageField storyBook={storybook} disabled={disabled} {...attribute} form={form} />
             : (
-              <DataProvider baseUrl={baseUrl}>
+              <DataProvider baseUrl={baseUrl} apiVersion={39}>
                 <ImageField storyBook={storybook} disabled={disabled} {...attribute} form={form} />
               </DataProvider>
             )
