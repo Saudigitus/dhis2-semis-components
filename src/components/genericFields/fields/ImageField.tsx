@@ -46,11 +46,11 @@ function ImageField(props: CombinedProps) {
             reader.onloadend = () => {
                 setUploadedImage(reader.result)
             }
-            if (response.file)
-                reader.readAsDataURL(response.file)
-            if (response.error) {
+            if (response?.file)
+                reader.readAsDataURL(response?.file)
+            if (response?.error) {
                 setUploadedImage(null)
-                setErrorImage("File could not be loaded: " + response.error)
+                setErrorImage("File could not be loaded: " + response?.error)
             }
         })
     }
