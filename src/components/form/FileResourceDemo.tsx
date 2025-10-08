@@ -1,10 +1,13 @@
-import { useFileResource } from "dhis2-semis-functions"
+import { useFileResource, useGetSectionTypeLabel } from "dhis2-semis-functions"
 import React, { useState } from "react"
+import { useDataStoreKey } from "../../hooks/dataStore/useDataStoreKey"
 
 export const FileResourceDemo = () => {
   const { createFileResource, getFileResource, deleteFileResource, loading } = useFileResource()
   const [fileId, setFileId] = useState<string | null>(null)
   const [file, setFile] = useState<any>(null)
+  const { sectionName } = useGetSectionTypeLabel();
+  const dataStoreData = useDataStoreKey({ sectionType: sectionName });
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files[0]) {
@@ -17,19 +20,19 @@ export const FileResourceDemo = () => {
     // if (fileId) {
     const result = await getFileResource({
       trackedEntity: "VGWPgGDIAhr",
-      attribute: "cFYnzcqZyZ9"
+      attribute: "cFYnzcqZyZ9",
+      program: dataStoreData.program
     })
-    console.log(result)
+
     const reader = new FileReader()
     reader.onloadend = () => {
       setFile(reader.result)
     }
-    if (result?.file)
+    if (result?.file){
       reader.readAsDataURL(result?.file)
-    if (result?.error) {
+    }else{
       setFile(null)
     }
-    // }
   }
 
   async function handleDelete() {
