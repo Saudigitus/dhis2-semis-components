@@ -28,9 +28,9 @@ const AppWrapperRaw = ({ children, dataStoreKey, schoolCalendarKey }: AppWrapper
   }
 
   return (
-    <div>
+   <DataProvider baseUrl={baseUrl} apiVersion={39}>
       {children}
-    </div>
+     </DataProvider>
   )
 }
 
