@@ -16,8 +16,8 @@ interface customProps {
 interface CombinedProps extends GroupFormProps, customProps { }
 
 function GroupForm(props: CombinedProps) {
-    const { setChanged, name, fields, description, form, onInputChange, trackedEntity, storyBook, submitted } = props
-    const { baseUrl } = props
+    const { trackedEntity, storyBook, submitted } = props
+    const { setChanged, name, fields, description, form, onInputChange, baseUrl } = props
 
     return (
         <>

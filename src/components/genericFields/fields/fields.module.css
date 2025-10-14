@@ -76,3 +76,8 @@
         width: 18px;
     }
 }
+
+.errorMessage {
+    font-size: 0.75rem;
+    color: #f44336;
+}
