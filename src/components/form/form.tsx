@@ -12,13 +12,14 @@ interface imageFieldSpecificProps {
     trackedEntity?: string,
     destructive?: boolean,
     setTrackedValues?: (value: any) => void,
+    baseUrl?: string,
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 
 export default function CustomForm(props: CombinedProps) {
     const { storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons } = props
-    const { onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues, formValues } = props
+    const { onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues, formValues, baseUrl } = props
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const [changed, setChanged] = useState(false)
     const [formSubmitted, setFormSubmitted] = useState(false)
@@ -107,6 +108,7 @@ export default function CustomForm(props: CombinedProps) {
                                             storyBook={storyBook}
                                             setChanged={setChanged}
                                             submitted={formSubmitted}
+                                            baseUrl={baseUrl}
                                         />
                                     ))
                             }
