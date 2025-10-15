@@ -7,7 +7,7 @@ import { RecoilRoot, } from 'recoil';
 import { useSetupDataStore } from '../../hooks/appWrapper/useSetupDataStore';
 import { useGetSysInfo } from 'dhis2-semis-functions';
 
-const AppWrapperRaw = ({ children, dataStoreKey, schoolCalendarKey }: AppWrapperProps) => {
+const AppWrapperRaw = ({ children, dataStoreKey, schoolCalendarKey, baseUrl }: AppWrapperProps) => {
   const { setupDataStore, error, errorProgram, loading } = useSetupDataStore({ dataStoreKey, schoolCalendarKey })
   const { loading: loadingSysInfo } = useGetSysInfo()
 
@@ -28,9 +28,9 @@ const AppWrapperRaw = ({ children, dataStoreKey, schoolCalendarKey }: AppWrapper
   }
 
   return (
-    <div>
+    <DataProvider baseUrl={baseUrl}>
       {children}
-    </div>
+    </DataProvider>
   )
 }
 
@@ -39,9 +39,9 @@ type CombinedTypes = AppWrapperProps & { baseUrl: string };
 const AppWrapper = ({ children, dataStoreKey, baseUrl, schoolCalendarKey }: CombinedTypes) => {
 
   return (
-    <DataProvider baseUrl={baseUrl} apiVersion={39}>
+    <DataProvider baseUrl={baseUrl}>
       <RecoilRoot>
-        <AppWrapperRaw dataStoreKey={dataStoreKey} schoolCalendarKey={schoolCalendarKey}>
+        <AppWrapperRaw baseUrl={baseUrl} dataStoreKey={dataStoreKey} schoolCalendarKey={schoolCalendarKey}>
           {children}
         </AppWrapperRaw>
       </RecoilRoot>
