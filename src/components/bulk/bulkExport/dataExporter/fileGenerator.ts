@@ -105,7 +105,7 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                         console.log(rows?.find(x => x.ref == row?.getCell(colIndex)?.value), 'the rowww')
 
                         const status = rows?.find(x => x.ref == row?.getCell(colIndex)?.value)?.enrollmentStatus
-                        if (status === 'CANCELLED' && module != Modules.Final_Result) rowsToBlock.push(row._number)
+                        if (status === 'CANCELLED' /*&& module != Modules.Final_Result*/) rowsToBlock.push(row._number)
                     }
 
                     if (index > 2) {
@@ -137,7 +137,7 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                 });
             });
 
-            if (module === Modules.Attendance)
+            if (module === Modules.Attendance) {
                 sheet.eachRow({ includeEmpty: true }, (row: any) => {
                     row.eachCell({ includeEmpty: true }, (cell: any) => {
                         if (regex.test(cell._column._key) && cell._row._number > 3) {
@@ -157,9 +157,9 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                         }
                     });
                 });
+            }
 
             sheet.eachRow({ includeEmpty: true }, (row: any) => {
-                console.log(rowsToBlock, row._number)
                 if (rowsToBlock.includes(row._number)) {
                     row.eachCell({ includeEmpty: true }, (cell: any) => {
 
