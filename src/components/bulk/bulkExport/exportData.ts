@@ -14,16 +14,7 @@ import { SchoolCalendarType } from "../../../types/dataStore/schoolCalendar";
 
 export function useExportData(props: ExportData) {
     const {
-        programConfig,
-        isSchoolDay,
-        stagesToExport,
-        module,
-        selectedSectionDataStore,
-        withSocioEconomics = false,
-        sectionType,
-        empty = false,
-        setProgress = () => { },
-        onError,
+        programConfig, isSchoolDay, stagesToExport, module, selectedSectionDataStore, withSocioEconomics = false, sectionType, empty = false, setProgress = () => { }, onError,
     } = props
     const { getData } = getCommonSheetData({ ...props, onError })
     const { urlParameters } = useUrlParams()
@@ -34,13 +25,7 @@ export function useExportData(props: ExportData) {
     const selectedCalendar = schoolCalendar?.find(x => x?.academicYear?.code == defaults?.academicYear)
     const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date, config: SchoolCalendarType) => boolean, config: selectedCalendar })
     const { getHeaders } = generateHeaders({
-        module,
-        programConfig,
-        stagesToExport,
-        selectedSectionDataStore,
-        sectionType,
-        withSocioEconomics,
-        empty
+        module, programConfig, stagesToExport, selectedSectionDataStore, sectionType, withSocioEconomics, empty
     })
     const { msg, valid } = areParamsValid({ ...props })
     const { getDate } = useIncrementDays()

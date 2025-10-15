@@ -102,6 +102,8 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                     const cell = row.getCell(colIndex);
 
                     if (!rowsToBlock.includes(row._number) && colKey === 'ref') {
+                        console.log(rows?.find(x => x.ref == row?.getCell(colIndex)?.value), 'the rowww')
+
                         const status = rows?.find(x => x.ref == row?.getCell(colIndex)?.value)?.enrollmentStatus
                         if (status === 'CANCELLED' && module != Modules.Final_Result) rowsToBlock.push(row._number)
                     }
@@ -157,6 +159,7 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                 });
 
             sheet.eachRow({ includeEmpty: true }, (row: any) => {
+                console.log(rowsToBlock, row._number)
                 if (rowsToBlock.includes(row._number)) {
                     row.eachCell({ includeEmpty: true }, (cell: any) => {
 
