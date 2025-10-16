@@ -119,7 +119,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                         style={{ ...classes.cell, ...classes.bodyCell }}
                     >
                         <Checkbox
-                            disabled={!enableInactiveRowSelection}
+                            disabled={disabled}
                             indeterminate={indeterminate}
                             checked={isSelected(row)}
                             onChange={() => onChange && onChange(row)}
@@ -147,7 +147,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 }] : rowAction
                             }
                             row={row}
-                            disabled={checkCanceled(row.status)}
+                            disabled={checkCanceled(row.status) && !enableInactiveRowSelection}
                             loading={loading!}
                             displayType={displayType}
                         />
