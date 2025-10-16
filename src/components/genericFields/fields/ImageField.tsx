@@ -4,8 +4,9 @@ import { IconUpload24, IconCross24, Center, CircularLoader } from "@dhis2/ui"
 import { useField, type FieldRenderProps } from "react-final-form"
 import style from "./fields.module.css"
 import { FormFieldsProps } from '../../../types/form/GenericFieldsTypes'
-import { useFileResource } from 'dhis2-semis-functions'
+import { useFileResource, useGetSectionTypeLabel } from 'dhis2-semis-functions'
 import { Box, Button } from '@mui/material'
+import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey'
 
 interface imageFieldSpecificProps {
     storyBook: boolean
@@ -20,6 +21,9 @@ function ImageField(props: CombinedProps) {
     const [uploadedImage, setUploadedImage] = useState<any>()
     const { input }: FieldRenderProps<any, HTMLElement> = useField(name)
     const { createFileResource, getFileResource, loading } = useFileResource()
+
+    const { sectionName } = useGetSectionTypeLabel();
+    const dataStoreData = useDataStoreKey({ sectionType: sectionName });
 
     const handleFileChange = async (event: any) => {
         const image = event.target.files[0]
@@ -41,7 +45,7 @@ function ImageField(props: CombinedProps) {
     }
 
     async function getImage() {
-        await getFileResource({ trackedEntity: props.trackedEntity, attribute: input.name }).then((response: { file: any, error: any }) => {
+        await getFileResource({ trackedEntity: props.trackedEntity, attribute: input.name, program: dataStoreData.program }).then((response: { file: any, error: any }) => {
             const reader = new FileReader()
             reader.onloadend = () => {
                 setUploadedImage(reader.result)
