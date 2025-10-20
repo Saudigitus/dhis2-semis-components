@@ -72,6 +72,7 @@ export default function ProcessImport(props: importData) {
                 children={
                     <ModalSummaryContent
                         onSubmit={onSubmit}
+                        module={module}
                         programConfig={programConfig}
                         setOpen={setOpenStats}
                         invalidRecords={invalidRecords}
