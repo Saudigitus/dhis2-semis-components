@@ -17,11 +17,12 @@ interface ModalContentProps {
     programConfig: any
     onSubmit: (args: "VALIDATE" | "COMMIT") => any
     onClose?: () => any
+    module: string
     stats: { stats: { ignored: number, created: number, updated: number, total: number }, errorDetails: any[], byType: [], exceptions?: any[] }
 }
 
 const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
-    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, stats, onClose } = props;
+    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, stats, onClose, module } = props;
     const [showDetails, setShowDetails] = useState(false)
     const [load, setLoading] = useState(false)
     const [doneProcessing, setDoneProcessing] = useState<any>({ validate: false, commit: false })
@@ -109,7 +110,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             <Title style={{ fontSize: "18px" }} label={`Summary`} type="title" />
             <WithPadding />
 
-            <SummaryCards stats={stats} invalidRecs={invalidRecords} validRecs={validRecords} doneProcessing={doneProcessing.commit || doneProcessing.validate} />
+            <SummaryCards module={module} stats={stats} invalidRecs={invalidRecords} validRecs={validRecords} doneProcessing={doneProcessing.commit || doneProcessing.validate} />
 
             <WithPadding />
             <ButtonStrip>
