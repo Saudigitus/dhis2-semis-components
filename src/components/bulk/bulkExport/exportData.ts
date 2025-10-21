@@ -60,8 +60,8 @@ export function useExportData(props: ExportData) {
                 if (!empty) data = await getData()
 
                 if (module != Modules.Enrollment) {
-                    for (let teisCounter = 0; teisCounter < data.length; teisCounter++) {
-                        for (let a = 0; a < stagesToExport.length; a++) {
+                    for (let teisCounter = 0; teisCounter < data?.length; teisCounter++) {
+                        for (let a = 0; a < stagesToExport?.length; a++) {
                             await getEvents({
                                 program: selectedSectionDataStore?.program as unknown as string,
                                 ...(module === Modules.Attendance ? {
@@ -70,19 +70,19 @@ export function useExportData(props: ExportData) {
                                 } : {}),
                                 orgUnit,
                                 ouMode: "SELECTED",
-                                programStage: stagesToExport[a],
+                                programStage: stagesToExport?.[a],
                                 fields: "event,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
-                                trackedEntity: data[teisCounter].trackedEntity,
+                                trackedEntity: data?.[teisCounter]?.trackedEntity,
                                 skipPaging: true
                             }).then((resp) => {
-                                const events = resp?.filter((x: any) => x.enrollment === data[teisCounter].enrollment)
-                                const increment = (40 / data.length) / stagesToExport.length;
-                                const bufferIncrement = (41 / data.length) / stagesToExport.length;
+                                const events = resp?.filter((x: any) => x.enrollment === data?.[teisCounter]?.enrollment)
+                                const increment = (40 / data?.length) / stagesToExport?.length;
+                                const bufferIncrement = (41 / data?.length) / stagesToExport?.length;
 
                                 data[teisCounter] = {
                                     ...data[teisCounter], ...formatSheetData({
                                         module: module,
-                                        stageId: stagesToExport[a],
+                                        stageId: stagesToExport?.[a],
                                         events: events,
                                         dataStore: selectedSectionDataStore as unknown as selectedDataStoreKey
                                     })
