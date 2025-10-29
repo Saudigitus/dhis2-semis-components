@@ -1,0 +1,2758 @@
+{
+    "translations": [],
+    "version": 36,
+    "programType": "WITH_REGISTRATION",
+    "trackedEntityType": {
+        "trackedEntityTypeAttributes": [
+            {
+                "trackedEntityAttribute": {
+                    "id": "EPYqXuM0M2u"
+                }
+            },
+            {
+                "trackedEntityAttribute": {
+                    "id": "ZIDlK6BaAU2"
+                }
+            },
+            {
+                "trackedEntityAttribute": {
+                    "id": "gz8w04YBSS0"
+                }
+            },
+            {
+                "trackedEntityAttribute": {
+                    "id": "G0B8B0AH5Ek"
+                }
+            }
+        ],
+        "id": "eMLK4VQm3Kj"
+    },
+    "displayName": "Student",
+    "id": "wQaiD2V27Dp",
+    "programStages": [
+        {
+            "translations": [],
+            "programStageDataElements": [
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Academic Year ",
+                        "translations": [],
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "2024",
+                                    "label": "2024"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2023",
+                                    "label": "2023"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2022",
+                                    "label": "2022"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2021",
+                                    "label": "2021"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2025",
+                                    "label": "2025"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2020",
+                                    "label": "2020"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2019",
+                                    "label": "2019"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Test",
+                                    "label": "ORG TESTE"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2018",
+                                    "label": "2018"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2017",
+                                    "label": "2017"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2026",
+                                    "label": "2026"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2027",
+                                    "label": "2027"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2015",
+                                    "label": "2015"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "1999",
+                                    "label": "1999"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "2028",
+                                    "label": "2028"
+                                }
+                            ]
+                        },
+                        "displayName": "Academic Year ",
+                        "id": "iDSrFrrVgmX"
+                    },
+                    "compulsory": true,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Grade",
+                        "translations": [
+                            {
+                                "locale": "pt",
+                                "property": "SHORT_NAME",
+                                "value": "Classe"
+                            },
+                            {
+                                "locale": "pt",
+                                "property": "NAME",
+                                "value": "Classe"
+                            },
+                            {
+                                "locale": "pt",
+                                "property": "FORM_NAME",
+                                "value": "Classe"
+                            }
+                        ],
+                        "formName": "Grade",
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "Grade 1",
+                                    "label": "Grade 1"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Grade 2",
+                                    "label": "Grade 2"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Grade 3",
+                                    "label": "Grade 3"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Grade 4",
+                                    "label": "Grade 4"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Grade 5",
+                                    "label": "Grade 5"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Grade 6",
+                                    "label": "Grade 6"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Grade 7",
+                                    "label": "Grade 7"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Grade 8",
+                                    "label": "Grade 8"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Grade 9",
+                                    "label": "Grade 9"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Grade 10",
+                                    "label": "Grade 10"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Grade 11",
+                                    "label": "Grade 11"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Grade 12",
+                                    "label": "Grade 12"
+                                }
+                            ]
+                        },
+                        "displayName": "Grade",
+                        "id": "kNNoif9gASf"
+                    },
+                    "compulsory": true,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Class/Section",
+                        "translations": [
+                            {
+                                "locale": "pt",
+                                "property": "SHORT_NAME",
+                                "value": "Turma"
+                            },
+                            {
+                                "locale": "pt",
+                                "property": "FORM_NAME",
+                                "value": "Turma"
+                            },
+                            {
+                                "locale": "pt",
+                                "property": "NAME",
+                                "value": "Turma"
+                            }
+                        ],
+                        "formName": "Class/Section",
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "Not defined",
+                                    "label": "Not defined"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "A",
+                                    "label": "A"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "B",
+                                    "label": "B"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "C",
+                                    "label": "C"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "D",
+                                    "label": "D"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "E",
+                                    "label": "E"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "F",
+                                    "label": "F"
+                                }
+                            ]
+                        },
+                        "displayName": "Class/Section",
+                        "id": "RhABRLO2Fae"
+                    },
+                    "compulsory": true,
+                    "displayInReports": true
+                }
+            ],
+            "autoGenerateEvent": false,
+            "displayName": "Enrollment details",
+            "id": "Ni2qsy2WJn4",
+            "repeatable": false
+        },
+        {
+            "translations": [],
+            "programStageDataElements": [
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Electricity in students house",
+                        "translations": [],
+                        "formName": "Do you have electricity in your house ?",
+                        "valueType": "TRUE_ONLY",
+                        "displayName": "Electricity in students house",
+                        "id": "sLeCSA4UMe5"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Talents",
+                        "translations": [],
+                        "formName": "Talents?",
+                        "valueType": "TEXT",
+                        "displayName": "Talents",
+                        "id": "UgCcMc10Dsw"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Floor of the room in which students sleep",
+                        "translations": [],
+                        "formName": "What material are the floor of the room in which you sleep?",
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "earth",
+                                    "label": "Earth/mud"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "wood",
+                                    "label": "Wood"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "stone",
+                                    "label": "Stone/brick"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "cement",
+                                    "label": "Cement/ concrete/tiles"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "other",
+                                    "label": "Other"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "do not know",
+                                    "label": "Don’t Know"
+                                }
+                            ]
+                        },
+                        "displayName": "Floor of the room in which students sleep",
+                        "id": "JIk5YtcFt7b"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Do you have Sickle Cell Anaemia?",
+                        "translations": [],
+                        "valueType": "BOOLEAN",
+                        "displayName": "Do you have Sickle Cell Anaemia?",
+                        "id": "pCZgMl3RgiC"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Do you have any other health issue?",
+                        "translations": [],
+                        "valueType": "TEXT",
+                        "displayName": "Do you have any other health issue?",
+                        "id": "vpAkX5dHhx8"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Do you have difficulty (with self-care such as) washing all over or dressing?",
+                        "translations": [],
+                        "formName": "Do you have difficulty (with self-care such as) washing all over or dressing?",
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "Yes, a lot of difficulty ",
+                                    "label": "Yes, a lot of difficulty "
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Cannot do it at all ",
+                                    "label": "Cannot do it at all "
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "No, no difficulty",
+                                    "label": "No, no difficulty"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Yes, some difficulty",
+                                    "label": "Yes, some difficulty"
+                                }
+                            ]
+                        },
+                        "displayName": "Do you have difficulty (with self-care such as) washing all over or dressing?",
+                        "id": "RFLVyp90ITL"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Living with parents",
+                        "translations": [],
+                        "formName": "Are you living with your parents?",
+                        "valueType": "BOOLEAN",
+                        "displayName": "Living with parents",
+                        "id": "JDODlu9eDSe"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Do you have difficulty hearing, even if using a hearing aid?",
+                        "translations": [],
+                        "formName": "Do you have difficulty hearing, even if using a hearing aid?",
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "Yes, a lot of difficulty ",
+                                    "label": "Yes, a lot of difficulty "
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Cannot do it at all ",
+                                    "label": "Cannot do it at all "
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "No, no difficulty",
+                                    "label": "No, no difficulty"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Yes, some difficulty",
+                                    "label": "Yes, some difficulty"
+                                }
+                            ]
+                        },
+                        "displayName": "Do you have difficulty hearing, even if using a hearing aid?",
+                        "id": "FZZNRD0FCGF"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Means of travel to school",
+                        "translations": [],
+                        "formName": "How did you travel to school?",
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "walk",
+                                    "label": "walk"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "bicycle",
+                                    "label": "bicycle"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "personal vehicle",
+                                    "label": "personal vehicle"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "public transportation",
+                                    "label": "public transportation"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "horse cart",
+                                    "label": "Horse/donkey cart"
+                                }
+                            ]
+                        },
+                        "displayName": "Means of travel to school",
+                        "id": "pmnNFDUEmwT"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Do you have difficulty remembering or concentrating?",
+                        "translations": [],
+                        "formName": "Do you have difficulty remembering or concentrating?",
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "Yes, a lot of difficulty ",
+                                    "label": "Yes, a lot of difficulty "
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Cannot do it at all ",
+                                    "label": "Cannot do it at all "
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "No, no difficulty",
+                                    "label": "No, no difficulty"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Yes, some difficulty",
+                                    "label": "Yes, some difficulty"
+                                }
+                            ]
+                        },
+                        "displayName": "Do you have difficulty remembering or concentrating?",
+                        "id": "oLxYfrjR6B5"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "LI6a - General bursary information: Receives bursary",
+                        "translations": [],
+                        "formName": "General bursary information: Receives bursary",
+                        "valueType": "BOOLEAN",
+                        "displayName": "LI6a - General bursary information: Receives bursary",
+                        "id": "SjMxl9Cwha8"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Do you have difficulty seeing, even if wearing glasses?",
+                        "translations": [],
+                        "formName": "Do you have difficulty seeing, even if wearing glasses?",
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "Yes, a lot of difficulty ",
+                                    "label": "Yes, a lot of difficulty "
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Cannot do it at all ",
+                                    "label": "Cannot do it at all "
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "No, no difficulty",
+                                    "label": "No, no difficulty"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Yes, some difficulty",
+                                    "label": "Yes, some difficulty"
+                                }
+                            ]
+                        },
+                        "displayName": "Do you have difficulty seeing, even if wearing glasses?",
+                        "id": "HDrb9f7Ndpp"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "LI6b - General bursary information: Source(s) of bursary",
+                        "translations": [],
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "Government",
+                                    "label": "Government"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "International Scholarship",
+                                    "label": "International Scholarship"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Local Scholarship",
+                                    "label": "Local Scholarship"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "National Board",
+                                    "label": "National Board"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Private",
+                                    "label": "Private"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Others",
+                                    "label": "Others"
+                                }
+                            ]
+                        },
+                        "displayName": "LI6b - General bursary information: Source(s) of bursary",
+                        "id": "H12Bz9ilOf1"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Do you have difficulty walking or climbing steps?",
+                        "translations": [],
+                        "formName": "Do you have difficulty walking or climbing steps?",
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "Yes, a lot of difficulty ",
+                                    "label": "Yes, a lot of difficulty "
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Cannot do it at all ",
+                                    "label": "Cannot do it at all "
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "No, no difficulty",
+                                    "label": "No, no difficulty"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Yes, some difficulty",
+                                    "label": "Yes, some difficulty"
+                                }
+                            ]
+                        },
+                        "displayName": "Do you have difficulty walking or climbing steps?",
+                        "id": "k7z0gfAvLkA"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "LI6c - General bursary information: Amount in SZL of bursary per year",
+                        "translations": [],
+                        "formName": "Amount in SZL of bursary per year",
+                        "valueType": "NUMBER",
+                        "displayName": "LI6c - General bursary information: Amount in SZL of bursary per year",
+                        "id": "wsFrk0eBZgi"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "LI6d - Amount in SZL of bursary for School fees",
+                        "translations": [],
+                        "valueType": "INTEGER_ZERO_OR_POSITIVE",
+                        "displayName": "LI6d - Amount in SZL of bursary for School fees",
+                        "id": "DXg4BfI9BQx"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "LI6e - Amount in SZL of bursary for Examination fees",
+                        "translations": [],
+                        "valueType": "INTEGER_ZERO_OR_POSITIVE",
+                        "displayName": "LI6e - Amount in SZL of bursary for Examination fees",
+                        "id": "woYJkG3KMga"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "LI6f - Amount in SZL of bursary for others (Others)",
+                        "translations": [],
+                        "valueType": "INTEGER_ZERO_OR_POSITIVE",
+                        "displayName": "LI6f - Amount in SZL of bursary for others (Others)",
+                        "id": "QRl2YSQXsYr"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Health Issues?",
+                        "translations": [],
+                        "formName": "Health Issues?",
+                        "valueType": "TEXT",
+                        "displayName": "Health Issues?",
+                        "id": "ReiryBkZcCT"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Special needs?",
+                        "translations": [],
+                        "formName": "Special needs?",
+                        "valueType": "TEXT",
+                        "displayName": "Special needs?",
+                        "id": "xOiyqnsPZS7"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Practical skills",
+                        "translations": [],
+                        "formName": "Practical skills?",
+                        "valueType": "TEXT",
+                        "displayName": "Practical skills",
+                        "id": "sImY1RsfcWN"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Student Levy",
+                        "translations": [],
+                        "formName": "Student Levy",
+                        "valueType": "NUMBER",
+                        "displayName": "Student Levy",
+                        "id": "OsXzFxuvQqy"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                }
+            ],
+            "autoGenerateEvent": false,
+            "displayName": "Socio-economics",
+            "id": "Wi3KEZ7C3w9",
+            "repeatable": false
+        },
+        {
+            "translations": [],
+            "programStageDataElements": [
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Attendance",
+                        "translations": [
+                            {
+                                "locale": "fr",
+                                "property": "SHORT_NAME",
+                                "value": "Présence"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "FORM_NAME",
+                                "value": "Présence"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "NAME",
+                                "value": "Présence"
+                            }
+                        ],
+                        "formName": "Attendance status",
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [
+                                        {
+                                            "locale": "fr",
+                                            "property": "NAME",
+                                            "value": "Présent"
+                                        }
+                                    ],
+                                    "value": "present",
+                                    "label": "Present"
+                                },
+                                {
+                                    "translations": [
+                                        {
+                                            "locale": "fr",
+                                            "property": "NAME",
+                                            "value": "En retard"
+                                        }
+                                    ],
+                                    "value": "late",
+                                    "label": "Late"
+                                },
+                                {
+                                    "translations": [
+                                        {
+                                            "locale": "en",
+                                            "property": "FORM_NAME",
+                                            "value": "Absent"
+                                        },
+                                        {
+                                            "locale": "fr",
+                                            "property": "NAME",
+                                            "value": "Absent"
+                                        },
+                                        {
+                                            "locale": "en",
+                                            "property": "NAME",
+                                            "value": "Absent"
+                                        }
+                                    ],
+                                    "value": "absent",
+                                    "label": "Absent"
+                                }
+                            ]
+                        },
+                        "displayName": "Attendance",
+                        "id": "d0MKWRNGv0a"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Reason of absence",
+                        "translations": [],
+                        "formName": "Reason of absence",
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "SICK",
+                                    "label": "Sick"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "OTHER REASON",
+                                    "label": "Other reason"
+                                }
+                            ]
+                        },
+                        "displayName": "Reason of absence",
+                        "id": "oLUMMT84ILM"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                }
+            ],
+            "autoGenerateEvent": false,
+            "displayName": "Attendance",
+            "id": "Ljyrr3cktAr",
+            "repeatable": true
+        },
+        {
+            "translations": [],
+            "programStageDataElements": [
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "English language",
+                        "translations": [
+                            {
+                                "locale": "fr",
+                                "property": "SHORT_NAME",
+                                "value": "Note du 1er trimestre - Langue anglaise"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "NAME",
+                                "value": "Note du 1er trimestre - Langue anglaise"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "FORM_NAME",
+                                "value": "Note du 1er trimestre - Langue anglaise"
+                            }
+                        ],
+                        "formName": "English language",
+                        "valueType": "NUMBER",
+                        "displayName": "English language",
+                        "id": "mMiLYGJJ78I"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Mathematics",
+                        "translations": [
+                            {
+                                "locale": "fr",
+                                "property": "NAME",
+                                "value": "Note du 1er trimestre - Mathématiques"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "SHORT_NAME",
+                                "value": "Note du 1er trimestre - Mathématiques"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "FORM_NAME",
+                                "value": "Note du 1er trimestre - Mathématiques"
+                            }
+                        ],
+                        "formName": "Mathematics",
+                        "valueType": "NUMBER",
+                        "displayName": "Mathematics",
+                        "id": "qPwGZal50yH"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Science",
+                        "translations": [],
+                        "formName": "Science",
+                        "valueType": "NUMBER",
+                        "displayName": "Science",
+                        "id": "w75mLLmHYyS"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "History",
+                        "translations": [],
+                        "formName": "History",
+                        "valueType": "NUMBER",
+                        "displayName": "History",
+                        "id": "cTTpaVY6m1Q"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Visual arts",
+                        "translations": [],
+                        "formName": "Visual arts",
+                        "valueType": "NUMBER",
+                        "displayName": "Visual arts",
+                        "id": "HFjLxmmXm7t"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                }
+            ],
+            "autoGenerateEvent": false,
+            "displayName": "Term 1",
+            "id": "mBEhR2M4DRQ",
+            "repeatable": false
+        },
+        {
+            "translations": [],
+            "programStageDataElements": [
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "English language",
+                        "translations": [
+                            {
+                                "locale": "fr",
+                                "property": "SHORT_NAME",
+                                "value": "Note du 1er trimestre - Langue anglaise"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "NAME",
+                                "value": "Note du 1er trimestre - Langue anglaise"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "FORM_NAME",
+                                "value": "Note du 1er trimestre - Langue anglaise"
+                            }
+                        ],
+                        "formName": "English language",
+                        "valueType": "NUMBER",
+                        "displayName": "English language",
+                        "id": "mMiLYGJJ78I"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Mathematics",
+                        "translations": [
+                            {
+                                "locale": "fr",
+                                "property": "NAME",
+                                "value": "Note du 1er trimestre - Mathématiques"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "SHORT_NAME",
+                                "value": "Note du 1er trimestre - Mathématiques"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "FORM_NAME",
+                                "value": "Note du 1er trimestre - Mathématiques"
+                            }
+                        ],
+                        "formName": "Mathematics",
+                        "valueType": "NUMBER",
+                        "displayName": "Mathematics",
+                        "id": "qPwGZal50yH"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Science",
+                        "translations": [],
+                        "formName": "Science",
+                        "valueType": "NUMBER",
+                        "displayName": "Science",
+                        "id": "w75mLLmHYyS"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "History",
+                        "translations": [],
+                        "formName": "History",
+                        "valueType": "NUMBER",
+                        "displayName": "History",
+                        "id": "cTTpaVY6m1Q"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Visual arts",
+                        "translations": [],
+                        "formName": "Visual arts",
+                        "valueType": "NUMBER",
+                        "displayName": "Visual arts",
+                        "id": "HFjLxmmXm7t"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                }
+            ],
+            "autoGenerateEvent": false,
+            "displayName": "Term 2",
+            "id": "aDmsN3qemOA",
+            "repeatable": false
+        },
+        {
+            "translations": [],
+            "programStageDataElements": [
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "English language",
+                        "translations": [
+                            {
+                                "locale": "fr",
+                                "property": "SHORT_NAME",
+                                "value": "Note du 1er trimestre - Langue anglaise"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "NAME",
+                                "value": "Note du 1er trimestre - Langue anglaise"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "FORM_NAME",
+                                "value": "Note du 1er trimestre - Langue anglaise"
+                            }
+                        ],
+                        "formName": "English language",
+                        "valueType": "NUMBER",
+                        "displayName": "English language",
+                        "id": "mMiLYGJJ78I"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Mathematics",
+                        "translations": [
+                            {
+                                "locale": "fr",
+                                "property": "NAME",
+                                "value": "Note du 1er trimestre - Mathématiques"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "SHORT_NAME",
+                                "value": "Note du 1er trimestre - Mathématiques"
+                            },
+                            {
+                                "locale": "fr",
+                                "property": "FORM_NAME",
+                                "value": "Note du 1er trimestre - Mathématiques"
+                            }
+                        ],
+                        "formName": "Mathematics",
+                        "valueType": "NUMBER",
+                        "displayName": "Mathematics",
+                        "id": "qPwGZal50yH"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Science",
+                        "translations": [],
+                        "formName": "Science",
+                        "valueType": "NUMBER",
+                        "displayName": "Science",
+                        "id": "w75mLLmHYyS"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "History",
+                        "translations": [],
+                        "formName": "History",
+                        "valueType": "NUMBER",
+                        "displayName": "History",
+                        "id": "cTTpaVY6m1Q"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                }
+            ],
+            "autoGenerateEvent": false,
+            "displayName": "Term 3",
+            "id": "rZGdcch2PCh",
+            "repeatable": false
+        },
+        {
+            "translations": [],
+            "programStageDataElements": [
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Final decision",
+                        "translations": [],
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "Promoted",
+                                    "label": "Promoted"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Failed",
+                                    "label": "Failed"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Dropout",
+                                    "label": "Dropout"
+                                }
+                            ]
+                        },
+                        "displayName": "Final decision",
+                        "id": "bsyU0WFfskG"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                }
+            ],
+            "autoGenerateEvent": false,
+            "displayName": "Final result",
+            "id": "hcrjYJ6Yl5F",
+            "repeatable": false
+        },
+        {
+            "translations": [],
+            "programStageDataElements": [
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Destiny School (Transfer)",
+                        "translations": [],
+                        "formName": "Destiny School",
+                        "valueType": "ORGANISATION_UNIT",
+                        "displayName": "Destiny School (Transfer)",
+                        "id": "kQbquG7UivM"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Reason for transfer",
+                        "translations": [],
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "Change of residence",
+                                    "label": "Change of residence"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Health challenges",
+                                    "label": "Health challenges"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Quality of education",
+                                    "label": "Quality of education"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Financial hardships",
+                                    "label": "Financial hardships"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Other",
+                                    "label": "Other"
+                                }
+                            ]
+                        },
+                        "displayName": "Reason for transfer",
+                        "id": "ZdFo5gthBt2"
+                    },
+                    "compulsory": false,
+                    "displayInReports": false
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Transfer Status",
+                        "translations": [],
+                        "valueType": "TEXT",
+                        "optionSet": {
+                            "options": [
+                                {
+                                    "translations": [],
+                                    "value": "Pending",
+                                    "label": "Pending"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Approved",
+                                    "label": "Approved"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Reproved",
+                                    "label": "Rejected"
+                                },
+                                {
+                                    "translations": [],
+                                    "value": "Cancelled",
+                                    "label": "Cancelled"
+                                }
+                            ]
+                        },
+                        "displayName": "Transfer Status",
+                        "id": "YnwITieplwy"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                },
+                {
+                    "translations": [],
+                    "dataElement": {
+                        "name": "Origin School",
+                        "translations": [],
+                        "valueType": "ORGANISATION_UNIT",
+                        "displayName": "Origin School",
+                        "id": "BxOhjC4qCFD"
+                    },
+                    "compulsory": false,
+                    "displayInReports": true
+                }
+            ],
+            "autoGenerateEvent": false,
+            "displayName": "Transfer",
+            "id": "uewAr6TmLkw",
+            "repeatable": true
+        }
+    ],
+    "programTrackedEntityAttributes": [
+        {
+            "name": "Student System ID",
+            "displayInList": true,
+            "mandatory": true,
+            "searchable": false,
+            "displayName": "Student System ID",
+            "trackedEntityAttribute": {
+                "name": "System ID",
+                "translations": [
+                    {
+                        "locale": "fr",
+                        "property": "FORM_NAME",
+                        "value": "Id du système"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "SHORT_NAME",
+                        "value": "Id du système"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "DESCRIPTION",
+                        "value": "Id du système"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "NAME",
+                        "value": "Id du système"
+                    }
+                ],
+                "formName": "Unique Student Registration Number",
+                "valueType": "TEXT",
+                "unique": true,
+                "generated": true,
+                "pattern": "CURRENT_DATE(yyyy)+\"-\"+SEQUENTIAL(########)",
+                "displayName": "System ID",
+                "id": "G0B8B0AH5Ek"
+            }
+        },
+        {
+            "name": "Student Learner Internal ID",
+            "displayInList": false,
+            "mandatory": false,
+            "searchable": false,
+            "displayName": "Student Learner Internal ID",
+            "trackedEntityAttribute": {
+                "name": "Learner Internal ID",
+                "translations": [],
+                "formName": "Internal ID",
+                "valueType": "TEXT",
+                "unique": true,
+                "generated": true,
+                "pattern": "CURRENT_DATE(yyyy) + \"-\" RANDOM(**######)",
+                "displayName": "Learner Internal ID",
+                "id": "SSRTWWEPn15"
+            }
+        },
+        {
+            "name": "Student First name",
+            "displayInList": true,
+            "mandatory": true,
+            "searchable": true,
+            "displayName": "Student First name",
+            "trackedEntityAttribute": {
+                "name": "First name",
+                "translations": [
+                    {
+                        "locale": "fr",
+                        "property": "SHORT_NAME",
+                        "value": "Prénom(s)"
+                    },
+                    {
+                        "locale": "pt",
+                        "property": "SHORT_NAME",
+                        "value": "Primeiro Nome"
+                    },
+                    {
+                        "locale": "pt",
+                        "property": "NAME",
+                        "value": "Primeiro Nome"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "DESCRIPTION",
+                        "value": "Prénom(s)"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "NAME",
+                        "value": "Prénom(s)"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "FORM_NAME",
+                        "value": "Prénom(s)"
+                    },
+                    {
+                        "locale": "pt",
+                        "property": "FORM_NAME",
+                        "value": "Primeiro Nome"
+                    }
+                ],
+                "formName": "First name",
+                "valueType": "TEXT",
+                "unique": false,
+                "generated": false,
+                "pattern": "",
+                "displayName": "First name",
+                "id": "gz8w04YBSS0"
+            }
+        },
+        {
+            "name": "Student Surname",
+            "displayInList": true,
+            "mandatory": true,
+            "searchable": true,
+            "displayName": "Student Surname",
+            "trackedEntityAttribute": {
+                "name": "Surname",
+                "translations": [
+                    {
+                        "locale": "fr",
+                        "property": "DESCRIPTION",
+                        "value": "Nom"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "SHORT_NAME",
+                        "value": "Nom"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "NAME",
+                        "value": "Nom"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "FORM_NAME",
+                        "value": "Nom"
+                    }
+                ],
+                "formName": "Surname",
+                "valueType": "TEXT",
+                "unique": false,
+                "generated": false,
+                "pattern": "",
+                "displayName": "Surname",
+                "id": "ZIDlK6BaAU2"
+            }
+        },
+        {
+            "name": "Student Gender",
+            "displayInList": true,
+            "mandatory": false,
+            "searchable": false,
+            "displayName": "Student Gender",
+            "trackedEntityAttribute": {
+                "name": "Gender ",
+                "translations": [
+                    {
+                        "locale": "fr",
+                        "property": "FORM_NAME",
+                        "value": "Sexe"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "SHORT_NAME",
+                        "value": "Sexe"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "NAME",
+                        "value": "Sexe"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "DESCRIPTION",
+                        "value": "Sexe"
+                    }
+                ],
+                "formName": "Gender",
+                "valueType": "TEXT",
+                "optionSet": {
+                    "options": [
+                        {
+                            "translations": [],
+                            "value": "female",
+                            "label": "Female"
+                        },
+                        {
+                            "translations": [],
+                            "value": "male",
+                            "label": "Male"
+                        }
+                    ]
+                },
+                "unique": false,
+                "generated": false,
+                "pattern": "",
+                "displayName": "Gender",
+                "id": "X0vzx18XWqu"
+            }
+        },
+        {
+            "name": "Student Date of birth",
+            "displayInList": false,
+            "mandatory": true,
+            "searchable": true,
+            "displayName": "Student Date of birth",
+            "trackedEntityAttribute": {
+                "name": "Date of birth",
+                "translations": [
+                    {
+                        "locale": "fr",
+                        "property": "SHORT_NAME",
+                        "value": "Date de naissance"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "DESCRIPTION",
+                        "value": "Date de naissance"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "NAME",
+                        "value": "Date de naissance"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "FORM_NAME",
+                        "value": "Date de naissance"
+                    }
+                ],
+                "formName": "Date of birth",
+                "valueType": "DATE",
+                "unique": false,
+                "generated": false,
+                "pattern": "",
+                "displayName": "Date of birth",
+                "id": "EPYqXuM0M2u"
+            }
+        },
+        {
+            "name": "Student Nationality",
+            "displayInList": false,
+            "mandatory": false,
+            "searchable": true,
+            "displayName": "Student Nationality",
+            "trackedEntityAttribute": {
+                "name": "Nationality",
+                "translations": [
+                    {
+                        "locale": "fr",
+                        "property": "NAME",
+                        "value": "Nationalité"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "DESCRIPTION",
+                        "value": "Nationalité"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "SHORT_NAME",
+                        "value": "Nationalité"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "FORM_NAME",
+                        "value": "Nationalité"
+                    }
+                ],
+                "formName": "Nationality",
+                "valueType": "TEXT",
+                "optionSet": {
+                    "options": [
+                        {
+                            "translations": [],
+                            "value": "afghan",
+                            "label": "Afghan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "albanian",
+                            "label": "Albanian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "algerian",
+                            "label": "Algerian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "american",
+                            "label": "American"
+                        },
+                        {
+                            "translations": [],
+                            "value": "andorran",
+                            "label": "Andorran"
+                        },
+                        {
+                            "translations": [],
+                            "value": "angolan",
+                            "label": "Angolan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "antiguans",
+                            "label": "Antiguans"
+                        },
+                        {
+                            "translations": [],
+                            "value": "argentinean",
+                            "label": "Argentinean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "armenian",
+                            "label": "Armenian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "australian",
+                            "label": "Australian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "austrian",
+                            "label": "Austrian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "azerbaijani",
+                            "label": "Azerbaijani"
+                        },
+                        {
+                            "translations": [],
+                            "value": "bahamian",
+                            "label": "Bahamian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "bahraini",
+                            "label": "Bahraini"
+                        },
+                        {
+                            "translations": [],
+                            "value": "bangladeshi",
+                            "label": "Bangladeshi"
+                        },
+                        {
+                            "translations": [],
+                            "value": "barbadian",
+                            "label": "Barbadian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "barbudans",
+                            "label": "Barbudans"
+                        },
+                        {
+                            "translations": [],
+                            "value": "batswana",
+                            "label": "Batswana"
+                        },
+                        {
+                            "translations": [],
+                            "value": "belarusian",
+                            "label": "Belarusian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "belgian",
+                            "label": "Belgian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "belizean",
+                            "label": "Belizean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "beninese",
+                            "label": "Beninese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "bhutanese",
+                            "label": "Bhutanese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "bolivian",
+                            "label": "Bolivian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "bosnian",
+                            "label": "Bosnian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "brazilian",
+                            "label": "Brazilian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "british",
+                            "label": "British"
+                        },
+                        {
+                            "translations": [],
+                            "value": "bruneian",
+                            "label": "Bruneian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "bulgarian",
+                            "label": "Bulgarian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "burkinabe",
+                            "label": "Burkinabe"
+                        },
+                        {
+                            "translations": [],
+                            "value": "burmese",
+                            "label": "Burmese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "burundian",
+                            "label": "Burundian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "cambodian",
+                            "label": "Cambodian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "cameroonian",
+                            "label": "Cameroonian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "canadian",
+                            "label": "Canadian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "cape verdean",
+                            "label": "Cape Verdean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "central african",
+                            "label": "Central African"
+                        },
+                        {
+                            "translations": [],
+                            "value": "chadian",
+                            "label": "Chadian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "chilean",
+                            "label": "Chilean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "chinese",
+                            "label": "Chinese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "colombian",
+                            "label": "Colombian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "comoran",
+                            "label": "Comoran"
+                        },
+                        {
+                            "translations": [],
+                            "value": "congolese",
+                            "label": "Congolese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "costa rican",
+                            "label": "Costa Rican"
+                        },
+                        {
+                            "translations": [],
+                            "value": "croatian",
+                            "label": "Croatian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "cuban",
+                            "label": "Cuban"
+                        },
+                        {
+                            "translations": [],
+                            "value": "cypriot",
+                            "label": "Cypriot"
+                        },
+                        {
+                            "translations": [],
+                            "value": "czech",
+                            "label": "Czech"
+                        },
+                        {
+                            "translations": [],
+                            "value": "danish",
+                            "label": "Danish"
+                        },
+                        {
+                            "translations": [],
+                            "value": "djibouti",
+                            "label": "Djibouti"
+                        },
+                        {
+                            "translations": [],
+                            "value": "dominican",
+                            "label": "Dominican"
+                        },
+                        {
+                            "translations": [],
+                            "value": "dutch",
+                            "label": "Dutch"
+                        },
+                        {
+                            "translations": [],
+                            "value": "east timorese",
+                            "label": "East Timorese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "ecuadorean",
+                            "label": "Ecuadorean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "egyptian",
+                            "label": "Egyptian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "emirian",
+                            "label": "Emirian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "equatorial guinean",
+                            "label": "Equatorial Guinean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "eritrean",
+                            "label": "Eritrean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "estonian",
+                            "label": "Estonian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "ethiopian",
+                            "label": "Ethiopian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "fijian",
+                            "label": "Fijian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "filipino",
+                            "label": "Filipino"
+                        },
+                        {
+                            "translations": [],
+                            "value": "finnish",
+                            "label": "Finnish"
+                        },
+                        {
+                            "translations": [],
+                            "value": "french",
+                            "label": "French"
+                        },
+                        {
+                            "translations": [],
+                            "value": "gabonese",
+                            "label": "Gabonese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "gambian",
+                            "label": "Gambian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "georgian",
+                            "label": "Georgian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "german",
+                            "label": "German"
+                        },
+                        {
+                            "translations": [],
+                            "value": "ghanaian",
+                            "label": "Ghanaian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "greek",
+                            "label": "Greek"
+                        },
+                        {
+                            "translations": [],
+                            "value": "grenadian",
+                            "label": "Grenadian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "guatemalan",
+                            "label": "Guatemalan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "guinea-bissauan",
+                            "label": "Guinea-Bissauan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "guinean",
+                            "label": "Guinean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "guyanese",
+                            "label": "Guyanese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "haitian",
+                            "label": "Haitian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "herzegovinian",
+                            "label": "Herzegovinian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "honduran",
+                            "label": "Honduran"
+                        },
+                        {
+                            "translations": [],
+                            "value": "hungarian",
+                            "label": "Hungarian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "i-kiribati",
+                            "label": "I-Kiribati"
+                        },
+                        {
+                            "translations": [],
+                            "value": "icelander",
+                            "label": "Icelander"
+                        },
+                        {
+                            "translations": [],
+                            "value": "indian",
+                            "label": "Indian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "indonesian",
+                            "label": "Indonesian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "iranian",
+                            "label": "Iranian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "iraqi",
+                            "label": "Iraqi"
+                        },
+                        {
+                            "translations": [],
+                            "value": "irish",
+                            "label": "Irish"
+                        },
+                        {
+                            "translations": [],
+                            "value": "israeli",
+                            "label": "Israeli"
+                        },
+                        {
+                            "translations": [],
+                            "value": "italian",
+                            "label": "Italian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "ivorian",
+                            "label": "Ivorian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "jamaican",
+                            "label": "Jamaican"
+                        },
+                        {
+                            "translations": [],
+                            "value": "japanese",
+                            "label": "Japanese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "jordanian",
+                            "label": "Jordanian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "kazakhstani",
+                            "label": "Kazakhstani"
+                        },
+                        {
+                            "translations": [],
+                            "value": "kenyan",
+                            "label": "Kenyan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "kittian and nevisian",
+                            "label": "Kittian and Nevisian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "kuwaiti",
+                            "label": "Kuwaiti"
+                        },
+                        {
+                            "translations": [],
+                            "value": "kyrgyz",
+                            "label": "Kyrgyz"
+                        },
+                        {
+                            "translations": [],
+                            "value": "laotian",
+                            "label": "Laotian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "latvian",
+                            "label": "Latvian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "lebanese",
+                            "label": "Lebanese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "liberian",
+                            "label": "Liberian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "libyan",
+                            "label": "Libyan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "liechtensteiner",
+                            "label": "Liechtensteiner"
+                        },
+                        {
+                            "translations": [],
+                            "value": "lithuanian",
+                            "label": "Lithuanian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "luxembourger",
+                            "label": "Luxembourger"
+                        },
+                        {
+                            "translations": [],
+                            "value": "macedonian",
+                            "label": "Macedonian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "malagasy",
+                            "label": "Malagasy"
+                        },
+                        {
+                            "translations": [],
+                            "value": "malawian",
+                            "label": "Malawian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "malaysian",
+                            "label": "Malaysian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "maldivian",
+                            "label": "Maldivian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "malian",
+                            "label": "Malian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "maltese",
+                            "label": "Maltese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "marshallese",
+                            "label": "Marshallese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "mauritanian",
+                            "label": "Mauritanian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "mauritian",
+                            "label": "Mauritian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "mexican",
+                            "label": "Mexican"
+                        },
+                        {
+                            "translations": [],
+                            "value": "micronesian",
+                            "label": "Micronesian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "moldovan",
+                            "label": "Moldovan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "monacan",
+                            "label": "Monacan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "mongolian",
+                            "label": "Mongolian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "moroccan",
+                            "label": "Moroccan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "mosotho",
+                            "label": "Mosotho"
+                        },
+                        {
+                            "translations": [],
+                            "value": "motswana",
+                            "label": "Motswana"
+                        },
+                        {
+                            "translations": [],
+                            "value": "mozambican",
+                            "label": "Mozambican"
+                        },
+                        {
+                            "translations": [],
+                            "value": "namibian",
+                            "label": "Namibian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "nauruan",
+                            "label": "Nauruan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "nepalese",
+                            "label": "Nepalese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "new zealander",
+                            "label": "New Zealander"
+                        },
+                        {
+                            "translations": [],
+                            "value": "ni-vanuatu",
+                            "label": "Ni-Vanuatu"
+                        },
+                        {
+                            "translations": [],
+                            "value": "nicaraguan",
+                            "label": "Nicaraguan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "nigerian",
+                            "label": "Nigerian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "nigerien",
+                            "label": "Nigerien"
+                        },
+                        {
+                            "translations": [],
+                            "value": "north korean",
+                            "label": "North Korean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "northern irish",
+                            "label": "Northern Irish"
+                        },
+                        {
+                            "translations": [],
+                            "value": "norwegian",
+                            "label": "Norwegian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "omani",
+                            "label": "Omani"
+                        },
+                        {
+                            "translations": [],
+                            "value": "pakistani",
+                            "label": "Pakistani"
+                        },
+                        {
+                            "translations": [],
+                            "value": "palauan",
+                            "label": "Palauan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "panamanian",
+                            "label": "Panamanian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "papua new guinean",
+                            "label": "Papua New Guinean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "paraguayan",
+                            "label": "Paraguayan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "peruvian",
+                            "label": "Peruvian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "polish",
+                            "label": "Polish"
+                        },
+                        {
+                            "translations": [],
+                            "value": "portuguese",
+                            "label": "Portuguese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "qatari",
+                            "label": "Qatari"
+                        },
+                        {
+                            "translations": [],
+                            "value": "romanian",
+                            "label": "Romanian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "russian",
+                            "label": "Russian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "rwandan",
+                            "label": "Rwandan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "saint lucian",
+                            "label": "Saint Lucian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "salvadoran",
+                            "label": "Salvadoran"
+                        },
+                        {
+                            "translations": [],
+                            "value": "samoan",
+                            "label": "Samoan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "san marinese",
+                            "label": "San Marinese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "sao tomean",
+                            "label": "Sao Tomean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "saudi",
+                            "label": "Saudi"
+                        },
+                        {
+                            "translations": [],
+                            "value": "scottish",
+                            "label": "Scottish"
+                        },
+                        {
+                            "translations": [],
+                            "value": "senegalese",
+                            "label": "Senegalese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "serbian",
+                            "label": "Serbian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "seychellois",
+                            "label": "Seychellois"
+                        },
+                        {
+                            "translations": [],
+                            "value": "sierra leonean",
+                            "label": "Sierra Leonean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "singaporean",
+                            "label": "Singaporean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "slovakian",
+                            "label": "Slovakian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "slovenian",
+                            "label": "Slovenian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "solomon islander",
+                            "label": "Solomon Islander"
+                        },
+                        {
+                            "translations": [],
+                            "value": "somali",
+                            "label": "Somali"
+                        },
+                        {
+                            "translations": [],
+                            "value": "south african",
+                            "label": "South African"
+                        },
+                        {
+                            "translations": [],
+                            "value": "south korean",
+                            "label": "South Korean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "spanish",
+                            "label": "Spanish"
+                        },
+                        {
+                            "translations": [],
+                            "value": "sri lankan",
+                            "label": "Sri Lankan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "sudanese",
+                            "label": "Sudanese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "surinamer",
+                            "label": "Surinamer"
+                        },
+                        {
+                            "translations": [],
+                            "value": "swazi",
+                            "label": "Swazi"
+                        },
+                        {
+                            "translations": [],
+                            "value": "swedish",
+                            "label": "Swedish"
+                        },
+                        {
+                            "translations": [],
+                            "value": "swiss",
+                            "label": "Swiss"
+                        },
+                        {
+                            "translations": [],
+                            "value": "syrian",
+                            "label": "Syrian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "taiwanese",
+                            "label": "Taiwanese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "tajik",
+                            "label": "Tajik"
+                        },
+                        {
+                            "translations": [],
+                            "value": "tanzanian",
+                            "label": "Tanzanian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "thai",
+                            "label": "Thai"
+                        },
+                        {
+                            "translations": [],
+                            "value": "togolese",
+                            "label": "Togolese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "tongan",
+                            "label": "Tongan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "trinidadian or tobagonian",
+                            "label": "Trinidadian or Tobagonian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "tunisian",
+                            "label": "Tunisian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "turkish",
+                            "label": "Turkish"
+                        },
+                        {
+                            "translations": [],
+                            "value": "tuvaluan",
+                            "label": "Tuvaluan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "ugandan",
+                            "label": "Ugandan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "ukrainian",
+                            "label": "Ukrainian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "uruguayan",
+                            "label": "Uruguayan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "uzbekistani",
+                            "label": "Uzbekistani"
+                        },
+                        {
+                            "translations": [],
+                            "value": "venezuelan",
+                            "label": "Venezuelan"
+                        },
+                        {
+                            "translations": [],
+                            "value": "vietnamese",
+                            "label": "Vietnamese"
+                        },
+                        {
+                            "translations": [],
+                            "value": "welsh",
+                            "label": "Welsh"
+                        },
+                        {
+                            "translations": [],
+                            "value": "yemenite",
+                            "label": "Yemenite"
+                        },
+                        {
+                            "translations": [],
+                            "value": "zambian",
+                            "label": "Zambian"
+                        },
+                        {
+                            "translations": [],
+                            "value": "zimbabwean",
+                            "label": "Zimbabwean"
+                        },
+                        {
+                            "translations": [],
+                            "value": "0 - Others",
+                            "label": "0 - Others"
+                        }
+                    ]
+                },
+                "unique": false,
+                "generated": false,
+                "pattern": "",
+                "displayName": "Nationality",
+                "id": "wGiRDfHT0hj"
+            }
+        },
+        {
+            "name": "Student Address",
+            "displayInList": false,
+            "mandatory": false,
+            "searchable": true,
+            "displayName": "Student Address",
+            "trackedEntityAttribute": {
+                "name": "Address",
+                "translations": [],
+                "formName": "Address",
+                "valueType": "TEXT",
+                "unique": false,
+                "generated": false,
+                "pattern": "",
+                "displayName": "Address",
+                "id": "SwfMi3g9k4s"
+            }
+        },
+        {
+            "name": "Student Guardian's Name",
+            "displayInList": false,
+            "mandatory": false,
+            "searchable": false,
+            "displayName": "Student Guardian's Name",
+            "trackedEntityAttribute": {
+                "name": "Guardian's Name",
+                "translations": [],
+                "formName": "Guardian's Name",
+                "valueType": "TEXT",
+                "unique": false,
+                "generated": false,
+                "pattern": "",
+                "displayName": "Guardian's Name",
+                "id": "d2SES7i0fzb"
+            }
+        },
+        {
+            "name": "Student Guardian's Phone Number",
+            "displayInList": false,
+            "mandatory": false,
+            "searchable": false,
+            "displayName": "Student Guardian's Phone Number",
+            "trackedEntityAttribute": {
+                "name": "Guardian's Phone Number",
+                "translations": [],
+                "formName": "Guardian's Phone Number",
+                "valueType": "TEXT",
+                "unique": false,
+                "generated": false,
+                "pattern": "",
+                "displayName": "Guardian's Phone Number",
+                "id": "tWYfZZjmYgm"
+            }
+        },
+        {
+            "name": "Student Photo",
+            "displayInList": false,
+            "mandatory": false,
+            "searchable": false,
+            "displayName": "Student Photo",
+            "trackedEntityAttribute": {
+                "name": "Photo",
+                "translations": [],
+                "valueType": "IMAGE",
+                "unique": false,
+                "generated": false,
+                "pattern": "",
+                "displayName": "Photo",
+                "id": "cFYnzcqZyZ9"
+            }
+        },
+        {
+            "name": "Student Age",
+            "displayInList": false,
+            "mandatory": false,
+            "searchable": false,
+            "displayName": "Student Age",
+            "trackedEntityAttribute": {
+                "name": "Age",
+                "translations": [],
+                "valueType": "INTEGER_POSITIVE",
+                "unique": false,
+                "generated": false,
+                "pattern": "",
+                "displayName": "Age",
+                "id": "l1QCV36yuUy"
+            }
+        },
+        {
+            "name": "Student Mobile Number",
+            "displayInList": false,
+            "mandatory": false,
+            "searchable": false,
+            "displayName": "Student Mobile Number",
+            "trackedEntityAttribute": {
+                "name": "Mobile Number",
+                "translations": [
+                    {
+                        "locale": "fr",
+                        "property": "FORM_NAME",
+                        "value": "Numéro de cellulaire"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "NAME",
+                        "value": "Numéro de cellulaire"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "DESCRIPTION",
+                        "value": "Numéro de cellulaire"
+                    },
+                    {
+                        "locale": "fr",
+                        "property": "SHORT_NAME",
+                        "value": "Numéro de cellulaire"
+                    }
+                ],
+                "formName": "Mobile Number",
+                "valueType": "PHONE_NUMBER",
+                "unique": false,
+                "generated": false,
+                "pattern": "",
+                "displayName": "Mobile Number",
+                "id": "YnHuqCmuydE"
+            }
+        }
+    ]
+}

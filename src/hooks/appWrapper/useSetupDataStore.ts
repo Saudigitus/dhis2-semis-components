@@ -5,10 +5,12 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { DataStoreState, DataStoreStatusState } from "../../schemas/dataStore";
 import { useState } from "react";
 import { SchoolCalendarData } from "../../schemas/schoolCalendar";
+import { applyProgramTranslations } from "../../utils/program/formatProgramTranslation";
+import { ProgramConfig } from "dhis2-semis-types";
 
 const useSetupDataStore = (
-    { dataStoreKey, schoolCalendarKey }:
-        { dataStoreKey: string, schoolCalendarKey: string }
+    { dataStoreKey, schoolCalendarKey, keyDbLocale }:
+        { dataStoreKey: string, schoolCalendarKey: string, keyDbLocale: string }
 ) => {
     const { error, getDataStore } = useDataStore();
     const [loading, setLoading] = useState<boolean>(true)
@@ -24,8 +26,8 @@ const useSetupDataStore = (
         return await getDataStore(dataStoreKey).then(async (configs) => {
             let programs: any = []
             for (let i = 0; i < configs?.length; i++) {
-                const result = await getProgram(configs?.[i].program)
-                programs.push(result)
+                const result = await getProgram(configs?.[i].program) as ProgramConfig
+                programs.push(applyProgramTranslations(result, keyDbLocale))
             }
             setProgramsValues(programs);
             setDataStoreValues(configs)
