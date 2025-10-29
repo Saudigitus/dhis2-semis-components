@@ -26,7 +26,7 @@ const useSetupDataStore = (
         return await getDataStore(dataStoreKey).then(async (configs) => {
             let programs: any = []
             for (let i = 0; i < configs?.length; i++) {
-                const result = await getProgram(configs?.[i].program) as ProgramConfig
+                const result = await getProgram(configs?.[i].program) as any
                 programs.push(applyProgramTranslations(result, keyDbLocale))
             }
             setProgramsValues(programs);
