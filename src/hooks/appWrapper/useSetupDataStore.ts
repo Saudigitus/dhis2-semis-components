@@ -7,7 +7,7 @@ import { useState } from "react";
 import { SchoolCalendarData } from "../../schemas/schoolCalendar";
 import { applyProgramTranslations } from "../../utils/program/formatProgramTranslation";
 import { TranslationState } from "../../schemas/translationsSchema";
-import { UserInfoState } from "dhis2-semis-functions/dist/declarations";
+import { UserInfoState } from "dhis2-semis-functions";
 
 const useSetupDataStore = (
     { dataStoreKey, schoolCalendarKey, i18n }:
