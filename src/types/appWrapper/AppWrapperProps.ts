@@ -9,7 +9,6 @@ interface AppWrapperProps {
     dataStoreKey: string
     schoolCalendarKey: string
     baseUrl: string
-    keyDbLocale: string
     i18n: any
 }
 
