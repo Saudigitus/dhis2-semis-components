@@ -10,6 +10,7 @@ interface AppWrapperProps {
     schoolCalendarKey: string
     baseUrl: string
     keyDbLocale: string
+    i18n: any
 }
 
 export type { AppWrapperProps }

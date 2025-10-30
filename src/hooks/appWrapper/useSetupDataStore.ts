@@ -6,22 +6,27 @@ import { DataStoreState, DataStoreStatusState } from "../../schemas/dataStore";
 import { useState } from "react";
 import { SchoolCalendarData } from "../../schemas/schoolCalendar";
 import { applyProgramTranslations } from "../../utils/program/formatProgramTranslation";
-import { ProgramConfig } from "dhis2-semis-types";
+import { TranslationState } from "../../schemas/translationsSchema";
 
 const useSetupDataStore = (
-    { dataStoreKey, schoolCalendarKey, keyDbLocale }:
-        { dataStoreKey: string, schoolCalendarKey: string, keyDbLocale: string }
+    { dataStoreKey, schoolCalendarKey, keyDbLocale, i18n }:
+        { dataStoreKey: string, schoolCalendarKey: string, keyDbLocale: string, i18n: any }
 ) => {
     const { error, getDataStore } = useDataStore();
     const [loading, setLoading] = useState<boolean>(true)
     const setProgramsValues = useSetRecoilState(ProgramConfigState)
     const setDataStoreValues = useSetRecoilState(DataStoreState)
     const setCalendarValues = useSetRecoilState(SchoolCalendarData)
+    const setTranslationsValues = useSetRecoilState(TranslationState)
     const [dataStoreStatus, setDataStoreStatus] = useRecoilState(DataStoreStatusState)
     const { getProgram, error: errorProgram } = useProgramConfig()
 
     const setupDataStore = async () => {
         setLoading(true)
+
+        //Setting i18n translations
+        setTranslationsValues(i18n)
+
         //TRY TO GET CONFIG DATASTORE
         return await getDataStore(dataStoreKey).then(async (configs) => {
             let programs: any = []

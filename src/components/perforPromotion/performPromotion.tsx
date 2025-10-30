@@ -9,6 +9,8 @@ import useProgramsKeys from "../../hooks/appWrapper/useProgramsKeys";
 import WithBorder from "../template/WithBorder";
 import { staticForm } from "../../utils/constants/searchEnrollmentForm";
 import { Modules } from 'dhis2-semis-types';
+import { useRecoilValue } from "recoil";
+import { TranslationState } from "../../schemas/translationsSchema";
 
 export default function PerformPromotion({ selected, Form, loading, onSubmit }: { onSubmit: (e: any) => void, selected: any[], Form: any, loading: boolean }) {
     const programsValues = useProgramsKeys();
@@ -17,6 +19,7 @@ export default function PerformPromotion({ selected, Form, loading, onSubmit }: 
     const { formData } = useBuildForm({ dataStoreData, programData, module: Modules.Enrollment });
     const [enrollmentDetails = []] = formData;
     const [open, setOpen] = useState(false)
+    const i18n = useRecoilValue(TranslationState) as any
 
     return (
         <>
@@ -24,14 +27,14 @@ export default function PerformPromotion({ selected, Form, loading, onSubmit }: 
                 setOpen(true);
             }} icon={<IconAddCircle24 />}
             >
-                <span>Perform promotion</span>
+                <span>{i18n.t("Perform Promotion")}</span>
             </Button >
 
             {
                 open && <ModalComponent
                     children={<WithPadding>
-                        <NoticeBox title={`WARNING! ${selected.length} rows will be affected`} warning>
-                            No one will be able to access this program. Add some Organisation Units to the access list.
+                        <NoticeBox title={`${i18n.t("WARNING")}! ${selected.length} ${i18n.t("rows will be affected")}`} warning>
+                            {i18n.t("No one will be able to access this program. Add some Organisation Units to the access list.")}
                         </NoticeBox>
                         <WithBorder type="all" >
                             <WithPadding>
@@ -41,8 +44,8 @@ export default function PerformPromotion({ selected, Form, loading, onSubmit }: 
                                     formFields={[
                                         {
                                             storyBook: false,
-                                            name: "Student promotion",
-                                            description: "Student promotion",
+                                            name: i18n.t("Student promotion"),
+                                            description: i18n.t("Student promotion"),
                                             fields: [
                                                 staticForm().registeringSchool,
                                                 ...enrollmentDetails,
@@ -60,7 +63,7 @@ export default function PerformPromotion({ selected, Form, loading, onSubmit }: 
                     </WithPadding>}
                     open={open}
                     handleClose={() => setOpen(false)}
-                    title="Perform Promotion"
+                    title={i18n.t("Perform Promotion")}
                 />
             }
         </>

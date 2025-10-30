@@ -5,6 +5,8 @@ import { type CustomAttributeProps } from 'dhis2-semis-types'
 import styles from "./configTableColumns.module.css"
 import { IconButton, Tooltip } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { useRecoilValue } from 'recoil';
+import { TranslationState } from '../../../../schemas/translationsSchema';
 
 interface ConfigTableColumnsProps {
     headers: CustomAttributeProps[]
@@ -28,6 +30,7 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
     const { headers, updateVariables, filteredHeaders, selectable, selected } = props;
     const [open, setopen] = useState(false)
     const classes = useStyles()
+    const i18n = useRecoilValue(TranslationState) as any
 
     const closeDialog = () => {
         setopen(false)
@@ -40,7 +43,7 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
     return (
         <div className={styles['config-table__columns']}>
             {
-                (selected > 0 && selectable) && <NoticeBox className={classes.noticeBox} title={`${selected} rows selected`} />
+                (selected > 0 && selectable) && <NoticeBox className={classes.noticeBox} title={`${selected} ${i18n.t("rows selected")}`} />
             }
             <Tooltip
                 disableFocusListener

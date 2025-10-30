@@ -7,8 +7,8 @@ import { RecoilRoot, } from 'recoil';
 import { useSetupDataStore } from '../../hooks/appWrapper/useSetupDataStore';
 import { useGetSysInfo } from 'dhis2-semis-functions';
 
-const AppWrapperRaw = ({ children, dataStoreKey, schoolCalendarKey, baseUrl, keyDbLocale }: AppWrapperProps) => {
-  const { setupDataStore, error, errorProgram, loading } = useSetupDataStore({ dataStoreKey, schoolCalendarKey, keyDbLocale })
+const AppWrapperRaw = ({ children, dataStoreKey, schoolCalendarKey, baseUrl, keyDbLocale, i18n }: AppWrapperProps) => {
+  const { setupDataStore, error, errorProgram, loading } = useSetupDataStore({ dataStoreKey, schoolCalendarKey, keyDbLocale, i18n })
   const { loading: loadingSysInfo } = useGetSysInfo()
 
   useEffect(() => {
@@ -36,12 +36,12 @@ const AppWrapperRaw = ({ children, dataStoreKey, schoolCalendarKey, baseUrl, key
 
 type CombinedTypes = AppWrapperProps & { baseUrl: string };
 
-const AppWrapper = ({ children, dataStoreKey, baseUrl, schoolCalendarKey, keyDbLocale }: CombinedTypes) => {
+const AppWrapper = ({ children, dataStoreKey, baseUrl, schoolCalendarKey, keyDbLocale, i18n }: CombinedTypes) => {
 
   return (
     <DataProvider baseUrl={baseUrl}>
       <RecoilRoot>
-        <AppWrapperRaw keyDbLocale={keyDbLocale} baseUrl={baseUrl} dataStoreKey={dataStoreKey} schoolCalendarKey={schoolCalendarKey}>
+        <AppWrapperRaw keyDbLocale={keyDbLocale} baseUrl={baseUrl} dataStoreKey={dataStoreKey} schoolCalendarKey={schoolCalendarKey} i18n={i18n}>
           {children}
         </AppWrapperRaw>
       </RecoilRoot>
