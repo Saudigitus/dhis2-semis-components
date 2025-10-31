@@ -21,7 +21,7 @@ const useSetupDataStore = (
     const setTranslationsValues = useSetRecoilState(TranslationState)
     const [dataStoreStatus, setDataStoreStatus] = useRecoilState(DataStoreStatusState)
     const { getProgram, error: errorProgram } = useProgramConfig()
-     const userinfo =useRecoilValue(UserInfoState) as any
+    const userinfo = useRecoilValue(UserInfoState) as any
 
     const setupDataStore = async () => {
         setLoading(true)
@@ -34,7 +34,7 @@ const useSetupDataStore = (
             let programs: any = []
             for (let i = 0; i < configs?.length; i++) {
                 const result = await getProgram(configs?.[i].program) as any
-                programs.push(applyProgramTranslations(result, userinfo.settings.keyDbLocale || "en"))
+                programs.push(applyProgramTranslations(result, userinfo?.settings?.keyDbLocale || "en"))
             }
             setProgramsValues(programs);
             setDataStoreValues(configs)

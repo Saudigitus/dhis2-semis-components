@@ -4,9 +4,12 @@ import classNames from "classnames";
 import { SimpleButtonsComponentProps, SimpleButtonType } from "../../../../types/buttons/switchButtonsProps";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { useRecoilValue } from "recoil";
+import { TranslationState } from "../../../../schemas/translationsSchema";
 
 export default function SimpleDropdownButton(props: SimpleButtonsComponentProps): React.ReactElement {
   const { items, selected, setSelected, onSelect } = props;
+  const i18n = useRecoilValue(TranslationState) as any
 
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event: any) => {
@@ -41,7 +44,7 @@ export default function SimpleDropdownButton(props: SimpleButtonsComponentProps)
         onClick={handleClick}
         endIcon={anchorEl === null ? <ExpandMore className={styles.dropdownIcon} /> : <ExpandLess className={styles.dropdownIcon} />}
       >
-        {selected?.label ?? "Select an item"}
+        {selected?.label ?? i18n.t("Select an item")}
       </Button>
       <Menu
         id="simple-menu"
