@@ -49,7 +49,7 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
                 disableFocusListener
                 disableTouchListener
                 enterDelay={500}
-                title={'Select columns'}
+                title={i18n.t('Select columns')}
                 className="my-auto"
             >
                 <IconButton
