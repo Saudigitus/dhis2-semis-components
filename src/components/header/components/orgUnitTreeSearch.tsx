@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { OuQueryString } from "../../../schemas/headerSearchInputSchema";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { SearchOu } from "../../../types/header/ouQueryParams";
 import { Center, CircularLoader, Help, Input, Menu } from "@dhis2/ui";
 import OrgUnitTreeComponent from "./orgUnitTree";
 import style from "../mainHeader.module.css"
+import { TranslationState } from "../../../schemas/translationsSchema";
 
 
 const OrgUnitTree = ({ onChange, stringQuery }) => {
@@ -106,6 +107,7 @@ const OrgUnitTree = ({ onChange, stringQuery }) => {
 
 const OrgUnitTreeSearch = ({ onChange }) => {
     const [stringQuery, setStringQuery] = useRecoilState(OuQueryString)
+    const i18n = useRecoilValue(TranslationState) as any
     const onChangeQuerySearch = (e: { value: string, name: string }) => {
         setStringQuery(e.value);
     }
@@ -115,7 +117,7 @@ const OrgUnitTreeSearch = ({ onChange }) => {
             <Menu>
                 <div onClick={(e) => e.stopPropagation()}>
                     <div className={style.SimpleSearcInputContainer} >
-                        <Input onChange={onChangeQuerySearch} value={stringQuery} initialFocus placeholder={"Search for a school"} name="input" />
+                        <Input onChange={onChangeQuerySearch} value={stringQuery} initialFocus placeholder={i18n.t("Search for a school")} name="input" />
                     </div>
                     <OrgUnitTree onChange={onChange} stringQuery={stringQuery} />
                 </div>

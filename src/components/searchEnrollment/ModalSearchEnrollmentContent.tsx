@@ -38,8 +38,8 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   ];
 
   const modalActions = [
-    { id: "cancel", small: true, name: "Cancel", disabled: false, primary: true, onClick: () => { setOpen(false) } },
-    { id: "continue", name: "Register new", color: "gray", small: true, disabled: loading, onClick: () => { onHandleRegisterNew() } },
+    { id: "cancel", small: true, name: i18n.t("Cancel"), disabled: false, primary: true, onClick: () => { setOpen(false) } },
+    { id: "continue", name: i18n.t("Register new"), color: "gray", small: true, disabled: loading, onClick: () => { onHandleRegisterNew() } },
   ];
 
   const [initialValues] = useState<object>({
@@ -140,7 +140,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
             <div className="mb-3">
               <WithBorder type="all">
                 <div className={styles.accordionHeaderContainer} onClick={() => setCollapseAttributes(index === collapseAttributes ? -1 : index)}>
-                  <label className={styles.accordionHeader}>Search by {group?.name}</label>
+                  <label className={styles.accordionHeader}>{i18n.t("Search by")} {group?.name}</label>
                   <IconButton size="small" onClick={() => setCollapseAttributes(index)}> {collapseAttributes === index ? <ExpandLess /> : <ExpandMore />}  </IconButton>
                 </div>
 
@@ -153,7 +153,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                         onFormSubtmit={(e: any) => onHandleSubmit()}
                         onInputChange={(e: any) => onHandleChange(e)}
                         onCancel={onReset}
-                        submitButtonLabel={`Search ${sectionName.toLocaleLowerCase()}`}
+                        submitButtonLabel={`${i18n.t("Search")} ${sectionName.toLocaleLowerCase()}`}
                         Form={Form}
                         withButtons={true}
                         loading={loading}

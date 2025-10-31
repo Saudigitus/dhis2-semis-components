@@ -8,6 +8,8 @@ import { convertArrayToObject } from '../../../utils/common/formatArrayToObject'
 import { type CustomAttributeProps } from 'dhis2-semis-types'
 import { EnrollmentFilterProps } from '../../../types/filters/filtersProps'
 import { Button } from '@mui/material'
+import { useRecoilValue } from 'recoil'
+import { TranslationState } from '../../../schemas/translationsSchema'
 
 type FiltersValuesProps = Record<string, any | { endDate: string } | { startDate: string }>
 
@@ -19,6 +21,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
     const [fieldsFilled, setFieldsFilled] = useState<FiltersValuesProps>({});
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [resetValues, setResetValues] = useState<string>("");
+    const i18n = useRecoilValue(TranslationState) as any
 
     const attributesQuerybuilder: any[][] = [];
     const dataElementsQuerybuilder: any[][] = [];
@@ -166,7 +169,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
                         variant='outlined'
                         onClick={handleClick}
                     >
-                        More Filters
+                        {i18n.t("More Filters")}
                     </Button>
                 }
                 <MenuFilters

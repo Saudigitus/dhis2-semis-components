@@ -10,6 +10,8 @@ import { FormApi } from 'final-form';
 import { type DropZoneProps } from "../../types/dropzone/dropZoneTypes";
 import ModalComponent from "../modal/Modal";
 import { DefaultExtensionType, FileIcon, defaultStyles } from "react-file-icon";
+import { useRecoilValue } from "recoil";
+import { TranslationState } from "../../schemas/translationsSchema";
 
 interface IForm { }
 
@@ -22,6 +24,7 @@ function DropZone(props: DropZoneProps) {
     const inputFiles = document.querySelectorAll(".dropzone_area input[type='file']");
     const inputElement: any = inputFiles[0];
     const dropZoneElement: any = inputElement?.closest(".dropzone_area");
+        const i18n = useRecoilValue(TranslationState) as any
 
     useEffect(() => {
         if (uploadedFile === undefined) {
@@ -43,13 +46,13 @@ function DropZone(props: DropZoneProps) {
         {
             id: "cancel",
             type: "reset",
-            label: "Cancel",
+            label: i18n.t("Cancel"),
             disabled: loading,
             onClick: () => { setUploadedFile(undefined); handleClose(); onCancel && onCancel() },
             secondary: true
         }, {
             id: "continue",
-            label: "Continue",
+            label: i18n.t("Continue"),
             success: "success",
             disabled: !Boolean(uploadedFile) || loading,
             onClick: () => onSave([uploadedFile]),
