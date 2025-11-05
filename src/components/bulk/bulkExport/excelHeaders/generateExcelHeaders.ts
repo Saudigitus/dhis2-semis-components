@@ -22,7 +22,8 @@ export function generateHeaders(props: GenerateHeaders) {
         const Profile = (sectionType ?? '').substring(0, 1).toUpperCase() + (sectionType ?? '').substring(1, (sectionType ?? '').length) + ' profile'
         let defaultLockedHeaders: any = [...(module != Modules.Enrollment ? [Profile] : []), "Ids"], filters: any = {}, att = [];
         const stageHeaders = [selectedSectionDataStore.registration.programStage,
-        ...((withSocioEconomics || module === Modules.Enrollment) ? [selectedSectionDataStore["socio-economics"].programStage] : []),
+        ...(((withSocioEconomics || module === Modules.Enrollment) && selectedSectionDataStore["socio-economics"].programStage)
+            ? [selectedSectionDataStore["socio-economics"].programStage] : []),
         ...(module != Modules.Enrollment ? stagesToExport : [])
         ]
         const colors = {

@@ -21,7 +21,7 @@ function SummaryCards({ validRecs, invalidRecs, doneProcessing, stats, module }:
                 return soma
             }
         } else {
-            if (invalid) invalidRecs?.length || 0;
+            if (invalid) return invalidRecs?.length || 0;
             return validRecs?.length || 0;
         }
     }
@@ -29,7 +29,7 @@ function SummaryCards({ validRecs, invalidRecs, doneProcessing, stats, module }:
     return (
         <ButtonStrip>
             {!doneProcessing ? <>
-                <SummaryCard color="success" label="New Records" value={getStats()} />
+                <SummaryCard color="success" label="New Records" value={getStats(false)} />
                 <SummaryCard color="warning" label="Invalid Records" value={getStats(true)} />
             </>
                 :

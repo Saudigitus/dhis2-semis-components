@@ -20,7 +20,8 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
     async function postEnrollments(
         enrollments: any[], excelData: any, importMode: "VALIDATE" | "COMMIT", program: string, updating: boolean, dataStore: selectedDataStoreKey, orgUnit: string
     ) {
-        let copyData = [...enrollments], updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] }
+        let copyData = [...enrollments]
+        let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] }
         const updateProgress = updating ? 40 : 0
 
         if (updating) {
@@ -28,35 +29,40 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
                 return { tei: x?.Ids?.trackedEntity, orgUnit: x.Ids.orgUnit, enrollment: x.Ids.enrollment }
             })
 
+            console.log(teis)
             for (let index = 0; index < teis.length; index++) {
-                await getEvents({
-                    program,
-                    orgUnit: teis[index]?.orgUnit,
-                    ouMode: "SELECTED",
-                    programStage: dataStore["socio-economics"].programStage,
-                    fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
-                    trackedEntity: teis[index]?.tei,
-                    skipPaging: true
-                }).then((resp: any[]) => {
-                    let thisTeiEvent = resp.find(x => x.enrollment === copyData[index].enrollment)
-                    const { attributes, ...rest } = copyData[index]
+                const { attributes, ...rest } = copyData[index]
+                let enrollments = { ...rest, events: [] }
 
-                    copyData[index] = {
-                        enrollments: [{
-                            ...rest,
-                            events: [...(thisTeiEvent ? [{ ...copyData[index].events[0], event: thisTeiEvent.event }] : [])]
-                        }],
+                if (dataStore?.["socio-economics"]?.programStage?.length > 0) {
+                    await getEvents({
+                        program,
                         orgUnit: teis[index]?.orgUnit,
+                        ouMode: "SELECTED",
+                        programStage: dataStore["socio-economics"].programStage,
+                        fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
                         trackedEntity: teis[index]?.tei,
-                        trackedEntityType: dataStore.trackedEntityType,
-                        attributes: attributes
-                    }
+                        skipPaging: true
+                    }).then((resp: any[]) => {
+                        let thisTeiEvent = resp.find(x => x.enrollment === copyData[index].enrollment)
 
-                    updateProgressF(updateProgress + 5, updateProgress, teis.length)
-                }).catch((error) => {
-                    setOpenProgress(false)
-                    onError(error)
-                })
+                        enrollments = { ...rest, events: [...(thisTeiEvent ? [{ ...copyData[index].events[0], event: thisTeiEvent.event }] : [])] }
+                    }).catch((error) => {
+                        setOpenProgress(false)
+                        onError(error)
+                        return
+                    })
+                }
+
+                copyData[index] = {
+                    enrollments: [enrollments],
+                    orgUnit: teis[index]?.orgUnit,
+                    trackedEntity: teis[index]?.tei,
+                    trackedEntityType: dataStore.trackedEntityType,
+                    attributes: attributes
+                }
+
+                updateProgressF(updateProgress + 5, updateProgress, teis.length)
             }
         } else {
             for (let index = 0; index < copyData.length; index++) {
