@@ -9,6 +9,8 @@ import SummaryDetails from "./SummaryDetails";
 import { Collapse, LinearProgress } from "@mui/material";
 import { InfoOutlined } from "@mui/icons-material";
 import ErrorDetailsTable from "./ErrorDetailsTable";
+import { TranslationState } from "../../../../schemas/translationsSchema";
+import { useRecoilValue } from "recoil";
 
 interface ModalContentProps {
     setOpen: (value: boolean) => void
@@ -26,6 +28,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
     const [showDetails, setShowDetails] = useState(false)
     const [load, setLoading] = useState(false)
     const [doneProcessing, setDoneProcessing] = useState<any>({ validate: false, commit: false })
+    const i18n = useRecoilValue(TranslationState) as any
 
     const handleShowDetails = () => { setShowDetails(!showDetails); }
 
@@ -35,7 +38,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
 
     const modalActions: ButtonActionProps[] = [
         {
-            label: "Dry Run",
+            label: `${i18n.t("Dry Run")}`,
             loading: false,
             disabled: stats?.exceptions?.length > 0 || validRecords?.length === 0 || doneProcessing.validate || doneProcessing.commit,
             onClick: async () => {
@@ -46,7 +49,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             },
         },
         {
-            label: "Import data",
+            label: `${i18n.t("Import data")}`,
             primary: true,
             loading: false,
             disabled: stats?.exceptions?.length > 0 || doneProcessing.commit || validRecords?.length === 0,
@@ -57,7 +60,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             },
         },
         {
-            label: "Close",
+            label: `${i18n.t("Close")}`,
             disabled: false,
             loading: false,
             onClick: () => {
@@ -88,26 +91,26 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
     return (
         <>
             <NoticeBox
-                title={((stats?.stats?.ignored ?? 0) + invalidRecords.length + stats?.exceptions?.length) > 0 ? "Errors were found!" : 'No errors!'}
+                title={((stats?.stats?.ignored ?? 0) + invalidRecords.length + stats?.exceptions?.length) > 0 ? `${i18n.t("Errors were found!")}` : `${i18n.t('No errors!')}`}
                 warning={((stats?.stats?.ignored ?? 0) + invalidRecords.length + stats?.exceptions?.length) > 0}
                 valid={((stats?.stats?.ignored ?? 0) + invalidRecords.length + stats?.exceptions?.length) == 0}
             >
                 {((stats?.stats?.ignored ?? 0) + invalidRecords.length + stats?.exceptions?.length) > 0 ?
                     doneProcessing.validate ?
-                        "Erros were found, please review your file!" :
-                        (invalidRecords.length > 0 || stats?.exceptions?.length) ? "Invalid records were found, please review your file!" :
-                            "Occurred errors during the import process, please review your file!"
+                        `${i18n.t("Erros were found, please review your file!")}` :
+                        (invalidRecords.length > 0 || stats?.exceptions?.length) ? `${i18n.t("Invalid records were found, please review your file!")}` :
+                            `${i18n.t("Occurred errors during the import process, please review your file!")}`
                     : doneProcessing.commit ?
-                        "Date imported successfully!" :
+                        `${i18n.t("Date imported successfully!")}` :
                         doneProcessing.validate ?
-                            "No errors were found during dry run process, you can proceed with the import." :
-                            "No errors were found during file validation process, you can proceed with the dry run/import."
+                            `${i18n.t("No errors were found during dry run process, you can proceed with the import.")}` :
+                            `${i18n.t("No errors were found during file validation process, you can proceed with the dry run/import.")}`
 
                 }
             </NoticeBox >
 
             <WithPadding />
-            <Title style={{ fontSize: "18px" }} label={`Summary`} type="title" />
+            <Title style={{ fontSize: "18px" }} label={`${i18n.t('Summary')}`} type="title" />
             <WithPadding />
 
             <SummaryCards module={module} stats={stats} invalidRecs={invalidRecords} validRecs={validRecords} doneProcessing={doneProcessing.commit || doneProcessing.validate} />
@@ -123,7 +126,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
                     {((doneProcessing.commit || doneProcessing.validate) && stats?.byType?.length > 0) &&
                         <>
                             <WithPadding />
-                            <Title style={{ fontSize: "18px" }} label={`Summary by tracker type`} type="subtitle" />
+                            <Title style={{ fontSize: "18px" }} label={`${i18n.t("Summary by tracker type")}`} type="subtitle" />
                             <WithPadding />
                             <ErrorDetailsTable data={stats?.byType} />
                             <WithPadding />

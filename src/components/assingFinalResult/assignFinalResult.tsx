@@ -6,6 +6,8 @@ import WithPadding from "../template/WithPadding";
 import CustomForm from "../form/form";
 import ModalComponent from "../modal/Modal";
 import WithBorder from "../template/WithBorder";
+import { TranslationState } from "../../schemas/translationsSchema";
+import { useRecoilValue } from "recoil";
 
 export default function AsssignFinalResult({ selected, Form }: { selected: any[], Form: any }) {
     const { urlParameters } = useUrlParams()
@@ -15,6 +17,7 @@ export default function AsssignFinalResult({ selected, Form }: { selected: any[]
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
     const { uploadValues } = useUploadEvents()
+    const i18n = useRecoilValue(TranslationState) as any
 
     async function formSubmit(values: any) {
         setLoading(true)
@@ -44,14 +47,21 @@ export default function AsssignFinalResult({ selected, Form }: { selected: any[]
                 setOpen(true);
             }} icon={<IconAddCircle24 />}
             >
-                <span>Assing final result</span>
+                <span>{`${i18n.t('Assing final result')}`}</span>
             </Button >
 
             {
                 open && <ModalComponent
                     children={<WithPadding>
-                        <NoticeBox title={`WARNING! ${selected.length} rows will be affected`} warning>
-                            No one will be able to access this program. Add some Organisation Units to the access list.
+                        <NoticeBox
+                            title={
+                                i18n.t('WARNING! {{size}} rows will be affected', {
+                                    size: `${selected.length}`,
+                                })
+                            }
+                            warning
+                        >
+                            {i18n.t("No one will be able to access this program. Add some Organisation Units to the access list.")}
                         </NoticeBox>
                         <WithBorder type="all" >
                             <WithPadding>
@@ -61,8 +71,8 @@ export default function AsssignFinalResult({ selected, Form }: { selected: any[]
                                     formFields={[
                                         {
                                             storyBook: false,
-                                            name: "Final Result",
-                                            description: "Student final result",
+                                            name: `${i18n.t('Final Results')}`,
+                                            description: `${i18n.t('Student final result')}`,
                                             fields: dataElements
                                         }
                                     ]}
@@ -76,7 +86,7 @@ export default function AsssignFinalResult({ selected, Form }: { selected: any[]
                     </WithPadding>}
                     open={open}
                     handleClose={() => setOpen(false)}
-                    title="Assign Final Result"
+                    title={`${i18n.t('Assign Final Result')}`}
                 />
             }
         </>

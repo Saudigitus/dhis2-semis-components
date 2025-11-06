@@ -4,11 +4,14 @@ import { importSummary } from "../../../../utils/common/getImportSummary";
 import { ProgramConfig } from "dhis2-semis-types"
 import { useUploadEvents } from "dhis2-semis-functions";
 import { useGetEvents } from "dhis2-semis-functions";
+import { useRecoilValue } from "recoil";
+import { TranslationState } from "../../../../schemas/translationsSchema";
 
 export function postValues({ setStats, setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { uploadValues } = useUploadEvents()
     const { getEvents } = useGetEvents()
     let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] }
+    const i18n = useRecoilValue(TranslationState) as any
 
     function updateProgressF(buffer: number, progressParam: number, denominador: number) {
         setProgress((progress: any) => ({
@@ -58,7 +61,7 @@ export function postValues({ setStats, setProgress, onError, setOpenProgress }: 
                 updatedStats = importSummary(response, updatedStats)
                 updateProgressF(50, 40, chunks.length)
             }).catch((error) => {
-                updatedStats = { ...updatedStats, exceptions: [{ "Error message": error?.message }] }
+                updatedStats = { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message }] }
                 setOpenProgress(false)
                 onError(error)
             });

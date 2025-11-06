@@ -4,10 +4,13 @@ import { splitArrayIntoChunks } from "../../../../utils/common/splitArray";
 import { importSummary } from "../../../../utils/common/getImportSummary";
 import { useUploadEvents } from "dhis2-semis-functions";
 import { useGetEvents } from "dhis2-semis-functions";
+import { TranslationState } from "../../../..//schemas/translationsSchema";
+import { useRecoilValue } from "recoil";
 
 export function postEnrollmentData({ setStats, setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { getEvents } = useGetEvents()
     const { uploadValues } = useUploadEvents()
+    const i18n = useRecoilValue(TranslationState) as any
 
     function updateProgressF(buffer: number, progressParam: number, denominador: number) {
         setProgress((progress: any) => ({
@@ -79,7 +82,7 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
                 updatedStats = importSummary(response, updatedStats)
                 updateProgressF((90 + 5 - updateProgress), (90 - updateProgress), chunks.length)
             }).catch((error) => {
-                updatedStats = { ...updatedStats, exceptions: [{ "Error message": error?.message }] }
+                updatedStats = { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message }]  }
                 setOpenProgress(false);
                 onError(error);
             });

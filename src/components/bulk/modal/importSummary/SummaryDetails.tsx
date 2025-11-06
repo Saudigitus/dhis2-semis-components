@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { TabBar, Tab } from '@dhis2/ui'
 import { SummaryTable } from "./SummaryContent";
 import Pagination from "../../../../components/table/components/pagination/Pagination";
+import { TranslationState } from "../../../../schemas/translationsSchema";
+import { useRecoilValue } from "recoil";
 
 const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programConfig, stats }: { stats: any, programConfig: any, validRecords: any, invalidRecords: any, doneProcessing: boolean }): React.ReactElement => {
     const [data, setData] = useState<any>([])
@@ -10,6 +12,7 @@ const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programC
     const currentPage = pagination[activeTab]?.page;
     const tabPageSize = pagination[activeTab]?.pageSize;
     const dataCont = { valid: doneProcessing ? [...stats?.errorDetails, ...stats?.exceptions] : validRecords, invalid: invalidRecords }
+    const i18n = useRecoilValue(TranslationState) as any
 
     const handlePageChange = (newPage: number) => {
         setPagination((prev: any) => ({
@@ -29,10 +32,10 @@ const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programC
         <>
             {!doneProcessing && <TabBar>
                 <Tab onClick={() => { setActiveTab('valid') }} selected={activeTab === 'valid'}>
-                    {validRecords?.lenfth}<br /> New Records
+                    {validRecords?.lenfth}<br /> {`${i18n.t('New Records')}`}
                 </Tab>
                 <Tab onClick={() => { setActiveTab('invalid') }} selected={activeTab === 'invalid'}>
-                    {invalidRecords?.lenfth}<br /> Invalid Records
+                    {invalidRecords?.lenfth}<br /> {`${i18n.t('Invalid Records')}`}
                 </Tab>
             </TabBar>}
 

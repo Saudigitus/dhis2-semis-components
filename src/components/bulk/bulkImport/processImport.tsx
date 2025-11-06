@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import ModalProgress from "../progress/interactiveProgress";
 import { useValidateFile, useValidation } from "dhis2-semis-functions";
 import ModalSummaryContent from "../modal/importSummary/importSummary";
+import { TranslationState } from "../../../schemas/translationsSchema";
+import { useRecoilValue } from "recoil";
 
 export default function ProcessImport(props: importData) {
     const { label, onError, title, updating, programConfig, module, onClose } = props
@@ -18,6 +20,7 @@ export default function ProcessImport(props: importData) {
     const [openStats, setOpenStats] = useState(false)
     const { importData } = useImportData({ setProgress, onError, stats, setStats, setOpenProgress })
     const { validador, invalidRecords, validRecords, loader } = useValidateFile(programConfig, updating ? 'UPDATE' : "POST")
+    const i18n = useRecoilValue(TranslationState) as any
 
     useEffect(() => {
         if (progress.progress > 0) {
@@ -45,7 +48,7 @@ export default function ProcessImport(props: importData) {
                 setExcelData(resp)
             })
             .catch((error) => {
-                setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [{ "Error message": error?.message }], byType: [] })
+                setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [{ [i18n.t("Error message")]: error?.message }], byType: [] })
                 setOpenProgress(false)
                 onError(error)
             })

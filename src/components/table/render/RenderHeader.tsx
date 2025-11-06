@@ -7,6 +7,8 @@ import HeaderCell from '../components/head/HeaderCell';
 import RowTable from '../components/row/RowTable';
 import { useTheme } from '@mui/material/styles';
 import { breakpoints } from '../../../constants/breakpoints';
+import { TranslationState } from '../../../schemas/translationsSchema';
+import { useRecoilValue } from 'recoil';
 
 export const useStyles = () => {
     const theme = useTheme();
@@ -55,6 +57,7 @@ export const useStyles = () => {
 function RenderHeader(props: RenderHeaderProps): React.ReactElement {
     const { selectedAll, rowsHeader = [], showRowIndex, order, orderBy, createSortHandler, isCheckbox, checked, indeterminate, onChange, sortable, showRowActions } = props
     const classes = useStyles()
+    const i18n = useRecoilValue(TranslationState) as any
 
     const headerCells = rowsHeader?.filter(x => x.visible)?.map((column) => (
         <HeaderCell
@@ -114,7 +117,7 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
                     <HeaderCell
                         style={{ ...classes.cell, ...classes.headerCell }}
                     >
-                        <span>Actions</span>
+                        <span>{i18n.t("Actions")}</span>
                     </HeaderCell>
                 }
             </RowTable>

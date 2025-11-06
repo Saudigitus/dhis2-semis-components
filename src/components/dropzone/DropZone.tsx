@@ -16,20 +16,19 @@ import { TranslationState } from "../../schemas/translationsSchema";
 interface IForm { }
 
 function DropZone(props: DropZoneProps) {
+    const i18n = useRecoilValue(TranslationState) as any
     const { loading, onSave, accept, placeholder, hideUploadIcon, hideLabel, height, width, dialogMode, title, buttonLabel, onCancel } = props;
     const [uploadedFile, setUploadedFile] = useState<any>('');
-    const [displayDetails, setdisplayDetails] = useState<{ name: string, extension: string }>({ name: "Drag & drop files or browse", extension: "" });
+    const [displayDetails, setdisplayDetails] = useState<{ name: string, extension: string }>({ name: `${i18n.t("Drag & drop files or browse")}`, extension: "" });
     const [open, setOpen] = useState<boolean>(false);
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const inputFiles = document.querySelectorAll(".dropzone_area input[type='file']");
     const inputElement: any = inputFiles[0];
     const dropZoneElement: any = inputElement?.closest(".dropzone_area");
-        const i18n = useRecoilValue(TranslationState) as any
-
     useEffect(() => {
         if (uploadedFile === undefined) {
             let dropzoneFileMessage = dropZoneElement?.querySelector(".file-info");
-            dropzoneFileMessage.innerHTML = `No files selected`;
+            dropzoneFileMessage.innerHTML = `${i18n.t("No files selected")}`;
         }
     }, [uploadedFile]);
 
@@ -104,7 +103,7 @@ function DropZone(props: DropZoneProps) {
         <>
             {
                 dialogMode ?
-                    <Button icon={<IconUpload24 />} primary onClick={() => setOpen(true)} >{buttonLabel ? buttonLabel : "Upload Files"}</Button>
+                    <Button icon={<IconUpload24 />} primary onClick={() => setOpen(true)} >{buttonLabel ? buttonLabel : `${"Upload Files"}`}</Button>
                     : <DropFile />
             }
             {open && <ModalComponent children={<DropFile />} open={open} handleClose={handleClose} title={title as unknown as string} key={"Modal-drang-&-drop"} />}
