@@ -1,5 +1,6 @@
 import { useDataEngine } from "@dhis2/app-runtime"
 import { useState } from "react"
+import { useCacheData } from "dhis2-semis-functions"
 
 const PROGRAMQUERY: any = (id: string) => ({
   results: {
@@ -23,11 +24,19 @@ const useProgramConfig = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<unknown>(null)
   const engine = useDataEngine()
+  const { getDataFromDB, saveDataToDB } = useCacheData()
 
   const getProgram = async (program: string) => {
     setLoading(true)
     try {
+      const cachedProgram = await getDataFromDB('programs', program)
+      if (cachedProgram) {
+        setData(cachedProgram)
+        return cachedProgram
+      }
+
       const response = await engine.query(PROGRAMQUERY(program));
+      await saveDataToDB(response?.results, 'programs')
       setData(response?.results)
       return response?.results
     } catch (error) {
