@@ -24,13 +24,17 @@ export function generateHeaders(props: GenerateHeaders) {
         let formatedHeaders: any[] = [], toGenerate: any[] = []
         const Profile = (sectionType ?? '').substring(0, 1).toUpperCase() + (sectionType ?? '').substring(1, (sectionType ?? '').length) + ' profile'
         let defaultLockedHeaders: any = [...(module != Modules.Enrollment ? [Profile] : []), "Ids"], filters: any = {}, att = [];
-        const stageHeaders = [selectedSectionDataStore.registration.programStage,
-        ...((withSocioEconomics || module === Modules.Enrollment) ? [selectedSectionDataStore["socio-economics"].programStage] : []),
-        ...(module != Modules.Enrollment ? stagesToExport : [])
+        const socioEconomicsStage = selectedSectionDataStore?.["socio-economics"]?.programStage
+        const stageHeaders = [
+            selectedSectionDataStore.registration.programStage,
+            ...(((withSocioEconomics || module === Modules.Enrollment) && socioEconomicsStage) ? [socioEconomicsStage] : []),
+            ...(module != Modules.Enrollment ? stagesToExport : [])
         ]
-        const colors = {
+        const colors: Record<string, string> = {
             [selectedSectionDataStore.registration.programStage]: "FCE5CD",
-            [selectedSectionDataStore["socio-economics"].programStage]: "FFFFC5"
+        }
+        if (socioEconomicsStage) {
+            colors[socioEconomicsStage] = "FFFFC5"
         }
 
 

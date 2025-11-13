@@ -30,36 +30,52 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
             const teis = excelData.map((x: any) => {
                 return { tei: x?.Ids?.trackedEntity, orgUnit: x.Ids.orgUnit, enrollment: x.Ids.enrollment }
             })
+            const socioEconomicsStage = dataStore?.["socio-economics"]?.programStage
 
             for (let index = 0; index < teis.length; index++) {
-                await getEvents({
-                    program,
-                    orgUnit: teis[index]?.orgUnit,
-                    ouMode: "SELECTED",
-                    programStage: dataStore["socio-economics"].programStage,
-                    fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
-                    trackedEntity: teis[index]?.tei,
-                    skipPaging: true
-                }).then((resp: any[]) => {
-                    let thisTeiEvent = resp.find(x => x.enrollment === copyData[index].enrollment)
-                    const { attributes, ...rest } = copyData[index]
+                if (socioEconomicsStage) {
+                    await getEvents({
+                        program,
+                        orgUnit: teis[index]?.orgUnit,
+                        ouMode: "SELECTED",
+                        programStage: socioEconomicsStage,
+                        fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
+                        trackedEntity: teis[index]?.tei,
+                        skipPaging: true
+                    }).then((resp: any[]) => {
+                        let thisTeiEvent = resp.find(x => x.enrollment === copyData[index].enrollment)
+                        const { attributes, ...rest } = copyData[index]
 
+                        copyData[index] = {
+                            enrollments: [{
+                                ...rest,
+                                events: [...(thisTeiEvent ? [{ ...copyData[index].events[0], event: thisTeiEvent.event }] : [])]
+                            }],
+                            orgUnit: teis[index]?.orgUnit,
+                            trackedEntity: teis[index]?.tei,
+                            trackedEntityType: dataStore.trackedEntityType,
+                            attributes: attributes
+                        }
+
+                        updateProgressF(updateProgress + 5, updateProgress, teis.length)
+                    }).catch((error) => {
+                        setOpenProgress(false)
+                        onError(error)
+                    })
+                } else {
+                    const { attributes, ...rest } = copyData[index]
                     copyData[index] = {
                         enrollments: [{
                             ...rest,
-                            events: [...(thisTeiEvent ? [{ ...copyData[index].events[0], event: thisTeiEvent.event }] : [])]
+                            events: []
                         }],
                         orgUnit: teis[index]?.orgUnit,
                         trackedEntity: teis[index]?.tei,
                         trackedEntityType: dataStore.trackedEntityType,
                         attributes: attributes
                     }
-
                     updateProgressF(updateProgress + 5, updateProgress, teis.length)
-                }).catch((error) => {
-                    setOpenProgress(false)
-                    onError(error)
-                })
+                }
             }
         } else {
             for (let index = 0; index < copyData.length; index++) {
