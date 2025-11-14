@@ -70,6 +70,9 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
     }).filter(x => x != undefined)
 
     for (const student of data) {
+        if (updating && (!student?.Ids || !student?.Ids?.enrollment || !student?.Ids?.trackedEntity || !student?.Ids?.orgUnit)) {
+            throw new Error('Import error: This operation requires a bulk update file containing (Enrollment, Tracked Entity Id, School UID). Please ensure you are using the bulk update template.');
+        }
         let events: any = [], att: any = [], enrollmentDate: any = null
 
         for (const stage of programStages) {
