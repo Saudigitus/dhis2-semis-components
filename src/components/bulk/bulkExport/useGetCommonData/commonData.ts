@@ -5,7 +5,7 @@ import { useGetEnrollmentData } from "../../../../hooks/enrollmentDetails/useGet
 export function getCommonSheetData(props: ExportData) {
     const { getEvents } = useGetEvents()
     const { eventFilters = [], selectedSectionDataStore, setProgress = () => { }, onError } = props
-    const { getEnrollmentDetails } = useGetEnrollmentData({ ...props, setProgress })
+    const { getEnrollmentDetails  } = useGetEnrollmentData({ ...props, setProgress })
     const { urlParameters } = useUrlParams()
     const { school: orgUnit } = urlParameters
 
@@ -25,6 +25,11 @@ export function getCommonSheetData(props: ExportData) {
         })
 
         setProgress((prev: any) => ({ ...prev, progress: 10, buffer: 16 }))
+        //verify if events is not empty
+        if (!events || events.length === 0) {
+            onError('Export Error: No data found')
+            return []
+        }
         const enrollmentDetails = await getEnrollmentDetails(events)
 
         return enrollmentDetails
