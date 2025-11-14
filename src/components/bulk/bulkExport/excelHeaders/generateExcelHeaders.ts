@@ -37,11 +37,12 @@ export function generateHeaders(props: GenerateHeaders) {
             colors[socioEconomicsStage] = "FFFFC5"
         }
 
+        const attendanceStageId = selectedSectionDataStore?.attendance?.programStage
 
         for (const stageId of stageHeaders) {
             const currStage = programConfig?.programStages?.find(x => x.id == stageId)
 
-            if (stageId === selectedSectionDataStore.attendance.programStage) {
+            if (attendanceStageId && stageId === attendanceStageId) {
                 let section: any = {
                     name: currStage?.displayName,
                     headers: [
@@ -56,8 +57,12 @@ export function generateHeaders(props: GenerateHeaders) {
                     ]
                 }
 
-                const statusDe = currStage?.programStageDataElements.find(x => x.dataElement.id === selectedSectionDataStore.attendance.status)
-                filters["Attendance"] = getFilterLables(statusDe?.dataElement.optionSet.options ?? [])
+                const statusDe = currStage?.programStageDataElements.find(
+                    x => x.dataElement.id === selectedSectionDataStore?.attendance?.status
+                )
+                if (statusDe?.dataElement?.optionSet?.options) {
+                    filters["Attendance"] = getFilterLables(statusDe.dataElement.optionSet.options)
+                }
 
                 formatedHeaders.push(section)
             } else {
