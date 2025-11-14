@@ -25,6 +25,7 @@ export function useGetEnrollmentData(props: ExportData) {
                         counter++
                         let enrollment = events.find((x: any) => x.trackedEntity == tei?.trackedEntity)?.enrollment
                         let socioEconomiscData: any = []
+                        const socioEconomicsStage = selectedSectionDataStore?.['socio-economics']?.programStage as unknown as string
 
                         const registrationData: any = await getEvents({
                             program: selectedSectionDataStore?.program as unknown as string,
@@ -37,10 +38,10 @@ export function useGetEnrollmentData(props: ExportData) {
                             orgUnit: orgUnit
                         })
 
-                        if (withSocioEconomics || module === Modules.Enrollment) {
+                        if (socioEconomicsStage && (withSocioEconomics || module === Modules.Enrollment)) {
                             socioEconomiscData = await getEvents({
                                 program: selectedSectionDataStore?.program as unknown as string,
-                                programStage: selectedSectionDataStore?.['socio-economics']?.programStage as unknown as string,
+                                programStage: socioEconomicsStage,
                                 ouMode: "SELECTED",
                                 fields: "*",
                                 filter: eventFilters,
@@ -63,7 +64,7 @@ export function useGetEnrollmentData(props: ExportData) {
                             enrollmentStatus: tei?.enrollments?.find((x: any) => x.enrollment === enrollment)?.status,
                             ...attributes(tei?.attributes ?? []),
                             ...dataValues(currEnrollmentRegistration?.dataValues ?? [], selectedSectionDataStore?.registration?.programStage as unknown as string),
-                            ...dataValues(currEnrollmentSocioEconomics?.dataValues ?? [], selectedSectionDataStore?.['socio-economics']?.programStage as unknown as string),
+                            ...(socioEconomicsStage ? dataValues(currEnrollmentSocioEconomics?.dataValues ?? [], socioEconomicsStage) : {}),
                         }]
 
                         setProgress((progress: any) => ({
