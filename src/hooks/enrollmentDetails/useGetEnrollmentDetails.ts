@@ -52,7 +52,7 @@ export function useGetEnrollmentData(props: ExportData) {
                         }
 
                         const currEnrollmentRegistration = registrationData?.find((x: any) => x.enrollment === enrollment)
-                        const currEnrollmentSocioEconomics = socioEconomiscData?.find((x: any) => x.enrollment === enrollment)
+                        const currEnrollmentSocioEconomics = socioEconomicsStage ? socioEconomiscData?.find((x: any) => x.enrollment === enrollment) : undefined
 
                         rows = [...rows, {
                             ref: "" + counter + " ",
