@@ -27,7 +27,6 @@ export function getCommonSheetData(props: ExportData) {
         setProgress((prev: any) => ({ ...prev, progress: 10, buffer: 16 }))
         //verify if events is not empty
         if (!events || events.length === 0) {
-            onError('Export Error: No data found')
             return []
         }
         const enrollmentDetails = await getEnrollmentDetails(events)
