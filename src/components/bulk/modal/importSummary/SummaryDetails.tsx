@@ -5,12 +5,13 @@ import Pagination from "../../../../components/table/components/pagination/Pagin
 import { TranslationState } from "../../../../schemas/translationsSchema";
 import { useRecoilValue } from "recoil";
 
-const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programConfig, stats }: { stats: any, programConfig: any, validRecords: any, invalidRecords: any, doneProcessing: boolean }): React.ReactElement => {
+const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programConfig, stats = {} }: { stats: any, programConfig: any, validRecords: any, invalidRecords: any, doneProcessing: boolean }): React.ReactElement => {
     const [data, setData] = useState<any>([])
     const [activeTab, setActiveTab] = useState("valid")
     const [pagination, setPagination] = useState<any>({ valid: { page: 1, pageSize: 10 }, invalid: { page: 1, pageSize: 10 } });
     const currentPage = pagination[activeTab]?.page;
     const tabPageSize = pagination[activeTab]?.pageSize;
+    console.log(stats, doneProcessing)
     const dataCont = { valid: doneProcessing ? [...stats?.errorDetails, ...stats?.exceptions] : validRecords, invalid: invalidRecords }
     const i18n = useRecoilValue(TranslationState) as any
 
