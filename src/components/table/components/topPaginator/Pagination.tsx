@@ -5,11 +5,14 @@ import { PaginationProps } from '../../../../types/table/PaginationProps';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import TextPagination from '../pagination/TextPagination';
 import IconButtonPagination from '../pagination/IconButtonPagination';
+import { useRecoilValue } from 'recoil';
+import { TranslationState } from '../../../../schemas/translationsSchema';
 
 
 function TopPaginator({ page, rowsPerPage, onPageChange, totalData, disablePreviousPage, disableNextPage, totalElements }: PaginationProps): React.ReactElement {
     const start = (page - 1) * rowsPerPage + 1;
     const end = start + totalData - 1;
+    const i18n = useRecoilValue(TranslationState) as any
 
     return (
         <div className={defaultClasses.pagination}>
@@ -22,14 +25,14 @@ function TopPaginator({ page, rowsPerPage, onPageChange, totalData, disablePrevi
 
                 <IconButtonPagination
                     Icon={<KeyboardArrowLeft />}
-                    ariaLabel='Previous Page'
+                    ariaLabel={i18n.t('Previous Page')}
                     disabled={disablePreviousPage}
                     onPageChange={() => { onPageChange(page - 1); }}
                 />
 
                 <IconButtonPagination
                     Icon={<KeyboardArrowRight />}
-                    ariaLabel='Next Page'
+                    ariaLabel={i18n.t('Next Page')}
                     disabled={disableNextPage}
                     onPageChange={() => { onPageChange(page + 1); }}
                 />

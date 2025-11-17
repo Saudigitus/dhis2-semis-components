@@ -1,0 +1,110 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"POT-Creation-Date: 2025-10-30T10:05:54.798Z\n"
+"PO-Revision-Date: 2025-10-30T10:05:54.798Z\n"
+
+msgid "Ref"
+msgstr "Ref"
+
+msgid "School"
+msgstr "School"
+
+msgid "No Label"
+msgstr "No Label"
+
+msgid "Academic year"
+msgstr "Academic year"
+
+msgid "Select a academic year"
+msgstr "Select a academic year"
+
+msgid "Perform Promotion"
+msgstr "Perform Promotion"
+
+msgid "WARNING"
+msgstr "WARNING"
+
+msgid "rows will be affected"
+msgstr "rows will be affected"
+
+msgid ""
+"No one will be able to access this program. Add some Organisation Units to "
+"the access list."
+msgstr ""
+"No one will be able to access this program. Add some Organisation Units to "
+"the access list."
+
+msgid "Student promotion"
+msgstr "Student promotion"
+
+msgid "View history"
+msgstr "View history"
+
+msgid "Fill in at least 1 attribute to search."
+msgstr "Fill in at least 1 attribute to search."
+
+msgid "Results found for"
+msgstr "Results found for"
+
+msgid "search"
+msgstr "search"
+
+msgid "No"
+msgstr "No"
+
+msgid "found"
+msgstr "found"
+
+msgid "Continue serching or click"
+msgstr "Continue serching or click"
+
+msgid "Register new"
+msgstr "Register new"
+
+msgid "if you want to register as a new"
+msgstr "if you want to register as a new"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "rows selected"
+msgstr "rows selected"
+
+msgid "Columns to show in the table"
+msgstr "Columns to show in the table"
+
+msgid "Table Columns"
+msgstr "Table Columns"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Click to open in new tab"
+msgstr "Click to open in new tab"
+
+msgid "Rows per page"
+msgstr "Rows per page"
+
+msgid "Page"
+msgstr "Page"
+
+msgid "Previous Page"
+msgstr "Previous Page"
+
+msgid "Next Page"
+msgstr "Next Page"
+
+msgid "No data to display"
+msgstr "No data to display"
+
+msgctxt "Date"
+msgid "Enrollment"
+msgstr "Enrollment_Date"

@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { FormApi } from "final-form"
 import { deepEqual } from "../../utils/table/objectComparison";
 import { FormSpy } from "react-final-form";
+import { useRecoilValue } from "recoil";
+import { TranslationState } from "../../schemas/translationsSchema";
 
 interface IForm extends Record<string, any> { }
 interface imageFieldSpecificProps {
@@ -24,6 +26,7 @@ export default function CustomForm(props: CombinedProps) {
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
     const { storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons } = props
     const { onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues, baseUrl } = props
+    const i18n = useRecoilValue(TranslationState) as any
 
     const handleInputChange = (event: any) => {
         if (onInputChange) onInputChange({ value: event.target.value, name: event.target.name, field: event })
@@ -34,7 +37,7 @@ export default function CustomForm(props: CombinedProps) {
         {
             id: "cancel",
             type: "reset",
-            label: "Cancel",
+            label: i18n.t("Cancel"),
             disabled: loading,
             onClick: () => {
                 form.reset()
@@ -44,7 +47,7 @@ export default function CustomForm(props: CombinedProps) {
         },
         {
             id: "continue",
-            label: submitButtonLabel ? submitButtonLabel : "Submit",
+            label: submitButtonLabel ? submitButtonLabel : i18n.t("Submit"),
             success: "success",
             type: "submit",
             disabled: !changed || loading,

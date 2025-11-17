@@ -3,6 +3,8 @@ import FilterComponents from '../../fields/FilterComponents';
 import { type SelectorContentsProps } from '../../../../types/table/ContentFiltersProps';
 import { createStyles, makeStyles } from '@mui/styles';
 import type { Theme } from '@mui/material/styles';
+import { TranslationState } from '../../../../schemas/translationsSchema';
+import { useRecoilValue } from 'recoil';
 
 const getStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -20,6 +22,7 @@ const getStyles = makeStyles((theme: Theme) =>
 function SelectorContents(props: SelectorContentsProps) {
     const { onClose, disabledReset, closeFilterSelector, colum, onQuerySubmit, disabled: disabledUpdate, value, filled } = props;
     const classes = getStyles()
+    const i18n = useRecoilValue(TranslationState) as any
 
     const handleKeyDown = (event: any) => {
         if (event.key === "Enter" && !(disabledUpdate || !value?.replace(/\s/g, '').length)) {
@@ -52,7 +55,7 @@ function SelectorContents(props: SelectorContentsProps) {
                         onClick={onUpdate}
                         disabled={disabledUpdate || !value}
                     >
-                        {('Update')}
+                        {i18n.t('Update')}
                     </Button>
                 </div>
                 <div
@@ -65,7 +68,7 @@ function SelectorContents(props: SelectorContentsProps) {
                         disabled={disabledReset || !filled}
 
                     >
-                        {('Restore')}
+                        {i18n.t('Restore')}
                     </Button>
                 </div>
             </div>

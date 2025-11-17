@@ -4,10 +4,13 @@ import { splitArrayIntoChunks } from "../../../../utils/common/splitArray";
 import { importSummary } from "../../../../utils/common/getImportSummary";
 import { useUploadEvents } from "dhis2-semis-functions";
 import { useGetEvents } from "dhis2-semis-functions";
+import { TranslationState } from "../../../..//schemas/translationsSchema";
+import { useRecoilValue } from "recoil";
 
 export function postEnrollmentData({ setStats, setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { getEvents } = useGetEvents()
     const { uploadValues } = useUploadEvents()
+    const i18n = useRecoilValue(TranslationState) as any
 
     function updateProgressF(buffer: number, progressParam: number, denominador: number) {
         setProgress((progress: any) => ({
@@ -28,41 +31,56 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
             const teis = excelData.map((x: any) => {
                 return { tei: x?.Ids?.trackedEntity, orgUnit: x.Ids.orgUnit, enrollment: x.Ids.enrollment }
             })
+            const socioEconomicsStage = dataStore?.["socio-economics"]?.programStage
 
             console.log(teis)
             for (let index = 0; index < teis.length; index++) {
-                const { attributes, ...rest } = copyData[index]
-                let enrollments = { ...rest, events: [] }
-
-                if (dataStore?.["socio-economics"]?.programStage?.length > 0) {
+                if (socioEconomicsStage) {
                     await getEvents({
                         program,
                         orgUnit: teis[index]?.orgUnit,
                         ouMode: "SELECTED",
-                        programStage: dataStore["socio-economics"].programStage,
+                        programStage: socioEconomicsStage,
                         fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
                         trackedEntity: teis[index]?.tei,
                         skipPaging: true
                     }).then((resp: any[]) => {
                         let thisTeiEvent = resp.find(x => x.enrollment === copyData[index].enrollment)
+                        const { attributes, ...rest } = copyData[index]
 
-                        enrollments = { ...rest, events: [...(thisTeiEvent ? [{ ...copyData[index].events[0], event: thisTeiEvent.event }] : [])] }
+                        copyData[index] = {
+                            enrollments: [{
+                                ...rest,
+                                events: [...(thisTeiEvent ? [{ ...copyData[index].events[0], event: thisTeiEvent.event }] : [])]
+                            }],
+                            orgUnit: teis[index]?.orgUnit,
+                            trackedEntity: teis[index]?.tei,
+                            trackedEntityType: dataStore.trackedEntityType,
+                            attributes: attributes
+                        }
+
+                        updateProgressF(updateProgress + 5, updateProgress, teis.length)
                     }).catch((error) => {
                         setOpenProgress(false)
                         onError(error)
-                        return
                     })
+                } else {
+                    const { attributes, ...rest } = copyData[index]
+                    copyData[index] = {
+                        enrollments: [{
+                            ...rest,
+                            events: []
+                        }],
+                        orgUnit: teis[index]?.orgUnit,
+                        ouMode: "SELECTED",
+                        programStage: dataStore["socio-economics"].programStage,
+                        fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
+                        trackedEntity: teis[index]?.tei,
+                        trackedEntityType: dataStore.trackedEntityType,
+                        attributes: attributes
+                    }
+                    updateProgressF(updateProgress + 5, updateProgress, teis.length)
                 }
-
-                copyData[index] = {
-                    enrollments: [enrollments],
-                    orgUnit: teis[index]?.orgUnit,
-                    trackedEntity: teis[index]?.tei,
-                    trackedEntityType: dataStore.trackedEntityType,
-                    attributes: attributes
-                }
-
-                updateProgressF(updateProgress + 5, updateProgress, teis.length)
             }
         } else {
             for (let index = 0; index < copyData.length; index++) {
@@ -85,7 +103,7 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
                 updatedStats = importSummary(response, updatedStats)
                 updateProgressF((90 + 5 - updateProgress), (90 - updateProgress), chunks.length)
             }).catch((error) => {
-                updatedStats = { ...updatedStats, exceptions: [{ "Error message": error?.message }] }
+                updatedStats = { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message }]  }
                 setOpenProgress(false);
                 onError(error);
             });

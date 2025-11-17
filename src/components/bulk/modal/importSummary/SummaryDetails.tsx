@@ -2,14 +2,28 @@ import React, { useEffect, useState } from "react";
 import { TabBar, Tab } from '@dhis2/ui'
 import { SummaryTable } from "./SummaryContent";
 import Pagination from "../../../../components/table/components/pagination/Pagination";
+import { TranslationState } from "../../../../schemas/translationsSchema";
+import { useRecoilValue } from "recoil";
 
-const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programConfig, stats }: { stats: any, programConfig: any, validRecords: any, invalidRecords: any, doneProcessing: boolean }): React.ReactElement => {
+const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programConfig, stats = {} }: { stats: any, programConfig: any, validRecords: any, invalidRecords: any, doneProcessing: boolean }): React.ReactElement => {
     const [data, setData] = useState<any>([])
     const [activeTab, setActiveTab] = useState("valid")
     const [pagination, setPagination] = useState<any>({ valid: { page: 1, pageSize: 10 }, invalid: { page: 1, pageSize: 10 } });
     const currentPage = pagination[activeTab]?.page;
     const tabPageSize = pagination[activeTab]?.pageSize;
-    const dataCont = { valid: doneProcessing ? [...stats?.errorDetails, ...stats?.exceptions] : validRecords, invalid: invalidRecords }
+    console.log(stats, doneProcessing)
+
+    // Safely default undefined lists to arrays to avoid spread/slice errors
+    const errorDetails = Array.isArray(stats?.errorDetails) ? stats.errorDetails : []
+    const exceptions = Array.isArray(stats?.exceptions) ? stats.exceptions : []
+    const safeValidRecords = Array.isArray(validRecords) ? validRecords : []
+    const safeInvalidRecords = Array.isArray(invalidRecords) ? invalidRecords : []
+
+    const dataCont = {
+        valid: doneProcessing ? [...errorDetails, ...exceptions] : safeValidRecords,
+        invalid: safeInvalidRecords
+    }
+    const i18n = useRecoilValue(TranslationState) as any
 
     const handlePageChange = (newPage: number) => {
         setPagination((prev: any) => ({
@@ -29,10 +43,10 @@ const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programC
         <>
             {!doneProcessing && <TabBar>
                 <Tab onClick={() => { setActiveTab('valid') }} selected={activeTab === 'valid'}>
-                    {validRecords?.lenfth}<br /> New Records
+                    {safeValidRecords.length}<br /> {`${i18n.t('New Records')}`}
                 </Tab>
                 <Tab onClick={() => { setActiveTab('invalid') }} selected={activeTab === 'invalid'}>
-                    {invalidRecords?.lenfth}<br /> Invalid Records
+                    {safeInvalidRecords.length}<br /> {`${i18n.t('Invalid Records')}`}
                 </Tab>
             </TabBar>}
 

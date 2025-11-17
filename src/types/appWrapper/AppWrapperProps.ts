@@ -9,6 +9,7 @@ interface AppWrapperProps {
     dataStoreKey: string
     schoolCalendarKey: string
     baseUrl: string
+    i18n: any
 }
 
 export type { AppWrapperProps }

@@ -17,6 +17,8 @@ import { formattedQuery } from "../../utils/search/formatQuery";
 import { IconInfo24 } from "@dhis2/ui";
 import { Collapse, IconButton } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { useRecoilValue } from "recoil";
+import { TranslationState } from "../../schemas/translationsSchema";
 
 function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   const { sectionName, setOpenNewEnrollmentModal, programConfig, open, setOpen, Form, setFormInitialValues } = props;
@@ -28,14 +30,16 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
   const [collapseAttributes, setCollapseAttributes] = useState(0)
   const { urlParameters } = useUrlParams();
   const { school: orgUnit, schoolName: orgUnitName, academicYear } = urlParameters
+  const i18n = useRecoilValue(TranslationState) as any
+
 
   const rowsActions: any = [
-    { icon: <IconInfo24 />, color: '#144b73', label: `View history`, disabled: false },
+    { icon: <IconInfo24 />, color: '#144b73', label: i18n.t("View history"), disabled: false },
   ];
 
   const modalActions = [
-    { id: "cancel", small: true, name: "Cancel", disabled: false, primary: true, onClick: () => { setOpen(false) } },
-    { id: "continue", name: "Register new", color: "gray", small: true, disabled: loading, onClick: () => { onHandleRegisterNew() } },
+    { id: "cancel", small: true, name: i18n.t("Cancel"), disabled: false, primary: true, onClick: () => { setOpen(false) } },
+    { id: "continue", name: i18n.t("Register new"), color: "gray", small: true, disabled: loading, onClick: () => { onHandleRegisterNew() } },
   ];
 
   const [initialValues] = useState<object>({
@@ -123,7 +127,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
 
   return (
     <ModalComponent
-      title="Fill in at least 1 attribute to search."
+      title={i18n.t("Fill in at least 1 attribute to search.")}
       actions={modalActions}
       handleClose={() => setOpen(false)}
       open={open}
@@ -136,7 +140,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
             <div className="mb-3">
               <WithBorder type="all">
                 <div className={styles.accordionHeaderContainer} onClick={() => setCollapseAttributes(index === collapseAttributes ? -1 : index)}>
-                  <label className={styles.accordionHeader}>Search by {group?.name}</label>
+                  <label className={styles.accordionHeader}>{i18n.t("Search by")} {group?.name}</label>
                   <IconButton size="small" onClick={() => setCollapseAttributes(index)}> {collapseAttributes === index ? <ExpandLess /> : <ExpandMore />}  </IconButton>
                 </div>
 
@@ -149,7 +153,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                         onFormSubtmit={(e: any) => onHandleSubmit()}
                         onInputChange={(e: any) => onHandleChange(e)}
                         onCancel={onReset}
-                        submitButtonLabel={`Search ${sectionName.toLocaleLowerCase()}`}
+                        submitButtonLabel={`${i18n.t("Search")} ${sectionName.toLocaleLowerCase()}`}
                         Form={Form}
                         withButtons={true}
                         loading={loading}
@@ -170,7 +174,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                     columns={searchableAttributes}
                     programConfig={programConfig}
                     tableData={enrollmentValues}
-                    title={`Results found for ${sectionName} search`}
+                    title={`${i18n.t("Results found for")} ${sectionName} ${i18n.t("search")}`}
                     rowAction={rowsActions}
                     onRowClick={onSelectTei}
                     displayType="icon"
@@ -181,15 +185,15 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
                     showRowIndex={false}
                   />
                 </div> :
-                <NoticeBox className={styles.noticeBox} title={`No ${sectionName} found`}>
-                  Continue serching or click <strong>'Register new'</strong> if you want to register as a new <strong>{sectionName}</strong>.
+                <NoticeBox className={styles.noticeBox} title={`${i18n.t("No")} ${sectionName} ${i18n.t("found")}`}>
+                  {i18n.t("Continue serching or click")} <strong>'{i18n.t("Register new")}'</strong> {i18n.t("if you want to register as a new")} <strong>{sectionName}</strong>.
                 </NoticeBox>}
             </>
           </Collapse>
           {!showResults &&
             <ButtonStrip end>
               <Button key={"Close"} onClick={() => setOpen(false)} loading={false}>
-                Close
+                {i18n.t("Close")}
               </Button>
             </ButtonStrip>
           }

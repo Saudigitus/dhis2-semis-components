@@ -7,6 +7,8 @@ import { FormFieldsProps } from '../../../types/form/GenericFieldsTypes'
 import { useFileResource, useGetSectionTypeLabel } from 'dhis2-semis-functions'
 import { Box, Button } from '@mui/material'
 import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey'
+import { TranslationState } from '../../../schemas/translationsSchema'
+import { useRecoilValue } from 'recoil'
 
 interface imageFieldSpecificProps {
     storyBook: boolean
@@ -21,6 +23,7 @@ function ImageField(props: CombinedProps) {
     const [uploadedImage, setUploadedImage] = useState<any>()
     const { input }: FieldRenderProps<any, HTMLElement> = useField(name)
     const { createFileResource, getFileResource, loading } = useFileResource()
+    const i18n = useRecoilValue(TranslationState) as any
 
     const { sectionName } = useGetSectionTypeLabel();
     const dataStoreData = useDataStoreKey({ sectionType: sectionName });
@@ -54,7 +57,7 @@ function ImageField(props: CombinedProps) {
                 reader.readAsDataURL(response?.file)
             if (response?.error) {
                 setUploadedImage(null)
-                setErrorImage("File could not be loaded: " + response?.error)
+                setErrorImage(i18n.t("File could not be loaded: ") + response?.error)
             }
         })
     }
@@ -104,7 +107,7 @@ function ImageField(props: CombinedProps) {
                                     loading={loading}
                                     disabled={disabled}
                                 >
-                                    Choose File
+                                    {i18n.t("Choose File")}
                                 </Button>
                             </label>
                         </span>
@@ -121,12 +124,12 @@ function ImageField(props: CombinedProps) {
                         loading={loading}
                         disabled={disabled}
                     >
-                        Remove
+                        {i18n.t("Remove")}
                     </Button>
                 </div>
             }
             {/* {errorImage && <span className={style.errorMessage}>{errorImage}</span>} */}
-            {errorImage && <span className={style.errorMessage}>File could not be loaded: An unknown error occurred.</span>}
+            {errorImage && <span className={style.errorMessage}>{i18n.t("File could not be loaded: An unknown error occurred.")}</span>}
         </Box>
     )
 }

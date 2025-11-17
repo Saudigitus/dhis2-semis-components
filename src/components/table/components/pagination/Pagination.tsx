@@ -5,15 +5,18 @@ import {  PaginationProps } from '../../../../types/table/PaginationProps';
 import TextPagination from './TextPagination';
 import IconButtonPagination from './IconButtonPagination';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
+import { useRecoilValue } from 'recoil';
+import { TranslationState } from '../../../../schemas/translationsSchema';
 
 
 function Pagination({ page, rowsPerPage, onPageChange, onRowsPerPageChange, disablePreviousPage, disableNextPage, rowsPerPages }: PaginationProps): React.ReactElement {
+        const i18n = useRecoilValue(TranslationState) as any
     return (
         <div className={defaultClasses.pagination}>
             <div />
 
             <div className={defaultClasses.rootPagination}>
-                {TextPagination("Rows per page")}
+                {TextPagination(i18n.t("Rows per page"))}
 
                 <Select
                     className={defaultClasses.textPagination}
@@ -25,20 +28,20 @@ function Pagination({ page, rowsPerPage, onPageChange, onRowsPerPageChange, disa
                     onChange={onRowsPerPageChange}
                     menuContainerStyle={{ top: 'auto', bottom: '100%' }}
                 />
-                {TextPagination(`Page ${page}`)}
+                {TextPagination(`${i18n.t("Page")} ${page}`)}
 
                 <div className={defaultClasses.separator} />
 
                 <IconButtonPagination
                     Icon={<KeyboardArrowLeft />}
-                    ariaLabel='Previous Page'
+                    ariaLabel={i18n.t('Previous Page')}
                     disabled={disablePreviousPage}
                     onPageChange={() => { onPageChange(page - 1); }}
                 />
 
                 <IconButtonPagination
                     Icon={<KeyboardArrowRight />}
-                    ariaLabel='Next Page'
+                    ariaLabel={i18n.t('Next Page')}
                     disabled={disableNextPage}
                     onPageChange={() => { onPageChange(page + 1); }}
                 />

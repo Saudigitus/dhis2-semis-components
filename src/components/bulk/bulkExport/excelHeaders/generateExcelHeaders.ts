@@ -3,6 +3,8 @@ import { GenerateHeaders } from "../../../../types/bulk/bulkOperations";
 import { Modules } from 'dhis2-semis-types';
 import { dfHeaders } from "../../../../utils/constants/dfHeaders";
 import { getFilterLables } from "../../../../utils/format/getFilterLables";
+import { useRecoilValue } from "recoil";
+import { TranslationState } from "../../../../schemas/translationsSchema";
 
 export function generateHeaders(props: GenerateHeaders) {
     const {
@@ -16,26 +18,31 @@ export function generateHeaders(props: GenerateHeaders) {
         isSchoolDay
     } = props
     const { getValidDaysToExport } = generateAttendanceDays({ unavailableDays: isSchoolDay as unknown as (args: Date) => boolean })
+    const i18n = useRecoilValue(TranslationState) as any
 
     function getHeaders(startDate: string, endDate: string) {
         let formatedHeaders: any[] = [], toGenerate: any[] = []
         const Profile = (sectionType ?? '').substring(0, 1).toUpperCase() + (sectionType ?? '').substring(1, (sectionType ?? '').length) + ' profile'
         let defaultLockedHeaders: any = [...(module != Modules.Enrollment ? [Profile] : []), "Ids"], filters: any = {}, att = [];
-        const stageHeaders = [selectedSectionDataStore.registration.programStage,
-        ...(((withSocioEconomics || module === Modules.Enrollment) && selectedSectionDataStore["socio-economics"].programStage)
-            ? [selectedSectionDataStore["socio-economics"].programStage] : []),
-        ...(module != Modules.Enrollment ? stagesToExport : [])
+        const socioEconomicsStage = selectedSectionDataStore?.["socio-economics"]?.programStage
+        const stageHeaders = [
+            selectedSectionDataStore.registration.programStage,
+            ...(((withSocioEconomics || module === Modules.Enrollment) && socioEconomicsStage) ? [socioEconomicsStage] : []),
+            ...(module != Modules.Enrollment ? stagesToExport : [])
         ]
-        const colors = {
+        const colors: Record<string, string> = {
             [selectedSectionDataStore.registration.programStage]: "FCE5CD",
-            [selectedSectionDataStore["socio-economics"].programStage]: "FFFFC5"
+        }
+        if (socioEconomicsStage) {
+            colors[socioEconomicsStage] = "FFFFC5"
         }
 
+        const attendanceStageId = selectedSectionDataStore?.attendance?.programStage
 
         for (const stageId of stageHeaders) {
             const currStage = programConfig?.programStages?.find(x => x.id == stageId)
 
-            if (stageId === selectedSectionDataStore.attendance.programStage) {
+            if (attendanceStageId && stageId === attendanceStageId) {
                 let section: any = {
                     name: currStage?.displayName,
                     headers: [
@@ -50,8 +57,12 @@ export function generateHeaders(props: GenerateHeaders) {
                     ]
                 }
 
-                const statusDe = currStage?.programStageDataElements.find(x => x.dataElement.id === selectedSectionDataStore.attendance.status)
-                filters["Attendance"] = getFilterLables(statusDe?.dataElement.optionSet.options ?? [])
+                const statusDe = currStage?.programStageDataElements.find(
+                    x => x.dataElement.id === selectedSectionDataStore?.attendance?.status
+                )
+                if (statusDe?.dataElement?.optionSet?.options) {
+                    filters["Attendance"] = getFilterLables(statusDe.dataElement.optionSet.options)
+                }
 
                 formatedHeaders.push(section)
             } else {
@@ -61,17 +72,17 @@ export function generateHeaders(props: GenerateHeaders) {
                     defaultLockedHeaders.push(currStage?.displayName)
                     const defaultHeaders = [
                         {
-                            header: 'Ref',
+                            header: i18n.t('Ref'),
                             key: 'ref',
                             width: 5,
                         },
                         {
-                            header: 'School',
+                            header: i18n.t('School'),
                             key: 'school',
                             width: 8,
                         },
                         {
-                            header: 'Enrollment Date',
+                            header: i18n.t('Enrollment_Date'),
                             key: 'enrollmentDate',
                             width: 14
                         }

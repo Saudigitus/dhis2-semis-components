@@ -3,23 +3,30 @@ import { Button, IconAddCircle16 } from "@dhis2/ui";
 import styles from "./enrollmentDetails.module.css";
 import { useEnrollmentsHeader } from "../../../utils/table/useEnrollmentsHeader";
 import { useGetSectionTypeLabel } from "dhis2-semis-functions";
+import { TranslationState } from "../../../schemas/translationsSchema";
+import { useRecoilValue } from "recoil";
 
 function EnrollmentDetailsComponent(props: any): React.ReactElement {
   const { enrollmentsData, existingAcademicYear, onSelectTei, programConfig } = props;
   const { columns: dataElements } = useEnrollmentsHeader({ programConfig });
   const { sectionName } = useGetSectionTypeLabel();
+  const i18n = useRecoilValue(TranslationState) as any
 
   return (
     <div className={styles.details_container}>
       <div className={styles.details_header}>
         <div className={styles.details_header_title}>
-          <h6 style={{ fontSize: 13 }}>Enrollment History</h6>
+          <h6 style={{ fontSize: 13 }}>{i18n.t("Enrollment History")}</h6>
         </div>
         <div className={styles.details_header_button}>
           {existingAcademicYear ?
-            <i className={styles.enrolledAlertLabel}>This {sectionName} is already enrolled for this year.</i>
+            <i className={styles.enrolledAlertLabel}>
+              {i18n.t('This {{section}} is already enrolled for this year.', {
+                section: `${i18n.t(sectionName)}s`,
+              })}
+            </i>
             :
-            <Button {...{ small: true, success: "success", onClick: onSelectTei, label: "New enrollment", icon: <IconAddCircle16 /> }} />
+            <Button {...{ small: true, success: "success", onClick: onSelectTei, label: i18n.t("New enrollment"), icon: <IconAddCircle16 /> }} />
           }
         </div>
       </div>
@@ -35,7 +42,7 @@ function EnrollmentDetailsComponent(props: any): React.ReactElement {
                 </div>
               ))}
             </div>
-          )) : <span className="ml-1">No enrollments found.</span>
+          )) : <span className="ml-1">{i18n.t("No enrollments found.")}</span>
         }
       </div>
     </div>

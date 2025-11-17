@@ -5,6 +5,8 @@ import { format } from 'date-fns'
 import { useCheckFilters, useUrlParams } from 'dhis2-semis-functions';
 import { useGetFileName } from '../../../hooks/common/useGetFileName';
 import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey';
+import { TranslationState } from '../../../schemas/translationsSchema';
+import { useRecoilValue } from 'recoil';
 
 export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form }: { Form: any, onSubmit: (rows: any) => void, open: boolean, setOpen: (args: boolean) => void, module: "attendance" | "final-result" | "enrollment" | "performance" }) {
     const { urlParameters } = useUrlParams()
@@ -13,13 +15,14 @@ export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form
     const { getUrlParamsAsObject } = useCheckFilters({ filters: (filters?.dataElements ?? []) as unknown as any })
     const { getFileName } = useGetFileName()
     const fileName = getFileName(module)
+    const i18n = useRecoilValue(TranslationState) as any
 
     return (
         <ModalComponent
             open={open}
             size='large'
             handleClose={() => setOpen(false)}
-            title='Export Data Details'
+            title={i18n.t('Export Data Details')}
             children={
                 <CustomForm
                     storyBook={false}
@@ -36,9 +39,9 @@ export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form
                     withButtons={true}
                     formFields={[
                         {
-                            "name": "Details",
+                            "name": `${i18n.t("Details")}`,
                             "storyBook": false,
-                            "description": "This file will allow the import of new student data into the system.",
+                            "description": `${i18n.t("This file will allow the import of new student data into the system.")}`,
                             "fields": [
                                 ...exportFields(module, filters)
                             ]

@@ -5,6 +5,8 @@ import { DateRange } from 'react-date-range';
 import { format } from 'date-fns';
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import { TranslationState } from '../../../../schemas/translationsSchema';
+import { useRecoilValue } from 'recoil';
 
 interface DateRangePickerProps {
     name: string;
@@ -15,6 +17,7 @@ interface DateRangePickerProps {
 const DateRangePicker: React.FC<DateRangePickerProps> = ({ name, disabled, setChanged }) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [open, setOpen] = useState(false);
+    const i18n = useRecoilValue(TranslationState) as any
 
     return (
         <Field name={name}>
@@ -69,7 +72,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ name, disabled, setCh
 
                             <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '8px' }}>
                                 <Button onClick={() => setOpen(false)} color="primary">
-                                    CANCEL
+                                    {i18n.t('CANCEL')}
                                 </Button>
                                 <Button
                                     onClick={() => {

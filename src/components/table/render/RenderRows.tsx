@@ -22,6 +22,8 @@ import { VariablesTypes } from '../../../types/variables/AttributeColumns';
 import { CropOriginal } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
 import { breakpoints } from '../../../constants/breakpoints';
+import { useRecoilValue } from 'recoil';
+import { TranslationState } from '../../../schemas/translationsSchema';
 
 export const useStyles = () => {
     const theme = useTheme();
@@ -92,7 +94,8 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
     const { academicYear, sectionType, school } = urlParameters
     const { registration } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
     const [showEnrollments, setShowEnrollments] = useState<string>()
-    const { headerData, rowsData = [], pagination, searchActions, showRowIndex, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected,enableInactiveRowSelection } = props;
+    const { headerData, rowsData = [], pagination, searchActions, showRowIndex, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected, enableInactiveRowSelection } = props;
+    const i18n = useRecoilValue(TranslationState) as any
 
     const isSelected = (row: any): boolean => selected?.find((item: any) => deepEqual(item, row));
 
@@ -105,7 +108,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                     style={{ ...classes.cell, ...classes.bodyCell }}
                     colspan={headerData?.filter(x => x.visible)?.length as unknown as number + 1}
                 >
-                    {'No data to display'}
+                    {i18n.t('No data to display')}
                 </RowCell>
             </RowTable>
         );
@@ -200,7 +203,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                                     formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
                                                         <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity })} target='_blank'>
                                                             {row[column.id] &&
-                                                                <Tooltip title="Click to open in new tab" >
+                                                                <Tooltip title={i18n.t("Click to open in new tab")} >
                                                                     <IconButton> <CropOriginal /></IconButton>
                                                                 </Tooltip>
                                                             }

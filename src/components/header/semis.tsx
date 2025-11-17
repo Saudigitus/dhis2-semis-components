@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { DataProvider } from "@dhis2/app-runtime"
 import { ExtendedDynamicHeaderProps, OptionProps, SemisHeaderProps } from "../../types/header/headerTypes"
 import { MenuSelect } from './common/common'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { HeaderValuesState } from '../../schemas/headerDataSchema'
 import style from "./mainHeader.module.css"
 import { useUrlParams } from 'dhis2-semis-functions'
@@ -12,12 +12,16 @@ import OrgUnitTreeSearch from './components/orgUnitTreeSearch'
 import { getAcademicYearOptions, getOptionsByDataElement } from './utils/getOptions'
 import { schoolCalendarDataStoreRecord } from '../../types/dataStore/schoolCalendar'
 import { formatStringToLowerCase, formatStringToTitleCase } from "dhis2-semis-functions"
+import { TranslationState } from '../../schemas/translationsSchema'
 
 const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http://localhost:8080", schoolCalendar }: { headerItems?: SemisHeaderProps, program: any, schoolCalendar: schoolCalendarDataStoreRecord, dataStoreValues?: any, baseUrl?: string }) => {
     const hash = window.location.hash;
     const queryString = hash.split('?')[1];
     const searchParams = new URLSearchParams(queryString);
     const { otherItems = [], hideTree = false, hideDataStoreFilters = false, hideAcademicYear = false } = headerItems ?? {}
+    const i18n = useRecoilValue(TranslationState) as any
+
+
     const [dynamicItems = [], setDynamicItems] = useState<ExtendedDynamicHeaderProps[]>(
         [
             ...(otherItems?.map(item => ({
@@ -136,16 +140,16 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                                         setHeaderValues(prevState => ({ ...prevState, [item?.ulrParam]: { label: "", value: "" } }))
                                         remove(item?.ulrParam)
                                     }}
-                                    label={formatStringToTitleCase(item.label) ?? "No Label"}
+                                    label={formatStringToTitleCase(item.label) ?? i18n.t("No Label")}
                                     value={searchParams.get(item?.ulrParam) ? headerValues[item?.ulrParam]?.value : ""}
-                                    noValueMessage={item.placehoder ?? `Select a ${formatStringToLowerCase(item.label) ?? "item"}`}
+                                    noValueMessage={item.placehoder ?? `${i18n.t("Select a")} ${formatStringToLowerCase(item.label) ?? i18n.t("item")}`}
                                     open={item.open}
                                     setOpen={() => onOpenDynamicItems(item)}
                                 >
                                     <MenuSelect
                                         dataElelementId={item?.dataElement}
                                         program={item?.program ?? program}
-                                        placeholder={item.placehoder ?? `Search for a ${formatStringToLowerCase(item.label) ?? "item"}`}
+                                        placeholder={item.placehoder ?? `${i18n.t("Search for a")} ${formatStringToLowerCase(item.label) ?? i18n.t("item")}`}
                                         isSeachable={item?.isSeachable ?? true}
                                         values={[...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]}
                                         selected={headerValues?.[item?.ulrParam]?.value}
@@ -157,13 +161,13 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                     {
                         !hideAcademicYear &&
                         <SelectorBarItem
-                            label="Academic year"
+                            label={i18n.t("Academic year")}
                             value={academicYear ?? headerValues?.selectedAcademicYear?.value}
-                            noValueMessage="Select a academic year"
+                            noValueMessage={i18n.t("Select a academic year")}
                             open={openAcademicYear}
                             setOpen={() => setOpenAcademicYear(!openAcademicYear)}
                         >
-                            <MenuSelect dataElelementId={schoolCalendar?.academicYear} program={program} placeholder="Select a academic year" isSeachable={false} values={getAcademicYearOptions({ schoolCalendar, program })} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
+                            <MenuSelect dataElelementId={schoolCalendar?.academicYear} program={program} placeholder={i18n.t("Select a academic year")} isSeachable={false} values={getAcademicYearOptions({ schoolCalendar, program })} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
                         </SelectorBarItem>
                     }
                 </div>
@@ -184,8 +188,8 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                     })
 
                 }}
-                label="School"
-                noValueMessage="Select a school"
+                label={i18n.t("School")}
+                noValueMessage={i18n.t("Select a school")}
                 open={openOu}
                 setOpen={() => setOpenOu(!openOu)}
             >
@@ -202,16 +206,16 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                                 setHeaderValues(prevState => ({ ...prevState, [item?.ulrParam]: { label: "", value: "" } }))
                                 remove(item?.ulrParam)
                             }}
-                            label={formatStringToTitleCase(item.label) ?? "No Label"}
+                            label={formatStringToTitleCase(item.label) ?? i18n.t("No Label")}
                             value={searchParams.get(item?.ulrParam) ? headerValues[item?.ulrParam]?.value : ""}
-                            noValueMessage={item.placehoder ?? `Select a ${formatStringToLowerCase(item.label) ?? "item"}`}
+                            noValueMessage={item.placehoder ?? `${i18n.t("Select a")} ${formatStringToLowerCase(item.label) ?? i18n.t("item")}`}
                             open={item.open}
                             setOpen={() => onOpenDynamicItems(item)}
                         >
                             <MenuSelect
                                 dataElelementId={item?.dataElement}
                                 program={item?.program ?? program}
-                                placeholder={item.placehoder ?? `Search for a ${formatStringToLowerCase(item.label) ?? "item"}`}
+                                placeholder={item.placehoder ?? `${i18n.t("Search for a")} ${formatStringToLowerCase(item.label) ?? i18n.t("item")}`}
                                 isSeachable={item?.isSeachable ?? true}
                                 values={[...getOptionsByDataElement(item?.dataElement, item?.program ?? program), ...item?.options]}
                                 selected={headerValues?.[item?.ulrParam]?.value}
