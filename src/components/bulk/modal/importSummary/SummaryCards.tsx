@@ -24,7 +24,7 @@ function SummaryCards({ validRecs, invalidRecs, doneProcessing, stats, module }:
                 return soma
             }
         } else {
-            if (invalid) invalidRecs?.length || 0;
+            if (invalid) return invalidRecs?.length || 0;
             return validRecs?.length || 0;
         }
     }

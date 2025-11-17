@@ -23,7 +23,8 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
     async function postEnrollments(
         enrollments: any[], excelData: any, importMode: "VALIDATE" | "COMMIT", program: string, updating: boolean, dataStore: selectedDataStoreKey, orgUnit: string
     ) {
-        let copyData = [...enrollments], updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] }
+        let copyData = [...enrollments]
+        let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] }
         const updateProgress = updating ? 40 : 0
 
         if (updating) {
@@ -32,6 +33,7 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
             })
             const socioEconomicsStage = dataStore?.["socio-economics"]?.programStage
 
+            console.log(teis)
             for (let index = 0; index < teis.length; index++) {
                 if (socioEconomicsStage) {
                     await getEvents({
@@ -70,6 +72,9 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
                             events: []
                         }],
                         orgUnit: teis[index]?.orgUnit,
+                        ouMode: "SELECTED",
+                        programStage: dataStore["socio-economics"].programStage,
+                        fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
                         trackedEntity: teis[index]?.tei,
                         trackedEntityType: dataStore.trackedEntityType,
                         attributes: attributes
