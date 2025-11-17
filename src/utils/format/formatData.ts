@@ -25,7 +25,7 @@ export function attendanceFormater(events: AttendanceFormaterProps[], attendance
     const localData: RowsDataProps = {}
     let status: string = ""
 
-    for (const event of events) {
+    for (const event of events || []) {
         for (const dataValue of event?.dataValues) {
 
             if (attendanceConfig?.status === dataValue.dataElement) {
