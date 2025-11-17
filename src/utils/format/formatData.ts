@@ -6,7 +6,7 @@ import { selectedDataStoreKey } from "dhis2-semis-types"
 
 export function attributes(data: attributesProps[]): RowsDataProps {
     const localData: RowsDataProps = {}
-    for (const attribute of data) {
+    for (const attribute of data || []) {
         localData[attribute.attribute] = attribute.value
     }
     return localData
@@ -15,7 +15,7 @@ export function attributes(data: attributesProps[]): RowsDataProps {
 export function dataValues(data: DataValuesProps[], stageId: string): RowsDataProps {
     const localData: RowsDataProps = {}
 
-    for (const dataElement of data) {
+    for (const dataElement of data || []) {
         localData[`${stageId}.${dataElement.dataElement}`] = dataElement.value
     }
     return localData
@@ -26,7 +26,7 @@ export function attendanceFormater(events: AttendanceFormaterProps[], attendance
     let status: string = ""
 
     for (const event of events || []) {
-        for (const dataValue of event?.dataValues) {
+        for (const dataValue of event?.dataValues || []) {
 
             if (attendanceConfig?.status === dataValue.dataElement) {
                 status = dataValue.value
