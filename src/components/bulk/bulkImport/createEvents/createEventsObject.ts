@@ -37,7 +37,11 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
     let attendanceEvents: any = []
 
     for (const student of data) {
-        const { trackedEntity, ...rest } = student.Ids
+        //show errror if not provide a correct file to import attendance
+        if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.orgUnit) {
+            throw new Error('Import error: This operation requires a bulk update file containing (Tracked Entity Id, School UID). Please ensure you are using the bulk attendance file.');
+        }
+        const { trackedEntity, ...rest } = student?.Ids
 
         for (const programStage of programStages) {
             for (const key of Object.keys(student[programStage])) {
