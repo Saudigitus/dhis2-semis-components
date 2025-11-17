@@ -11,14 +11,14 @@ function SummaryCards({ validRecs, invalidRecs, doneProcessing, stats, module }:
         if (module === "attendance") {
             if (invalid) {
                 const soma = validRecs?.reduce((acc: number, item: any) => {
-                    return acc + Object.values(item?.Attendance).filter((v: string) => v?.length == 0).length;
+                    return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length == 0)?.length;
                 }, 0)
 
                 return soma + (invalidRecs?.length || 0);
             } else {
 
                 const soma = validRecs?.reduce((acc: number, item: any) => {
-                    return acc + Object.values(item?.Attendance).filter((v: string) => v?.length > 0 && v != "Non School Day").length;
+                    return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length > 0 && v != "Non School Day")?.length;
                 }, 0)
 
                 return soma
