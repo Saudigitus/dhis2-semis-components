@@ -144,3 +144,64 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
 
     return { enrollments }
 }
+
+// create a function to generateFinalResultData
+export function generateFinalResultData(
+    programStages: string[],
+    data: any,
+    programConfig: ProgramConfig
+) {
+    let finalResultEvents: any = []
+    let enrollmentUpdates: any = []
+
+    for (const student of data) {
+        // Ensure this is a bulk update with Ids provided (trackedEntity, enrollment, orgUnit)
+        if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.enrollment || !student?.Ids?.orgUnit) {
+            throw new Error('Import error: This operation requires a bulk update file containing (Enrollment, Tracked Entity Id, School UID). Please ensure you are using the bulk update template for final results.');
+        }
+
+        const { trackedEntity, enrollment, orgUnit, ...rest } = student.Ids
+        let isDropout = false
+
+        for (const programStage of programStages) {
+            let eventProperties: any = { dataValues: [], program: programConfig.id }
+            const programStageID = programConfig.programStages.find(x => x.displayName == programStage)?.id
+
+            for (const key of Object.keys(student[programStage] || {})) {
+                const value = student[programStage][key]
+                if (value) {
+                    eventProperties.dataValues.push({
+                        dataElement: key.split('.')[1],
+                        value: value
+                    })
+
+                    // Detect "Dropout" in any final-result value (case-insensitive)
+                    if (typeof value === 'string' && value.trim().toLowerCase() === 'dropout') {
+                        isDropout = true
+                    }
+                }
+            }
+
+            finalResultEvents.push({
+                trackedEntityInstance: trackedEntity,
+                ...rest,
+                ...eventProperties,
+                programStage: programStageID,
+                occurredAt: format(new Date(), 'yyyy-MM-dd')
+            })
+        }
+
+        // Build enrollment update payload (CANCELLED for dropout, COMPLETED otherwise)
+        enrollmentUpdates.push({
+            enrollment,
+            program: programConfig.id,
+            orgUnit,
+            status: isDropout ? 'CANCELLED' : 'COMPLETED',
+            trackedEntity,
+            occurredAt: format(new Date(), 'yyyy-MM-dd'),
+            events: finalResultEvents
+        })
+    }
+
+    return { enrollmentUpdates }
+}
