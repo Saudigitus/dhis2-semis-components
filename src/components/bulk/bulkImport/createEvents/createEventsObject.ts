@@ -166,7 +166,6 @@ export function generateFinalResultData(
         for (const programStage of programStages) {
             let eventProperties: any = { dataValues: [], program: programConfig.id }
             const programStageID = programConfig.programStages.find(x => x.displayName == programStage)?.id
-
             for (const key of Object.keys(student[programStage] || {})) {
                 const value = student[programStage][key]
                 if (value) {
@@ -195,6 +194,7 @@ export function generateFinalResultData(
         enrollmentUpdates.push({
             enrollment,
             program: programConfig.id,
+            enrolledAt: format(new Date(), 'yyyy-MM-dd'),
             orgUnit,
             status: isDropout ? 'CANCELLED' : 'COMPLETED',
             trackedEntity,

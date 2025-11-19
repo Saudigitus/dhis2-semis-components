@@ -94,7 +94,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
 
                     break
                 // create a switch to final result module, 
-                case Modules["final-result"]:
+                case Modules.Final_Result:
                     const { enrollmentUpdates } = generateFinalResultData(
                         displayNames,
                         studentsData,
@@ -102,7 +102,6 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     )
 
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
-                    console.log(enrollmentUpdates)
 
                     await postEnrollments(
                         enrollmentUpdates,
