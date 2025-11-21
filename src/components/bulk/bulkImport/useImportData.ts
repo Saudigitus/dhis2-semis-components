@@ -108,11 +108,10 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                         studentsData,
                         importMode,
                         programConfig?.id,
-                        true,
+                        updating,
                         selectedSectionDataStore as unknown as selectedDataStoreKey,
                         orgUnit as unknown as string
                     ).finally(() => closeDialog())
-
 
                     break;
 

@@ -71,13 +71,6 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
                             ...rest,
                             events: []
                         }],
-                        orgUnit: teis[index]?.orgUnit,
-                        ouMode: "SELECTED",
-                        programStage: dataStore["socio-economics"].programStage,
-                        fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
-                        trackedEntity: teis[index]?.tei,
-                        trackedEntityType: dataStore.trackedEntityType,
-                        attributes: attributes
                     }
                     updateProgressF(updateProgress + 5, updateProgress, teis.length)
                 }

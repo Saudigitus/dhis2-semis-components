@@ -151,10 +151,10 @@ export function generateFinalResultData(
     data: any,
     programConfig: ProgramConfig
 ) {
-    let finalResultEvents: any = []
     let enrollmentUpdates: any = []
 
     for (const student of data) {
+        let finalResultEvents: any = []
         // Ensure this is a bulk update with Ids provided (trackedEntity, enrollment, orgUnit)
         if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.enrollment || !student?.Ids?.orgUnit) {
             throw new Error('Import error: This operation requires a bulk update file containing (Enrollment, Tracked Entity Id, School UID). Please ensure you are using the bulk update template for final results.');
@@ -164,11 +164,13 @@ export function generateFinalResultData(
         let isDropout = false
 
         for (const programStage of programStages) {
+            let eventId = ""
             let eventProperties: any = { dataValues: [], program: programConfig.id }
             const programStageID = programConfig.programStages.find(x => x.displayName == programStage)?.id
             for (const key of Object.keys(student[programStage] || {})) {
                 const value = student[programStage][key]
                 if (value) {
+                    eventId = key.split('.')[0]
                     eventProperties.dataValues.push({
                         dataElement: key.split('.')[1],
                         value: value
@@ -182,6 +184,8 @@ export function generateFinalResultData(
             }
 
             finalResultEvents.push({
+                event: eventId,
+                orgUnit,
                 trackedEntityInstance: trackedEntity,
                 ...rest,
                 ...eventProperties,
