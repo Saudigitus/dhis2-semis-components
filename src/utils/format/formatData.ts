@@ -16,7 +16,7 @@ export function dataValues(data: DataValuesProps[], stageId: string, event?: str
     const localData: RowsDataProps = {}
 
     for (const dataElement of data || []) {
-        localData[`${stageId}.${dataElement.dataElement}.${event}`] = dataElement.value
+        localData[`${stageId}.${dataElement.dataElement}${event ? "." + event : ""}`] = dataElement.value
     }
     return localData
 }

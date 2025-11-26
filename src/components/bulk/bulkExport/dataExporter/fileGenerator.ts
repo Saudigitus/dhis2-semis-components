@@ -21,7 +21,7 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
         const { headers, rows, filters, metadata, module, empty, defaultLockedHeaders, fileName } = props
         const workSheets = { ...(module === Modules.Attendance ? separateByMonth(headers.find(x => x.name === 'Attendance').headers) : { [module]: module }) }
         const { validationHeaders, validationRows } = generateValidationSheet(filters)
-        const IdRegex = /^[a-zA-Z]+\.[a-zA-Z]+$/
+        const IdRegex = /^[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/
 
         let validationSheet = workbook.addWorksheet('Validation', { state: 'veryHidden' })
         validationSheet.columns = validationHeaders;
@@ -165,7 +165,7 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                                 find(x => x?.includes(cell._column._key))?.
                                 split('.')?.[2]
 
-                            cell.name = eventId
+                            if (eventId != undefined) cell.name = eventId
                         }
                     }
                 });
@@ -184,13 +184,13 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                 }
             });
 
-            // sheet.protect(password, lock);
+            sheet.protect(password, lock);
         })
 
         sheet = workbook.addWorksheet('Metadata')
         sheet.columns = metadataHeaders
-        // metadata.map((row: any) => sheet.addRow(row))
-        // sheet.protect(password, lock)
+        metadata.map((row: any) => sheet.addRow(row))
+        sheet.protect(password, lock)
 
         const buf = await workbook.xlsx.writeBuffer()
         saveAs(new Blob([buf]), fileName + ".xlsx")
