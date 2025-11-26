@@ -127,7 +127,7 @@ interface excelProps {
     rows: any[]
     filters: any
     fileName: string
-    metadata: any[]
+    metadata?: any[]
     module: string
     empty: boolean
     defaultLockedHeaders: string[]

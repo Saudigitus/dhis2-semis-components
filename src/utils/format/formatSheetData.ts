@@ -9,7 +9,7 @@ export function formatSheetData({ module, stageId, events, dataStore }: { module
     if (module == Modules.Attendance) {
         formatedValues = attendanceFormater(events, dataStore.attendance)
     } else {
-        formatedValues = dataValues(events?.[0]?.dataValues, stageId)
+        formatedValues = dataValues(events?.[0]?.dataValues, stageId, events?.[0]?.event)
     }
 
     return formatedValues

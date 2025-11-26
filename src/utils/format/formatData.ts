@@ -12,11 +12,11 @@ export function attributes(data: attributesProps[]): RowsDataProps {
     return localData
 }
 
-export function dataValues(data: DataValuesProps[], stageId: string): RowsDataProps {
+export function dataValues(data: DataValuesProps[], stageId: string, event?: string): RowsDataProps {
     const localData: RowsDataProps = {}
 
     for (const dataElement of data || []) {
-        localData[`${stageId}.${dataElement.dataElement}`] = dataElement.value
+        localData[`${stageId}.${dataElement.dataElement}.${event}`] = dataElement.value
     }
     return localData
 }

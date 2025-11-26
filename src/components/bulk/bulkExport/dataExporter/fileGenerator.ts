@@ -9,6 +9,7 @@ import { Modules } from 'dhis2-semis-types';
 import { generateValidationSheet } from '../../../../utils/common/generateValidationSheet';
 import { convertNumberToLetter } from '../../../../utils/common/convertNumberToLetter';
 import { SchoolCalendarType } from '../../../../types/dataStore/schoolCalendar';
+import { transformObjectKeys } from '../../../../utils/format/transformObjectKeys';
 
 export function generateFile({ unavailableDays, config }: { unavailableDays: (date: Date, config: SchoolCalendarType) => boolean, config: SchoolCalendarType }) {
     const password = '#saudigitus_SEMIS_Export#'
@@ -20,6 +21,7 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
         const { headers, rows, filters, metadata, module, empty, defaultLockedHeaders, fileName } = props
         const workSheets = { ...(module === Modules.Attendance ? separateByMonth(headers.find(x => x.name === 'Attendance').headers) : { [module]: module }) }
         const { validationHeaders, validationRows } = generateValidationSheet(filters)
+        const IdRegex = /^[a-zA-Z]+\.[a-zA-Z]+$/
 
         let validationSheet = workbook.addWorksheet('Validation', { state: 'veryHidden' })
         validationSheet.columns = validationHeaders;
@@ -32,7 +34,7 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
             sheet = workbook.addWorksheet(workSheet)
 
             headers.forEach(section => {
-                (section.name == 'Attendance' ? workSheets[workSheet] : section.headers).forEach((headerInfo: any) => {
+                (section.name == 'Attendance' ? workSheets[workSheet] : section.headers)?.forEach((headerInfo: any) => {
                     columns.push({
                         header: section.name,
                         key: headerInfo.key,
@@ -84,7 +86,8 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
             })
 
             rows.forEach(rowData => {
-                const { enrollmentStatus, ...rowContent } = rowData;
+                const transformedRow = transformObjectKeys(rowData)
+                const { enrollmentStatus, ...rowContent } = transformedRow;
                 sheet.addRow(rowContent);
             })
 
@@ -135,9 +138,9 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                 });
             });
 
-            if (module === Modules.Attendance)
-                sheet.eachRow({ includeEmpty: true }, (row: any) => {
-                    row.eachCell({ includeEmpty: true }, (cell: any) => {
+            sheet.eachRow({ includeEmpty: true }, (row: any) => {
+                row.eachCell({ includeEmpty: true }, (cell: any) => {
+                    if (module === Modules.Attendance) {
                         if (regex.test(cell._column._key) && cell._row._number > 3) {
                             if (unavailableDays != undefined && unavailableDays(new Date(cell._column._key), config)) {
 
@@ -153,8 +156,20 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                             cell.fill = { fgColor: { argb: 'f8f9fa' }, ...fill as unknown as any }
                             cell.border = border as unknown as any
                         }
-                    });
+                    }
+
+                    if (cell._row._number > 3) {
+                        if (IdRegex.test(cell._column._key)) {
+                            const obj = rows[cell._row._number - 4]
+                            const eventId = Object?.keys(obj)?.
+                                find(x => x?.includes(cell._column._key))?.
+                                split('.')?.[2]
+
+                            cell.name = eventId
+                        }
+                    }
                 });
+            });
 
             sheet.eachRow({ includeEmpty: true }, (row: any) => {
                 if (rowsToBlock.includes(row._number)) {
@@ -169,13 +184,13 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                 }
             });
 
-            sheet.protect(password, lock);
+            // sheet.protect(password, lock);
         })
 
         sheet = workbook.addWorksheet('Metadata')
         sheet.columns = metadataHeaders
-        metadata.map((row: any) => sheet.addRow(row))
-        sheet.protect(password, lock)
+        // metadata.map((row: any) => sheet.addRow(row))
+        // sheet.protect(password, lock)
 
         const buf = await workbook.xlsx.writeBuffer()
         saveAs(new Blob([buf]), fileName + ".xlsx")
