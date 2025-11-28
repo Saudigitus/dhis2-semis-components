@@ -10,8 +10,8 @@ import { TranslationState } from "../../../../schemas/translationsSchema";
 export function postValues({ setStats, setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { uploadValues } = useUploadEvents()
     const { getEvents } = useGetEvents()
-    let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] }
     const i18n = useRecoilValue(TranslationState) as any
+    let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] }
 
     function updateProgressF(buffer: number, progressParam: number, denominador: number) {
         setProgress((progress: any) => ({
@@ -46,7 +46,7 @@ export function postValues({ setStats, setProgress, onError, setOpenProgress }: 
                     const index = copyData.findIndex(x => x.enrollment === enrollment && x.programStage == stage)
                     copyData[index] = { ...copyData[index], ...(event ? { event: event } : {}) }
 
-                    updateProgressF(50, 45, excelData.mapping.length * programStages.length)
+                    updateProgressF(20, 17, excelData.mapping.length * programStages.length)
                 }).catch((error) => {
                     setOpenProgress(false)
                     onError(error)
@@ -59,7 +59,7 @@ export function postValues({ setStats, setProgress, onError, setOpenProgress }: 
         for (const chunk of chunks) {
             await uploadValues({ events: chunk }, importMode, importStrategy.CREATE).then((response) => {
                 updatedStats = importSummary(response, updatedStats)
-                updateProgressF(50, 40, chunks.length)
+                updateProgressF(20, 13, chunks.length)
             }).catch((error) => {
                 updatedStats = { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message }] }
                 setOpenProgress(false)

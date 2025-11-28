@@ -93,8 +93,9 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     ).finally(() => closeDialog())
 
                     break
-                // create a switch to final result module, 
-                case Modules.Final_Result:
+
+                case Modules.Final_Result: {
+                    const { events } = generateEventObjects(displayNames, studentsData, programConfig)
                     const { enrollmentUpdates } = generateFinalResultData(
                         displayNames,
                         studentsData,
@@ -103,16 +104,19 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
 
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
+                    await postData(events, excelData, importMode, programConfig, programStages).finally(() => closeDialog())
+
                     await postEnrollments(
                         enrollmentUpdates,
                         studentsData,
                         importMode,
                         programConfig?.id,
-                        updating,
+                        true,
                         selectedSectionDataStore as unknown as selectedDataStoreKey,
-                        orgUnit as unknown as string
+                        orgUnit as unknown as string,
+                        true
                     ).finally(() => closeDialog())
-
+                }
                     break;
 
                 default:
