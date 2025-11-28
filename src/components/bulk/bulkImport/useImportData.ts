@@ -1,6 +1,6 @@
 import { excelData, importData } from "../../../types/bulk/bulkOperations";
 import { selectedDataStoreKey, Modules } from 'dhis2-semis-types';
-import { generateAttendanceEventObjects, generateEnrollmentData, generateEventObjects } from "./createEvents/createEventsObject";
+import { generateAttendanceEventObjects, generateEnrollmentData, generateEventObjects, generateFinalResultData } from "./createEvents/createEventsObject";
 import { postAttendanceValues } from "./postEvents/postAttendance";
 import { postEnrollmentData } from "./postEvents/postEnrollment";
 import { postValues } from "./postEvents/postEvents";
@@ -93,6 +93,31 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     ).finally(() => closeDialog())
 
                     break
+
+                case Modules.Final_Result: {
+                    const { events } = generateEventObjects(displayNames, studentsData, programConfig)
+                    const { enrollmentUpdates } = generateFinalResultData(
+                        displayNames,
+                        studentsData,
+                        programConfig
+                    )
+
+                    setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
+
+                    await postData(events, excelData, importMode, programConfig, programStages).finally(() => closeDialog())
+
+                    await postEnrollments(
+                        enrollmentUpdates,
+                        studentsData,
+                        importMode,
+                        programConfig?.id,
+                        true,
+                        selectedSectionDataStore as unknown as selectedDataStoreKey,
+                        orgUnit as unknown as string,
+                        true
+                    ).finally(() => closeDialog())
+                }
+                    break;
 
                 default:
                     const { events } = generateEventObjects(displayNames, studentsData, programConfig)

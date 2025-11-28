@@ -21,11 +21,12 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
     }
 
     async function postEnrollments(
-        enrollments: any[], excelData: any, importMode: "VALIDATE" | "COMMIT", program: string, updating: boolean, dataStore: selectedDataStoreKey, orgUnit: string
+        enrollments: any[], excelData: any, importMode: "VALIDATE" | "COMMIT", program: string,
+        updating: boolean, dataStore: selectedDataStoreKey, orgUnit: string, updatingFR = false
     ) {
         let copyData = [...enrollments]
         let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] }
-        const updateProgress = updating ? 40 : 0
+        const updateProgress = (updating || updatingFR) ? 40 : 0
 
         if (updating) {
             const teis = excelData.map((x: any) => {
@@ -33,9 +34,8 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
             })
             const socioEconomicsStage = dataStore?.["socio-economics"]?.programStage
 
-            console.log(teis)
             for (let index = 0; index < teis.length; index++) {
-                if (socioEconomicsStage) {
+                if (socioEconomicsStage && !updatingFR) {
                     await getEvents({
                         program,
                         orgUnit: teis[index]?.orgUnit,
@@ -66,19 +66,9 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
                     })
                 } else {
                     const { attributes, ...rest } = copyData[index]
-                    copyData[index] = {
-                        enrollments: [{
-                            ...rest,
-                            events: []
-                        }],
-                        orgUnit: teis[index]?.orgUnit,
-                        ouMode: "SELECTED",
-                        programStage: dataStore["socio-economics"].programStage,
-                        fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
-                        trackedEntity: teis[index]?.tei,
-                        trackedEntityType: dataStore.trackedEntityType,
-                        attributes: attributes
-                    }
+                    copyData[index] = updatingFR ? { ...rest, events: [] } :
+                        { enrollments: [{ ...rest, events: [] }] }
+
                     updateProgressF(updateProgress + 5, updateProgress, teis.length)
                 }
             }
@@ -99,11 +89,11 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
         const chunks = splitArrayIntoChunks(copyData, 50);
 
         for (const chunk of chunks) {
-            await uploadValues({ trackedEntities: chunk }, importMode, importStrategy.CREATE).then((response) => {
+            await uploadValues((updatingFR ? { enrollments: chunk } : { trackedEntities: chunk }), importMode, importStrategy.CREATE).then((response: any) => {
                 updatedStats = importSummary(response, updatedStats)
                 updateProgressF((90 + 5 - updateProgress), (90 - updateProgress), chunks.length)
-            }).catch((error) => {
-                updatedStats = { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message }]  }
+            }).catch((error: any) => {
+                updatedStats = { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message }] }
                 setOpenProgress(false);
                 onError(error);
             });

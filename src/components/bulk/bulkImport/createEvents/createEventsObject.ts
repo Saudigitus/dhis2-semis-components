@@ -37,7 +37,11 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
     let attendanceEvents: any = []
 
     for (const student of data) {
-        const { trackedEntity, ...rest } = student.Ids
+        //show errror if not provide a correct file to import attendance
+        if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.orgUnit) {
+            throw new Error('Import error: This operation requires a bulk update file containing (Tracked Entity Id, School UID). Please ensure you are using the bulk attendance file.');
+        }
+        const { trackedEntity, ...rest } = student?.Ids
 
         for (const programStage of programStages) {
             for (const key of Object.keys(student[programStage])) {
@@ -139,4 +143,48 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
     }
 
     return { enrollments }
+}
+
+// create a function to generateFinalResultData
+export function generateFinalResultData(
+    programStages: string[],
+    data: any,
+    programConfig: ProgramConfig
+) {
+    let enrollmentUpdates: any = []
+
+    for (const student of data) {
+        // Ensure this is a bulk update with Ids provided (trackedEntity, enrollment, orgUnit)
+        if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.enrollment || !student?.Ids?.orgUnit) {
+            throw new Error('Import error: This operation requires a bulk update file containing (Enrollment, Tracked Entity Id, School UID). Please ensure you are using the bulk update template for final results.');
+        }
+
+        const { trackedEntity, enrollment, orgUnit } = student.Ids
+        let isDropout = false
+
+        for (const programStage of programStages) {
+            for (const key of Object.keys(student[programStage] || {})) {
+                const value = student[programStage][key]
+                if (value) {
+                    // Detect "Dropout" in any final-result value (case-insensitive)
+                    if (typeof value === 'string' && value.trim().toLowerCase() === 'dropout') {
+                        isDropout = true
+                    }
+                }
+            }
+        }
+
+        // Build enrollment update payload (CANCELLED for dropout, COMPLETED otherwise)
+        enrollmentUpdates.push({
+            enrollment,
+            program: programConfig.id,
+            enrolledAt: format(new Date(), 'yyyy-MM-dd'),
+            orgUnit,
+            status: isDropout ? 'CANCELLED' : 'COMPLETED',
+            trackedEntity,
+            occurredAt: format(new Date(), 'yyyy-MM-dd'),
+        })
+    }
+
+    return { enrollmentUpdates }
 }
