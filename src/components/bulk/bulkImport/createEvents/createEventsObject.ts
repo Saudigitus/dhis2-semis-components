@@ -149,7 +149,8 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
 export function generateFinalResultData(
     programStages: string[],
     data: any,
-    programConfig: ProgramConfig
+    programConfig: ProgramConfig,
+    dataStore: any
 ) {
     let enrollmentUpdates: any = []
 
@@ -167,7 +168,7 @@ export function generateFinalResultData(
                 const value = student[programStage][key]
                 if (value) {
                     // Detect "Dropout" in any final-result value (case-insensitive)
-                    if (typeof value === 'string' && value.trim().toLowerCase() === 'dropout') {
+                    if (typeof value === 'string' && dataStore?.finalResult?.dropoutStatusValues?.includes(value)) {
                         isDropout = true
                     }
                 }

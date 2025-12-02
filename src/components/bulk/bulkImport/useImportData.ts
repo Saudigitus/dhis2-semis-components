@@ -99,7 +99,8 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     const { enrollmentUpdates } = generateFinalResultData(
                         displayNames,
                         studentsData,
-                        programConfig
+                        programConfig,
+                        selectedSectionDataStore
                     )
 
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
