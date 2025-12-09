@@ -189,7 +189,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
                                 style={{ ...classes.row, ...classes.dataRow, ...((searchActions && showEnrollments) ? classes.dataRowCollapsed : {}) }}
                             >
-                                {renderRowCheckBox({ row, disabled: checkCanceled(row.status) })}
+                                {renderRowCheckBox({ row, disabled: (checkCanceled(row.status) && !enableInactiveRowSelection) })}
                                 {renderRowIndex({ index })}
                                 {
                                     headerData?.filter((x: any) => x.visible)?.map((column: any) => (
