@@ -59,33 +59,44 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
     const classes = useStyles()
     const i18n = useRecoilValue(TranslationState) as any
 
-    const headerCells = rowsHeader?.filter(x => x.visible)?.map((column) => (
-        <HeaderCell
-            key={column.id}
-            style={{ ...classes.cell, ...classes.headerCell }}
-        >
-            {
-                sortable ?
-                    <SortLabel
-                        active={orderBy === column.id}
-                        direction={orderBy === column.id ? order : 'asc'}
-                        createSortHandler={createSortHandler ? createSortHandler(column.id) : undefined}
-                        className={classNames(classes.cell, classes.headerCell)}
-                    >
-                        {column.displayName}
-                        {orderBy === column.id
-                            ? (
-                                <span style={classes.visuallyHidden as React.CSSProperties}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                </span>
-                            )
-                            : null}
-                    </SortLabel>
-                    :
-                    column.displayName
-            }
-        </HeaderCell>
-    ))
+    // Helper to get header text color with fallback
+    const getHeaderColor = (column: any) => {
+        // Option 1: column.color (if you store it directly)
+        // Option 2: fallback to theme
+        return column?.color || classes.headerCell.color; // this will be theme.palette.text.secondary
+    };
+
+    const headerCells = rowsHeader?.filter(x => x.visible)?.map((column) => {
+        const headerColor = getHeaderColor(column);
+
+        return (
+            <HeaderCell
+                key={column.id}
+                style={{ ...classes.cell, ...classes.headerCell, color: headerColor }}
+            >
+                {
+                    sortable ?
+                        <SortLabel
+                            active={orderBy === column.id}
+                            direction={orderBy === column.id ? order : 'asc'}
+                            createSortHandler={createSortHandler ? createSortHandler(column.id) : undefined}
+                            className={classNames(classes.cell, classes.headerCell)}
+                        >
+                            {column.displayName}
+                            {orderBy === column.id
+                                ? (
+                                    <span style={classes.visuallyHidden as React.CSSProperties}>
+                                        {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                    </span>
+                                )
+                                : null}
+                        </SortLabel>
+                        :
+                        column.displayName
+                }
+            </HeaderCell>
+        )
+    })
 
     return (
         <thead>
