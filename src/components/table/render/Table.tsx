@@ -97,10 +97,11 @@ function Table(props: TableRenderProps): React.ReactElement {
 
     const classes = useStyles()
     const [filteredHeaders, setFilteredHeaders] = useState<CustomAttributeProps[]>([])
-    const onPageChange = (newPage: number) => setPagination({ ...pagination, page: newPage })
     const filtered = enableInactiveRowSelection ? tableData : tableData.filter(x => !checkCanceled(x.status))
 
-    const onRowsPerPageChange = (event: any) => setPagination({ ...pagination, pageSize: parseInt(event.value, 10) })
+    const onPageChange = (newPage: number) => setPagination({ ...pagination, page: newPage })
+
+    const onRowsPerPageChange = (event: any) => setPagination({ ...pagination, pageSize: parseInt(event.value, 10), page: 1 })
 
     const onCheckboxChange = (row: any, all?: boolean) => {
         if (all) {
