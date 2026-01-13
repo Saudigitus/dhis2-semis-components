@@ -37,7 +37,6 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
     let attendanceEvents: any = []
 
     for (const student of data) {
-        //show errror if not provide a correct file to import attendance
         if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.orgUnit) {
             throw new Error('Import error: This operation requires a bulk update file containing (Tracked Entity Id, School UID). Please ensure you are using the bulk attendance file.');
         }
@@ -79,57 +78,39 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
         }
         let events: any = [], att: any = [], enrollmentDate: any = null
 
-        // First pass: extract enrollment date from all stages
         for (const stage of programStages) {
             if (student[stage.name] && student[stage.name]['enrollmentDate']) {
                 enrollmentDate = student[stage.name]['enrollmentDate']
-                break; // Use the first enrollment date found
+                break;
             }
         }
 
-        // Parse and validate enrollment date before creating events
         let enrolledAtDate = format(new Date(), 'yyyy-MM-dd')
-        console.log('🔍 Before parsing - enrollmentDate:', enrollmentDate, 'Type:', typeof enrollmentDate)
 
         if (enrollmentDate) {
             try {
-                // Handle different date formats from Excel
                 let parsedDate: Date
 
-                // Check if it's already in YYYY-MM-DD format
                 if (typeof enrollmentDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(enrollmentDate)) {
                     parsedDate = new Date(enrollmentDate)
-                    console.log('✅ Parsed as YYYY-MM-DD string:', parsedDate)
                 }
-                // Handle Excel serial date number (days since 1900-01-01)
                 else if (typeof enrollmentDate === 'number') {
-                    // Excel date serial number conversion
                     const excelEpoch = new Date(1899, 11, 30) // Excel's epoch is 1899-12-30
                     parsedDate = new Date(excelEpoch.getTime() + enrollmentDate * 24 * 60 * 60 * 1000)
-                    console.log('✅ Parsed as Excel serial number:', parsedDate)
                 }
-                // Try parsing as regular date string
                 else {
                     parsedDate = new Date(enrollmentDate)
-                    console.log('✅ Parsed as date string:', parsedDate)
                 }
 
-                // Validate the parsed date
                 if (!isNaN(parsedDate.getTime())) {
                     enrolledAtDate = format(parsedDate, 'yyyy-MM-dd')
-                    console.log('✅ Final enrolledAt date:', enrolledAtDate)
                 } else {
-                    console.warn('⚠️ Invalid date after parsing:', parsedDate)
                 }
             } catch (error) {
-                console.warn('❌ Failed to parse enrollment date:', enrollmentDate, error)
-                // Fall back to current date
+
             }
-        } else {
-            console.log('⚠️ No enrollment date found, using current date')
         }
 
-        // Now create events with the parsed enrollment date
         for (const stage of programStages) {
             let dataValues: any = []
 
@@ -192,7 +173,6 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
     return { enrollments }
 }
 
-// create a function to generateFinalResultData
 export function generateFinalResultData(
     programStages: string[],
     data: any,
@@ -202,7 +182,6 @@ export function generateFinalResultData(
     let enrollmentUpdates: any = []
 
     for (const student of data) {
-        // Ensure this is a bulk update with Ids provided (trackedEntity, enrollment, orgUnit)
         if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.enrollment || !student?.Ids?.orgUnit) {
             throw new Error('Import error: This operation requires a bulk update file containing (Enrollment, Tracked Entity Id, School UID). Please ensure you are using the bulk update template for final results.');
         }
@@ -214,7 +193,6 @@ export function generateFinalResultData(
             for (const key of Object.keys(student[programStage] || {})) {
                 const value = student[programStage][key]
                 if (value) {
-                    // Detect "Dropout" in any final-result value (case-insensitive)
                     if (typeof value === 'string' && dataStore?.finalResult?.dropoutStatusValues?.includes(value)) {
                         isDropout = true
                     }
@@ -222,7 +200,6 @@ export function generateFinalResultData(
             }
         }
 
-        // Build enrollment update payload (CANCELLED for dropout, COMPLETED otherwise)
         enrollmentUpdates.push({
             enrollment,
             program: programConfig.id,
