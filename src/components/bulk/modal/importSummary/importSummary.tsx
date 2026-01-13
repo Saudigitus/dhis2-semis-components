@@ -123,17 +123,8 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             <WithPadding />
             <Collapse in={showDetails}>
                 <div className={styles.detailsContainer}>
-                    {((doneProcessing?.commit || doneProcessing?.validate) && stats?.byType?.length > 0) &&
-                        <>
-                            <WithPadding />
-                            <Title style={{ fontSize: "18px" }} label={`${i18n.t("Summary by tracker type")}`} type="subtitle" />
-                            <WithPadding />
-                            <ErrorDetailsTable data={stats?.byType} />
-                            <WithPadding />
-                        </>
-                    }
                     {
-                        ((stats?.stats?.ignored ?? 0) + invalidRecords?.length + ((doneProcessing?.commit || doneProcessing?.validate) ? 0 : validRecords?.length)) > 0 &&
+                        (validRecords?.length + invalidRecords?.length + (stats?.stats?.ignored ?? 0)) > 0 &&
                         <>
                             <WithPadding p="0px 0 -50px 0" />
                             <SummaryDetails stats={stats} programConfig={programConfig} doneProcessing={doneProcessing?.commit || doneProcessing?.validate} invalidRecords={invalidRecords} validRecords={validRecords} />
