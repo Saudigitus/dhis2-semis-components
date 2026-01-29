@@ -31,10 +31,13 @@ const useSetupDataStore = (
 
         //TRY TO GET CONFIG DATASTORE
         return await getDataStore(dataStoreKey).then(async (configs) => {
+
             let programs: any = []
             for (let i = 0; i < configs?.length; i++) {
-                const result = await getProgram(configs?.[i].program) as any
-                programs.push(applyProgramTranslations(result, userinfo?.settings?.keyDbLocale || "en"))
+                if (configs?.[i].program) {
+                    const result = await getProgram(configs?.[i].program) as any
+                    programs.push(applyProgramTranslations(result, userinfo?.settings?.keyDbLocale || "en"))
+                }
             }
             setProgramsValues(programs);
             setDataStoreValues(configs)
@@ -52,11 +55,11 @@ const useSetupDataStore = (
                     not_found_calendar: false,
                     not_found_config: false
                 })
-            }).catch(() => {
+            }).catch((err) => {
             }).finally(() => {
                 setLoading(false)
             })
-        }).catch(() => {
+        }).catch((err) => {
             setLoading(false)
         })
     }
