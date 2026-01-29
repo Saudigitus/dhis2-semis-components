@@ -21,7 +21,7 @@ export function generateHeaders(props: GenerateHeaders) {
     const i18n = useRecoilValue(TranslationState) as any
 
     function getHeaders(startDate: string, endDate: string) {
-        let formatedHeaders: any[] = [], toGenerate: any[] = []
+        let formatedHeaders: any[] = [], attributesToGenerate: Array<{ attributeID: string, pattern: string }> = []
         const Profile = (sectionType ?? '').substring(0, 1).toUpperCase() + (sectionType ?? '').substring(1, (sectionType ?? '').length) + ' profile'
         let defaultLockedHeaders: any = [...(module != Modules.Enrollment ? [Profile] : []), "Ids"], filters: any = {}, att = [];
         const socioEconomicsStage = selectedSectionDataStore?.["socio-economics"]?.programStage
@@ -120,7 +120,7 @@ export function generateHeaders(props: GenerateHeaders) {
             }
 
             if (x.trackedEntityAttribute.generated) {
-                toGenerate.push(x.trackedEntityAttribute.id);
+                attributesToGenerate.push({ attributeID: x.trackedEntityAttribute.id, pattern: x.trackedEntityAttribute.pattern });
                 module == Modules.Enrollment && defaultLockedHeaders.push(x.trackedEntityAttribute.id);
             }
 
@@ -142,7 +142,7 @@ export function generateHeaders(props: GenerateHeaders) {
                 headers: dfHeaders
             })
 
-        return { formatedHeaders, filters, toGenerate, defaultLockedHeaders }
+        return { formatedHeaders, filters, attributesToGenerate, defaultLockedHeaders }
     }
 
     return { getHeaders }
