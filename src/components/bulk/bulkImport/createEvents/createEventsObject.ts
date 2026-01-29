@@ -37,7 +37,6 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
     let attendanceEvents: any = []
 
     for (const student of data) {
-        //show errror if not provide a correct file to import attendance
         if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.orgUnit) {
             throw new Error('Import error: This operation requires a bulk update file containing (Tracked Entity Id, School UID). Please ensure you are using the bulk attendance file.');
         }
@@ -80,6 +79,39 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
         let events: any = [], att: any = [], enrollmentDate: any = null
 
         for (const stage of programStages) {
+            if (student[stage.name] && student[stage.name]['enrollmentDate']) {
+                enrollmentDate = student[stage.name]['enrollmentDate']
+                break;
+            }
+        }
+
+        let enrolledAtDate = format(new Date(), 'yyyy-MM-dd')
+
+        if (enrollmentDate) {
+            try {
+                let parsedDate: Date
+
+                if (typeof enrollmentDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(enrollmentDate)) {
+                    parsedDate = new Date(enrollmentDate)
+                }
+                else if (typeof enrollmentDate === 'number') {
+                    const excelEpoch = new Date(1899, 11, 30) // Excel's epoch is 1899-12-30
+                    parsedDate = new Date(excelEpoch.getTime() + enrollmentDate * 24 * 60 * 60 * 1000)
+                }
+                else {
+                    parsedDate = new Date(enrollmentDate)
+                }
+
+                if (!isNaN(parsedDate.getTime())) {
+                    enrolledAtDate = format(parsedDate, 'yyyy-MM-dd')
+                } else {
+                }
+            } catch (error) {
+
+            }
+        }
+
+        for (const stage of programStages) {
             let dataValues: any = []
 
             if (
@@ -89,18 +121,14 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
             ) {
                 if (student[stage.name]) {
                     for (const key of Object.keys(student[stage.name])) {
-                        if (student[stage.name][key] && key.split('.')[1] || key === 'enrollmentDate') {
-                            if (key === 'enrollmentDate') {
-                                enrollmentDate = student[stage.name]['enrollmentDate']
-                            } else {
-                                dataValues = [
-                                    ...dataValues,
-                                    {
-                                        dataElement: key.split(".")[1],
-                                        value: student[stage.name][key]
-                                    }
-                                ]
-                            }
+                        if (student[stage.name][key] && key.split('.')[1]) {
+                            dataValues = [
+                                ...dataValues,
+                                {
+                                    dataElement: key.split(".")[1],
+                                    value: student[stage.name][key]
+                                }
+                            ]
                         }
                     }
                 }
@@ -110,7 +138,7 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
                     orgUnit: orgUnit,
                     dataValues: dataValues,
                     status: "ACTIVE",
-                    occurredAt: format(new Date(), 'yyyy-MM-dd'),
+                    occurredAt: enrolledAtDate,
                     programStage: stage.id,
                     ...(updating ? { trackedEntity: student?.Ids?.trackedEntity } : {})
                 })
@@ -136,8 +164,8 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
             orgUnit: orgUnit,
             status: "COMPLETED",
             attributes: att,
-            occurredAt: format(new Date(), 'yyyy-MM-dd'),
-            enrolledAt: format(new Date(enrollmentDate), 'yyyy-MM-dd'),
+            occurredAt: enrolledAtDate,
+            enrolledAt: enrolledAtDate,
             ...(updating ? { enrollment: student.Ids.enrollment } : {})
         })
     }
@@ -145,7 +173,6 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
     return { enrollments }
 }
 
-// create a function to generateFinalResultData
 export function generateFinalResultData(
     programStages: string[],
     data: any,
@@ -155,7 +182,6 @@ export function generateFinalResultData(
     let enrollmentUpdates: any = []
 
     for (const student of data) {
-        // Ensure this is a bulk update with Ids provided (trackedEntity, enrollment, orgUnit)
         if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.enrollment || !student?.Ids?.orgUnit) {
             throw new Error('Import error: This operation requires a bulk update file containing (Enrollment, Tracked Entity Id, School UID). Please ensure you are using the bulk update template for final results.');
         }
@@ -167,7 +193,6 @@ export function generateFinalResultData(
             for (const key of Object.keys(student[programStage] || {})) {
                 const value = student[programStage][key]
                 if (value) {
-                    // Detect "Dropout" in any final-result value (case-insensitive)
                     if (typeof value === 'string' && dataStore?.finalResult?.dropoutStatusValues?.includes(value)) {
                         isDropout = true
                     }
@@ -175,7 +200,6 @@ export function generateFinalResultData(
             }
         }
 
-        // Build enrollment update payload (CANCELLED for dropout, COMPLETED otherwise)
         enrollmentUpdates.push({
             enrollment,
             program: programConfig.id,

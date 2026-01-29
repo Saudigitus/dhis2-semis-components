@@ -119,7 +119,7 @@ export function generateHeaders(props: GenerateHeaders) {
                 filters[x.trackedEntityAttribute.id] = getFilterLables(x.trackedEntityAttribute.optionSet.options);
             }
 
-            if (x.trackedEntityAttribute.generated || x.trackedEntityAttribute.unique) {
+            if (x.trackedEntityAttribute.generated) {
                 attributesToGenerate.push({ attributeID: x.trackedEntityAttribute.id, pattern: x.trackedEntityAttribute.pattern });
                 module == Modules.Enrollment && defaultLockedHeaders.push(x.trackedEntityAttribute.id);
             }
