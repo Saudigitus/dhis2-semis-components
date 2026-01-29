@@ -54,7 +54,7 @@ export function useExportData(props: ExportData) {
             } else {
                 setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
                 let data: any = []
-                const { filters, formatedHeaders, toGenerate, defaultLockedHeaders } = getHeaders(startDate, endDate)
+                const { filters, formatedHeaders, attributesToGenerate, defaultLockedHeaders } = getHeaders(startDate, endDate)
                 const metadata = getMetaData(programConfig, stagesToExport)
 
                 if (!empty) data = await getData()
@@ -103,11 +103,17 @@ export function useExportData(props: ExportData) {
                 } else if (empty && module == Modules.Enrollment) {
                     let ids: any = {}
 
-                    for (const idToGenerate of toGenerate) {
-                        await generate(numberOfEmptyRows, idToGenerate).then((generatedIds: any) => {
-                            ids[idToGenerate] = generatedIds?.result?.map((x: any) => x.value)
+                    for (const attr of attributesToGenerate) {
+                        await generate({
+                            studentsNumber: numberOfEmptyRows,
+                            attributeID: attr?.attributeID,
+                            pattern: attr?.pattern,
+                            orgUnitId: orgUnit,
+                            onError: () => onError(`Export error: Occurred error wihile generating ids for attribute ${attr?.attributeID}`)
+                        }).then((generatedIds: any) => {
+                            ids[attr.attributeID] = generatedIds?.result?.map((x: any) => x.value)
                         })
-                            .then(() => setProgress((progress: any) => ({ ...progress, progress: 80 / toGenerate.length, buffer: 82 / toGenerate.length })))
+                            .then(() => setProgress((progress: any) => ({ ...progress, progress: 80 / attributesToGenerate.length, buffer: 82 / attributesToGenerate.length })))
                             .catch((error) => {
                                 onError(`Export error: ${error}`)
                                 setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
