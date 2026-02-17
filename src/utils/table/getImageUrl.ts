@@ -3,8 +3,8 @@ import { useConfig } from "@dhis2/app-service-config"
 export const GetImageUrl = () => {
     const { baseUrl } = useConfig()
 
-    function imageUrl({ trackedEntity, attribute }: { attribute: string, trackedEntity: string }) {
-        return `${baseUrl}/api/trackedEntityInstances/${trackedEntity}/${attribute}/image?dimension=MEDIUM`
+    function imageUrl({ trackedEntity, attribute, program }: { attribute: string, trackedEntity: string, program: string }) {
+        return `${baseUrl}/api/tracker/trackedEntities/${trackedEntity}/attributes/${attribute}/image?program=${program}&dimension=MEDIUM`
     }
 
     return {

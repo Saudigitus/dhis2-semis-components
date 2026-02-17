@@ -201,7 +201,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                             {
                                                 column.type === VariablesTypes.Custom ? row[column.id] :
                                                     formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
-                                                        <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity })} target='_blank'>
+                                                        <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity, program: programConfig.id })} target='_blank'>
                                                             {row[column.id] &&
                                                                 <Tooltip title={i18n.t("Click to open in new tab")} >
                                                                     <IconButton> <CropOriginal /></IconButton>
