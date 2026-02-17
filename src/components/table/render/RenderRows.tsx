@@ -24,6 +24,7 @@ import { useTheme } from '@mui/material/styles';
 import { breakpoints } from '../../../constants/breakpoints';
 import { useRecoilValue } from 'recoil';
 import { TranslationState } from '../../../schemas/translationsSchema';
+import { useConfig } from '@dhis2/app-runtime';
 
 export const useStyles = () => {
     const theme = useTheme();
@@ -88,6 +89,7 @@ export const useStyles = () => {
 
 
 function RenderRows(props: RenderRowsProps): React.ReactElement {
+    const config = useConfig()
     const classes = useStyles()
     const { imageUrl } = GetImageUrl()
     const { urlParameters } = useUrlParams()
@@ -201,7 +203,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                             {
                                                 column.type === VariablesTypes.Custom ? row[column.id] :
                                                     formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
-                                                        <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity })} target='_blank'>
+                                                        <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity, program: programConfig.id , apiVersion: config.apiVersion })} target='_blank'>
                                                             {row[column.id] &&
                                                                 <Tooltip title={i18n.t("Click to open in new tab")} >
                                                                     <IconButton> <CropOriginal /></IconButton>
