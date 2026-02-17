@@ -63,7 +63,7 @@ function ImageField(props: CombinedProps) {
     }
 
     useEffect(() => {
-        if (input.value && !uploadedImage && !storyBook) {
+        if (input.value && typeof input.value === "string" && !uploadedImage && !storyBook) {
             getImage()
         }
     }, [input.value])
