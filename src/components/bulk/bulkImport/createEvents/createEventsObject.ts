@@ -21,7 +21,7 @@ export function generateEventObjects(programStages: string[], data: any, program
             }
 
             events.push({
-                trackedEntityInstance: trackedEntity,
+                trackedEntity: trackedEntity,
                 ...rest,
                 ...eventProperties,
                 programStage: programStageID,
