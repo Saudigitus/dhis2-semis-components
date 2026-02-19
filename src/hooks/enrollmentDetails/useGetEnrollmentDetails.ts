@@ -1,7 +1,7 @@
+import { format } from 'date-fns';
+import { Modules } from 'dhis2-semis-types';
 import { ExportData } from '../../types/bulk/bulkOperations';
 import { attributes, dataValues } from '../../utils/format/formatData';
-import { Modules } from 'dhis2-semis-types';
-import { format } from 'date-fns';
 import { useGetEvents, useGetTeis, useUrlParams } from "dhis2-semis-functions";
 
 export function useGetEnrollmentData(props: ExportData) {
@@ -13,10 +13,10 @@ export function useGetEnrollmentData(props: ExportData) {
 
     const getEnrollmentDetails = async (events: any) => {
         const percentagem = module === Modules.Enrollment ? 80 : 40
-        const trackedEntityIds = events?.map((x: { trackedEntity: string }) => x.trackedEntity).join(';')
+        const trackedEntityIds = events?.map((x: { trackedEntity: string }) => x.trackedEntity).join(',')
 
         try {
-            return getTeis({ program: selectedSectionDataStore?.program as unknown as string, trackedEntity: trackedEntityIds, orgUnit })
+            return getTeis({ program: selectedSectionDataStore?.program as unknown as string, trackedEntities: trackedEntityIds, orgUnit })
                 .then(async (trackedEntityInstances: any) => {
                     let rows: any = []
                     let counter = 0
@@ -30,11 +30,11 @@ export function useGetEnrollmentData(props: ExportData) {
                         const registrationData: any = await getEvents({
                             program: selectedSectionDataStore?.program as unknown as string,
                             programStage: selectedSectionDataStore?.registration?.programStage as unknown as string,
-                            ouMode: "SELECTED",
+                            orgUnitMode: "SELECTED",
                             fields: "*",
                             filter: eventFilters,
-                            skipPaging: true,
-                            trackedEntity: tei?.trackedEntity,
+                            paging: false,
+                            trackedEntities: tei?.trackedEntity,
                             orgUnit: orgUnit
                         })
 
@@ -42,11 +42,11 @@ export function useGetEnrollmentData(props: ExportData) {
                             socioEconomiscData = await getEvents({
                                 program: selectedSectionDataStore?.program as unknown as string,
                                 programStage: socioEconomicsStage,
-                                ouMode: "SELECTED",
+                                orgUnitMode: "SELECTED",
                                 fields: "*",
                                 filter: eventFilters,
-                                skipPaging: true,
-                                trackedEntity: tei?.trackedEntity,
+                                paging: false,
+                                trackedEntities: tei?.trackedEntity,
                                 orgUnit: orgUnit
                             })
                         }

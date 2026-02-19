@@ -16,8 +16,8 @@ export function getCommonSheetData(props: ExportData) {
             fields: "trackedEntity,enrollment,orgUnit,program",
             filter: eventFilters,
             orgUnit,
-            skipPaging: true,
-            ouMode: 'SELECTED',
+            paging: false,
+            orgUnitMode: 'SELECTED',
             order: selectedSectionDataStore?.defaults.defaultOrder
         }).catch((error) => {
             setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))

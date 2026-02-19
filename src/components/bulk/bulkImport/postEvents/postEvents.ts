@@ -36,11 +36,11 @@ export function postValues({ setStats, setProgress, onError, setOpenProgress }: 
                 await getEvents({
                     program: programConfig.id,
                     orgUnit,
-                    ouMode: "SELECTED",
+                    orgUnitMode: "SELECTED",
                     programStage: stage,
                     fields: "event,programStage,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
-                    trackedEntity: trackedEntity,
-                    skipPaging: true
+                    trackedEntities: trackedEntity,
+                    paging: false
                 }).then((resp: any) => {
                     let event = resp.find((x: any) => x.enrollment === enrollment && x.programStage == stage)?.event
                     const index = copyData.findIndex(x => x.enrollment === enrollment && x.programStage == stage)

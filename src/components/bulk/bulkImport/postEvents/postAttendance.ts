@@ -43,11 +43,11 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpenPr
                 program,
                 ...filter,
                 orgUnit,
-                ouMode: "SELECTED",
+                orgUnitMode: "SELECTED",
                 programStage: programStageId,
                 fields: "event,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
-                trackedEntity: trackedEntity,
-                skipPaging: true
+                trackedEntities: trackedEntity,
+                paging: false
             }).then((resp: any[]) => {
 
                 let thisTeiEvents = events.filter(x => x.enrollment === enrollment)

@@ -39,11 +39,11 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
                     await getEvents({
                         program,
                         orgUnit: teis[index]?.orgUnit,
-                        ouMode: "SELECTED",
+                        orgUnitMode: "SELECTED",
                         programStage: socioEconomicsStage,
                         fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
-                        trackedEntity: teis[index]?.tei,
-                        skipPaging: true
+                        trackedEntities: teis[index]?.tei,
+                        paging: false
                     }).then((resp: any[]) => {
                         let thisTeiEvent = resp.find(x => x.enrollment === copyData[index].enrollment)
                         const { attributes, ...rest } = copyData[index]
