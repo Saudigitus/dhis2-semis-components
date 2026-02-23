@@ -69,11 +69,11 @@ export function useExportData(props: ExportData) {
                                     occurredBefore: getDate({ selectedDate: new Date(endDate) }),
                                 } : {}),
                                 orgUnit,
-                                ouMode: "SELECTED",
+                                orgUnitMode: "SELECTED",
                                 programStage: stagesToExport?.[a],
                                 fields: "event,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
-                                trackedEntity: data?.[teisCounter]?.trackedEntity,
-                                skipPaging: true
+                                trackedEntities: data?.[teisCounter]?.trackedEntity,
+                                paging: false
                             }).then((resp) => {
                                 const events = resp?.filter((x: any) => x.enrollment === data?.[teisCounter]?.enrollment)
                                 const increment = (40 / data?.length) / stagesToExport?.length;
