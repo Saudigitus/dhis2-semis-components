@@ -34,13 +34,16 @@ export function importSummary(summary: any, updatedStats: any) {
     }
 
     const trackedEntityStats = bundleReport?.TRACKED_ENTITY?.stats || {}
+    const ignoredAcrossTrackerTypes = trackerTypes.reduce((acc, trackerType) => {
+        return acc + (bundleReport?.[trackerType]?.stats?.ignored || 0)
+    }, 0)
 
 
     return {
         ...updatedStats,
         stats: {
             created: (updatedStats?.stats?.created || 0) + (trackedEntityStats?.created || 0),
-            ignored: (updatedStats?.stats?.ignored || 0) + (trackedEntityStats?.ignored || 0),
+            ignored: (updatedStats?.stats?.ignored || 0) + ignoredAcrossTrackerTypes,
             updated: (updatedStats?.stats?.updated || 0) + (trackedEntityStats?.updated || 0),
             total: (updatedStats?.stats?.total || 0) + (trackedEntityStats?.total || 0)
         },
