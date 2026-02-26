@@ -11,6 +11,7 @@ import { InfoOutlined } from "@mui/icons-material";
 import ErrorDetailsTable from "./ErrorDetailsTable";
 import { TranslationState } from "../../../../schemas/translationsSchema";
 import { useRecoilValue } from "recoil";
+import { TabBar, Tab } from '@dhis2/ui'
 
 interface ModalContentProps {
     setOpen: (value: boolean) => void
@@ -20,12 +21,13 @@ interface ModalContentProps {
     onSubmit: (args: "VALIDATE" | "COMMIT") => any
     onClose?: () => any
     module: string
-    stats: { stats: { ignored: number, created: number, updated: number, total: number }, errorDetails: any[], byType: [], exceptions?: any[] }
+    stats: { stats: { ignored: number, created: number, updated: number, total: number }, errorDetails: any[], byType: [], warningDetails: [], exceptions?: any[] }
 }
 
 const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
-    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, stats, onClose, module } = props;
+    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, onClose, module, stats } = props;
     const [showDetails, setShowDetails] = useState(false)
+    const [tab, setSelectedTab] = useState<any>({ id: 'byType', data: stats?.byType })
     const [load, setLoading] = useState(false)
     const [doneProcessing, setDoneProcessing] = useState<any>({ validate: false, commit: false })
     const i18n = useRecoilValue(TranslationState) as any
@@ -35,6 +37,15 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
     useEffect(() => {
         setDoneProcessing({ validate: false, commit: false })
     }, [])
+
+    useEffect(() => {
+        setSelectedTab((
+            doneProcessing?.commit ? { id: 'byType', data: stats?.byType }
+                : !doneProcessing?.commit && stats?.errorDetails?.length > 0 ? { data: stats?.errorDetails, id: "errors" }
+                    : stats?.warningDetails?.length > 0 ? { data: stats?.warningDetails, id: "warning" } : {} as any
+        ))
+    }, [stats])
+
 
     const modalActions: ButtonActionProps[] = [
         {
@@ -123,15 +134,46 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             <WithPadding />
             <Collapse in={showDetails}>
                 <div className={styles.detailsContainer}>
+                    {((doneProcessing?.commit || doneProcessing?.validate) && stats?.byType?.length > 0) &&
+                        <>
+                            <WithPadding />
+                            <TabBar>
+                                {doneProcessing?.commit &&
+                                    <Tab onClick={() => { setSelectedTab({ data: stats?.byType, id: "byType" }) }} selected={tab.id === 'byType'}>
+                                        {`${i18n.t('Summary by tracker type')}`}
+                                    </Tab>
+                                }
+                                {stats?.errorDetails?.length > 0 &&
+                                    <Tab
+                                        onClick={() => { setSelectedTab({ data: stats?.errorDetails, id: "errors" }) }}
+                                        selected={tab.id === 'errors'}
+                                    >
+                                        {`${i18n.t('Error details')}`}
+                                    </Tab>
+                                }
+                                {stats?.warningDetails?.length > 0 &&
+                                    <Tab
+                                        onClick={() => { setSelectedTab({ data: stats?.warningDetails, id: "warning" }) }}
+                                        selected={tab.id === 'warning'}
+                                    >
+                                        {`${i18n.t('Warning details')}`}
+                                    </Tab>
+                                }
+                            </TabBar>
+                            <WithPadding />
+                            <ErrorDetailsTable data={tab.data} />
+                            <WithPadding />
+                        </>
+                    }
                     {
-                        (validRecords?.length + invalidRecords?.length + (stats?.stats?.ignored ?? 0)) > 0 &&
+                        ((invalidRecords?.length + validRecords?.length) > 0 && !doneProcessing?.commit && !doneProcessing?.validate) &&
                         <>
                             <WithPadding p="0px 0 -50px 0" />
                             <SummaryDetails stats={stats} programConfig={programConfig} doneProcessing={doneProcessing?.commit || doneProcessing?.validate} invalidRecords={invalidRecords} validRecords={validRecords} />
                         </>
                     }
                 </div>
-            </Collapse>
+            </Collapse >
             {load && <LinearProgress />}
             <Actions />
         </>

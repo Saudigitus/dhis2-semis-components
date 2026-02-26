@@ -14,7 +14,7 @@ export default function ProcessImport(props: importData) {
     const [progress, setProgress] = useState({ prorocess: "import", progress: 0, buffer: 0 })
     const UseValidation = new useValidation()
     const [open, setOpen] = useState(false)
-    const [stats, setStats] = useState<any>({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] })
+    const [stats, setStats] = useState<any>({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], warningDetails: [], exceptions: [], byType: [] })
     const [excelData, setExcelData] = useState<any>({ mapping: [], module: "" })
     const [openPogress, setOpenProgress] = useState(false)
     const [openStats, setOpenStats] = useState(false)
@@ -48,7 +48,7 @@ export default function ProcessImport(props: importData) {
                 setExcelData(resp)
             })
             .catch((error) => {
-                setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [{ [i18n.t("Error message")]: error?.message }], byType: [] })
+                setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], warningDetails: [], exceptions: [{ [i18n.t("Error message")]: error?.message }], byType: [] })
                 setOpenProgress(false)
                 onError(error)
             })
@@ -58,7 +58,7 @@ export default function ProcessImport(props: importData) {
         <div>
             <a style={{ width: "100%", cursor: "pointer", padding: "5px" }} onClick={(e) => {
                 e.preventDefault()
-                setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] })
+                setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], warningDetails: [], exceptions: [], byType: [] })
                 setOpen(true)
             }}>
                 {label}

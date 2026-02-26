@@ -39,7 +39,8 @@ function SummaryCards({ validRecs, invalidRecs, doneProcessing, stats, module }:
                 <>
                     <SummaryCard color="success" label={`${i18n.t("Imported Records")}`} value={stats?.stats?.created?.toString()} />
                     <SummaryCard color="updated" label={`${i18n.t("Updated Records")}`} value={stats?.stats?.updated?.toString()} />
-                    <SummaryCard color="error" label={`${i18n.t("Error")}`} value={stats?.stats?.ignored?.toString()} />
+                    <SummaryCard color="error" label={`${i18n.t("Errors")}`} value={stats?.stats?.ignored?.toString()} />
+                    <SummaryCard color="warning" label={`${i18n.t("Warnings")}`} value={stats?.warningDetails?.length ?? 0} />
                     <SummaryCard color="secondary" label={`${i18n.t("Total rows")}`} value={validRecs?.length + invalidRecs?.length} />
                 </>
             }
