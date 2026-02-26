@@ -32,7 +32,6 @@ const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programC
         }));
     };
 
-    console.log(data,stats,'ababa pai')
     useEffect(() => {
         setData(() => (
             [...(dataCont?.[activeTab]?.slice((currentPage - 1) * tabPageSize, currentPage * tabPageSize) ?? [])]

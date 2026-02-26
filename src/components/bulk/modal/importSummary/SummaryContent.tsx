@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { DataTable, DataTableBody, DataTableCell, DataTableRow, } from '@dhis2/ui'
 import ErrorDetailsTable from './ErrorDetailsTable';
+import { TranslationState } from '../../../../schemas/translationsSchema';
+import { useRecoilValue } from 'recoil';
 
 interface SummaryTableProps {
     displayData: Record<string, any>[]
@@ -9,6 +11,7 @@ interface SummaryTableProps {
 }
 
 export const SummaryTable = (props: SummaryTableProps): React.ReactElement => {
+    const i18n = useRecoilValue(TranslationState) as any
     const { displayData, doneProcessing, programConfig } = props
     const [expanded, setExpanded] = useState<string>("")
     const att = [
@@ -96,7 +99,7 @@ export const SummaryTable = (props: SummaryTableProps): React.ReactElement => {
                     }
                     {(displayData?.length === 0) &&
                         <DataTableRow>
-                            <DataTableCell>{`No records to display!`}</DataTableCell>
+                            <DataTableCell>{i18n.t('No records to display!')}</DataTableCell>
                         </DataTableRow>
                     }
                 </DataTableBody>
