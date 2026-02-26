@@ -25,7 +25,7 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
         updating: boolean, dataStore: selectedDataStoreKey, orgUnit: string, updatingFR = false
     ) {
         let copyData = [...enrollments]
-        let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] }
+        let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], warningDetails: [], exceptions: [], byType: [] }
         const updateProgress = (updating || updatingFR) ? 40 : 0
 
         if (updating) {

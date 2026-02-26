@@ -37,6 +37,10 @@ export function importSummary(summary: any, updatedStats: any) {
             ...(updatedStats?.errorDetails || []),
             ...(summary?.validationReport?.errorReports || []),
         ],
+        warningDetails: [
+            ...(updatedStats?.warningDetails || []),
+            ...(summary?.validationReport?.warningReports || []),
+        ],
         byType: byTypeCopy
     };
 }
