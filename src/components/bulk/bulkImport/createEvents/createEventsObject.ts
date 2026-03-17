@@ -142,7 +142,6 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
                     programStage: stage.id,
                     ...(updating ? { trackedEntity: student?.Ids?.trackedEntity } : {})
                 })
-                console.log(events, 'aaaaaa')
             }
         }
 
