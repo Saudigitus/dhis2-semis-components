@@ -116,7 +116,7 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
 
             if (
                 Object.values(dataStore)?.some((dataStoreKey: any) =>
-                    dataStoreKey?.programStage === stage.id || dataStoreKey?.programStages?.includes(stage.id)
+                    dataStoreKey?.programStage === stage.id || dataStoreKey?.programStages?.map((x: any) => x.programStage)?.includes(stage.id)
                 )
             ) {
                 if (student[stage.name]) {
@@ -142,6 +142,7 @@ export function generateEnrollmentData(profile: string, programConfig: ProgramCo
                     programStage: stage.id,
                     ...(updating ? { trackedEntity: student?.Ids?.trackedEntity } : {})
                 })
+                console.log(events, 'aaaaaa')
             }
         }
 
