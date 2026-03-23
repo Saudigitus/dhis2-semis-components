@@ -62,7 +62,7 @@ export function useExportData(props: ExportData) {
                 if (module != Modules.Enrollment) {
                     for (let teisCounter = 0; teisCounter < data?.length; teisCounter++) {
                         for (let a = 0; a < stagesToExport?.length; a++) {
-                            let events = [], page = 1, pageSize = 50
+                            let events = [], page = 1, pageSize = 10
 
                             do {
                                 events = await getEvents({
