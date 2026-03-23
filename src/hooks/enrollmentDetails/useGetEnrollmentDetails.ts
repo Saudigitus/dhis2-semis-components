@@ -33,7 +33,6 @@ export function useGetEnrollmentData(props: ExportData) {
                             orgUnitMode: "SELECTED",
                             fields: "*",
                             filter: eventFilters,
-                            paging: false,
                             trackedEntities: tei?.trackedEntity,
                             orgUnit: orgUnit
                         })
@@ -45,7 +44,7 @@ export function useGetEnrollmentData(props: ExportData) {
                                 orgUnitMode: "SELECTED",
                                 fields: "*",
                                 filter: eventFilters,
-                                paging: false,
+
                                 trackedEntities: tei?.trackedEntity,
                                 orgUnit: orgUnit
                             })
