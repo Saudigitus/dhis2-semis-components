@@ -36,7 +36,6 @@ const OrgUnitTree = ({ onChange, stringQuery }) => {
                             'id,displayName,path,publicAccess,access,lastUpdated',
                             'children[id,displayName,publicAccess,access,path,children::isNotEmpty]',
                         ].join(','),
-                        paging: true,
                         query: currentSearchText,
                         withinUserSearchHierarchy: true,
                         pageSize: 15,

@@ -19,7 +19,7 @@ function TopPaginator({ page, rowsPerPage, onPageChange, totalData, disablePrevi
             <div />
 
             <div className={defaultClasses.rootPagination}>
-                {TextPagination(`${start} - ${end} of ${totalElements}`)}
+                {TextPagination(`${start} - ${end}`)}
 
                 <div className={defaultClasses.separator} />
 
