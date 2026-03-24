@@ -33,24 +33,31 @@ export function postValues({ setStats, setProgress, onError, setOpenProgress }: 
             const { enrollment, orgUnit, trackedEntity } = (student as unknown as any).Ids
 
             for (const stage of programStages) {
-                await getEvents({
-                    program: programConfig.id,
-                    orgUnit,
-                    orgUnitMode: "SELECTED",
-                    programStage: stage,
-                    fields: "event,programStage,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
-                    trackedEntities: trackedEntity,
-                    paging: false
-                }).then((resp: any) => {
-                    let event = resp.find((x: any) => x.enrollment === enrollment && x.programStage == stage)?.event
-                    const index = copyData.findIndex(x => x.enrollment === enrollment && x.programStage == stage)
-                    copyData[index] = { ...copyData[index], ...(event ? { event: event } : {}) }
+                let page = 1, pageSize = 50, events = []
 
-                    updateProgressF(20, 17, excelData.mapping.length * programStages.length)
-                }).catch((error) => {
-                    setOpenProgress(false)
-                    onError(error)
-                })
+                do {
+                    events = await getEvents({
+                        program: programConfig.id,
+                        orgUnit,
+                        orgUnitMode: "SELECTED",
+                        programStage: stage,
+                        fields: "event,programStage,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
+                        trackedEntities: trackedEntity,
+                        page,
+                        pageSize
+                    }).then((resp: any) => {
+                        let event = resp.find((x: any) => x.enrollment === enrollment && x.programStage == stage)?.event
+                        const index = copyData.findIndex(x => x.enrollment === enrollment && x.programStage == stage)
+                        copyData[index] = { ...copyData[index], ...(event ? { event: event } : {}) }
+                        page++
+                        
+                        return resp
+                    }).catch((error) => {
+                        setOpenProgress(false)
+                        onError(error)
+                    })
+                } while (events?.length == pageSize)
+                updateProgressF(20, 17, excelData.mapping.length * programStages.length)
             }
         }
 

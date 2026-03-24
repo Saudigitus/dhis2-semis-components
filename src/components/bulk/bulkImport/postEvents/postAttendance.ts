@@ -32,6 +32,7 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpenPr
         const keys = Object.keys(values)
 
         for (const student of excelData as unknown as []) {
+            let page = 1, pageSize = 50, data = []
             const { enrollment, orgUnit, trackedEntity } = (student as unknown as any).Ids
             const days = Object.keys(student[programStageName])
             const filter = {
@@ -39,37 +40,42 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpenPr
                 occurredBefore: days[days.length - 1]
             }
 
-            await getEvents({
-                program,
-                ...filter,
-                orgUnit,
-                orgUnitMode: "SELECTED",
-                programStage: programStageId,
-                fields: "event,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
-                trackedEntities: trackedEntity,
-                paging: false
-            }).then((resp: any[]) => {
+            do {
+                data = await getEvents({
+                    program,
+                    ...filter,
+                    orgUnit,
+                    orgUnitMode: "SELECTED",
+                    programStage: programStageId,
+                    fields: "event,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
+                    trackedEntities: trackedEntity,
+                    pageSize,
+                    page
+                }).then((resp: any[]) => {
 
-                let thisTeiEvents = events.filter(x => x.enrollment === enrollment)
-                let alreadyExistingEvents: any = {}
+                    let thisTeiEvents = events.filter(x => x.enrollment === enrollment)
+                    let alreadyExistingEvents: any = {}
 
-                resp?.filter(x => x.enrollment === enrollment).map((x) => {
-                    alreadyExistingEvents[format(new Date(x.occurredAt), 'yyyy-MM-dd')] = x.event
+                    resp?.filter(x => x.enrollment === enrollment).map((x) => {
+                        alreadyExistingEvents[format(new Date(x.occurredAt), 'yyyy-MM-dd')] = x.event
+                    })
+
+                    thisTeiEvents.forEach(event => {
+                        if (alreadyExistingEvents[event.occurredAt]) {
+                            values.UPDATE.push({ ...event, event: alreadyExistingEvents[event.occurredAt] });
+                        } else {
+                            values.CREATE.push(event);
+                        }
+                    });
+
+                    page++
+                }).catch((error) => {
+                    setOpenProgress(false)
+                    onError(error)
                 })
+            } while (events?.length == pageSize)
 
-                thisTeiEvents.forEach(event => {
-                    if (alreadyExistingEvents[event.occurredAt]) {
-                        values.UPDATE.push({ ...event, event: alreadyExistingEvents[event.occurredAt] });
-                    } else {
-                        values.CREATE.push(event);
-                    }
-                });
-
-                updateProgressF(40, 35, excelData.length)
-            }).catch((error) => {
-                setOpenProgress(false)
-                onError(error)
-            })
+            updateProgressF(40, 35, excelData.length)
         }
 
         for (const key of keys) {
