@@ -11,9 +11,9 @@ export function useGetEnrollmentData(props: ExportData) {
     const { urlParameters } = useUrlParams()
     const { schoolName: orgUnitName, school: orgUnit, } = urlParameters
 
-    const getEnrollmentDetails = async (events: any) => {
+    const getEnrollmentDetails = async (data: any) => {
         const percentagem = module === Modules.Enrollment ? 80 : 40
-        const trackedEntityIds = events?.map((x: { trackedEntity: string }) => x.trackedEntity).join(',')
+        const trackedEntityIds = data?.map((x: { trackedEntity: string }) => x.trackedEntity).join(',')
 
         try {
             return getTeis({ program: selectedSectionDataStore?.program as unknown as string, trackedEntities: trackedEntityIds, orgUnit })
@@ -23,31 +23,45 @@ export function useGetEnrollmentData(props: ExportData) {
 
                     for (const tei of trackedEntityInstances) {
                         counter++
-                        let enrollment = events.find((x: any) => x.trackedEntity == tei?.trackedEntity)?.enrollment
-                        let socioEconomiscData: any = []
+                        let enrollment = data.find((x: any) => x.trackedEntity == tei?.trackedEntity)?.enrollment
+                        let socioEconomiscData: any = [], registrationData = [], page = 1, pageSize = 50, events: any = []
                         const socioEconomicsStage = selectedSectionDataStore?.['socio-economics']?.programStage as unknown as string
 
-                        const registrationData: any = await getEvents({
-                            program: selectedSectionDataStore?.program as unknown as string,
-                            programStage: selectedSectionDataStore?.registration?.programStage as unknown as string,
-                            orgUnitMode: "SELECTED",
-                            fields: "*",
-                            filter: eventFilters,
-                            trackedEntities: tei?.trackedEntity,
-                            orgUnit: orgUnit
-                        })
-
-                        if (socioEconomicsStage && (withSocioEconomics || module === Modules.Enrollment)) {
-                            socioEconomiscData = await getEvents({
+                        do {
+                            events = await getEvents({
                                 program: selectedSectionDataStore?.program as unknown as string,
-                                programStage: socioEconomicsStage,
+                                programStage: selectedSectionDataStore?.registration?.programStage as unknown as string,
                                 orgUnitMode: "SELECTED",
                                 fields: "*",
                                 filter: eventFilters,
-
                                 trackedEntities: tei?.trackedEntity,
-                                orgUnit: orgUnit
+                                orgUnit: orgUnit,
+                                page,
+                                pageSize
                             })
+
+                            registrationData = [...registrationData, ...events ?? []]
+                            page++
+                        } while (events?.length === pageSize)
+
+                        if (socioEconomicsStage && (withSocioEconomics || module === Modules.Enrollment)) {
+                            page = 1
+                            do {
+                                events = await getEvents({
+                                    program: selectedSectionDataStore?.program as unknown as string,
+                                    programStage: socioEconomicsStage,
+                                    orgUnitMode: "SELECTED",
+                                    fields: "*",
+                                    filter: eventFilters,
+                                    trackedEntities: tei?.trackedEntity,
+                                    orgUnit: orgUnit,
+                                    page,
+                                    pageSize
+                                })
+
+                                socioEconomiscData = [...socioEconomiscData, ...events ?? []]
+                                page++
+                            } while (events?.length === pageSize)
                         }
 
                         const currEnrollmentRegistration = registrationData?.find((x: any) => x.enrollment === enrollment)

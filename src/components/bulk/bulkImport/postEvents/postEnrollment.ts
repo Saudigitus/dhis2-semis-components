@@ -36,34 +36,42 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
 
             for (let index = 0; index < teis.length; index++) {
                 if (socioEconomicsStage && !updatingFR) {
-                    await getEvents({
-                        program,
-                        orgUnit: teis[index]?.orgUnit,
-                        orgUnitMode: "SELECTED",
-                        programStage: socioEconomicsStage,
-                        fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
-                        trackedEntities: teis[index]?.tei,
-                        paging: false
-                    }).then((resp: any[]) => {
-                        let thisTeiEvent = resp.find(x => x.enrollment === copyData[index].enrollment)
-                        const { attributes, ...rest } = copyData[index]
+                    let page = 1, pageSize = 50, events = []
 
-                        copyData[index] = {
-                            enrollments: [{
-                                ...rest,
-                                events: [...(thisTeiEvent ? [{ ...copyData[index].events[0], event: thisTeiEvent.event }] : [])]
-                            }],
+                    do {
+                        events = await getEvents({
+                            program,
                             orgUnit: teis[index]?.orgUnit,
-                            trackedEntity: teis[index]?.tei,
-                            trackedEntityType: dataStore.trackedEntityType,
-                            attributes: attributes
-                        }
+                            orgUnitMode: "SELECTED",
+                            programStage: socioEconomicsStage,
+                            fields: "event,trackedEntity,enrollment,dataValues[dataElement,value]",
+                            trackedEntities: teis[index]?.tei,
+                            page,
+                            pageSize
+                        }).then((resp: any[]) => {
+                            let thisTeiEvent = resp.find(x => x.enrollment === copyData[index].enrollment)
+                            const { attributes, ...rest } = copyData[index]
 
-                        updateProgressF(updateProgress + 5, updateProgress, teis.length)
-                    }).catch((error) => {
-                        setOpenProgress(false)
-                        onError(error)
-                    })
+                            copyData[index] = {
+                                enrollments: [{
+                                    ...rest,
+                                    events: [...(thisTeiEvent ? [{ ...copyData[index].events[0], event: thisTeiEvent.event }] : [])]
+                                }],
+                                orgUnit: teis[index]?.orgUnit,
+                                trackedEntity: teis[index]?.tei,
+                                trackedEntityType: dataStore.trackedEntityType,
+                                attributes: attributes
+                            }
+                            page++
+
+                            return resp
+                        }).catch((error) => {
+                            setOpenProgress(false)
+                            onError(error)
+                        })
+                    } while (events?.length == pageSize)
+
+                    updateProgressF(updateProgress + 5, updateProgress, teis.length)
                 } else {
                     const { attributes, ...rest } = copyData[index]
                     copyData[index] = updatingFR ? { ...rest, events: [] } : {

@@ -62,42 +62,51 @@ export function useExportData(props: ExportData) {
                 if (module != Modules.Enrollment) {
                     for (let teisCounter = 0; teisCounter < data?.length; teisCounter++) {
                         for (let a = 0; a < stagesToExport?.length; a++) {
-                            await getEvents({
-                                program: selectedSectionDataStore?.program as unknown as string,
-                                ...(module === Modules.Attendance ? {
-                                    occurredAfter: startDate,
-                                    occurredBefore: getDate({ selectedDate: new Date(endDate) }),
-                                } : {}),
-                                orgUnit,
-                                orgUnitMode: "SELECTED",
-                                programStage: stagesToExport?.[a],
-                                fields: "event,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
-                                trackedEntities: data?.[teisCounter]?.trackedEntity,
-                                paging: false
-                            }).then((resp) => {
-                                const events = resp?.filter((x: any) => x.enrollment === data?.[teisCounter]?.enrollment)
-                                const increment = (40 / data?.length) / stagesToExport?.length;
-                                const bufferIncrement = (41 / data?.length) / stagesToExport?.length;
+                            let events = [], page = 1, pageSize = 50
 
-                                data[teisCounter] = {
-                                    ...data[teisCounter], ...formatSheetData({
-                                        module: module,
-                                        stageId: stagesToExport?.[a],
-                                        events: events,
-                                        dataStore: selectedSectionDataStore as unknown as selectedDataStoreKey
-                                    })
-                                }
+                            do {
+                                events = await getEvents({
+                                    program: selectedSectionDataStore?.program as unknown as string,
+                                    ...(module === Modules.Attendance ? {
+                                        occurredAfter: startDate,
+                                        occurredBefore: getDate({ selectedDate: new Date(endDate) }),
+                                    } : {}),
+                                    orgUnit,
+                                    orgUnitMode: "SELECTED",
+                                    programStage: stagesToExport?.[a],
+                                    fields: "event,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
+                                    trackedEntities: data?.[teisCounter]?.trackedEntity,
+                                    pageSize,
+                                    page
+                                }).then((resp) => {
+                                    page++
+                                    const data = resp?.filter((x: any) => x.enrollment === data?.[teisCounter]?.enrollment)
 
-                                setProgress((prev: any) => ({
-                                    ...prev,
-                                    progress: prev.progress + increment,
-                                    buffer: prev.buffer + bufferIncrement
-                                }));
+                                    data[teisCounter] = {
+                                        ...data[teisCounter], ...formatSheetData({
+                                            module: module,
+                                            stageId: stagesToExport?.[a],
+                                            events: data,
+                                            dataStore: selectedSectionDataStore as unknown as selectedDataStoreKey
+                                        })
+                                    }
 
-                            }).catch((error) => {
-                                setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
-                                onError(`Export error: Occurred error wihile fetching data: ${error}`)
-                            })
+                                    return resp
+                                }).catch((error) => {
+                                    setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
+                                    onError(`Export error: Occurred error wihile fetching data: ${error}`)
+                                })
+
+                            } while (events?.length == pageSize)
+
+                            const increment = (40 / data?.length) / stagesToExport?.length;
+                            const bufferIncrement = (41 / data?.length) / stagesToExport?.length;
+
+                            setProgress((prev: any) => ({
+                                ...prev,
+                                progress: prev.progress + increment,
+                                buffer: prev.buffer + bufferIncrement
+                            }));
                         }
                     }
                 } else if (empty && module == Modules.Enrollment) {
