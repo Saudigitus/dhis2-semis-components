@@ -8,8 +8,10 @@ import { useValidateFile, useValidation } from "dhis2-semis-functions";
 import ModalSummaryContent from "../modal/importSummary/importSummary";
 import { TranslationState } from "../../../schemas/translationsSchema";
 import { useRecoilValue } from "recoil";
+import useGetSelectedKeys from "../../../hooks/config/useGetSelectedKeys";
 
 export default function ProcessImport(props: importData) {
+    const { dataStoreData } = useGetSelectedKeys()
     const { label, onError, title, updating, programConfig, module, onClose } = props
     const [progress, setProgress] = useState({ prorocess: "import", progress: 0, buffer: 0 })
     const UseValidation = new useValidation()
@@ -41,7 +43,7 @@ export default function ProcessImport(props: importData) {
         await UseValidation.validation(file[0])
             .then((resp) => {
                 const { mapping, module } = resp
-                validador({ module, data: mapping }).then(() => {
+                validador({ module, data: mapping, dataStore: dataStoreData }).then(() => {
                     setOpen(false)
                     setOpenStats(true)
                 })
