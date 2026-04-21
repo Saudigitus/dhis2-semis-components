@@ -32,5 +32,5 @@ export interface CardDashboardProps {
     /**Choose how to align the action [start,center,end]*/
     alignActions?: PositionProps
     size?: SizeProps
-    id: string
+    dataTest: string
 }

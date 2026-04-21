@@ -78,6 +78,7 @@ const OrgUnitTreeComponent = (props: OrgUnitTreeComponentProps) => {
             singleSelection
             selected={getHighlightedItems()}
             onChange={onSelectClick}
+            dataTest='school-list'
         />
     );
 }

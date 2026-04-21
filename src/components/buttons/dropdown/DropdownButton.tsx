@@ -4,7 +4,7 @@ import FlyoutMenu from "../../../components/menu/FlyoutMenu";
 import { DropdownProps } from "../../../types/buttons/DropdownProps";
 
 function CustomDropdown(props: DropdownProps): React.ReactElement {
-  const { name, icon, options, disabled, id } = props;
+  const { name, icon, options, disabled, id, dataTest } = props;
 
   return (
     <SplitButton
@@ -12,6 +12,7 @@ function CustomDropdown(props: DropdownProps): React.ReactElement {
       disabled={disabled}
       key={id}
       component={<FlyoutMenu options={options} />}
+      dataTest={dataTest}
     >
       {name}
     </SplitButton>

@@ -15,6 +15,7 @@ interface TextProps {
      */
     weight?: "normal" | "bold"
     style?: React.CSSProperties
+    dataTest?: string
 }
 
 export type { TextProps }

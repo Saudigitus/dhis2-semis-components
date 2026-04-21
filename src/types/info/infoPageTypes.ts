@@ -29,6 +29,7 @@ interface InfoTypes {
             instructions: string[]
         }
     ]
+    dataTest: string
 }
 
 export type { InfoTypes }

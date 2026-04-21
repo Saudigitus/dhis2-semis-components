@@ -17,6 +17,7 @@ interface DropdownProps {
     icon?: React.ReactElement
     options: FlyoutOptionsProps[]
     id?: string
+    dataTest: string
 }
 
 export type { DropdownProps }

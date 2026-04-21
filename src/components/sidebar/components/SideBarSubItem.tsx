@@ -7,11 +7,11 @@ export default function SideBarSubItem(props: SideBarSubItemProps) {
     const { icon, label, badgeInfo, disabled, appUrl, active, action } = props
 
     return (
-        <div id={label.toLocaleLowerCase()} onClick={action} className={style.subItemLink}>
+        <div data-test={label.toLocaleLowerCase()} onClick={action} className={style.subItemLink}>
             <li className={active ? style.sideBarSubItemContainerActive : classNames(style.sideBarSubItemContainer, (Boolean(disabled)) && style.sideBarDisabledSubItem)}>
                 <img src={icon} /> <span className={style.sideBarSubItemLabel}>{label}</span>
                 {badgeInfo ? <div className={style.badgeContainer}><Badge value={badgeInfo} /></div> : null}
-                <div id={label} className={style.tooltipContainer}>
+                <div data-test={label} className={style.tooltipContainer}>
                     {label}
                 </div>
             </li>
