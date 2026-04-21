@@ -16,6 +16,7 @@ interface DropdownProps {
     disabled: boolean
     icon?: React.ReactElement
     options: FlyoutOptionsProps[]
+    id?: string
 }
 
 export type { DropdownProps }

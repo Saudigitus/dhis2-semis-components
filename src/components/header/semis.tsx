@@ -135,7 +135,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                         dynamicItems.map((item: ExtendedDynamicHeaderProps, index) => {
                             return item?.position === "RIGHT" ? (
                                 <SelectorBarItem
-                                    key={index}
+                                    dataTest={item?.label}
                                     onClearSelectionClick={() => {
                                         setHeaderValues(prevState => ({ ...prevState, [item?.ulrParam]: { label: "", value: "" } }))
                                         remove(item?.ulrParam)
@@ -166,6 +166,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                             noValueMessage={i18n.t("Select a academic year")}
                             open={openAcademicYear}
                             setOpen={() => setOpenAcademicYear(!openAcademicYear)}
+                            dataTest="academicYear"
                         >
                             <MenuSelect dataElelementId={schoolCalendar?.academicYear} program={program} placeholder={i18n.t("Select a academic year")} isSeachable={false} values={getAcademicYearOptions({ schoolCalendar, program })} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
                         </SelectorBarItem>
@@ -191,6 +192,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                 label={i18n.t("School")}
                 noValueMessage={i18n.t("Select a school")}
                 open={openOu}
+                dataTest="school"
                 setOpen={() => setOpenOu(!openOu)}
             >
                 <DataProvider baseUrl={baseUrl}>
@@ -210,6 +212,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                             value={searchParams.get(item?.ulrParam) ? headerValues[item?.ulrParam]?.value : ""}
                             noValueMessage={item.placehoder ?? `${i18n.t("Select a")} ${formatStringToLowerCase(item.label) ?? i18n.t("item")}`}
                             open={item.open}
+                            dataTest={item?.label}
                             setOpen={() => onOpenDynamicItems(item)}
                         >
                             <MenuSelect

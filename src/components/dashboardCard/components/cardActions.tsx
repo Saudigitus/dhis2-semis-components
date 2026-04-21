@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { IconButton, Tooltip } from "@mui/material";
 
 
-const CardActions = ({ actions, align }: { actions?: Action[], align: PositionProps }) => {
+const CardActions = ({ actions, align, id }: { actions?: Action[], align: PositionProps, id: string }) => {
 
     const getActionsAlignment = () => {
         switch (align) {
@@ -26,6 +26,7 @@ const CardActions = ({ actions, align }: { actions?: Action[], align: PositionPr
                                     size="small"
                                     onClick={action?.onAction}
                                     disabled={action?.disabled}
+                                    id={id}
                                 >
                                     {action.icon ?? <></>}
                                 </IconButton>

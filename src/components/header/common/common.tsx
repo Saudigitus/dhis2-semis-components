@@ -53,6 +53,7 @@ export const MenuSelect = ({ values, selected, onChange, isSeachable, placeholde
                         label={label}
                         active={selected === value}
                         onClick={() => onChange({ selected: value })}
+                        dataTest={label}
                     />
                 ))
                     :
@@ -72,6 +73,7 @@ export const OrgUnitSelect = ({ onChange, selected }) => {
                 onChange={onChange}
                 roots={['A0000000000']}
                 selected={selected}
+                dataTest='school'
             />
         </div>
     )

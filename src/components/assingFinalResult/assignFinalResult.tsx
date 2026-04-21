@@ -43,17 +43,22 @@ export default function AsssignFinalResult({ selected, Form }: { selected: any[]
 
     return (
         <>
-            <Button onClick={() => {
-                setOpen(true);
-            }} icon={<IconAddCircle24 />}
+            <Button 
+                id="btn-assign-final-result"
+                onClick={() => {
+                    setOpen(true);
+                }} 
+                icon={<IconAddCircle24 />}
             >
                 <span>{`${i18n.t('Assing final result')}`}</span>
             </Button >
 
             {
                 open && <ModalComponent
-                    children={<WithPadding>
+                    id="modal-assign-final-result"
+                    children={<WithPadding id="padding-modal-content">
                         <NoticeBox
+                            id="notice-box-warning"
                             title={
                                 i18n.t('WARNING! {{size}} rows will be affected', {
                                     size: `${selected.length}`,
@@ -63,9 +68,10 @@ export default function AsssignFinalResult({ selected, Form }: { selected: any[]
                         >
                             {i18n.t("No one will be able to access this program. Add some Organisation Units to the access list.")}
                         </NoticeBox>
-                        <WithBorder type="all" >
-                            <WithPadding>
+                        <WithBorder id="border-form-container" type="all" >
+                            <WithPadding id="padding-form">
                                 <CustomForm
+                                    id="custom-form-final-result"
                                     Form={Form}
                                     loading={loading}
                                     formFields={[

@@ -7,7 +7,7 @@ import CardActions from "./components/cardActions"
 import { CardDashboardProps } from "../../types/cards/cardDashboardProps"
 
 /** A friendly dashboard simple card with icon, title and actions*/
-const DashboardCard = ({ icon, actions, alignActions, size, contents }: CardDashboardProps) => {
+const DashboardCard = ({ icon, actions, alignActions, size, contents, id }: CardDashboardProps) => {
 
   const getCardSize = () => {
     switch (size) {
@@ -25,7 +25,7 @@ const DashboardCard = ({ icon, actions, alignActions, size, contents }: CardDash
         <Divider className={style.customDivider}/>
         <CardBody contents={contents} />
         {(!actions || actions?.length > 0) && <Divider className={style.customDivider} />}
-        <CardActions actions={actions} align={alignActions ?? "end"} />
+        <CardActions id={id} actions={actions} align={alignActions ?? "end"} />
       </Card>
     </Box>
   )

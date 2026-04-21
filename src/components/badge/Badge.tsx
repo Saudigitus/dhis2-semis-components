@@ -4,9 +4,9 @@ import { BadgeProps } from '../../types/badge/BadgeTypes'
 
 
 export default function Badge(props: BadgeProps): React.ReactElement {
-    const { value } = props
+    const { value, id } = props
     
     return (
-        <span className={style.badgeContainer}>{value}</span>
+        <span id={id} className={style.badgeContainer}>{value}</span>
     )
 }

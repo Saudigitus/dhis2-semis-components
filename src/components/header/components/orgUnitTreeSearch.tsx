@@ -113,10 +113,10 @@ const OrgUnitTreeSearch = ({ onChange }) => {
 
     return (
         <div className={style.HeaderMenu} onClick={(e) => e.stopPropagation()}>
-            <Menu>
+            <Menu dataTest="list-menu-schools">
                 <div onClick={(e) => e.stopPropagation()}>
                     <div className={style.SimpleSearcInputContainer} >
-                        <Input onChange={onChangeQuerySearch} value={stringQuery} initialFocus placeholder={i18n.t("Search for a school")} name="input" />
+                        <Input dataTest="search-school" onChange={onChangeQuerySearch} value={stringQuery} initialFocus placeholder={i18n.t("Search for a school")} name="input" />
                     </div>
                     <OrgUnitTree onChange={onChange} stringQuery={stringQuery} />
                 </div>
