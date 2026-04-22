@@ -41,4 +41,10 @@ export interface CardSummaryProps {
      * @type {?string}
      */
     className?: string;
+    /**
+     * Data test attribute for the card container, used for testing.
+     *
+     * @type {string}
+     */
+    dataTest: string;
 }
