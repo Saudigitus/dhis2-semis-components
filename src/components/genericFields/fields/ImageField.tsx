@@ -18,7 +18,7 @@ interface CombinedProps extends FormFieldsProps, imageFieldSpecificProps { }
 
 
 function ImageField(props: CombinedProps) {
-    const { disabled, name, form, storyBook } = props
+    const { dataTest, disabled, name, form, storyBook } = props
     const [errorImage, setErrorImage] = useState<any>()
     const [uploadedImage, setUploadedImage] = useState<any>()
     const { input }: FieldRenderProps<any, HTMLElement> = useField(name)
@@ -98,6 +98,7 @@ function ImageField(props: CombinedProps) {
                                 type="file"
                                 onChange={handleFileChange}
                                 disabled={disabled}
+                                data-test={dataTest + "-input"}
                             />
                             <label htmlFor="contained-button-file">
                                 <Button
@@ -106,6 +107,7 @@ function ImageField(props: CombinedProps) {
                                     startIcon={<IconUpload24 />}
                                     loading={loading}
                                     disabled={disabled}
+                                    data-test={dataTest + "-button"}
                                 >
                                     {i18n.t("Choose File")}
                                 </Button>

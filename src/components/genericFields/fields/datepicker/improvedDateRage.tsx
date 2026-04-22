@@ -12,9 +12,10 @@ interface DateRangePickerProps {
     name: string;
     disabled?: boolean;
     setChanged?: any
+    dataTest: string;
 }
 
-const DateRangePicker: React.FC<DateRangePickerProps> = ({ name, disabled, setChanged }) => {
+const DateRangePicker: React.FC<DateRangePickerProps> = ({ dataTest, name, disabled, setChanged }) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [open, setOpen] = useState(false);
     const i18n = useRecoilValue(TranslationState) as any
@@ -41,6 +42,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ name, disabled, setCh
                                     ? `${format(selected.startDate, 'MMMM d, yyyy')} - ${format(selected.endDate, 'MMMM d, yyyy')}`
                                     : ''
                             }
+                            data-test={dataTest}
                             size="small"
                             onClick={(event: React.MouseEvent<HTMLElement>) => {
                                 setAnchorEl(event.currentTarget);
