@@ -132,6 +132,7 @@ function ModalSearchEnrollmentContent(props: ModalSearchTemplateProps) {
       handleClose={() => setOpen(false)}
       open={open}
       size="large"
+      dataTest="search-enrollment-content"
       isClickAway={false}
       showActions={showResults}
       children={
