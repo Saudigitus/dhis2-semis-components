@@ -7,7 +7,7 @@ export default function SwitchButtonView({ items, maxLinearItems, selected, setS
   const maxItems = maxLinearItems ?? 3;
 
   return (
-    <div>
+    <div data-test="switch-buttons-view">
       {items?.length > maxItems ? (
         <SimpleDropdownButton
           items={items}

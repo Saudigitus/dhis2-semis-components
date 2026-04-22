@@ -39,6 +39,7 @@ export default function SimpleDropdownButton(props: SimpleButtonsComponentProps)
     <>
       <Button
         ref={buttonRef}
+        data-test={`simple-dropdown-button-${selected?.id}`}
         className={styles.simpleDropdownButton}
         variant="outlined"
         onClick={handleClick}
@@ -51,6 +52,7 @@ export default function SimpleDropdownButton(props: SimpleButtonsComponentProps)
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        data-test="simple-dropdown-menu"
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         transformOrigin={{ vertical: "top", horizontal: "center" }}
         slotProps={{
@@ -62,6 +64,7 @@ export default function SimpleDropdownButton(props: SimpleButtonsComponentProps)
         {items.map((item, i) => (
           <MenuItem
             key={i}
+            data-test={`simple-dropdown-menu-item-${item?.id}`}
             className={classNames(styles.simpleMenuItem, selected?.id === item.id && styles.activeMenuItem)}
             onClick={() => handleSelect(item)}
           >
