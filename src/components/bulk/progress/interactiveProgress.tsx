@@ -19,6 +19,7 @@ export default function ModalProgress({ progress, open, setOpen, module }: { pro
         <ModalComponent
             open={open}
             handleClose={() => setOpen(false)}
+            dataTest={`${module}-${progress.prorocess}-progress-modal`}
             title={progress.prorocess == 'export' ? i18n.t("Export progress") : i18n.t("Import progress")}
             children={
                 <div className={styles.loadingContainer}>

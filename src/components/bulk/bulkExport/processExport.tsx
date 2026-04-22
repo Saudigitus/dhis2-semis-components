@@ -28,7 +28,7 @@ export default function ProcessExport(props: ExportData) {
     }, [progress.progress])
 
     return (
-        <>
+        <div data-test={`${module}-process-export`}>
             <a style={{ width: "100%", cursor: "pointer", padding: "5px" }} onClick={async (e) => {
                 e.preventDefault()
                 if (empty || module === Modules.Attendance) setOpen(true)
@@ -51,6 +51,6 @@ export default function ProcessExport(props: ExportData) {
                 module={module as unknown as string}
                 setOpen={setOpenProgress}
             />
-        </>
+        </div>
     )
 }
