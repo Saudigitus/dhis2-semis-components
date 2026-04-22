@@ -19,6 +19,7 @@ export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form
 
     return (
         <ModalComponent
+            dataTest={`${module}-export-empty-modal`}
             open={open}
             size='large'
             handleClose={() => setOpen(false)}

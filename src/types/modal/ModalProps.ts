@@ -80,6 +80,11 @@ interface ModalProps {
    * A variable to choose of you want to show actions or not
    */
     showActions?: boolean
+    /**
+     * A prop to send modal test. Optional.
+     * @type {string}
+     */
+    dataTest: string
 }
 
 export type { ModalProps }

@@ -6,7 +6,7 @@ import { Modal, ModalContent, ModalActions, ButtonStrip, Button, Center, Circula
 
 function ModalComponent(props: ModalProps): React.ReactElement {
   const modalRef: React.MutableRefObject<HTMLDivElement | undefined> = useRef(null);
-  const { showActions = true, open, title, children, handleClose, position = "middle", size = "large", isClickAway = false, actions, loading = false } = props;
+  const { showActions = true, open, title, children, handleClose, position = "middle", size = "large", isClickAway = false, actions, loading = false, dataTest } = props;
 
   /*** Click away code */
   useEffect(() => {
@@ -33,6 +33,7 @@ function ModalComponent(props: ModalProps): React.ReactElement {
         open ?
           <div ref={modalRef as any}>
             <Modal
+              dataTest={dataTest}
               position={position}
               className={classNames(styles.modalContainer, styles[size])}
             >
@@ -44,7 +45,7 @@ function ModalComponent(props: ModalProps): React.ReactElement {
                 </button>
               </div>
 
-              <div className={styles.modalTitle}>{title}</div>
+              <div data-test={`${dataTest}-title`} className={styles.modalTitle}>{title}</div>
 
               {
                 loading ?
@@ -53,14 +54,14 @@ function ModalComponent(props: ModalProps): React.ReactElement {
                   </Center>
                   :
                   <>
-                    <ModalContent>{children}</ModalContent>
+                    <ModalContent dataTest={`${dataTest}-content`}  >{children}</ModalContent>
                     {
                       (actions?.length && showActions) ?
-                        <ModalActions>
+                        <ModalActions dataTest={`${dataTest}-actions`}>
                           <ButtonStrip end className={styles.modalButtonsStrip}>
                             {
                               actions.map((action, i) => (
-                                <Button key={i} {...action} className={classNames(styles.modalButtons, loading && styles['btnLoading'])}
+                                <Button dataTest={`${dataTest}-action-${action.name}`} key={i} {...action} className={classNames(styles.modalButtons, loading && styles['btnLoading'])}
                                   style={action.color ? { backgroundColor: `${action.color}`, border: `${action.color}`, color: "white" } : {}}
                                 >
                                   {action.name}
