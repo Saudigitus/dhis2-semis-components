@@ -11,6 +11,7 @@ interface DropDownCalendarProps {
     icon?: any
     value?: string
     config?: SchoolCalendar
+    dataTest: string
 }
 
 interface CalendarProps {
@@ -18,6 +19,7 @@ interface CalendarProps {
     dateDisabler?: (date: Date, config: SchoolCalendar) => boolean
     setValue: ({ selectedDate }: { selectedDate: Date }) => void
     config?: SchoolCalendar
+    dataTest: string
 }
 
 interface defaults {

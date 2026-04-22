@@ -57,7 +57,7 @@ export default function ProcessImport(props: importData) {
     }
 
     return (
-        <div>
+        <div data-test={`${module}-process-import`}>
             <a style={{ width: "100%", cursor: "pointer", padding: "5px" }} onClick={(e) => {
                 e.preventDefault()
                 setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], warningDetails: [], exceptions: [], byType: [] })
@@ -67,6 +67,7 @@ export default function ProcessImport(props: importData) {
             </a>
 
             <ModalComponent
+                dataTest={`${module}-process-import-modal`}
                 children={<DropZone onCancel={() => setOpen(false)} loading={loader} accept='.csv,.xlsx' onSave={(file) => onValidation(file)} />}
                 handleClose={() => { setOpen(false) }}
                 open={open}
@@ -74,6 +75,7 @@ export default function ProcessImport(props: importData) {
             />
 
             {openStats && <ModalComponent
+                dataTest={`${module}-import-stats-modal`}
                 children={
                     <ModalSummaryContent
                         onSubmit={onSubmit}
