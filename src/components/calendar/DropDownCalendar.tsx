@@ -53,6 +53,6 @@ export default function DropDownCalendar(props: DropDownCalendarProps) {
                     </div>
                 </Paper>
             </Popover>
-        </>
+        </div>
     )
 }
