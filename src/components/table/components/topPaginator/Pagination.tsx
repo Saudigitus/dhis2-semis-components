@@ -9,13 +9,13 @@ import { useRecoilValue } from 'recoil';
 import { TranslationState } from '../../../../schemas/translationsSchema';
 
 
-function TopPaginator({ page, rowsPerPage, onPageChange, totalData, disablePreviousPage, disableNextPage, totalElements }: PaginationProps): React.ReactElement {
+function TopPaginator({ dataTest, page, rowsPerPage, onPageChange, totalData, disablePreviousPage, disableNextPage, totalElements }: PaginationProps): React.ReactElement {
     const start = (page - 1) * rowsPerPage + 1;
     const end = start + totalData - 1;
     const i18n = useRecoilValue(TranslationState) as any
 
     return (
-        <div className={defaultClasses.pagination}>
+        <div data-test={dataTest} className={defaultClasses.pagination}>
             <div />
 
             <div className={defaultClasses.rootPagination}>
@@ -24,6 +24,7 @@ function TopPaginator({ page, rowsPerPage, onPageChange, totalData, disablePrevi
                 <div className={defaultClasses.separator} />
 
                 <IconButtonPagination
+                    dataTest={`${dataTest}-previous-page`}
                     Icon={<KeyboardArrowLeft />}
                     ariaLabel={i18n.t('Previous Page')}
                     disabled={disablePreviousPage}
@@ -31,6 +32,7 @@ function TopPaginator({ page, rowsPerPage, onPageChange, totalData, disablePrevi
                 />
 
                 <IconButtonPagination
+                    dataTest={`${dataTest}-next-page`}
                     Icon={<KeyboardArrowRight />}
                     ariaLabel={i18n.t('Next Page')}
                     disabled={disableNextPage}

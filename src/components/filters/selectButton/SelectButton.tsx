@@ -89,6 +89,7 @@ function SelectButton(props: SelectButtonProps) {
                         title={title}
                         selectorVisible={selectorVisible}
                         tooltipContent={tooltipContent}
+                        
                     />
                     : <RenderWithoutAppliedFilter
                         classes={classes}

@@ -81,7 +81,7 @@ interface ModalProps {
    */
     showActions?: boolean
     /**
-     * A prop to send modal test. Optional.
+     * A prop to send modal test.
      * @type {string}
      */
     dataTest: string

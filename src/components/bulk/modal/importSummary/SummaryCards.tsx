@@ -30,18 +30,18 @@ function SummaryCards({ validRecs, invalidRecs, doneProcessing, stats, module }:
     }
 
     return (
-        <ButtonStrip>
+        <ButtonStrip dataTest={`${module}-summary-cards`}>
             {!doneProcessing ? <>
-                <SummaryCard color="success" label={`${i18n.t("New Records")}`} value={getStats()} />
-                <SummaryCard color="warning" label={`${i18n.t("Invalid Records")}`} value={getStats(true)} />
+                <SummaryCard dataTest={`${module}-new-records-card`} color="success" label={`${i18n.t("New Records")}`} value={getStats()} />
+                <SummaryCard dataTest={`${module}-invalid-records-card`} color="warning" label={`${i18n.t("Invalid Records")}`} value={getStats(true)} />
             </>
                 :
                 <>
-                    <SummaryCard color="success" label={`${i18n.t("Imported Records")}`} value={stats?.stats?.created?.toString()} />
-                    <SummaryCard color="updated" label={`${i18n.t("Updated Records")}`} value={stats?.stats?.updated?.toString()} />
-                    <SummaryCard color="error" label={`${i18n.t("Errors")}`} value={stats?.stats?.ignored?.toString()} />
-                    <SummaryCard color="warning" label={`${i18n.t("Warnings")}`} value={stats?.warningDetails?.length ?? 0} />
-                    <SummaryCard color="secondary" label={`${i18n.t("Total rows")}`} value={validRecs?.length + invalidRecs?.length} />
+                    <SummaryCard dataTest={`${module}-imported-records-card`} color="success" label={`${i18n.t("Imported Records")}`} value={stats?.stats?.created?.toString()} />
+                    <SummaryCard dataTest={`${module}-updated-records-card`} color="updated" label={`${i18n.t("Updated Records")}`} value={stats?.stats?.updated?.toString()} />
+                    <SummaryCard dataTest={`${module}-errors-card`} color="error" label={`${i18n.t("Errors")}`} value={stats?.stats?.ignored?.toString()} />
+                    <SummaryCard dataTest={`${module}-warnings-card`} color="warning" label={`${i18n.t("Warnings")}`} value={stats?.warningDetails?.length ?? 0} />
+                    <SummaryCard dataTest={`${module}-total-rows-card`} color="secondary" label={`${i18n.t("Total rows")}`} value={validRecs?.length + invalidRecs?.length} />
                 </>
             }
         </ButtonStrip>

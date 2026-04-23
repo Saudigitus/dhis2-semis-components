@@ -137,7 +137,8 @@ function ContentFilter(props: EnrollmentFilterProps) {
                 localFilters.filter(x => x.searchable === true).map((colums, index) => {
                     const filled = (Boolean(fieldsFilled[colums.id])) && fieldsFilled[colums.id]
                     return (
-                        <SelectButton key={index}
+                        <SelectButton
+                            key={index}
                             tooltipContent=''
                             title={colums.displayName}
                             value={filtersValues[colums.id]}
@@ -168,6 +169,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
                     <Button className={styles.moreFilters}
                         variant='outlined'
                         onClick={handleClick}
+                        data-test={`${module}-table-more-filters`}
                     >
                         {i18n.t("More Filters")}
                     </Button>

@@ -55,7 +55,7 @@ export const useStyles = () => {
 
 
 function RenderHeader(props: RenderHeaderProps): React.ReactElement {
-    const { selectedAll, rowsHeader = [], showRowIndex, order, orderBy, createSortHandler, isCheckbox, checked, indeterminate, onChange, sortable, showRowActions } = props
+    const { dataTest, selectedAll, rowsHeader = [], showRowIndex, order, orderBy, createSortHandler, isCheckbox, checked, indeterminate, onChange, sortable, showRowActions } = props
     const classes = useStyles()
     const i18n = useRecoilValue(TranslationState) as any
 
@@ -72,6 +72,7 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
         return (
             <HeaderCell
                 key={column.id}
+                dataTest={`${dataTest}-header-cell-${column.id}`}
                 style={{ ...classes.cell, ...classes.headerCell, color: headerColor }}
             >
                 {
@@ -79,6 +80,7 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
                         <SortLabel
                             active={orderBy === column.id}
                             direction={orderBy === column.id ? order : 'asc'}
+                            data-test={`${dataTest}-sort-label-${column.id}`}
                             createSortHandler={createSortHandler ? createSortHandler(column.id) : undefined}
                             className={classNames(classes.cell, classes.headerCell)}
                         >
@@ -99,12 +101,16 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
     })
 
     return (
-        <thead>
+        <thead
+            data-test={`${dataTest}-thead`}
+        >
             <RowTable
                 style={classes.row}
+                dataTest={`${dataTest}-row-table`}
             >
                 {isCheckbox &&
                     <HeaderCell
+                        dataTest={`${dataTest}-header-checkbox`}
                         style={{ ...classes.cell, ...classes.headerCell }}
                     >
                         <Checkbox
@@ -116,6 +122,7 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
                 }
                 {showRowIndex &&
                     <HeaderCell
+                        dataTest={`${dataTest}-header-cell-row-index`}
                         style={{ ...classes.cell, ...classes.headerCell }}
                     >
                         <span>#</span>
@@ -126,6 +133,7 @@ function RenderHeader(props: RenderHeaderProps): React.ReactElement {
 
                 {showRowActions &&
                     <HeaderCell
+                        dataTest={`${dataTest}-header-cell-row-actions`}
                         style={{ ...classes.cell, ...classes.headerCell }}
                     >
                         <span>{i18n.t("Actions")}</span>

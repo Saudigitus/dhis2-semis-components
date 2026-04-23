@@ -1,4 +1,5 @@
 interface PaginationProps {
+    dataTest: string
     page: number
     rowsPerPage: number
     onPageChange: (page: number) => void
@@ -14,6 +15,7 @@ interface PaginationProps {
 
 
 interface IconButtonPaginationProps {
+    dataTest: string
     onPageChange: (page: number) => void
     ariaLabel: string
     disabled: boolean

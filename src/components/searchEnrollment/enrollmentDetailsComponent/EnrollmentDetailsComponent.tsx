@@ -13,7 +13,7 @@ function EnrollmentDetailsComponent(props: any): React.ReactElement {
   const i18n = useRecoilValue(TranslationState) as any
 
   return (
-    <div className={styles.details_container}>
+    <div className={styles.details_container} data-test="enrollment-details-component">
       <div className={styles.details_header}>
         <div className={styles.details_header_title}>
           <h6 style={{ fontSize: 13 }}>{i18n.t("Enrollment History")}</h6>
@@ -26,15 +26,18 @@ function EnrollmentDetailsComponent(props: any): React.ReactElement {
               })}
             </i>
             :
-            <Button {...{ small: true, success: "success", onClick: onSelectTei, label: i18n.t("New enrollment"), icon: <IconAddCircle16 /> }} />
+            <Button
+              dataTest="new-enrollment-button"
+              {...{ small: true, success: "success", onClick: onSelectTei, label: i18n.t("New enrollment"), icon: <IconAddCircle16 /> }}
+            />
           }
         </div>
       </div>
       <div className={styles.details_body}>
 
         {enrollmentsData.length ?
-          enrollmentsData?.map((enrollment: any) => (
-            <div className={styles.detailsCard}>
+          enrollmentsData?.map((enrollment: any, i: number) => (
+            <div className={styles.detailsCard} data-test={`enrollment-card-${i}`}>
               {dataElements?.map((dataElement: any, key: number) => (
                 <div className={styles.details_body_list} key={key}>
                   <label className={styles.detailsCardVariable}>{dataElement?.displayName}:</label>

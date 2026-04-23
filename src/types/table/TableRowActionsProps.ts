@@ -26,6 +26,11 @@ interface TableRowActionsProps {
      * @type {?TableRowActionsType}
      */
     displayType?: TableRowActionsType
+    /**
+    *  A prop to send modal test.
+    * @type {dataTest}
+    */
+    dataTest: string
 }
 
 interface RowActionsType {
@@ -82,6 +87,11 @@ interface RowActionsProps {
      * @type {RowActionsType[]}
      */
     actions: RowActionsType[]
+    /**
+    * A prop to send modal test.
+    * @type {dataTest}
+    */
+    dataTest: string
 }
 
 

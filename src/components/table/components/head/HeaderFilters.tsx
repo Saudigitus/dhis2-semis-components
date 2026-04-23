@@ -20,13 +20,14 @@ interface HeaderFiltersProps {
   selected?: number
   selectable?: boolean
   beforeSettings?: ReactElement
+  dataTest?: string
 }
 
 function HeaderFilters(props: HeaderFiltersProps): React.ReactElement {
-  const { beforeSettings, updateVariables, filteredHeaders, columns, filterState, setFilterState, defaultFilterNumber, selectable, selected } = props;
+  const { beforeSettings, updateVariables, filteredHeaders, columns, filterState, setFilterState, defaultFilterNumber, selectable, selected, dataTest } = props;
 
   return (
-    <div className={styles.filterContainer}>
+    <div data-test={dataTest} className={styles.filterContainer}>
       <EnrollmentFilters filterState={filterState} variables={columns} setFilterState={setFilterState} defaultFilterNumber={defaultFilterNumber} />
 
       <div>

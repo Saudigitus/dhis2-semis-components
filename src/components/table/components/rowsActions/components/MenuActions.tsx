@@ -6,7 +6,7 @@ import { MoreVert } from '@mui/icons-material';
 
 
 export default function MenuActions(props: RowActionsProps) {
-  const { actions: menuItems, disabled, row } = props;
+  const { actions: menuItems, disabled, row, dataTest } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -26,6 +26,7 @@ export default function MenuActions(props: RowActionsProps) {
           aria-haspopup="true"
           disabled={disabled}
           onClick={handleClick}
+          data-test={`${dataTest}-button`}
           aria-expanded={open ? 'true' : undefined}
           aria-controls={open ? 'basic-menu' : undefined}
           style={{ color: "#212121", opacity: disabled ? "0.5" : "1" }}
@@ -45,10 +46,12 @@ export default function MenuActions(props: RowActionsProps) {
           vertical: 'top',
           horizontal: 'center',
         }}
+        data-test={`${dataTest}-action-menu`}
       >
         {menuItems?.map((item: any, index: any) => (
           <MenuItem dense
             key={index}
+            data-test={`${dataTest}-action-menu-item`}
             onClick={(event) => {
               item.onClick({ row });
               handleClose();

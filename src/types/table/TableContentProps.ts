@@ -9,6 +9,7 @@ interface TableProps {
 }
 
 interface TableComponentProps {
+    dataTest: string
     children?: React.ReactNode
     className?: string
 }
@@ -21,6 +22,7 @@ interface HeaderCellProps {
     colspan?: number
     onClick?: (args: any) => void
     style?: any
+    dataTest: string
 }
 
 interface RowProps {
@@ -34,9 +36,11 @@ interface RowProps {
     disableHoverListener?: boolean
     tooltip?: boolean
     style?: any
+    dataTest: string
 }
 
 interface RenderHeaderProps {
+    dataTest: string
     rowsHeader?: CustomAttributeProps[]
     orderBy?: string
     showRowIndex?: boolean
@@ -53,6 +57,7 @@ interface RenderHeaderProps {
 }
 
 interface RenderRowsProps {
+    dataTest: string
     showRowIndex?: boolean
     headerData?: CustomAttributeProps[]
     rowsData: Record<string, any>[]
@@ -75,6 +80,8 @@ interface RenderRowsProps {
 }
 
 interface MobileRowsProps {
+    dataTest: string
+    apiVersion: number
     inactive?: boolean
     checkable?: boolean
     showAction?: boolean

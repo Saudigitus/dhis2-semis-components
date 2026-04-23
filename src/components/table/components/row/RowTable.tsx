@@ -5,7 +5,7 @@ import { RowProps } from '../../../../types/table/TableContentProps';
 import { Tooltip } from '@mui/material';
 
 function RowTable(props: RowProps): React.ReactElement {
-    const { children, className, table, inactive = false, disableHoverListener, title, tooltip, ...passOnProps } = props;
+    const { children, className, table, inactive = false, disableHoverListener, title, tooltip, dataTest, ...passOnProps } = props;
 
     const classes = classNames(
         defaultClasses.tableRow,
@@ -20,9 +20,10 @@ function RowTable(props: RowProps): React.ReactElement {
 
     return (
         tooltip ?
-            <Tooltip arrow={true} disableHoverListener={disableHoverListener} disableFocusListener
+            <Tooltip data-test={`${dataTest}-row-table-tooltip`} arrow={true} disableHoverListener={disableHoverListener} disableFocusListener
                 title={title!}>
                 <tr
+                    data-test={`${dataTest}-row-table`}
                     className={classes}
                     {...passOnProps}
                 >
@@ -31,6 +32,7 @@ function RowTable(props: RowProps): React.ReactElement {
             </Tooltip>
             :
             <tr
+                data-test={`${dataTest}-row-table`}
                 className={classes}
                 {...passOnProps}
             >

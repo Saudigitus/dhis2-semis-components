@@ -4,9 +4,10 @@ import { IconButtonPaginationProps } from "../../../../types/table/PaginationPro
 import { IconButton } from '@mui/material';
 
 export default function IconButtonPagination(props: IconButtonPaginationProps): React.ReactElement {
-    const {Icon, ariaLabel, disabled, onPageChange} = props;
+    const { dataTest, Icon, ariaLabel, disabled, onPageChange } = props;
     return (
         <IconButton
+            data-test={dataTest}
             onClick={(page: any) => onPageChange(page)}
             disabled={disabled}
             aria-label={ariaLabel}

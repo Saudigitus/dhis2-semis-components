@@ -89,6 +89,7 @@ export const useStyles = () => {
 
 
 function RenderRows(props: RenderRowsProps): React.ReactElement {
+    const { dataTest } = props
     const config = useConfig()
     const classes = useStyles()
     const { imageUrl } = GetImageUrl()
@@ -105,8 +106,10 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
         return (
             <RowTable
                 style={classes.row}
+                dataTest={`${dataTest}-table-row`}
             >
                 <RowCell
+                    dataTest={`${dataTest}-row-cell`}
                     style={{ ...classes.cell, ...classes.bodyCell }}
                     colspan={headerData?.filter(x => x.visible)?.length as unknown as number + 1}
                 >
@@ -121,6 +124,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
             <>
                 {isCheckbox &&
                     <RowCell
+                        dataTest={`${dataTest}-row-cell-${row?.id}`}
                         style={{ ...classes.cell, ...classes.bodyCell }}
                     >
                         <Checkbox
@@ -128,6 +132,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                             indeterminate={indeterminate}
                             checked={isSelected(row)}
                             onChange={() => onChange && onChange(row)}
+                            data-test={`${dataTest}-row-cell-checkbox-${row?.id}`}
                         />
                     </RowCell>
                 }
@@ -142,6 +147,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                     showRowActions &&
                     <RowCell
                         key={"actions"}
+                        dataTest={`${dataTest}-row-cell-${row?.id}`}
                         style={{ ...classes.cell, ...classes.bodyCell, ...classes.actionsCell }}
                     >
                         <TableRowActions
@@ -152,6 +158,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 }] : rowAction
                             }
                             row={row}
+                            dataTest={`${dataTest}-row-action-${row?.id}`}
                             disabled={checkCanceled(row.status) && !enableInactiveRowSelection}
                             loading={loading!}
                             displayType={displayType}
@@ -167,6 +174,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
             <>
                 {showRowIndex &&
                     <RowCell
+                        dataTest={`${dataTest}-row-cell-${index}`}
                         style={{ ...classes.cell, ...classes.bodyCell }}
                     >
                         {(pagination?.page - 1) * pagination?.pageSize + index + 1}
@@ -188,6 +196,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 key={index}
                                 title={inactiveRowMessage}
                                 inactive={checkCanceled(row.status)}
+                                dataTest={`${dataTest}-table-row-${row?.id}`}
                                 isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
                                 style={{ ...classes.row, ...classes.dataRow, ...((searchActions && showEnrollments) ? classes.dataRowCollapsed : {}) }}
                             >
@@ -197,20 +206,23 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                     headerData?.filter((x: any) => x.visible)?.map((column: any) => (
                                         <RowCell
                                             key={column.id}
+                                            dataTest={`${dataTest}-row-cell-${row?.id}`}
                                             style={{ ...classes.cell, ...classes.bodyCell }}
                                             onClick={() => onRowClick ? onRowClick(row) : {}}
                                         >
                                             {
                                                 column.type === VariablesTypes.Custom ? row[column.id] :
                                                     formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
-                                                        <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity, program: programConfig.id , apiVersion: config.apiVersion })} target='_blank'>
+                                                        <a
+                                                            data-test={`${dataTest}-row-cell-${row?.id}-image-url`}
+                                                            href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity, program: programConfig.id, apiVersion: config.apiVersion })} target='_blank'>
                                                             {row[column.id] &&
                                                                 <Tooltip title={i18n.t("Click to open in new tab")} >
                                                                     <IconButton> <CropOriginal /></IconButton>
                                                                 </Tooltip>
                                                             }
                                                         </a>
-                                                        : <div>
+                                                        : <div data-test={`${dataTest}-row-cell-${row?.id}-value`}>
                                                             {getDisplayName({ metaData: column.id, value: row[column.id], program: programConfig })}
                                                         </div>
                                             }
@@ -230,13 +242,19 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 inactive={checkCanceled(row.status)}
                                 rowIndex={renderRowIndex({ index })}
                                 rowActions={renderRowAction({ row })}
+                                apiVersion={config.apiVersion}
+                                program={programConfig.id}
+                                dataTest={`${dataTest}-table-mobile-row-${row?.id}`}
                                 checkBox={renderRowCheckBox({ row, disabled: checkCanceled(row.status) })}
                             />
                         }
 
                         {searchActions && showEnrollments === row.trackedEntity ?
-                            <RowTable style={{ ...classes.row, ...classes.historyRow }}>
+                            <RowTable
+                                dataTest={`${dataTest}-table-row-${row?.id}`}
+                                style={{ ...classes.row, ...classes.historyRow }}>
                                 <RowCell
+                                    dataTest={`${dataTest}-row-cell-${row?.id}`}
                                     style={{ ...classes.cell, ...classes.bodyCell }}
                                     colspan={headerData?.filter(x => x.visible)?.length as unknown as number + 1}
                                 >
