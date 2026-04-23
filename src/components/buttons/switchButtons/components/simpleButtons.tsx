@@ -15,10 +15,11 @@ export default function SimpleButtons(props: SimpleButtonsComponentProps): React
   }
 
   return (
-    <ButtonStrip>
+    <ButtonStrip data-test="simple-buttons">
       {items?.map((item) => (
         <div
           key={item?.id}
+          data-test={`simple-button-${item?.id}`}
           className={classNames(styles.simpleButton , selected?.id === item?.id ? styles["active-button"] : "", buttonClassName)}
           onClick={() => handleSelect(item)}
         >
