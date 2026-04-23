@@ -12,7 +12,7 @@ export default function SideBarItem(props: SideBarItemProps): React.ReactElement
             <SideBarItemTitle title={title} />
             <ul className={style.sideBarItemListContainer}>
                 {subItems?.filter((subItem) => subItem.displayInMenu).map((subItem, index: number) => (
-                    <SideBarSubItem key={index} {...subItem}/>
+                    <SideBarSubItem key={index} {...subItem} title={title}/>
                 ))}
             </ul>
         </section>

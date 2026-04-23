@@ -166,7 +166,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                             noValueMessage={i18n.t("Select a academic year")}
                             open={openAcademicYear}
                             setOpen={() => setOpenAcademicYear(!openAcademicYear)}
-                            dataTest="academicYear"
+                            dataTest="menu-academicYear-header"
                         >
                             <MenuSelect dataElelementId={schoolCalendar?.academicYear} program={program} placeholder={i18n.t("Select a academic year")} isSeachable={false} values={getAcademicYearOptions({ schoolCalendar, program })} selected={headerValues?.selectedAcademicYear?.value} onChange={onChangeAcademicYear} />
                         </SelectorBarItem>
@@ -192,7 +192,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                 label={i18n.t("School")}
                 noValueMessage={i18n.t("Select a school")}
                 open={openOu}
-                dataTest="school"
+                dataTest="menu-school-header"
                 setOpen={() => setOpenOu(!openOu)}
             >
                 <DataProvider baseUrl={baseUrl}>
@@ -212,7 +212,7 @@ const SemisHeaderRaw = ({ headerItems, program, dataStoreValues, baseUrl = "http
                             value={searchParams.get(item?.ulrParam) ? headerValues[item?.ulrParam]?.value : ""}
                             noValueMessage={item.placehoder ?? `${i18n.t("Select a")} ${formatStringToLowerCase(item.label) ?? i18n.t("item")}`}
                             open={item.open}
-                            dataTest={item?.label}
+                            dataTest={"menu-" + item?.ulrParam + "-header"}
                             setOpen={() => onOpenDynamicItems(item)}
                         >
                             <MenuSelect

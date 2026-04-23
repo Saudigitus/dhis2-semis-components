@@ -98,6 +98,7 @@ interface SideBarSubItemProps {
       * @type {void}
       */
     action: () => void
+    title?: string
 }
 
 /**
