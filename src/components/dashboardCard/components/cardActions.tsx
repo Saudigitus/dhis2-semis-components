@@ -26,7 +26,7 @@ const CardActions = ({ actions, align, dataTest }: { actions?: Action[], align: 
                                     size="small"
                                     onClick={action?.onAction}
                                     disabled={action?.disabled}
-                                    data-test={dataTest}
+                                    data-test={`${dataTest}-${action?.label ?? ""}`}
                                 >
                                     {action.icon ?? <></>}
                                 </IconButton>

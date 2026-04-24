@@ -19,7 +19,7 @@ const DashboardCard = ({ icon, actions, alignActions, size, contents, dataTest }
   }
 
   return (
-    <Box className={classNames(style.dinamicBox, style[getCardSize()])}>
+    <Box data-test={dataTest} className={classNames(style.dinamicBox, style[getCardSize()])}>
       <Card className={classNames(style.cardContainer)}>
         <CardHeader icon={icon} />
         <Divider className={style.customDivider}/>

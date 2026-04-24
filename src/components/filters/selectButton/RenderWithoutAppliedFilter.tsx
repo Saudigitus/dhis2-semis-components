@@ -18,12 +18,14 @@ function RenderWithoutAppliedFilter(props: RenderWithoutAppliedFilterProps): Rea
                             }
                         }}
                     >
-                        <Button disabled={disabled}>
-                            {title}
-                            <span className={classes.icon}>
-                                {selectorVisible ? <IconChevronUp16 /> : <IconChevronDown16 />}
-                            </span>
-                        </Button>
+                        <span>
+                            <Button disabled={disabled}>
+                                {title}
+                                <span className={classes.icon}>
+                                    {selectorVisible ? <IconChevronUp16 /> : <IconChevronDown16 />}
+                                </span>
+                            </Button>
+                        </span>
                     </div>
                 )}
             </Tooltip>
