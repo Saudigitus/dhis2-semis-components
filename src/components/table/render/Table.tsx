@@ -128,7 +128,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                 {
                     <h4 style={classes.h4}>{title}</h4>
                 }
-                <div data-test={`${module}-table-buttons`} style={classes.tablebuttons}>
+                <div data-test={`table-buttons`} style={classes.tablebuttons}>
                     {rightElements}
                 </div>
             </div>}
@@ -136,7 +136,7 @@ function Table(props: TableRenderProps): React.ReactElement {
             <WithPadding>
                 <WithBorder type='all'>
                     {showHeaderFilters && <HeaderFilters
-                        dataTest={`${module}-header-filters`}
+                        dataTest={`header-filters`}
                         columns={columns}
                         updateVariables={setFilteredHeaders}
                         filteredHeaders={filteredHeaders}
@@ -149,7 +149,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                             <>
                                 {beforeSettings}
                                 {(enableRowCounter && !loading) ? <TopPaginator
-                                    dataTest={`${module}-top-paginator`}
+                                    dataTest={`table-top-paginator`}
                                     loading={loading}
                                     onPageChange={onPageChange}
                                     totalData={tableData.length}
@@ -166,14 +166,14 @@ function Table(props: TableRenderProps): React.ReactElement {
                     />}
                     <div
                         style={classes.tableContainer}
-                        data-test={`${module}-table-container`}
+                        data-test={`table-container`}
                     >
-                        <TableComponent dataTest={`${module}-table`}>
+                        <TableComponent dataTest={`table-component`}>
                             <>
                                 {
                                     viewPortWidth > 520 &&
                                     <RenderHeader
-                                        dataTest={`${module}-header`}
+                                        dataTest={`table-header`}
                                         showRowIndex={showRowIndex}
                                         createSortHandler={createSortHandler}
                                         order={order}
@@ -189,7 +189,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                                 }
                                 {!loading && (
                                     <RenderRows
-                                        dataTest={`${module}-table-body`}
+                                        dataTest={`table-body`}
                                         pagination={pagination}
                                         showRowIndex={showRowIndex}
                                         headerData={filteredHeaders.length > 0 ? filteredHeaders : columns}
@@ -222,7 +222,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                         loading={loading}
                         onPageChange={onPageChange}
                         onRowsPerPageChange={onRowsPerPageChange}
-                        dataTest={`${module}-table-pagination`}
+                        dataTest={`table-pagination`}
                         page={pagination?.page}
                         rowsPerPage={pagination?.pageSize}
                         disablePreviousPage={pagination?.page === 1}
