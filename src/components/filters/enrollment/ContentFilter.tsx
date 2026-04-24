@@ -169,7 +169,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
                     <Button className={styles.moreFilters}
                         variant='outlined'
                         onClick={handleClick}
-                        data-test={`${module}-table-more-filters`}
+                        data-test={`table-more-filters`}
                     >
                         {i18n.t("More Filters")}
                     </Button>

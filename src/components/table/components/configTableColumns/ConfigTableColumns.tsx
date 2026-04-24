@@ -51,10 +51,10 @@ function ConfigTableColumns(props: ConfigTableColumnsProps) {
                 enterDelay={500}
                 title={i18n.t('Select columns')}
                 className="my-auto"
-                data-test={`${module}-table-config-columns-tooltip`}
+                data-test={`table-config-columns-tooltip`}
             >
                 <IconButton
-                    data-test={`${module}-table-config-columns-button`}
+                    data-test={`table-config-columns-button`}
                     onClick={openDialog}
                 >
                     <IconSettings24 />

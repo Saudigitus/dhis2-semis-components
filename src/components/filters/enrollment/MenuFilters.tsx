@@ -16,13 +16,13 @@ export default function MenuFilters(props: MenuFiltersProps) {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
-                data-test={`${module}-table-filters-menu`}
+                data-test={`table-filters-menu`}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
                 {options?.map((option: any, i: number) =>
                     <MenuItem key={i}
-                        data-test={`${module}-table-filters-menu-item-${i}`}
+                        data-test={`table-filters-menu-item-${i}`}
                         onClick={() => { addSearchableHeaders(option); setAnchorEl(null) }}
                     >
                         {option.header}
