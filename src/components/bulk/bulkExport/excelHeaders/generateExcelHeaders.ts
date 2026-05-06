@@ -79,7 +79,7 @@ export function generateHeaders(props: GenerateHeaders) {
                         {
                             header: i18n.t('School'),
                             key: 'school',
-                            width: 8,
+                            width: 20,
                         },
                         {
                             header: i18n.t('Enrollment_Date'),
@@ -127,7 +127,7 @@ export function generateHeaders(props: GenerateHeaders) {
             att.push({
                 header: `${x.trackedEntityAttribute.displayName}${x.mandatory && empty ? "*" : ""}`,
                 key: x.trackedEntityAttribute.id,
-                width: x.trackedEntityAttribute.displayName.length + 2,
+                width: /*x.trackedEntityAttribute.displayName.length + 2*/27,
             });
         }
 
