@@ -80,13 +80,13 @@ export function useExportData(props: ExportData) {
                                     page
                                 }).then((resp) => {
                                     page++
-                                    const data = resp?.filter((x: any) => x.enrollment === data?.[teisCounter]?.enrollment)
+                                    const filteredEvents = resp?.filter((x: any) => x.enrollment === data?.[teisCounter]?.enrollment)
 
                                     data[teisCounter] = {
                                         ...data[teisCounter], ...formatSheetData({
                                             module: module,
                                             stageId: stagesToExport?.[a],
-                                            events: data,
+                                            events: filteredEvents,
                                             dataStore: selectedSectionDataStore as unknown as selectedDataStoreKey
                                         })
                                     }
