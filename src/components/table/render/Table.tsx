@@ -220,7 +220,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                         page={pagination?.page}
                         rowsPerPage={pagination?.pageSize}
                         disablePreviousPage={pagination?.page === 1}
-                        disableNextPage={pagination?.page === pagination?.totalPages}
+                        disableNextPage={(pagination?.page === pagination?.totalPages || tableData?.length === 0 || tableData?.length < pagination?.pageSize)}
                         rowsPerPages={rowsPerPages}
                     />}
                 </WithBorder>
