@@ -33,8 +33,9 @@ export function generateEventObjects(programStages: string[], data: any, program
     return { events }
 }
 
-export function generateAttendanceEventObjects(programStages: string[], data: any, dataStore: selectedDataStoreKey) {
+export function generateAttendanceEventObjects(programStages: string[], data: any, dataStore: selectedDataStoreKey, schoolCalendar: any) {
     let attendanceEvents: any = []
+    const holidays = schoolCalendar?.holidays?.map((x: any) => x.date) ?? []
 
     for (const student of data) {
         if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.orgUnit) {
@@ -44,7 +45,7 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
 
         for (const programStage of programStages) {
             for (const key of Object.keys(student[programStage])) {
-                if (student[programStage][key]) {
+                if (student[programStage][key] && !holidays.includes(key)) {
                     attendanceEvents.push({
                         occurredAt: key,
                         trackedEntity,
