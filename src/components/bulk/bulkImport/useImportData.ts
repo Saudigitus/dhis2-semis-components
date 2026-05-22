@@ -5,6 +5,7 @@ import { postAttendanceValues } from "./postEvents/postAttendance";
 import { postEnrollmentData } from "./postEvents/postEnrollment";
 import { postValues } from "./postEvents/postEvents";
 import { useUrlParams } from "dhis2-semis-functions";
+import { useSchoolCalendarKey } from "../../../hooks/dataStore/useSchoolCalendarKey";
 
 type CombinedTypes = importData & excelData & { importMode: "VALIDATE" | "COMMIT" };
 
@@ -13,7 +14,8 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
     const { postAttendance } = postAttendanceValues({ setStats, setProgress, onError, setOpenProgress })
     const { postEnrollments } = postEnrollmentData({ setStats, setProgress, onError, setOpenProgress })
     const { urlParameters } = useUrlParams()
-    const { school: orgUnit } = urlParameters
+    const { school: orgUnit, academicYear } = urlParameters
+    const { schoolCalendar } = useSchoolCalendarKey()
 
     async function importData(props: CombinedTypes) {
         setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
@@ -41,7 +43,9 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
 
             switch (excelData?.module) {
                 case Modules.Attendance:
-                    const { attendanceEvents } = generateAttendanceEventObjects(displayNames, studentsData, selectedSectionDataStore as unknown as selectedDataStoreKey)
+                    const selectedSchoolCalendar = schoolCalendar?.find(x => x.academicYear?.code === academicYear)
+
+                    const { attendanceEvents } = generateAttendanceEventObjects(displayNames, studentsData, selectedSectionDataStore as unknown as selectedDataStoreKey, selectedSchoolCalendar)
                     const attendanceDisplayName = programConfig?.programStages.find(x => x.id === selectedSectionDataStore?.attendance?.programStage)?.displayName
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
