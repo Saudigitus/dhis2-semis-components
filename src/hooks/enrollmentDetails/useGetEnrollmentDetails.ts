@@ -16,7 +16,7 @@ export function useGetEnrollmentData(props: ExportData) {
         const trackedEntityIds = data?.map((x: { trackedEntity: string }) => x.trackedEntity).join(',')
 
         try {
-            return getTeis({ program: selectedSectionDataStore?.program as unknown as string, trackedEntities: trackedEntityIds, orgUnit })
+            return getTeis({ program: selectedSectionDataStore?.program as unknown as string, trackedEntities: trackedEntityIds, orgUnitMode: "ACCESSIBLE" })
                 .then(async (trackedEntityInstances: any) => {
                     let rows: any = []
                     let counter = 0
