@@ -1,0 +1,63 @@
+.HeaderContainer {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    background: rgb(255, 255, 255);
+    box-shadow: rgb(213, 221, 229) 0px -1px 0px 0px inset;
+    padding-bottom: 1px;
+}
+
+.topHeaderContainer {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.backButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #1478a6;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.backButton:hover {
+    text-decoration: underline;
+    color: #005a9c;
+}
+
+.divider {
+    margin: 0 12px;
+    color: #c4c4c4;
+    font-size: 14px;
+}
+
+.breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.breadcrumbLabel {
+    color: #6c757d;
+    font-weight: 400;
+}
+
+.chevron {
+    color: #a0aec0;
+    font-size: 14px;
+}
+
+.studentName {
+    color: #1b2533;
+    font-weight: 600;
+}
