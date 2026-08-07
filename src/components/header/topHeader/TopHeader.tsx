@@ -5,12 +5,13 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import style from './topHeader.module.css';
 
 export interface TopHeaderProps {
-    studentName?: string;
+    studentName: string;
     i18n?: any;
     onBack?: () => void;
+    type: "student" | "staff"
 }
 
-export const TopHeader = ({ studentName, i18n, onBack }: TopHeaderProps) => {
+export const TopHeader = ({ studentName, i18n, onBack, type }: TopHeaderProps) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -23,8 +24,7 @@ export const TopHeader = ({ studentName, i18n, onBack }: TopHeaderProps) => {
     };
 
     const backText = i18n?.t ? i18n.t("Back to Enrollments") : "Back to Enrollments";
-    const enrollmentText = i18n?.t ? i18n.t("Enrollment") : "Enrollment";
-    const defaultStudentName = i18n?.t ? i18n.t("Student Profile") : "Student Profile";
+    const enrollmentText = i18n?.t ? type === "student" ? i18n.t("Enrollment") : i18n.t("Staff") : type === "staff" ? "Staff" : "Enrollment";
 
     return (
         <div className={style.HeaderContainer}>
@@ -42,7 +42,7 @@ export const TopHeader = ({ studentName, i18n, onBack }: TopHeaderProps) => {
                 <div className={style.breadcrumb}>
                     <span className={style.breadcrumbLabel}>{enrollmentText}</span>
                     <span className={style.chevron}>›</span>
-                    <span className={style.studentName}>{studentName || defaultStudentName}</span>
+                    <span className={style.studentName}>{studentName}</span>
                 </div>
             </div>
         </div>
