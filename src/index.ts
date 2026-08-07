@@ -39,9 +39,11 @@ import { SchoolCalendarData } from './schemas/schoolCalendar'
 import { useSchoolCalendarKey } from "./hooks/dataStore/useSchoolCalendarKey"
 import { useDataStoreStatus } from "./hooks/dataStore/useDataStoreStatus"
 import TestForm from "./components/form/testeForm"
+import TopHeader from "./components/header/topHeader/TopHeader"
 
 export {
     TestForm,
+    TopHeader,
     HeaderValuesState,
     DataStoreState,
     SchoolCalendarData,
