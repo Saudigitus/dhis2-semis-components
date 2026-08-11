@@ -8,6 +8,7 @@ const PROGRAMQUERY: any = (id: string) => ({
     params: {
       fields: [
         "access",
+        "programIndicators[displayName,id]",
         "id,displayName,description,programType,version,translations",
         "trackedEntityType[id,trackedEntityTypeAttributes[trackedEntityAttribute[id]]]",
         "programTrackedEntityAttributes[name,displayName,mandatory,searchable,displayInList,trackedEntityAttribute[translations,generated,pattern,id,displayName,name,formName,unique,valueType,optionSet[options[translations,style,code~rename(value),displayName~rename(label)]]]]",
