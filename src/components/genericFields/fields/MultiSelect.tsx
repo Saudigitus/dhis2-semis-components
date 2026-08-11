@@ -1,77 +1,242 @@
 import "./MultiSelect.css";
-import { Chip, Popover, Stack } from "@mui/material";
-import ErrorIcon from '@mui/icons-material/Error';
-import { useState, useEffect, useRef } from "react";
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
+import {
+    Chip,
+    InputAdornment,
+    Popover,
+    Stack,
+    TextField,
+} from "@mui/material";
+
+import ErrorIcon from "@mui/icons-material/Error";
+import SearchIcon from "@mui/icons-material/Search";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+
+import { useMemo, useState } from "react";
 import { useField, type FieldRenderProps } from "react-final-form";
+
 import { AutoCompleteProps } from "../../../types/form/GenericFieldsTypes";
+
+interface MultiSelectOption {
+    value: string;
+    label: string;
+}
 
 export function SelectMultiple(props: AutoCompleteProps) {
     const { input }: FieldRenderProps<any, HTMLElement> = useField(props.name);
+
     const [isOpen, setIsOpen] = useState(false);
-    const [toogled, setToogled] = useState(false)
-    const [selected, setSelected] = useState(input?.value ?? []);
-    const wrapperRef = useRef(null);
-    const showWarning = Boolean((toogled) && selected.length === 0 && props?.required && !isOpen)
-    const options = props?.options?.optionSet?.options ?? [] as unknown as any
-    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const [toggled, setToggled] = useState(false);
+    const [search, setSearch] = useState("");
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-    const toggleOption = (value: any) => {
-        const originalCopy = selected.includes(value)
-            ? selected.filter((v: any) => v !== value)
-            : [...selected, value]
+    const selected: string[] = Array.isArray(input.value)
+        ? input.value
+        : [];
 
-        setSelected(() => originalCopy);
-        input.onChange(originalCopy)
-        if (props?.setChanged) props.setChanged(true)
-        if (props?.onChange) props.onChange({ field: "", value: originalCopy, name: props.name })
+    const options: MultiSelectOption[] =
+        (props?.options?.optionSet?.options ?? []) as MultiSelectOption[];
+
+    const showWarning =
+        toggled &&
+        selected.length === 0 &&
+        Boolean(props?.required) &&
+        !isOpen;
+
+    const getLabel = (value: string) => {
+        return (
+            options.find((option) => option.value === value)?.label ?? value
+        );
     };
 
-    const getLabel = (id: string) => options?.find((x: any) => x.value == id)?.label
+    const orderedOptions = useMemo(() => {
+        const normalizedSearch = search.trim().toLowerCase();
+
+        const filteredOptions = options.filter((option) =>
+            option.label.toLowerCase().includes(normalizedSearch)
+        );
+
+        return [...filteredOptions].sort((a, b) => {
+            const aSelected = selected.includes(a.value);
+            const bSelected = selected.includes(b.value);
+
+            if (aSelected && !bSelected) return -1;
+            if (!aSelected && bSelected) return 1;
+
+            return a.label.localeCompare(b.label);
+        });
+    }, [options, selected, search]);
+
+    const toggleOption = (value: string) => {
+        const newSelected = selected.includes(value)
+            ? selected.filter((item) => item !== value)
+            : [...selected, value];
+
+        input.onChange(newSelected);
+
+        props?.setChanged?.(true);
+
+        props?.onChange?.({
+            field: "",
+            value: newSelected,
+            name: props.name,
+        });
+    };
+
+    const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+        setIsOpen(true);
+        setToggled(true);
+    };
+
+    const handleClose = () => {
+        setIsOpen(false);
+        setAnchorEl(null);
+        setSearch("");
+    };
 
     return (
-        <div className="custom-multiselect" ref={wrapperRef}>
-            <div style={{ display: "flex", width: "100%" }} >
+        <div className="custom-multiselect">
+            <div className="multiselect-container">
                 <div
-                    style={showWarning ? { borderColor: "#F44336" } : {}}
-                    className="multiselect-header"
-                    onClick={(e: any) => {
-                        setIsOpen(!isOpen)
-                        setToogled(true)
-                        setAnchorEl(e.currentTarget)
-                    }}
+                    className={`multiselect-header ${showWarning ? "multiselect-header-error" : ""
+                        }`}
+                    onClick={handleOpen}
+                    role="button"
+                    tabIndex={0}
                 >
-                    {selected.length > 0
-                        ? <Stack direction="row" spacing={1}>
-                            {selected?.length <= 3 ?
-                                selected?.map((e) => <Chip style={{ backgroundColor: "#00897B", color: "#fff" }} label={getLabel(e)} size='small' />) :
-                                <Chip style={{ backgroundColor: "#00897B", color: "#fff" }} label={`${selected?.length} selected`} size='small' />
-                            }
-                        </Stack>
+                    <div className="multiselect-value">
+                        {selected.length > 0 ? (
+                            <Stack
+                                direction="row"
+                                spacing={0.5}
+                                className="multiselect-chips"
+                            >
+                                {selected.length <= 3 ? (
+                                    selected.map((value) => (
+                                        <Chip
+                                            key={value}
+                                            className="multiselect-chip"
+                                            label={getLabel(value)}
+                                            size="small"
+                                        />
+                                    ))
+                                ) : (
+                                    <Chip
+                                        className="multiselect-chip"
+                                        label={`${selected.length} selected`}
+                                        size="small"
+                                    />
+                                )}
+                            </Stack>
+                        ) : (
+                            <span className="multiselect-placeholder">
+                                Select options
+                            </span>
+                        )}
+                    </div>
 
-                        : "Select options"}
-                    <span className="arrow">{isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}</span>
+                    <span className="multiselect-arrow">
+                        {isOpen ? (
+                            <ArrowDropUpIcon />
+                        ) : (
+                            <ArrowDropDownIcon />
+                        )}
+                    </span>
                 </div>
-                <span hidden={!showWarning} style={{ margin: "auto 5px" }} >  <ErrorIcon style={{ color: "#F44336" }} /></span>
+
+                {showWarning && (
+                    <span className="multiselect-warning-icon">
+                        <ErrorIcon />
+                    </span>
+                )}
             </div>
 
-            <Popover className="multiselect-options" anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-            }} onClose={() => setIsOpen(!isOpen)} open={isOpen} anchorEl={anchorEl} >
-                {options?.map((opt: any) => (
-                    <label key={opt.value} className="multiselect-option">
-                        <input
-                            type="checkbox"
-                            checked={selected.includes(opt.value)}
-                            onChange={() => toggleOption(opt.value)}
-                        />
-                        {opt.label}
-                    </label>
-                ))}
+            <Popover
+                open={isOpen}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                }}
+                transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                }}
+                slotProps={{
+                    paper: {
+                        className: "multiselect-popover",
+                        sx: {
+                            width: anchorEl
+                                ? `${anchorEl.getBoundingClientRect().width}px`
+                                : undefined,
+                        },
+                    },
+                }}
+            >
+                <div className="multiselect-search">
+                    <TextField
+                        fullWidth
+                        size="small"
+                        value={search}
+                        onChange={(event) => setSearch(event.target.value)}
+                        placeholder="Search options..."
+                        autoComplete="off"
+                        onClick={(event) => event.stopPropagation()}
+                        onKeyDown={(event) => event.stopPropagation()}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon fontSize="small" />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </div>
+
+                <div className="multiselect-options">
+                    {orderedOptions.length > 0 ? (
+                        orderedOptions.map((option) => {
+                            const isSelected = selected.includes(option.value);
+
+                            return (
+                                <label
+                                    key={option.value}
+                                    className={`multiselect-option ${isSelected
+                                        ? "multiselect-option-selected"
+                                        : ""
+                                        }`}
+                                >
+                                    <input
+                                        type="checkbox"
+                                        checked={isSelected}
+                                        onChange={() =>
+                                            toggleOption(option.value)
+                                        }
+                                    />
+
+                                    <span className="multiselect-option-label">
+                                        {option.label}
+                                    </span>
+                                </label>
+                            );
+                        })
+                    ) : (
+                        <div className="multiselect-no-results">
+                            No options found
+                        </div>
+                    )}
+                </div>
             </Popover>
-            <span hidden={!showWarning} className="error" >&nbsp;Please provide a value</span>
+
+            {showWarning && (
+                <span className="multiselect-error">
+                    Please provide a value
+                </span>
+            )}
         </div>
     );
 }
+
