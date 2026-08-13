@@ -13,9 +13,10 @@ import { FlyoutOptionsProps } from "../menu/FlyoutMenuProps"
  */
 interface DropdownProps {
     name: string
-    disabled: boolean
+    disabled?: boolean
     icon?: React.ReactElement
     options: FlyoutOptionsProps[]
+    fullWidth?: boolean
 }
 
 export type { DropdownProps }
