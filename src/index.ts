@@ -40,6 +40,7 @@ import { useSchoolCalendarKey } from "./hooks/dataStore/useSchoolCalendarKey"
 import { useDataStoreStatus } from "./hooks/dataStore/useDataStoreStatus"
 import TestForm from "./components/form/testeForm"
 import TopHeader from "./components/header/topHeader/TopHeader"
+import { getDisplayName } from "./utils/table/getDisplayNameByOption"
 
 export {
     TestForm,
@@ -86,5 +87,6 @@ export {
     SwitchButtonView,
     DropDownCalendar,
     OrgUnitTreeField,
-    TabComponent
+    TabComponent,
+    getDisplayName
 }
