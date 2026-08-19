@@ -7,3 +7,13 @@
     justify-content: flex-end;
     padding: 0 5px !important;
 }
+
+
+.chip {
+    border-radius: 4px !important;
+    background-color: #006458 !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+    height: 36px !important;
+    margin:0 5px 12px 0 !important;
+}

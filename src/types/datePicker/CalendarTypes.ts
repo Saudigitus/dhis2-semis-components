@@ -9,8 +9,10 @@ interface DropDownCalendarProps {
     dateDisabler?: (date: Date, config: SchoolCalendar) => boolean
     label: string
     icon?: any
-    value?: string
+    value?: any
     config?: SchoolCalendar
+    onCancel?: () => void
+    showSelected?: boolean
 }
 
 interface CalendarProps {
