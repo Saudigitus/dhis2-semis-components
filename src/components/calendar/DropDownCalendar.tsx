@@ -1,28 +1,70 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Calendar from './Calendar';
 import { format } from 'date-fns';
 import style from './datepicker.module.css'
 import { DropDownCalendarProps } from '../../types/datePicker/CalendarTypes';
 import { Button as Dhis2Btn } from "@dhis2/ui";
-import { Button, Paper, Popover, Typography } from '@mui/material';
+import { Button, Chip, Paper, Popover, Typography } from '@mui/material';
 import { useRecoilValue } from 'recoil';
 import { TranslationState } from '../../schemas/translationsSchema';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 export default function DropDownCalendar(props: DropDownCalendarProps) {
-    const { setValue, dateDisabler, label, icon, value, config } = props
+    const { setValue, dateDisabler, label, icon, value, config, onCancel, showSelected = false } = props
     const [localDateSelected, setlocalDateSelected] = useState<{ selectedDate: Date }>({ selectedDate: new Date() })
     const [anchorCalendar, setAnchorCalendat] = useState<null | HTMLElement>(null);
     const [open, setOpen] = useState<boolean>(false);
+    const [showSelectedChip, setShowSelectedChip] = useState<boolean>(false);
     const i18n = useRecoilValue(TranslationState) as any
+    const ref = useRef<any>(null)
+    const showInput = showSelected ? !showSelectedChip : true
+
+    useEffect(() => {
+        setShowSelectedChip((!!value?.selectedDate || !!value))
+    }, [value])
 
     const closeAnchor = () => {
+        onCancel?.();
         setAnchorCalendat(null);
         setOpen(false);
+        if (value?.selectedDate || value) {
+            setShowSelectedChip(true)
+        }
     };
 
     return (
         <>
-            <span onClick={(event: any) => { setAnchorCalendat(event.currentTarget), setOpen(true) }}>
+            {
+                (showSelectedChip && showSelected) &&
+                <Chip
+                    onClick={() => {
+                        setShowSelectedChip(false)
+                        setAnchorCalendat(ref.current), setOpen(true)
+                    }}
+                    deleteIcon={<CalendarMonthIcon />}
+                    sx={{
+                        "& .MuiChip-deleteIcon": {
+                            color: "#ededed",
+                        },
+                        "& .MuiChip-deleteIcon:hover": {
+                            color: "#fff",
+                        },
+                    }}
+                    onDelete={() => {
+                        setShowSelectedChip(false)
+                        setAnchorCalendat(ref.current), setOpen(true)
+                    }}
+                    className={style.chip}
+                    label={`${i18n.t('Selected date')}: ${(value?.selectedDate || value)
+                        && format(new Date(value?.selectedDate ?? value), 'dd/MM/yyyy')}`}
+                />
+            }
+
+            <span
+                style={{
+                    display: showInput ? "inline-flex" : "none",
+                }} ref={ref} onClick={() => { setAnchorCalendat(ref.current), setOpen(true) }}
+            >
                 <Dhis2Btn
                     icon={icon}
                 >
