@@ -10,11 +10,15 @@ function SummaryCards({ validRecs, invalidRecs, doneProcessing, stats, module }:
     const getStats = (invalid = false) => {
         if (module === "attendance") {
             if (invalid) {
-                const soma = validRecs?.reduce((acc: number, item: any) => {
+                let soma = validRecs?.reduce((acc: number, item: any) => {
                     return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length == 0)?.length;
                 }, 0)
 
-                return soma + (invalidRecs?.length || 0);
+                soma += invalidRecs?.reduce((acc: number, item: any) => {
+                    return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length == 0)?.length;
+                }, 0)
+                
+                return soma;
             } else {
 
                 const soma = validRecs?.reduce((acc: number, item: any) => {

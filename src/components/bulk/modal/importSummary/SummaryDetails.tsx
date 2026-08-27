@@ -5,7 +5,28 @@ import Pagination from "../../../../components/table/components/pagination/Pagin
 import { TranslationState } from "../../../../schemas/translationsSchema";
 import { useRecoilValue } from "recoil";
 
-const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programConfig, stats = {} }: { stats: any, programConfig: any, validRecords: any, invalidRecords: any, doneProcessing: boolean }): React.ReactElement => {
+const getStats = (validRecords: any[], invalidRecords: any[], invalid = false) => {
+    if (invalid) {
+        let soma = validRecords?.reduce((acc: number, item: any) => {
+            return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length == 0)?.length;
+        }, 0)
+
+        soma += invalidRecords?.reduce((acc: number, item: any) => {
+            return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length == 0)?.length;
+        }, 0)
+
+        return soma;
+    } else {
+
+        const soma = validRecords?.reduce((acc: number, item: any) => {
+            return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length > 0 && v != "Non School Day")?.length;
+        }, 0)
+
+        return soma
+    }
+}
+
+const SummaryDetails = ({ module, invalidRecords, doneProcessing, validRecords, programConfig, stats = {} }: { module: string, stats: any, programConfig: any, validRecords: any, invalidRecords: any, doneProcessing: boolean }): React.ReactElement => {
     const [data, setData] = useState<any>([])
     const [activeTab, setActiveTab] = useState("valid")
     const [pagination, setPagination] = useState<any>({ valid: { page: 1, pageSize: 10 }, invalid: { page: 1, pageSize: 10 } });
@@ -17,7 +38,7 @@ const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programC
     const exceptions = Array.isArray(stats?.exceptions) ? stats.exceptions : []
     const safeValidRecords = Array.isArray(validRecords) ? validRecords : []
     const safeInvalidRecords = Array.isArray(invalidRecords) ? invalidRecords : []
-    
+
     const dataCont = {
         valid: doneProcessing ? [...errorDetails, ...exceptions] : safeValidRecords,
         invalid: safeInvalidRecords
@@ -43,10 +64,10 @@ const SummaryDetails = ({ invalidRecords, doneProcessing, validRecords, programC
         <>
             {!doneProcessing && <TabBar>
                 <Tab onClick={() => { setActiveTab('valid') }} selected={activeTab === 'valid'}>
-                    {safeValidRecords.length}<br /> {`${i18n.t('New Records')}`}
+                    {module == 'attendance' ? getStats(validRecords, invalidRecords) : safeValidRecords.length}<br /> {`${i18n.t('New Records')}`}
                 </Tab>
                 <Tab onClick={() => { setActiveTab('invalid') }} selected={activeTab === 'invalid'}>
-                    {safeInvalidRecords.length}<br /> {`${i18n.t('Invalid Records')}`}
+                    {module == 'attendance' ? getStats(validRecords, invalidRecords, true) : safeInvalidRecords.length}<br /> {`${i18n.t('Invalid Records')}`}
                 </Tab>
             </TabBar>}
 

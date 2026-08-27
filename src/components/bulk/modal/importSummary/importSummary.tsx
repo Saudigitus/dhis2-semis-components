@@ -169,7 +169,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
                         ((invalidRecords?.length + validRecords?.length) > 0 && !doneProcessing?.commit && !doneProcessing?.validate) &&
                         <>
                             <WithPadding p="0px 0 -50px 0" />
-                            <SummaryDetails stats={stats} programConfig={programConfig} doneProcessing={doneProcessing?.commit || doneProcessing?.validate} invalidRecords={invalidRecords} validRecords={validRecords} />
+                            <SummaryDetails module={module} stats={stats} programConfig={programConfig} doneProcessing={doneProcessing?.commit || doneProcessing?.validate} invalidRecords={invalidRecords} validRecords={validRecords} />
                         </>
                     }
                 </div>
