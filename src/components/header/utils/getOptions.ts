@@ -25,14 +25,16 @@ const getAcademicYearOptions = ({ schoolCalendar, program }: { schoolCalendar: s
     }
 
     program?.programStages?.forEach((stage: any) => {
-        stage?.programStageDataElements.forEach(element => {
-            if (element?.dataElement?.id === schoolCalendar?.academicYear) {
-                element?.dataElement?.optionSet?.options?.forEach(option => {
-                    if (schoolCalendar?.schoolCalendar?.some((op) => op?.academicYear?.label == option?.label || op?.academicYear?.code == option?.value))
-                        options.push(option)
-                })
-            }
-        });
+        if (!options!.length) {
+            stage?.programStageDataElements.forEach(element => {
+                if (element?.dataElement?.id === schoolCalendar?.academicYear) {
+                    element?.dataElement?.optionSet?.options?.forEach(option => {
+                        if (schoolCalendar?.schoolCalendar?.some((op) => op?.academicYear?.label == option?.label || op?.academicYear?.code == option?.value))
+                            options.push(option)
+                    })
+                }
+            });
+        }
     });
 
     return options
