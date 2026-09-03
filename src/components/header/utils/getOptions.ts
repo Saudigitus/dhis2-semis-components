@@ -5,11 +5,13 @@ const getOptionsByDataElement = (dataElement: string, program: any) => {
     const options = [];
     if (dataElement && program) {
         program?.programStages?.forEach((stage: any) => {
-            stage.programStageDataElements.forEach((element: { dataElement: { id: string, optionSet: { options: any } } }) => {
-                if (element.dataElement.id === dataElement && element.dataElement.optionSet) {
-                    options.push(...element.dataElement.optionSet.options);
-                }
-            });
+            if (!options!.length) {
+                stage.programStageDataElements.forEach((element: { dataElement: { id: string, optionSet: { options: any } } }) => {
+                    if (element.dataElement.id === dataElement && element.dataElement.optionSet) {
+                        options.push(...element.dataElement.optionSet.options);
+                    }
+                })
+            }
         });
     }
     return options
