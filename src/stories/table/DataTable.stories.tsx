@@ -10,7 +10,7 @@ import "react-select/dist/react-select.css";
 import { ProgramConfig } from "dhis2-semis-types";
 
 const rowsActions: RowActionsType[] = [
-  { icon: <IconEdit24 />, color: '#277314', label: `Edition`, disabled: true, loading: false, onClick: () => { alert("Edition") } },
+  { icon: <IconEdit24 />, color: '#277314', label: `Edit`, disabled: true, loading: false, onClick: () => { alert("Edit") } },
   { icon: <IconDelete24 />, color: '#d64d4d', label: `Delete`, disabled: false, loading: false, onClick: () => { alert("Delete") } },
   { icon: <IconCheckmarkCircle24 />, color: '#147cd7', disabled: false, loading: false, label: 'Complete', onClick: () => { alert("Complete") } }
 ];
