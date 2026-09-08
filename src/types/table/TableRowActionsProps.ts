@@ -64,6 +64,16 @@ interface RowActionsType {
      * @type {(arg?: any) => void}
      */
     onClick: (args: { event?: any; row?: any }) => void
+    /**
+    * The aria-label attribute value.
+    * @type {string}
+    */
+    ariaLabel?: string
+    /**
+     * To set the action as a button.
+     * @type {boolean}
+     */
+    button?: boolean
 }
 
 interface RowActionsProps {

@@ -22,6 +22,8 @@ export default function IconActions(props: RowActionsProps) {
                 onClick={(event) => {
                   option.onClick({ row });
                 }}
+                data-test={option.ariaLabel}
+                aria-label={option.ariaLabel}
                 className={style.rowActionsIcon}
                 disabled={option.disabled || (disabled && Boolean(option.disableOnInactive))}
                 style={{ color: option.color, opacity: (option.disabled || (disabled && Boolean(option.disableOnInactive))) ? "0.5" : "1" }}
@@ -29,6 +31,47 @@ export default function IconActions(props: RowActionsProps) {
                 {option.icon}
               </IconButton>
             </div>
+
+            {/* {
+              actions?.map((option: RowActionsType, i: number) => (
+                <Tooltip
+                  key={i}
+                  title={option.label}
+                  aria-label={option.ariaLabel}
+                  disableHoverListener={(option.disabled || (disabled && Boolean(option.disableOnInactive)))}
+                >
+                  {
+                    option?.button ? (
+                      <button
+                        onClick={(event) => {
+                          option.onClick({ row });
+                        }}
+                        className={style.rowActionsButton}
+                        disabled={option.disabled || (disabled && Boolean(option.disableOnInactive))}
+                        style={{ color: option.color, opacity: (option.disabled || (disabled && Boolean(option.disableOnInactive))) ? "0.5" : "1" }}
+                      >
+                        {option.icon}
+                        <span>{option.label}</span>
+                      </button>
+                    ) :
+
+                      (
+                        <button
+                          onClick={(event) => {
+                            option.onClick({ row });
+                          }}
+                          className={style.rowActionsButton}
+                          disabled={option.disabled || (disabled && Boolean(option.disableOnInactive))}
+                          style={{ color: option.color, opacity: (option.disabled || (disabled && Boolean(option.disableOnInactive))) ? "0.5" : "1" }}
+                        >
+                          {option.icon}
+                        </button>
+                      )
+
+                  }
+                </Tooltip>
+              ))
+            } */}
           </Tooltip>
         ))
       }
