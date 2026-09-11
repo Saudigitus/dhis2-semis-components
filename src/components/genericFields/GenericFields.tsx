@@ -1,4 +1,5 @@
 import CheckInput from "./fields/CheckInput";
+import { useEffect } from 'react';
 import DateInput from "./fields/DateInput";
 import InputNumber from "./fields/InputNumber";
 import InputText from "./fields/InputText";
@@ -16,6 +17,12 @@ import { SelectMultiple } from "./fields/MultiSelect";
 
 function GenericFields(props: GenericFieldsComponentProps) {
   const { attribute, disabled, valueType, form, onInputChange, storybook, setChanged, submitted, baseUrl } = props;
+  const assigned = attribute as typeof attribute & { ruleAssigned?: boolean; value?: unknown };
+  useEffect(() => {
+    if (assigned.ruleAssigned && form?.change && !Object.is(form.getState().values[attribute.name], assigned.value)) {
+      form.change(attribute.name, assigned.value);
+    }
+  }, [assigned.ruleAssigned, assigned.value, attribute.name, form]);
 
   switch (valueType) {
     case Attribute.valueType.BOOLEAN as unknown as CustomAttributeProps["valueType"]:
