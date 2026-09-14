@@ -8,6 +8,7 @@ import { deepEqual } from "../../utils/table/objectComparison";
 import { FormSpy } from "react-final-form";
 import { useRecoilValue } from "recoil";
 import { TranslationState } from "../../schemas/translationsSchema";
+import { syncRuleValues } from '../../utils/form/syncRuleValues';
 
 interface IForm extends Record<string, any> { }
 interface imageFieldSpecificProps {
@@ -25,9 +26,16 @@ export default function CustomForm(props: CombinedProps) {
     const [changed, setChanged] = useState(false)
     const [formSubmitted, setFormSubmitted] = useState(false)
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
+    const ruleAssignments = useRef(new Map<string, unknown>());
     const { storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, customComponent } = props
     const { onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues, baseUrl } = props
     const i18n = useRecoilValue(TranslationState) as any
+
+    useEffect(() => {
+        const form = formRef.current;
+        if (!form) return;
+        ruleAssignments.current = syncRuleValues(form, formFields, ruleAssignments.current);
+    }, [formFields]);
 
     const handleInputChange = (event: any) => {
         if (onInputChange) onInputChange({ value: event.target.value, name: event.target.name, field: event })

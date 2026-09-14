@@ -22,7 +22,7 @@ const OptionSetAutocomplete = (props: AutoCompleteProps & { submitted?: boolean 
         {...props}
         options={options}
         fullWidth
-        clearIcon={null}
+        disableClearable={false}
         disabled={props.disabled}
         getOptionLabel={(option) => option.label}
         value={options?.find((element: { value: string }) => element.value === input.value) ?? null}
@@ -44,9 +44,10 @@ const OptionSetAutocomplete = (props: AutoCompleteProps & { submitted?: boolean 
 
         )}
         onChange={(field, value: any) => {
-          input.onChange(value.value);
-          props.setChanged(true)
-          if (props.onChange) props.onChange({ field: field, value: value.value, name: props.name });
+          const nextValue = value?.value ?? "";
+          input.onChange(nextValue);
+          props.setChanged?.(true)
+          if (props.onChange) props.onChange({ field: field, value: nextValue, name: props.name });
 
           setClicked(false)
         }}
