@@ -25,7 +25,9 @@ interface CombinedProps extends FormProps, imageFieldSpecificProps { }
 export default function CustomForm(props: CombinedProps) {
     const [changed, setChanged] = useState(false)
     const [formSubmitted, setFormSubmitted] = useState(false)
+    const [validationAttempt, setValidationAttempt] = useState(0)
     const formRef = useRef<FormApi<IForm, Partial<IForm>> | null>(null);
+    const formElementRef = useRef<HTMLFormElement | null>(null);
     const ruleAssignments = useRef(new Map<string, unknown>());
     const { storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, customComponent } = props
     const { onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues, baseUrl } = props
@@ -64,6 +66,20 @@ export default function CustomForm(props: CombinedProps) {
         setFormSubmitted(false)
     }
 
+    const focusFirstInvalidField = (errors?: Record<string, any>) => {
+        const firstError = Object.keys(errors ?? {}).find(key => key !== '_summary');
+        if (!firstError || !formElementRef.current) return;
+        const fields = Array.from(formElementRef.current.querySelectorAll<HTMLElement>('[name]'));
+        const field = fields.find(element =>
+            element.getAttribute('name') === firstError || element.id === firstError
+        );
+        if (!field) return;
+        window.setTimeout(() => {
+            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            field.focus({ preventScroll: true });
+        }, 0);
+    };
+
     const formActions = ({ form }: { form: any }) => [
         {
             id: "cancel",
@@ -101,20 +117,27 @@ export default function CustomForm(props: CombinedProps) {
                 {({ form, handleSubmit, values, submitFailed, errors }) => {
                     formRef.current = form;
 
+                    useEffect(() => {
+                        if (submitFailed) focusFirstInvalidField(errors);
+                    }, [submitFailed, errors, validationAttempt]);
+
                     return (
                         <form
+                            ref={formElementRef}
                             onChange={(onchangeValue: any) => {
                                 setFormValues && setFormValues(values);
                                 handleInputChange(onchangeValue)
                             }}
                             onSubmit={(e) => {
                                 e.preventDefault();
+                                setValidationAttempt(attempt => attempt + 1);
                                 handleSubmit(values);
                                 setFormSubmitted(true)
                             }}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
                                     e.preventDefault();
+                                    setValidationAttempt(attempt => attempt + 1);
                                     handleSubmit(values);
                                     setFormSubmitted(true)
                                 }
