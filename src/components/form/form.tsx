@@ -1,5 +1,5 @@
 import GroupForm from "../form/GroupForm";
-import { Button, ButtonStrip, CircularLoader } from "@dhis2/ui";
+import { Button, ButtonStrip, CircularLoader, NoticeBox } from "@dhis2/ui";
 import { type FormProps } from "dhis2-semis-types";
 import styles from './groupform.module.css'
 import { useEffect, useRef, useState } from "react";
@@ -30,6 +30,28 @@ export default function CustomForm(props: CombinedProps) {
     const { storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, customComponent } = props
     const { onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues, baseUrl } = props
     const i18n = useRecoilValue(TranslationState) as any
+
+    const validate = (values: Record<string, any>) => {
+        const errors: Record<string, string> = {};
+        const requiredFields: string[] = [];
+        const visit = (items: any[]) => items?.forEach(item => {
+            const children = ['fields', 'variables', 'variable'].filter(key => Array.isArray(item[key]));
+            if (item.visible === false || item.ruleHidden) return;
+            if (children.length) children.forEach(key => visit(item[key]));
+            else if (item.required) {
+                const value = values[item.name ?? item.id];
+                const empty = value === undefined || value === null || value === '' ||
+                    (Array.isArray(value) && value.length === 0);
+                if (empty) {
+                    const name = item.labelName || item.displayName || item.name || item.id;
+                    errors[item.name ?? item.id] = i18n.t('Please provide a value');
+                    requiredFields.push(name);
+                }
+            }
+        });
+        visit(formFields);
+        return { ...errors, _summary: requiredFields };
+    };
 
     useEffect(() => {
         const form = formRef.current;
@@ -69,13 +91,14 @@ export default function CustomForm(props: CombinedProps) {
     return (
         <div style={style}>
             <Form
+                validate={validate}
                 onSubmit={(values: any) => {
                     setFormSubmitted(true)
                     onFormSubtmit(values)
                 }}
                 initialValues={{ ...initialValues }}
             >
-                {({ form, handleSubmit, values }) => {
+                {({ form, handleSubmit, values, submitFailed, errors }) => {
                     formRef.current = form;
 
                     return (
@@ -97,6 +120,11 @@ export default function CustomForm(props: CombinedProps) {
                                 }
                             }}
                         >
+                            {submitFailed && errors?._summary?.length > 0 && (
+                                <NoticeBox error title={i18n.t('Please correct the following fields before submitting')}>
+                                    {errors._summary.join(', ')}
+                                </NoticeBox>
+                            )}
                             <FormSpy subscription={{ values: true, }} >
                                 {({ values }) => {
                                     useEffect(() => {
