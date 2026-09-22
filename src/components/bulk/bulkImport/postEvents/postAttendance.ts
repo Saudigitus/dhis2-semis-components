@@ -78,20 +78,22 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpenPr
             updateProgressF(40, 35, excelData.length)
         }
 
-        for (const key of keys) {
-            const chunks = splitArrayIntoChunks(values[key], 50);
+        console.log(values,'the values')
 
-            for (const chunk of chunks) {
-                await uploadValues({ events: chunk }, importMode, (importStrategy as unknown as any)[key]).then((response) => {
-                    updatedStats = importSummary(response, updatedStats)
-                    updateProgressF(50, 50, keys.length * chunks.length)
-                }).catch((error: any) => {
-                    updatedStats = { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message }] }
-                    setOpenProgress(false)
-                    onError(error)
-                });
-            }
-        }
+        // for (const key of keys) {
+        //     const chunks = splitArrayIntoChunks(values[key], 50);
+
+        //     for (const chunk of chunks) {
+        //         await uploadValues({ events: chunk }, importMode, (importStrategy as unknown as any)[key]).then((response) => {
+        //             updatedStats = importSummary(response, updatedStats)
+        //             updateProgressF(50, 50, keys.length * chunks.length)
+        //         }).catch((error: any) => {
+        //             updatedStats = { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message }] }
+        //             setOpenProgress(false)
+        //             onError(error)
+        //         });
+        //     }
+        // }
 
         setStats(updatedStats)
     }

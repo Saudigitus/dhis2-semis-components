@@ -1,9 +1,15 @@
-export function getFilterLables(options: { value: string, label: string }[]) {
-    let filter = ""
+export function getFilterLables(
+    options: { value: string; label: string }[],
+    configuredOtpions?: { code: string }[]
+): string {
+    const configuredCodes = new Set(
+        configuredOtpions?.map(option => option.code) ?? []
+    )
 
-    options.map((option) => {
-        filter += option.value + ","
-    })
-
-    return filter.substring(0, filter.length - 1)
+    return options
+        .filter(option =>
+            configuredCodes.size === 0 || configuredCodes.has(option.value)
+        )
+        .map(option => option.value)
+        .join(",")
 }
