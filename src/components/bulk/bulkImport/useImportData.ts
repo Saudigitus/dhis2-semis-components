@@ -52,7 +52,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     await postAttendance(
                         attendanceEvents,
                         attendanceDisplayName as unknown as string,
-                        selectedSectionDataStore?.attendance?.programStage as unknown as string,
+                        selectedSectionDataStore,
                         excelData?.mapping,
                         programConfig?.id,
                         importMode

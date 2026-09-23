@@ -38,6 +38,7 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
     const holidays = schoolCalendar?.holidays?.map((x: any) => x.date) ?? []
     const { attendance } = dataStore
     const statusOptions = attendance?.statusOptions?.map((x: any) => x.code)
+    const allowAttendanceStatus = attendance?.attendanceStatus?.allowAttendanceStatus
 
     for (const student of data) {
         if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.orgUnit) {
@@ -46,9 +47,12 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
         const { trackedEntity, ...rest } = student?.Ids
 
         for (const programStage of programStages) {
+
             for (const key of Object.keys(student[programStage])) {
-                if (student[programStage][key] && !holidays.includes(key) && statusOptions.includes(student[programStage][key])) {
+
+                if (student[programStage][key] && !holidays.includes(key) && (statusOptions.includes(student[programStage][key]) || allowAttendanceStatus)) {
                     attendanceEvents.push({
+                        status: student[programStage][key],
                         occurredAt: key,
                         trackedEntity,
                         ...rest,
