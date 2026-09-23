@@ -1,5 +1,6 @@
 import { format } from "date-fns"
 import { selectedDataStoreKey, ProgramConfig } from 'dhis2-semis-types';
+import { } from "dhis2-semis-functions";
 
 export function generateEventObjects(programStages: string[], data: any, programConfig: ProgramConfig) {
     let events: any = []
@@ -33,7 +34,7 @@ export function generateEventObjects(programStages: string[], data: any, program
     return { events }
 }
 
-export function generateAttendanceEventObjects(programStages: string[], data: any, dataStore: selectedDataStoreKey, schoolCalendar: any) {
+export function generateAttendanceEventObjects(programStages: string[], data: any, dataStore: selectedDataStoreKey, schoolCalendar: any, rDataElements: any[]) {
     let attendanceEvents: any = []
     const holidays = schoolCalendar?.holidays?.map((x: any) => x.date) ?? []
     const { attendance } = dataStore
@@ -59,6 +60,7 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
                         program: dataStore.program,
                         programStage: dataStore.attendance.programStage,
                         dataValues: [
+                            ...(rDataElements ?? []),
                             {
                                 dataElement: dataStore.attendance.status,
                                 value: student[programStage][key]

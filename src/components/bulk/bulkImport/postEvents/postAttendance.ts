@@ -86,8 +86,6 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpenPr
             updateProgressF(40, 35, excelData.length)
         }
 
-        console.log(values, 'the values')
-
         for (const key of keys) {
             const chunks = splitArrayIntoChunks(values[key], 50);
 
