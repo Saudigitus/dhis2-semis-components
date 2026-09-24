@@ -1,5 +1,6 @@
 import { format } from "date-fns"
 import { selectedDataStoreKey, ProgramConfig } from 'dhis2-semis-types';
+import { } from "dhis2-semis-functions";
 
 export function generateEventObjects(programStages: string[], data: any, programConfig: ProgramConfig) {
     let events: any = []
@@ -33,11 +34,12 @@ export function generateEventObjects(programStages: string[], data: any, program
     return { events }
 }
 
-export function generateAttendanceEventObjects(programStages: string[], data: any, dataStore: selectedDataStoreKey, schoolCalendar: any) {
+export function generateAttendanceEventObjects(programStages: string[], data: any, dataStore: selectedDataStoreKey, schoolCalendar: any, rDataElements: any[]) {
     let attendanceEvents: any = []
     const holidays = schoolCalendar?.holidays?.map((x: any) => x.date) ?? []
     const { attendance } = dataStore
     const statusOptions = attendance?.statusOptions?.map((x: any) => x.code)
+    const allowAttendanceStatus = attendance?.attendanceStatus?.allowAttendanceStatus
 
     for (const student of data) {
         if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.orgUnit) {
@@ -46,15 +48,19 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
         const { trackedEntity, ...rest } = student?.Ids
 
         for (const programStage of programStages) {
+
             for (const key of Object.keys(student[programStage])) {
-                if (student[programStage][key] && !holidays.includes(key) && statusOptions.includes(student[programStage][key])) {
+
+                if (student[programStage][key] && !holidays.includes(key) && (statusOptions.includes(student[programStage][key]) || allowAttendanceStatus)) {
                     attendanceEvents.push({
+                        status: student[programStage][key],
                         occurredAt: key,
                         trackedEntity,
                         ...rest,
                         program: dataStore.program,
                         programStage: dataStore.attendance.programStage,
                         dataValues: [
+                            ...(rDataElements ?? []),
                             {
                                 dataElement: dataStore.attendance.status,
                                 value: student[programStage][key]

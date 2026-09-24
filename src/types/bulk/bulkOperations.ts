@@ -142,7 +142,8 @@ interface excelData {
 
 export enum importStrategy {
     CREATE = "CREATE_AND_UPDATE",
-    UPDATE = "UPDATE"
+    UPDATE = "UPDATE",
+    DELETE = "DELETE"
 }
 
 interface importData {

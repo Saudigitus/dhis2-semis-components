@@ -5,6 +5,7 @@ import { dfHeaders } from "../../../../utils/constants/dfHeaders";
 import { getFilterLables } from "../../../../utils/format/getFilterLables";
 import { useRecoilValue } from "recoil";
 import { TranslationState } from "../../../../schemas/translationsSchema";
+import useGetSelectedKeys from "../../../../hooks/config/useGetSelectedKeys";
 
 export function generateHeaders(props: GenerateHeaders) {
     const {
@@ -19,6 +20,7 @@ export function generateHeaders(props: GenerateHeaders) {
     } = props
     const { getValidDaysToExport } = generateAttendanceDays({ unavailableDays: isSchoolDay as unknown as (args: Date) => boolean })
     const i18n = useRecoilValue(TranslationState) as any
+    const { dataStoreData } = useGetSelectedKeys()
 
     function getHeaders(startDate: string, endDate: string) {
         let formatedHeaders: any[] = [], attributesToGenerate: Array<{ attributeID: string, pattern: string }> = []
@@ -60,8 +62,12 @@ export function generateHeaders(props: GenerateHeaders) {
                 const statusDe = currStage?.programStageDataElements.find(
                     x => x.dataElement.id === selectedSectionDataStore?.attendance?.status
                 )
+
                 if (statusDe?.dataElement?.optionSet?.options) {
-                    filters["Attendance"] = getFilterLables(statusDe.dataElement.optionSet.options)
+                    const attendanceOptions = dataStoreData?.attendance?.statusOptions || []
+                    const attendanceStatus = dataStoreData?.attendance?.attendanceStatus?.allowAttendanceStatus
+
+                    filters["Attendance"] = `${getFilterLables(statusDe.dataElement.optionSet.options, attendanceOptions)}${attendanceStatus ? ',present' : ""}`
                 }
 
                 formatedHeaders.push(section)
