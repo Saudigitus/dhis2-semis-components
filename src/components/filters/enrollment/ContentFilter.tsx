@@ -27,10 +27,13 @@ function ContentFilter(props: EnrollmentFilterProps) {
     const dataElementsQuerybuilder: any[][] = [];
 
     const { viewPortWidth } = useViewportWidth();
+    const availableFilters = variables.filter(variable =>
+        !localFilters.some(filter => filter.id === variable.id)
+    );
 
     useEffect(() => {
         const sliceTo = viewPortWidth < 779 ? 1 : defaultFilterNumber;
-        setLocalFilters(variables.slice(0, sliceTo));
+        setLocalFilters(variables.filter(variable => variable.searchable === true).slice(0, sliceTo));
     }, [viewPortWidth, variables, defaultFilterNumber]);
 
     const handleClick = (event: any) => {
@@ -38,12 +41,9 @@ function ContentFilter(props: EnrollmentFilterProps) {
     };
 
     const addSearchableHeaders = (e: CustomAttributeProps) => {
-        const copyHeader = [...variables]
-        const copyHeaderLocal = [...localFilters]
-
-        const pos = copyHeader.findIndex(x => x.id === e.id)
-        copyHeaderLocal.push(copyHeader[pos])
-        setLocalFilters(copyHeaderLocal)
+        setLocalFilters(current => current.some(filter => filter.id === e.id)
+            ? current
+            : [...current, e]);
     }
 
     const onChangeFilters = (value: any, key: string, type: string, pos: string) => {
@@ -134,7 +134,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
     return (
         <div className={styles.container}>
             {
-                localFilters.filter(x => x.searchable === true).map((colums, index) => {
+                localFilters.map((colums, index) => {
                     const filled = (Boolean(fieldsFilled[colums.id])) && fieldsFilled[colums.id]
                     return (
                         <SelectButton key={index}
@@ -164,7 +164,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
                 )
             }
             <div className={styles.moreFiltersContainer}>
-                {variables?.filter((x: any) => !localFilters.includes(x) && x.searchable).length > 0 &&
+                {availableFilters.length > 0 &&
                     <Button className={styles.moreFilters}
                         variant='outlined'
                         onClick={handleClick}
@@ -175,7 +175,7 @@ function ContentFilter(props: EnrollmentFilterProps) {
                 <MenuFilters
                     anchorEl={anchorEl}
                     setAnchorEl={setAnchorEl}
-                    options={variables?.filter((x: any) => !localFilters.includes(x) && x.searchable)}
+                    options={availableFilters}
                     addSearchableHeaders={addSearchableHeaders}
                 />
             </div>

@@ -4,7 +4,7 @@ import { generateAttendanceEventObjects, generateEnrollmentData, generateEventOb
 import { postAttendanceValues } from "./postEvents/postAttendance";
 import { postEnrollmentData } from "./postEvents/postEnrollment";
 import { postValues } from "./postEvents/postEvents";
-import { useUrlParams } from "dhis2-semis-functions";
+import { useUrlParams, useGetRegitration } from "dhis2-semis-functions";
 import { useSchoolCalendarKey } from "../../../hooks/dataStore/useSchoolCalendarKey";
 
 type CombinedTypes = importData & excelData & { importMode: "VALIDATE" | "COMMIT" };
@@ -16,6 +16,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
     const { urlParameters } = useUrlParams()
     const { school: orgUnit, academicYear } = urlParameters
     const { schoolCalendar } = useSchoolCalendarKey()
+    const { useGetRegitrationDataElements } = useGetRegitration()
 
     async function importData(props: CombinedTypes) {
         setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
@@ -44,15 +45,16 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
             switch (excelData?.module) {
                 case Modules.Attendance:
                     const selectedSchoolCalendar = schoolCalendar?.find(x => x.academicYear?.code === academicYear)
+                    const rDataElements = useGetRegitrationDataElements()
 
-                    const { attendanceEvents } = generateAttendanceEventObjects(displayNames, studentsData, selectedSectionDataStore as unknown as selectedDataStoreKey, selectedSchoolCalendar)
+                    const { attendanceEvents } = generateAttendanceEventObjects(displayNames, studentsData, selectedSectionDataStore as unknown as selectedDataStoreKey, selectedSchoolCalendar, rDataElements)
                     const attendanceDisplayName = programConfig?.programStages.find(x => x.id === selectedSectionDataStore?.attendance?.programStage)?.displayName
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
                     await postAttendance(
                         attendanceEvents,
                         attendanceDisplayName as unknown as string,
-                        selectedSectionDataStore?.attendance?.programStage as unknown as string,
+                        selectedSectionDataStore,
                         excelData?.mapping,
                         programConfig?.id,
                         importMode

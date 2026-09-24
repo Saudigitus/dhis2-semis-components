@@ -23,13 +23,16 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpenPr
     async function postAttendance(
         events: any[],
         programStageName: string,
-        programStageId: string,
+        selectedSectionDataStore: any,
         excelData: any[],
         program: string,
         importMode: "VALIDATE" | "COMMIT"
     ) {
-        let values: any = { CREATE: [], UPDATE: [] }
+        let values: any = { CREATE: [], UPDATE: [], DELETE: [] }
         const keys = Object.keys(values)
+        const programStageId = selectedSectionDataStore?.attendance?.programStage as unknown as string
+        const statusOptions = selectedSectionDataStore?.attendance?.statusOptions?.map((x: any) => x.code)
+        const allowAttendanceStatus = selectedSectionDataStore?.attendance?.attendanceStatus?.allowAttendanceStatus
 
         for (const student of excelData as unknown as []) {
             let page = 1, pageSize = 50, data = []
@@ -61,11 +64,16 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpenPr
                     })
 
                     thisTeiEvents.forEach(event => {
+                        const { status, ...rest } = event
                         if (alreadyExistingEvents[event.occurredAt]) {
-                            values.UPDATE.push({ ...event, event: alreadyExistingEvents[event.occurredAt] });
-                        } else {
-                            values.CREATE.push(event);
-                        }
+                            if (statusOptions.includes(status))
+                                values.UPDATE.push({ ...rest, event: alreadyExistingEvents[event.occurredAt] });
+
+                            else if (allowAttendanceStatus)
+                                values.DELETE.push({ event: alreadyExistingEvents[event.occurredAt] });
+
+                        } else if (statusOptions.includes(status))
+                            values.CREATE.push(rest);
                     });
 
                     page++
@@ -82,14 +90,15 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpenPr
             const chunks = splitArrayIntoChunks(values[key], 50);
 
             for (const chunk of chunks) {
-                await uploadValues({ events: chunk }, importMode, (importStrategy as unknown as any)[key]).then((response) => {
-                    updatedStats = importSummary(response, updatedStats)
-                    updateProgressF(50, 50, keys.length * chunks.length)
-                }).catch((error: any) => {
-                    updatedStats = { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message }] }
-                    setOpenProgress(false)
-                    onError(error)
-                });
+                if (chunk?.length > 0)
+                    await uploadValues({ events: chunk }, importMode, (importStrategy as unknown as any)[key]).then((response) => {
+                        updatedStats = importSummary(response, updatedStats)
+                        updateProgressF(50, 50, keys.length * chunks.length)
+                    }).catch((error: any) => {
+                        updatedStats = { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message }] }
+                        setOpenProgress(false)
+                        onError(error)
+                    });
             }
         }
 
