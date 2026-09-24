@@ -2,7 +2,7 @@ import React from "react";
 import { Label } from "@dhis2/ui"
 import { useField, type FieldRenderProps } from "react-final-form";
 import { FormFieldsProps } from "../../../types/form/GenericFieldsTypes";
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { withStyles } from "@mui/styles";
 
 const CustomRadio = withStyles({
@@ -24,13 +24,16 @@ function RadioButton(props: FormFieldsProps) {
     <RadioGroup
       {...props}
       row
-      value={input?.value || ""}
+      value={input?.value ?? ""}
       onChange={(event: { target: { value: any } }) => {
         input.onChange(event?.target?.value);
       }}
     >
       <FormControlLabel style={props.disabled ? { cursor: "not-allowed" } : {}} value={true} control={<CustomRadio disabled={props.disabled} />} label={<Label className="mt-2">Yes</Label>} />
       <FormControlLabel style={props.disabled ? { cursor: "not-allowed" } : {}} value={false} control={<CustomRadio disabled={props.disabled} />} label={<Label className="mt-2">No</Label>} />
+      {input.value !== "" && input.value != null && (
+        <Button type="button" size="small" disabled={props.disabled} onClick={() => input.onChange("")}>Clear</Button>
+      )}
     </RadioGroup>
   );
 }
