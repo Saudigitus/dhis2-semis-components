@@ -17,13 +17,14 @@ export function postEnrollmentData({ setProgress, onError, setOpenProgress }: { 
     const engine = useDataEngine()
 
     // Enrollments by id (dates, school and status as saved on the server), read in groups.
-    async function readEnrollments(enrollmentIds: string[]): Promise<Record<string, any>> {
+    // "program" is mandatory for this request from DHIS2 2.43 (E1003 "Program is mandatory").
+    async function readEnrollments(program: string, enrollmentIds: string[]): Promise<Record<string, any>> {
         const found: Record<string, any> = {}
         for (const group of chunkList([...new Set(enrollmentIds.filter(Boolean))])) {
             const response: any = await engine.query({
                 results: {
                     resource: "tracker/enrollments",
-                    params: { enrollments: group.join(","), fields: "enrollment,enrolledAt,occurredAt,orgUnit,status", pageSize: group.length }
+                    params: { program, enrollments: group.join(","), fields: "enrollment,enrolledAt,occurredAt,orgUnit,status", pageSize: group.length }
                 }
             })
             for (const enrollment of (response?.results?.enrollments ?? response?.results?.instances ?? [])) found[enrollment.enrollment] = enrollment
@@ -65,7 +66,7 @@ export function postEnrollmentData({ setProgress, onError, setOpenProgress }: { 
                         fields: "event,enrollment,programStage,orgUnit,occurredAt,status"
                     }, ids.map((x: any) => x.enrollment)))
                 const eventsByEnrollment = groupByEnrollment(events)
-                const enrollmentsById = await readEnrollments(ids.map((x: any) => x.enrollment))
+                const enrollmentsById = await readEnrollments(program, ids.map((x: any) => x.enrollment))
 
                 copyData = copyData.map((row: any, index: number) => buildEnrollmentUpdate(
                     row,
