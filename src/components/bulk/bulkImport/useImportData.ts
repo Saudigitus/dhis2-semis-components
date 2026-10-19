@@ -74,9 +74,9 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     const stagesToIgnore = [
                         selectedSectionDataStore?.attendance?.programStage as unknown as string,
                         selectedSectionDataStore?.transfer?.programStage as unknown as string,
+                        // The update also sends the registration record (grade, class...): SEMIS-213.
                         ...(updating ? [
                             selectedSectionDataStore?.["final-result"]?.programStage as unknown as string,
-                            selectedSectionDataStore?.registration?.programStage as unknown as string,
                             ...(selectedSectionDataStore?.performance?.programStages?.map(x => x.programStage) || [])
                         ] : [""])
                     ]
