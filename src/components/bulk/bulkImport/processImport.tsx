@@ -41,13 +41,14 @@ export default function ProcessImport(props: importData) {
         UseValidation.setModule(module as unknown as any)
 
         await UseValidation.validation(file[0])
-            .then((resp) => {
+            .then(async (resp) => {
                 const { mapping, module } = resp
-                validador({ module, data: mapping, dataStore: dataStoreData }).then(() => {
-                    setOpen(false)
-                    setOpenStats(true)
-                })
                 setExcelData(resp)
+                // Wait for the row check so that any error in it reaches the catch below and
+                // is shown to the user, instead of leaving the dialog open with no message.
+                await validador({ module, data: mapping, dataStore: dataStoreData })
+                setOpen(false)
+                setOpenStats(true)
             })
             .catch((error) => {
                 setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], warningDetails: [], exceptions: [{ [i18n.t("Error message")]: error?.message }], byType: [] })
