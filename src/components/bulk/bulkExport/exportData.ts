@@ -8,6 +8,7 @@ import { generateFile } from './dataExporter/fileGenerator';
 import { generateEmptyRows } from '../../../utils/common/generateData';
 import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
+import { groupByEnrollment, readEventsByEnrollments } from '../../../utils/common/eventsByEnrollment';
 import { useGetEvents, useIncrementDays, useUrlParams } from "dhis2-semis-functions";
 import { useSchoolCalendarKey } from "../../../hooks/dataStore/useSchoolCalendarKey";
 import { SchoolCalendarType } from "../../../types/dataStore/schoolCalendar";
@@ -60,54 +61,42 @@ export function useExportData(props: ExportData) {
                 if (!empty) data = await getData()
 
                 if (module != Modules.Enrollment) {
-                    for (let teisCounter = 0; teisCounter < data?.length; teisCounter++) {
-                        for (let a = 0; a < stagesToExport?.length; a++) {
-                            let events = [], page = 1, pageSize = 50
+                    // Each program stage is read once for the whole class (by enrollment, in groups and
+                    // with paging) and joined in memory, instead of one request per person and stage.
+                    const enrollments = data?.map((row: any) => row?.enrollment) ?? []
 
-                            do {
-                                events = await getEvents({
-                                    program: selectedSectionDataStore?.program as unknown as string,
-                                    ...(module === Modules.Attendance ? {
-                                        occurredAfter: startDate,
-                                        occurredBefore: getDate({ selectedDate: new Date(endDate) }),
-                                    } : {}),
-                                    orgUnit,
-                                    orgUnitMode: "SELECTED",
-                                    programStage: stagesToExport?.[a],
-                                    fields: "event,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
-                                    trackedEntities: data?.[teisCounter]?.trackedEntity,
-                                    pageSize,
-                                    page
-                                }).then((resp) => {
-                                    page++
-                                    const filteredEvents = resp?.filter((x: any) => x.enrollment === data?.[teisCounter]?.enrollment)
+                    for (const stageId of stagesToExport ?? []) {
+                        try {
+                            const eventsByEnrollment = groupByEnrollment(await readEventsByEnrollments(getEvents, {
+                                program: selectedSectionDataStore?.program as unknown as string,
+                                ...(module === Modules.Attendance ? {
+                                    occurredAfter: startDate,
+                                    occurredBefore: getDate({ selectedDate: new Date(endDate) }),
+                                } : {}),
+                                orgUnit,
+                                orgUnitMode: "SELECTED",
+                                programStage: stageId,
+                                fields: "event,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
+                            }, enrollments))
 
-                                    data[teisCounter] = {
-                                        ...data[teisCounter], ...formatSheetData({
-                                            module: module,
-                                            stageId: stagesToExport?.[a],
-                                            events: filteredEvents,
-                                            dataStore: selectedSectionDataStore as unknown as selectedDataStoreKey
-                                        })
-                                    }
-
-                                    return resp
-                                }).catch((error) => {
-                                    setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
-                                    onError(`Export error: Occurred error wihile fetching data: ${error}`)
+                            data = (data ?? []).map((row: any) => ({
+                                ...row, ...formatSheetData({
+                                    module: module,
+                                    stageId,
+                                    events: eventsByEnrollment[row?.enrollment] ?? [],
+                                    dataStore: selectedSectionDataStore as unknown as selectedDataStoreKey
                                 })
-
-                            } while (events?.length == pageSize)
-
-                            const increment = (40 / data?.length) / stagesToExport?.length;
-                            const bufferIncrement = (41 / data?.length) / stagesToExport?.length;
-
-                            setProgress((prev: any) => ({
-                                ...prev,
-                                progress: prev.progress + increment,
-                                buffer: prev.buffer + bufferIncrement
-                            }));
+                            }))
+                        } catch (error) {
+                            setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
+                            onError(`Export error: Occurred error wihile fetching data: ${error}`)
                         }
+
+                        setProgress((prev: any) => ({
+                            ...prev,
+                            progress: prev.progress + 40 / stagesToExport.length,
+                            buffer: prev.buffer + 41 / stagesToExport.length
+                        }));
                     }
                 } else if (empty && module == Modules.Enrollment) {
                     let ids: any = {}
