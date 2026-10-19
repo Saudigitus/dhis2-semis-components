@@ -6,13 +6,14 @@ import { postEnrollmentData } from "./postEvents/postEnrollment";
 import { postValues } from "./postEvents/postEvents";
 import { useUrlParams, useGetRegitration } from "dhis2-semis-functions";
 import { useSchoolCalendarKey } from "../../../hooks/dataStore/useSchoolCalendarKey";
+import { mergeImportStats } from "../../../utils/common/getImportSummary";
 
 type CombinedTypes = importData & excelData & { importMode: "VALIDATE" | "COMMIT" };
 
 export function useImportData({ setProgress, onError, setStats, stats, setOpenProgress, }: { setOpenProgress: (args: boolean) => void, stats: any, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (rags: any) => void }) {
-    const { postData } = postValues({ setStats, setProgress, onError, setOpenProgress })
-    const { postAttendance } = postAttendanceValues({ setStats, setProgress, onError, setOpenProgress })
-    const { postEnrollments } = postEnrollmentData({ setStats, setProgress, onError, setOpenProgress })
+    const { postData } = postValues({ setProgress, onError, setOpenProgress })
+    const { postAttendance } = postAttendanceValues({ setProgress, onError, setOpenProgress })
+    const { postEnrollments } = postEnrollmentData({ setProgress, onError, setOpenProgress })
     const { urlParameters } = useUrlParams()
     const { school: orgUnit, academicYear } = urlParameters
     const { schoolCalendar } = useSchoolCalendarKey()
@@ -51,14 +52,14 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     const attendanceDisplayName = programConfig?.programStages.find(x => x.id === selectedSectionDataStore?.attendance?.programStage)?.displayName
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
-                    await postAttendance(
+                    setStats(await postAttendance(
                         attendanceEvents,
                         attendanceDisplayName as unknown as string,
                         selectedSectionDataStore,
                         excelData?.mapping,
                         programConfig?.id,
                         importMode
-                    ).finally(() => closeDialog())
+                    ).finally(() => closeDialog()))
                     break;
 
                 case Modules.Enrollment:
@@ -88,7 +89,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     )
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
-                    await postEnrollments(
+                    setStats(await postEnrollments(
                         enrollments,
                         studentsData,
                         importMode,
@@ -96,7 +97,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                         updating,
                         selectedSectionDataStore as unknown as selectedDataStoreKey,
                         orgUnit as unknown as string
-                    ).finally(() => closeDialog())
+                    ).finally(() => closeDialog()))
 
                     break
 
@@ -111,9 +112,9 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
 
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
-                    await postData(events, excelData, importMode, programConfig, programStages).finally(() => closeDialog())
+                    const eventStats = await postData(events, excelData, importMode, programConfig, programStages).finally(() => closeDialog())
 
-                    await postEnrollments(
+                    const enrollmentStats = await postEnrollments(
                         enrollmentUpdates,
                         studentsData,
                         importMode,
@@ -123,6 +124,9 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                         orgUnit as unknown as string,
                         true
                     ).finally(() => closeDialog())
+
+                    // Final result sends events and enrollments: show the stats of both.
+                    setStats(mergeImportStats(eventStats, enrollmentStats))
                 }
                     break;
 
@@ -130,7 +134,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     const { events } = generateEventObjects(displayNames, studentsData, programConfig)
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
-                    await postData(events, excelData, importMode, programConfig, programStages).finally(() => closeDialog())
+                    setStats(await postData(events, excelData, importMode, programConfig, programStages).finally(() => closeDialog()))
                     break;
             }
         } catch (error) {

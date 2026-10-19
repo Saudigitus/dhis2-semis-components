@@ -44,3 +44,26 @@ export function importSummary(summary: any, updatedStats: any) {
         byType: byTypeCopy
     };
 }
+
+// Joins the stats of two imports of the same run (for example the events and the
+// enrollments of Final result), so that the summary shows both and not only the last one.
+export function mergeImportStats(first: any, second: any) {
+    const byType = [...(first?.byType ?? [])].map((row: any) => ({ ...row }))
+
+    for (const row of (second?.byType ?? [])) {
+        const index = byType.findIndex((x: any) => x?.trackerType === row?.trackerType)
+        if (index === -1) byType.push({ ...row })
+        else for (const key of ["created", "ignored", "updated", "total"])
+            byType[index][key] = (byType[index][key] ?? 0) + (row?.[key] ?? 0)
+    }
+
+    const sum = (key: string) => (first?.stats?.[key] ?? 0) + (second?.stats?.[key] ?? 0)
+
+    return {
+        stats: { created: sum("created"), ignored: sum("ignored"), updated: sum("updated"), total: sum("total") },
+        errorDetails: [...(first?.errorDetails ?? []), ...(second?.errorDetails ?? [])],
+        warningDetails: [...(first?.warningDetails ?? []), ...(second?.warningDetails ?? [])],
+        exceptions: [...(first?.exceptions ?? []), ...(second?.exceptions ?? [])],
+        byType
+    }
+}

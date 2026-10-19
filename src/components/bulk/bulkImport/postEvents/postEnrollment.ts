@@ -7,7 +7,7 @@ import { useGetEvents } from "dhis2-semis-functions";
 import { TranslationState } from "../../../..//schemas/translationsSchema";
 import { useRecoilValue } from "recoil";
 
-export function postEnrollmentData({ setStats, setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
+export function postEnrollmentData({ setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { getEvents } = useGetEvents()
     const { uploadValues } = useUploadEvents()
     const i18n = useRecoilValue(TranslationState) as any
@@ -114,7 +114,7 @@ export function postEnrollmentData({ setStats, setProgress, onError, setOpenProg
             });
         }
 
-        setStats(updatedStats)
+        return updatedStats
     }
 
     return { postEnrollments }

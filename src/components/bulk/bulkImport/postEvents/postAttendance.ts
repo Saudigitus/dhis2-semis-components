@@ -7,10 +7,9 @@ import { useUploadEvents } from "dhis2-semis-functions";
 import { TranslationState } from "../../../../schemas/translationsSchema";
 import { useRecoilValue } from "recoil";
 
-export function postAttendanceValues({ setStats, setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
+export function postAttendanceValues({ setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { uploadValues } = useUploadEvents()
     const { getEvents } = useGetEvents()
-    let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [] }
     const i18n = useRecoilValue(TranslationState) as any
 
     function updateProgressF(buffer: number, progressParam: number, denominador: number) {
@@ -28,6 +27,8 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpenPr
         program: string,
         importMode: "VALIDATE" | "COMMIT"
     ) {
+        // Stats of this run only: a dry run and the import that follows must not add up.
+        let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], warningDetails: [], exceptions: [], byType: [] }
         let values: any = { CREATE: [], UPDATE: [], DELETE: [] }
         const keys = Object.keys(values)
         const programStageId = selectedSectionDataStore?.attendance?.programStage as unknown as string
@@ -102,7 +103,7 @@ export function postAttendanceValues({ setStats, setProgress, onError, setOpenPr
             }
         }
 
-        setStats(updatedStats)
+        return updatedStats
     }
 
     return { postAttendance }

@@ -21,11 +21,12 @@ interface ModalContentProps {
     onSubmit: (args: "VALIDATE" | "COMMIT") => any
     onClose?: () => any
     module: string
+    updating?: boolean
     stats: { stats: { ignored: number, created: number, updated: number, total: number }, errorDetails: any[], byType: [], warningDetails: [], exceptions?: any[] }
 }
 
 const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
-    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, onClose, module, stats } = props;
+    const { setOpen, invalidRecords, validRecords, programConfig, onSubmit, onClose, module, updating = false, stats } = props;
     const [showDetails, setShowDetails] = useState(false)
     const [tab, setSelectedTab] = useState<any>({ id: 'byType', data: stats?.byType })
     const [load, setLoading] = useState(false)
@@ -33,6 +34,12 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
     const i18n = useRecoilValue(TranslationState) as any
 
     const handleShowDetails = () => { setShowDetails(!showDetails); }
+
+    // A dry run that the server refused (ignored records, errors or an exception) blocks the
+    // import until a corrected file is uploaded (a new upload opens a new summary).
+    const dryRunFailed = doneProcessing.validate && (
+        (stats?.stats?.ignored ?? 0) > 0 || (stats?.errorDetails?.length ?? 0) > 0 || (stats?.exceptions?.length ?? 0) > 0
+    )
 
     useEffect(() => {
         setDoneProcessing({ validate: false, commit: false })
@@ -46,6 +53,24 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
         ))
     }, [stats])
 
+
+    const hasErrors = ((stats?.stats?.ignored ?? 0) + invalidRecords?.length + (stats?.exceptions?.length ?? 0)) > 0
+
+    // The rows that failed the check of the file are never sent, so after a clean dry run the
+    // import can go on; the message says which rows will be left out.
+    const noticeMessage = doneProcessing.commit ?
+        ((stats?.stats?.ignored ?? 0) + (stats?.exceptions?.length ?? 0)) > 0 ?
+            `${i18n.t("Occurred errors during the import process, please review your file!")}` :
+            `${i18n.t("Data imported successfully!")}`
+        : doneProcessing.validate ?
+            dryRunFailed ?
+                `${i18n.t("Errors were found during the dry run. Correct the file and upload it again.")}` :
+                invalidRecords?.length > 0 ?
+                    `${i18n.t("No errors were found during the dry run. The invalid records of the file will not be imported.")}` :
+                    `${i18n.t("No errors were found during dry run process, you can proceed with the import.")}`
+            : (invalidRecords?.length > 0 || stats?.exceptions?.length > 0) ?
+                `${i18n.t("Invalid records were found, please review your file! Only the valid records will be sent.")}` :
+                `${i18n.t("No errors were found during file validation process, you can proceed with the dry run/import.")}`
 
     const modalActions: ButtonActionProps[] = [
         {
@@ -63,7 +88,7 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             label: `${i18n.t("Import data")}`,
             primary: true,
             loading: false,
-            disabled: stats?.exceptions?.length > 0 || doneProcessing.commit || validRecords?.length === 0,
+            disabled: stats?.exceptions?.length > 0 || doneProcessing.commit || validRecords?.length === 0 || dryRunFailed,
             onClick: () => {
                 onSubmit("COMMIT").then(() => {
                     setDoneProcessing((done: any) => ({ ...done, commit: true }))
@@ -102,29 +127,18 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
     return (
         <>
             <NoticeBox
-                title={((stats?.stats?.ignored ?? 0) + invalidRecords?.length + stats?.exceptions?.length) > 0 ? `${i18n.t("Errors were found!")}` : `${i18n.t('No errors!')}`}
-                warning={((stats?.stats?.ignored ?? 0) + invalidRecords?.length + stats?.exceptions?.length) > 0}
-                valid={((stats?.stats?.ignored ?? 0) + invalidRecords?.length + stats?.exceptions?.length) == 0}
+                title={hasErrors ? `${i18n.t("Errors were found!")}` : `${i18n.t('No errors!')}`}
+                warning={hasErrors}
+                valid={!hasErrors}
             >
-                {((stats?.stats?.ignored ?? 0) + invalidRecords?.length + stats?.exceptions?.length) > 0 ?
-                    doneProcessing.validate ?
-                        `${i18n.t("Erros were found, please review your file!")}` :
-                        (invalidRecords?.length > 0 || stats?.exceptions?.length) ? `${i18n.t("Invalid records were found, please review your file!")}` :
-                            `${i18n.t("Occurred errors during the import process, please review your file!")}`
-                    : doneProcessing.commit ?
-                        `${i18n.t("Date imported successfully!")}` :
-                        doneProcessing.validate ?
-                            `${i18n.t("No errors were found during dry run process, you can proceed with the import.")}` :
-                            `${i18n.t("No errors were found during file validation process, you can proceed with the dry run/import.")}`
-
-                }
+                {noticeMessage}
             </NoticeBox >
 
             <WithPadding />
             <Title style={{ fontSize: "18px" }} label={`${i18n.t('Summary')}`} type="title" />
             <WithPadding />
 
-            <SummaryCards module={module} stats={stats} invalidRecs={invalidRecords} validRecs={validRecords} doneProcessing={doneProcessing.commit || doneProcessing.validate} />
+            <SummaryCards module={module} updating={updating} stats={stats} invalidRecs={invalidRecords} validRecs={validRecords} doneProcessing={doneProcessing.commit || doneProcessing.validate} dryRun={doneProcessing.validate && !doneProcessing.commit} />
 
             <WithPadding />
             <ButtonStrip>
