@@ -89,6 +89,7 @@ interface MobileRowsProps {
     programConfig: ProgramConfig
     onRowClick?: (args: any) => void
     onChange?: (selected: any, all?: boolean) => void
+    apiVersion?: number
 }
 
 interface EnrollmentDetailsComponentProps {
