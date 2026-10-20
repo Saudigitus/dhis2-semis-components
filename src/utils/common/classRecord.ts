@@ -1,3 +1,5 @@
+import { splitStatus } from "./absenceReason";
+
 // Row "Class record status" of the attendance files: the status of the class attendance record of
 // each day, as "Take attendance" on screen (ACTIVE = in progress, COMPLETED = completed). The export
 // writes it under the dates; the import creates or updates the class record of each day. The same
@@ -11,6 +13,8 @@ type ClassRecord = { event?: string, occurredAt?: string, status?: string, dataV
 
 const text = (value: any) => value === undefined || value === null ? "" : String(value).trim()
 const dayOf = (value: any) => text(value).slice(0, 10)
+// The option of a cell, without the reason of absence ("absent | SICK" -> "absent").
+const statusOf = (value: any) => splitStatus(value).status
 
 // Export: the row written under the dates, from the class records of the period.
 export function classRecordExportRow(records: ClassRecord[] = []): Record<string, string> {
@@ -36,7 +40,7 @@ export function daysWithValues(rows: any[] = [], section: string = "Attendance",
     const days = new Set<string>()
     for (const row of rows)
         for (const [day, value] of Object.entries(row?.[section] ?? {}))
-            if (text(value) !== "" && text(value) !== NON_SCHOOL_DAY && (!options || options.includes(text(value)))) days.add(day)
+            if (text(value) !== "" && text(value) !== NON_SCHOOL_DAY && (!options || options.includes(statusOf(value)))) days.add(day)
     return [...days].sort()
 }
 

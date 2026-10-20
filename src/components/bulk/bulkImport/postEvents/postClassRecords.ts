@@ -2,6 +2,7 @@ import { useGetEvents, useUploadEvents } from "dhis2-semis-functions";
 import { format } from "date-fns";
 import { importSummary } from "../../../../utils/common/getImportSummary";
 import { classRecordEvent, daysWithValues, planClassRecords, sameClassRecord } from "../../../../utils/common/classRecord";
+import { splitStatus } from "../../../../utils/common/absenceReason";
 
 // Class attendance records of the days of an attendance file ("Class record status" row), saved after
 // the attendance of the persons, with the values of "Take attendance" on screen. The totals are counted
@@ -11,8 +12,8 @@ export function postClassRecordValues() {
     const { getEvents } = useGetEvents()
     const { uploadValues } = useUploadEvents()
 
-    async function postClassRecords({ statusByDay, rows, section, dataStore, orgUnit, classValues, importMode, stats }: {
-        statusByDay: Record<string, string>, rows: any[], section: string, dataStore: any, orgUnit: string,
+    async function postClassRecords({ statusByDay, rows, personsInFile, section, dataStore, orgUnit, classValues, importMode, stats }: {
+        statusByDay: Record<string, string>, rows: any[], personsInFile?: number, section: string, dataStore: any, orgUnit: string,
         classValues: { dataElement: string, value: any }[], importMode: "VALIDATE" | "COMMIT", stats: any
     }) {
         const attendanceStatus = dataStore?.attendance?.attendanceStatus
@@ -52,10 +53,11 @@ export function postClassRecordValues() {
         const totalsOf = (day: string) => {
             const byStatus: Record<string, number> = {}
             for (const row of rows) {
-                const value = String(row?.[section]?.[day] ?? "").trim()
+                const value = splitStatus(row?.[section]?.[day]).status
                 if (value && value !== "Non School Day") byStatus[value] = (byStatus[value] ?? 0) + 1
             }
-            return { totalRecords: rows.length, byStatus }
+            // Total: the persons of the whole file, also the rows not sent because they are invalid.
+            return { totalRecords: Math.max(personsInFile ?? 0, rows.length), byStatus }
         }
 
         const plan = planClassRecords(statusByDay, valueDays, existingByDay)

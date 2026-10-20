@@ -11,7 +11,7 @@ import { useUrlParams, useGetRegitration } from "dhis2-semis-functions";
 import { useSchoolCalendarKey } from "../../../hooks/dataStore/useSchoolCalendarKey";
 import { mergeImportStats } from "../../../utils/common/getImportSummary";
 
-type CombinedTypes = importData & excelData & { importMode: "VALIDATE" | "COMMIT" };
+type CombinedTypes = importData & excelData & { importMode: "VALIDATE" | "COMMIT", personsInFile?: number };
 
 export function useImportData({ setProgress, onError, setStats, stats, setOpenProgress, }: { setOpenProgress: (args: boolean) => void, stats: any, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (rags: any) => void }) {
     const { postData } = postValues({ setProgress, onError, setOpenProgress })
@@ -28,7 +28,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
         let runStats: any
         const showStats = (value: any) => { runStats = value; setStats(value) }
         setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
-        const { onError, excelData, importMode, updating = false, programConfig, selectedSectionDataStore, sectionType } = props
+        const { onError, excelData, importMode, updating = false, programConfig, selectedSectionDataStore, sectionType, personsInFile } = props
 
         const closeDialog = () => {
             setProgress({ prorocess: "import", progress: 0, buffer: 0 })
@@ -61,7 +61,8 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     const personRows = studentsData.filter((x: any) => !x?.classRecord)
                     const statusByDay = classRecordStatusByDay(studentsData.find((x: any) => x?.classRecord))
 
-                    const { attendanceEvents } = generateAttendanceEventObjects(displayNames, personRows, selectedSectionDataStore as unknown as selectedDataStoreKey, selectedSchoolCalendar, rDataElements)
+                    const reasonInStage = !!attendanceStage?.programStageDataElements?.some((x: any) => x?.dataElement?.id === (selectedSectionDataStore as any)?.attendance?.absenceReason)
+                    const { attendanceEvents } = generateAttendanceEventObjects(displayNames, personRows, selectedSectionDataStore as unknown as selectedDataStoreKey, selectedSchoolCalendar, rDataElements, reasonInStage)
                     const attendanceDisplayName = programConfig?.programStages.find(x => x.id === selectedSectionDataStore?.attendance?.programStage)?.displayName
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
@@ -77,6 +78,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     showStats(await postClassRecords({
                         statusByDay,
                         rows: personRows,
+                        personsInFile,
                         section: attendanceDisplayName as unknown as string,
                         dataStore: selectedSectionDataStore,
                         orgUnit: orgUnit as unknown as string,

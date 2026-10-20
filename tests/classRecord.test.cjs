@@ -4,11 +4,13 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 
-// Transpile the TS helpers to CommonJS, as Vite would bundle them.
+// Transpile the TS helpers (and their relative imports) to CommonJS, as Vite would bundle them.
 function loadTs(file) {
+    const full = path.isAbsolute(file) ? file : path.join(__dirname, file);
     const compiled = { exports: {} };
-    const js = ts.transpileModule(fs.readFileSync(path.join(__dirname, file), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText;
-    new Function('module', 'exports', 'require', js)(compiled, compiled.exports, require);
+    const js = ts.transpileModule(fs.readFileSync(full, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText;
+    const localRequire = name => name.startsWith('.') ? loadTs(path.join(path.dirname(full), `${name}.ts`)) : require(name);
+    new Function('module', 'exports', 'require', js)(compiled, compiled.exports, localRequire);
     return compiled.exports;
 }
 const { CLASS_RECORD_ROW, classRecordExportRow, classRecordStatusByDay, daysWithValues, planClassRecords, classRecordEvent, sameClassRecord } = loadTs('../src/utils/common/classRecord.ts');
