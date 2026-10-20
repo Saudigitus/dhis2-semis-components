@@ -1,4 +1,5 @@
 import { absentCode, splitStatus } from "../../../../utils/common/absenceReason";
+import { enrollmentStatusOf, finalDecision } from "../../../../utils/common/finalResult";
 import { format } from "date-fns"
 import { selectedDataStoreKey, ProgramConfig } from 'dhis2-semis-types';
 import { } from "dhis2-semis-functions";
@@ -197,6 +198,7 @@ export function generateFinalResultData(
     dataStore: any
 ) {
     let enrollmentUpdates: any = []
+    const finalResult = dataStore?.["final-result"]
 
     for (const student of data) {
         if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.enrollment || !student?.Ids?.orgUnit) {
@@ -204,27 +206,17 @@ export function generateFinalResultData(
         }
 
         const { trackedEntity, enrollment, orgUnit } = student.Ids
-        let isDropout = false
-
-        for (const programStage of programStages) {
-            for (const key of Object.keys(student[programStage] || {})) {
-                const value = student[programStage][key]
-                if (value) {
-                    if (typeof value === 'string' && dataStore?.finalResult?.dropoutStatusValues?.includes(value)) {
-                        isDropout = true
-                    }
-                }
-            }
-        }
+        // Same rule as "Assign final result": dropout cancels, any other decision completes; a row
+        // without a decision does not change the enrollment. Dates are kept (see postEnrollments).
+        const decision = finalDecision(student, programStages, `${finalResult?.programStage}.${finalResult?.status}`)
+        if (!decision) continue
 
         enrollmentUpdates.push({
             enrollment,
             program: programConfig.id,
-            enrolledAt: format(new Date(), 'yyyy-MM-dd'),
             orgUnit,
-            status: isDropout ? 'CANCELLED' : 'COMPLETED',
+            status: enrollmentStatusOf(decision, finalResult),
             trackedEntity,
-            occurredAt: format(new Date(), 'yyyy-MM-dd'),
         })
     }
 
