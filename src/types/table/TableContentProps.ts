@@ -32,8 +32,8 @@ interface RowProps {
     isOwnershipOu?: boolean
     title?: string
     disableHoverListener?: boolean
-    tooltip?: boolean
     style?: any
+    disabled?: boolean
 }
 
 interface RenderHeaderProps {
@@ -72,6 +72,7 @@ interface RenderRowsProps {
     indeterminate?: boolean
     selected?: any
     enableInactiveRowSelection?: boolean
+    disabledRowMessage?: string
 }
 
 interface MobileRowsProps {
@@ -145,6 +146,7 @@ interface TableRenderProps {
     showWorkingListsContainer?: boolean
     paginate?: boolean
     enableInactiveRowSelection?: boolean
+    disabledRowMessage?: string
 }
 
 

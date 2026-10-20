@@ -18,6 +18,7 @@ interface imageFieldSpecificProps {
     trackedEntity?: string,
     setTrackedValues?: (value: any) => void,
     customComponent?: any,
+    disabled?: boolean
 }
 
 interface CombinedProps extends FormProps, imageFieldSpecificProps { }
@@ -30,7 +31,7 @@ export default function CustomForm(props: CombinedProps) {
     const formElementRef = useRef<HTMLFormElement | null>(null);
     const ruleAssignments = useRef(new Map<string, unknown>());
     const { storyBook, formFields, style, onInputChange, onFormSubtmit, loading, initialValues, withButtons, customComponent } = props
-    const { onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues, baseUrl } = props
+    const { onCancel, Form, submitButtonLabel, trackedEntity, destructive, setFormValues, setTrackedValues, baseUrl, disabled } = props
     const i18n = useRecoilValue(TranslationState) as any
 
     const validate = (values: Record<string, any>) => {
@@ -97,7 +98,7 @@ export default function CustomForm(props: CombinedProps) {
             label: submitButtonLabel ? submitButtonLabel : i18n.t("Submit"),
             success: "success",
             type: "submit",
-            disabled: !changed || loading,
+            disabled: !changed || loading || disabled,
             primary: destructive ? !destructive : true,
             destructive: destructive,
             icon: loading ? <CircularLoader small /> : null,
@@ -177,7 +178,7 @@ export default function CustomForm(props: CombinedProps) {
                                         />
                                     ))
                             }
-                            
+
                             {customComponent}
 
                             {withButtons && (

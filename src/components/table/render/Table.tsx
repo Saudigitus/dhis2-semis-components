@@ -92,7 +92,8 @@ function Table(props: TableRenderProps): React.ReactElement {
         showHeaderFilters = true,
         showWorkingListsContainer = true,
         paginate = true,
-        beforeSettings
+        beforeSettings,
+        disabledRowMessage
     } = props
 
     const classes = useStyles()
@@ -203,6 +204,7 @@ function Table(props: TableRenderProps): React.ReactElement {
                                         selected={selected}
                                         isCheckbox={selectable}
                                         enableInactiveRowSelection={enableInactiveRowSelection}
+                                        disabledRowMessage={disabledRowMessage}
                                     />
                                 )}
                             </>

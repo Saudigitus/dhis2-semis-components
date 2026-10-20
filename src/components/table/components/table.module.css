@@ -18,22 +18,24 @@
     outline: none;
 }
 
-.disabledRow {
+.inactiveRow {
     background: rgba(218, 52, 77, .1) !important;
     cursor: not-allowed !important;
 }
 
-.disabledRow .tableCell {
+.inactiveRow .tableCell {
     color: rgba(0, 0, 0, 0.4) !important;
 }
 
+.disabledRow,
 .disabledRowOwnershipOu {
-    background: rgba(207, 207, 207, .3) !important;
+    background: rgba(207, 207, 207, .1) !important;
     cursor: not-allowed !important;
 }
 
+.disabledRow .tableCell,
 .disabledRowOwnershipOu .tableCell {
-    color: rgba(0, 0, 0, 0.4) !important;
+    color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .tableRowBody {

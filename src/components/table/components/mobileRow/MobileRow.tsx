@@ -23,7 +23,7 @@ export default function MobileRow(props: MobileRowsProps): React.ReactElement {
 
   return (
     <Box
-      className={classNames(style.cardContainer, inactive && style.disabledRow)}
+      className={classNames(style.cardContainer, rowData?.disabled && style.disabledRow, inactive && style.inactiveRow,)}
     >
       <div style={{ width: "100%" }}>
         <div className={style.cardActions}>

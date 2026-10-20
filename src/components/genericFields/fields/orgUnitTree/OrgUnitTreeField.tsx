@@ -9,10 +9,19 @@ import { Close } from '@mui/icons-material';
 export default function OrgUnitTreeField(props: OuFieldProps): React.ReactElement {
     const [selectedOu, setSelectedOu] = useState<SelectedOuType>()
     const { input }: FieldRenderProps<any, HTMLElement> = useField(props.name);
+    const { onInputChange } = props;
 
     const onOuChange = (event: SelectedOuType) => {
         setSelectedOu(event)
-        input.onChange(event.id)
+        input.onChange(event?.id)
+        // Propaga a mudança para o onInputChange do CustomForm
+        onInputChange?.({ value: event?.id, name: props.name, field: event })
+    }
+
+    const onOuClear = () => {
+        setSelectedOu({} as unknown as SelectedOuType)
+        input.onChange("")
+        onInputChange?.({ value: "", name: props.name, field: null })
     }
 
     return (
@@ -25,7 +34,7 @@ export default function OrgUnitTreeField(props: OuFieldProps): React.ReactElemen
                         </span>
                         <IconButton
                             size="small"
-                            onClick={() => { setSelectedOu({} as unknown as SelectedOuType); }}
+                            onClick={onOuClear}
                             style={{ marginLeft: "auto" }}
                         >
                             <Close fontSize="small" />
