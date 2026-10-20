@@ -1,6 +1,7 @@
 import { splitArrayIntoChunks } from "../../../../utils/common/splitArray";
 import { importStrategy } from "../../../../types/bulk/bulkOperations";
 import { importSummary } from "../../../../utils/common/getImportSummary";
+import { eventsWithValues, withExistingEvent } from "../../../../utils/common/stageEvents";
 import { ProgramConfig } from "dhis2-semis-types"
 import { useUploadEvents } from "dhis2-semis-functions";
 import { useGetEvents } from "dhis2-semis-functions";
@@ -42,14 +43,15 @@ export function postValues({ setProgress, onError, setOpenProgress }: { setOpenP
                         orgUnit,
                         orgUnitMode: "SELECTED",
                         programStage: stage,
-                        fields: "event,programStage,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
+                        fields: "event,programStage,trackedEntity,occurredAt,status,enrollment,dataValues[dataElement,value]",
                         trackedEntities: trackedEntity,
                         page,
                         pageSize
                     }).then((resp: any) => {
-                        let event = resp.find((x: any) => x.enrollment === enrollment && x.programStage == stage)?.event
+                        // The existing record keeps its id, its date and its status.
+                        const existing = resp.find((x: any) => x.enrollment === enrollment && x.programStage == stage)
                         const index = copyData.findIndex(x => x.enrollment === enrollment && x.programStage == stage)
-                        copyData[index] = { ...copyData[index], ...(event ? { event: event } : {}) }
+                        if (index >= 0) copyData[index] = withExistingEvent(copyData[index], existing)
                         page++
                         
                         return resp
@@ -62,7 +64,7 @@ export function postValues({ setProgress, onError, setOpenProgress }: { setOpenP
             }
         }
 
-        const chunks = splitArrayIntoChunks(copyData, 50);
+        const chunks = splitArrayIntoChunks(eventsWithValues(copyData), 50);
 
         for (const chunk of chunks) {
             await uploadValues({ events: chunk }, importMode, importStrategy.CREATE).then((response) => {
