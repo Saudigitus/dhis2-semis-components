@@ -1,6 +1,7 @@
 import { excelData, importData } from "../../../types/bulk/bulkOperations";
 import { selectedDataStoreKey, Modules } from 'dhis2-semis-types';
 import { generateAttendanceEventObjects, generateEnrollmentData, generateEventObjects, generateFinalResultData } from "./createEvents/createEventsObject";
+import { dataValuesOfStage } from "../../../utils/common/stageDataValues";
 import { postAttendanceValues } from "./postEvents/postAttendance";
 import { postEnrollmentData } from "./postEvents/postEnrollment";
 import { postValues } from "./postEvents/postEvents";
@@ -49,7 +50,9 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
             switch (excelData?.module) {
                 case Modules.Attendance:
                     const selectedSchoolCalendar = schoolCalendar?.find(x => x.academicYear?.code === academicYear)
-                    const rDataElements = useGetRegitrationDataElements()
+                    // Class values of the screen, only those the attendance stage has (staff stages may not).
+                    const attendanceStage = programConfig?.programStages.find(x => x.id === selectedSectionDataStore?.attendance?.programStage)
+                    const rDataElements = dataValuesOfStage(useGetRegitrationDataElements(), attendanceStage)
 
                     const { attendanceEvents } = generateAttendanceEventObjects(displayNames, studentsData, selectedSectionDataStore as unknown as selectedDataStoreKey, selectedSchoolCalendar, rDataElements)
                     const attendanceDisplayName = programConfig?.programStages.find(x => x.id === selectedSectionDataStore?.attendance?.programStage)?.displayName

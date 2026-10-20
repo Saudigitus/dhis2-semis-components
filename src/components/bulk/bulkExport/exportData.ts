@@ -28,11 +28,12 @@ export function useExportData(props: ExportData) {
     } = props
     const { getData } = getCommonSheetData({ ...props, onError })
     const { urlParameters } = useUrlParams()
-    const { schoolName: orgUnitName, school: orgUnit } = urlParameters
+    const { schoolName: orgUnitName, school: orgUnit, academicYear } = urlParameters
     const { getEvents } = useGetEvents()
     const { generate } = generateAndReserveIds()
     const { defaults, schoolCalendar } = useSchoolCalendarKey()
-    const selectedCalendar = schoolCalendar?.find(x => x?.academicYear?.code == defaults?.academicYear)
+    // Calendar of the academic year selected on screen (school days of the exported period).
+    const selectedCalendar = schoolCalendar?.find(x => x?.academicYear?.code == (academicYear ?? defaults?.academicYear))
     const { excelGenerator } = generateFile({ unavailableDays: isSchoolDay as unknown as (date: Date, config: SchoolCalendarType) => boolean, config: selectedCalendar })
     const { getHeaders } = generateHeaders({
         module,

@@ -2,6 +2,7 @@ import { format } from "date-fns"
 import { importStrategy } from "../../../../types/bulk/bulkOperations"
 import { importSummary } from "../../../../utils/common/getImportSummary"
 import { splitArrayIntoChunks } from "../../../../utils/common/splitArray"
+import { readEventsByEnrollments } from "../../../../utils/common/eventsByEnrollment"
 import { useGetEvents } from "dhis2-semis-functions";
 import { useUploadEvents } from "dhis2-semis-functions";
 import { TranslationState } from "../../../../schemas/translationsSchema";
@@ -36,7 +37,6 @@ export function postAttendanceValues({ setProgress, onError, setOpenProgress }: 
         const allowAttendanceStatus = selectedSectionDataStore?.attendance?.attendanceStatus?.allowAttendanceStatus
 
         for (const student of excelData as unknown as []) {
-            let page = 1, pageSize = 50, data = []
             const { enrollment, orgUnit, trackedEntity } = (student as unknown as any).Ids
             const days = Object.keys(student[programStageName])
             const filter = {
@@ -44,8 +44,11 @@ export function postAttendanceValues({ setProgress, onError, setOpenProgress }: 
                 occurredBefore: days[days.length - 1]
             }
 
-            do {
-                data = await getEvents({
+            // Existing attendance records of the period, by day: every page is read (the paging
+            // stops on the reply of the server, not on the file) before deciding create / update.
+            const alreadyExistingEvents: any = {}
+            try {
+                const existing = await readEventsByEnrollments(getEvents, {
                     program,
                     ...filter,
                     orgUnit,
@@ -53,36 +56,28 @@ export function postAttendanceValues({ setProgress, onError, setOpenProgress }: 
                     programStage: programStageId,
                     fields: "event,trackedEntity,occurredAt,enrollment,dataValues[dataElement,value]",
                     trackedEntities: trackedEntity,
-                    pageSize,
-                    page
-                }).then((resp: any[]) => {
-
-                    let thisTeiEvents = events.filter(x => x.enrollment === enrollment)
-                    let alreadyExistingEvents: any = {}
-
-                    resp?.filter(x => x.enrollment === enrollment).map((x) => {
-                        alreadyExistingEvents[format(new Date(x.occurredAt), 'yyyy-MM-dd')] = x.event
-                    })
-
-                    thisTeiEvents.forEach(event => {
-                        const { status, ...rest } = event
-                        if (alreadyExistingEvents[event.occurredAt]) {
-                            if (statusOptions.includes(status))
-                                values.UPDATE.push({ ...rest, event: alreadyExistingEvents[event.occurredAt] });
-
-                            else if (allowAttendanceStatus)
-                                values.DELETE.push({ event: alreadyExistingEvents[event.occurredAt] });
-
-                        } else if (statusOptions.includes(status))
-                            values.CREATE.push(rest);
-                    });
-
-                    page++
-                }).catch((error) => {
-                    setOpenProgress(false)
-                    onError(error)
+                }, [enrollment], 1, 50)
+                existing.filter(x => x.enrollment === enrollment).forEach((x) => {
+                    alreadyExistingEvents[format(new Date(x.occurredAt), 'yyyy-MM-dd')] = x.event
                 })
-            } while (events?.length == pageSize)
+            } catch (error) {
+                setOpenProgress(false)
+                onError(error)
+                return updatedStats
+            }
+
+            events.filter(x => x.enrollment === enrollment).forEach(event => {
+                const { status, ...rest } = event
+                if (alreadyExistingEvents[event.occurredAt]) {
+                    if (statusOptions.includes(status))
+                        values.UPDATE.push({ ...rest, event: alreadyExistingEvents[event.occurredAt] });
+
+                    else if (allowAttendanceStatus)
+                        values.DELETE.push({ event: alreadyExistingEvents[event.occurredAt] });
+
+                } else if (statusOptions.includes(status))
+                    values.CREATE.push(rest);
+            });
 
             updateProgressF(40, 35, excelData.length)
         }

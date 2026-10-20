@@ -4,27 +4,11 @@ import { SummaryTable } from "./SummaryContent";
 import Pagination from "../../../../components/table/components/pagination/Pagination";
 import { TranslationState } from "../../../../schemas/translationsSchema";
 import { useRecoilValue } from "recoil";
+import { attendanceInvalidValues, attendanceValuesToRecord } from "../../../../utils/common/attendanceCounts";
 
-const getStats = (validRecords: any[], invalidRecords: any[], invalid = false) => {
-    if (invalid) {
-        let soma = validRecords?.reduce((acc: number, item: any) => {
-            return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length == 0)?.length;
-        }, 0)
-
-        soma += invalidRecords?.reduce((acc: number, item: any) => {
-            return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length == 0)?.length;
-        }, 0)
-
-        return soma;
-    } else {
-
-        const soma = validRecords?.reduce((acc: number, item: any) => {
-            return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length > 0 && v != "Non School Day")?.length;
-        }, 0)
-
-        return soma
-    }
-}
+// Empty days record nothing: only the invalid values are counted as invalid.
+const getStats = (validRecords: any[], invalidRecords: any[], invalid = false) =>
+    invalid ? attendanceInvalidValues(invalidRecords) : attendanceValuesToRecord(validRecords)
 
 const SummaryDetails = ({ module, invalidRecords, doneProcessing, validRecords, programConfig, stats = {} }: { module: string, stats: any, programConfig: any, validRecords: any, invalidRecords: any, doneProcessing: boolean }): React.ReactElement => {
     const [data, setData] = useState<any>([])

@@ -7,14 +7,18 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { TranslationState } from '../../../../schemas/translationsSchema';
 import { useRecoilValue } from 'recoil';
+import { dateWithin } from '../../../../utils/common/academicYearDates';
 
 interface DateRangePickerProps {
     name: string;
     disabled?: boolean;
     setChanged?: any
+    // Limits of the dates that can be chosen (e.g. the academic year of an export).
+    minDate?: Date
+    maxDate?: Date
 }
 
-const DateRangePicker: React.FC<DateRangePickerProps> = ({ name, disabled, setChanged }) => {
+const DateRangePicker: React.FC<DateRangePickerProps> = ({ name, disabled, setChanged, minDate, maxDate }) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [open, setOpen] = useState(false);
     const i18n = useRecoilValue(TranslationState) as any
@@ -25,8 +29,8 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ name, disabled, setCh
                 const selected = input.value || {};
                 const value = [
                     {
-                        startDate: selected.startDate || new Date(),
-                        endDate: selected.endDate || new Date(),
+                        startDate: selected.startDate || dateWithin(new Date(), minDate, maxDate),
+                        endDate: selected.endDate || dateWithin(new Date(), minDate, maxDate),
                         key: 'selection',
                     },
                 ];
@@ -61,6 +65,8 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ name, disabled, setCh
                                     ranges={value}
                                     direction="horizontal"
                                     months={2}
+                                    minDate={minDate}
+                                    maxDate={maxDate}
                                     onChange={(ranges: any) => {
                                         input.onChange({
                                             startDate: ranges.selection.startDate,

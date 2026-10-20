@@ -69,7 +69,7 @@ function GenericFields(props: GenericFieldsComponentProps) {
       </>
 
     case 'DATE_RANGE' as unknown as CustomAttributeProps["valueType"]:
-      return <DateRangePicker disabled={disabled} name='dateRange' setChanged={setChanged} />
+      return <DateRangePicker disabled={disabled} name='dateRange' setChanged={setChanged} minDate={(attribute as any)?.minDate} maxDate={(attribute as any)?.maxDate} />
 
     case Attribute.valueType.ORGANISATION_UNIT as unknown as CustomAttributeProps["valueType"]:
       return <OrgUnitTreeField {...attribute} />

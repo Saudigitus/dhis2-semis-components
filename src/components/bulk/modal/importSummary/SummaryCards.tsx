@@ -3,6 +3,7 @@ import { ButtonStrip } from "@dhis2/ui";
 import SummaryCard from "../../../card/SummaryCard";
 import { useRecoilValue } from "recoil";
 import { TranslationState } from "../../../../schemas/translationsSchema";
+import { attendanceInvalidValues, attendanceValuesToRecord } from "../../../../utils/common/attendanceCounts";
 
 function SummaryCards({ validRecs, invalidRecs, doneProcessing, dryRun = false, updating = false, stats, module }: { module: string, stats: any, validRecs: any, invalidRecs: any, doneProcessing: boolean, dryRun?: boolean, updating?: boolean }): React.ReactElement {
     const i18n = useRecoilValue(TranslationState) as any
@@ -11,24 +12,8 @@ function SummaryCards({ validRecs, invalidRecs, doneProcessing, dryRun = false, 
 
     const getStats = (invalid = false) => {
         if (module === "attendance") {
-            if (invalid) {
-                let soma = validRecs?.reduce((acc: number, item: any) => {
-                    return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length == 0)?.length;
-                }, 0)
-
-                soma += invalidRecs?.reduce((acc: number, item: any) => {
-                    return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length == 0)?.length;
-                }, 0)
-                
-                return soma;
-            } else {
-
-                const soma = validRecs?.reduce((acc: number, item: any) => {
-                    return acc + Object.values(item?.Attendance)?.filter((v: string) => v?.length > 0 && v != "Non School Day")?.length;
-                }, 0)
-
-                return soma
-            }
+            // Empty days record nothing: only the invalid values are counted as invalid.
+            return invalid ? attendanceInvalidValues(invalidRecs) : attendanceValuesToRecord(validRecs)
         } else {
             if (invalid) return invalidRecs?.length || 0;
             return validRecs?.length || 0;
