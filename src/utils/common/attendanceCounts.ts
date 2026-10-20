@@ -6,7 +6,8 @@ const NON_SCHOOL_DAY = "Non School Day"
 const hasValue = (value: any) => value !== undefined && value !== null && String(value).trim() !== "" && String(value).trim() !== NON_SCHOOL_DAY
 
 export function attendanceValuesToRecord(validRows: any[] = []): number {
-    return validRows.reduce((total, row) => total + Object.values(row?.Attendance ?? {}).filter(hasValue).length, 0)
+    // The row "Class record status" is not a person: its statuses are not attendance values.
+    return validRows.filter((row) => !row?.classRecord).reduce((total, row) => total + Object.values(row?.Attendance ?? {}).filter(hasValue).length, 0)
 }
 
 export function attendanceInvalidValues(invalidRows: any[] = []): number {

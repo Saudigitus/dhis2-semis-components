@@ -26,7 +26,8 @@ export function postAttendanceValues({ setProgress, onError, setOpenProgress }: 
         selectedSectionDataStore: any,
         excelData: any[],
         program: string,
-        importMode: "VALIDATE" | "COMMIT"
+        importMode: "VALIDATE" | "COMMIT",
+        classRecordDays: string[] = []
     ) {
         // Stats of this run only: a dry run and the import that follows must not add up.
         let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], warningDetails: [], exceptions: [], byType: [] }
@@ -65,6 +66,14 @@ export function postAttendanceValues({ setProgress, onError, setOpenProgress }: 
                 onError(error)
                 return updatedStats
             }
+
+            // On a day with a class record an empty cell means present: the absence saved before is
+            // removed, as "Present" does on screen.
+            if (allowAttendanceStatus)
+                for (const day of classRecordDays) {
+                    const cell = String((student as any)?.[programStageName]?.[day] ?? "").trim()
+                    if (cell === "" && alreadyExistingEvents[day]) values.DELETE.push({ event: alreadyExistingEvents[day] })
+                }
 
             events.filter(x => x.enrollment === enrollment).forEach(event => {
                 const { status, ...rest } = event

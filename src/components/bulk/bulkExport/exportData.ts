@@ -6,6 +6,7 @@ import { generateHeaders } from './excelHeaders/generateExcelHeaders';
 import { getCommonSheetData } from './useGetCommonData/commonData';
 import { generateFile } from './dataExporter/fileGenerator';
 import { generateEmptyRows } from '../../../utils/common/generateData';
+import { classRecordExportRow } from '../../../utils/common/classRecord';
 import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
 import { groupByEnrollment, readEventsByEnrollments } from '../../../utils/common/eventsByEnrollment';
@@ -99,6 +100,27 @@ export function useExportData(props: ExportData) {
                             progress: prev.progress + 40 / stagesToExport.length,
                             buffer: prev.buffer + 41 / stagesToExport.length
                         }));
+                    }
+
+                    // Attendance with the class attendance status enabled: a first row "Class record
+                    // status" with the status of the class record of each day (empty when none).
+                    const attendanceStatus = (selectedSectionDataStore as any)?.attendance?.attendanceStatus
+                    if (module === Modules.Attendance && attendanceStatus?.allowAttendanceStatus && attendanceStatus?.program) {
+                        try {
+                            const records = await getEvents({
+                                program: attendanceStatus.program,
+                                programStage: attendanceStatus.programStage,
+                                orgUnit,
+                                occurredAfter: startDate,
+                                occurredBefore: getDate({ selectedDate: new Date(endDate) }),
+                                filter: useGetRegitrationDataElements().filter((x: any) => x?.dataElement && x?.value).map((x: any) => `${x.dataElement}:in:${x.value}`),
+                                fields: "occurredAt,status",
+                                pageSize: 1000,
+                            })
+                            data = [classRecordExportRow(records ?? []), ...(data ?? [])]
+                        } catch (error) {
+                            onError(`Export error: Occurred error wihile fetching the class attendance records: ${error}`)
+                        }
                     }
                 } else if (empty && module == Modules.Enrollment) {
                     let ids: any = {}

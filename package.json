@@ -18,7 +18,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "test:bulk": "node --test tests/eventsByEnrollment.test.cjs tests/filterLists.test.cjs tests/emptyTemplate.test.cjs tests/enrollmentUpdate.test.cjs tests/enrollmentDateLabel.test.cjs tests/attendanceImport.test.cjs tests/attendanceExport.test.cjs",
+    "test:bulk": "node --test tests/eventsByEnrollment.test.cjs tests/filterLists.test.cjs tests/emptyTemplate.test.cjs tests/enrollmentUpdate.test.cjs tests/enrollmentDateLabel.test.cjs tests/attendanceImport.test.cjs tests/attendanceExport.test.cjs tests/classRecord.test.cjs",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

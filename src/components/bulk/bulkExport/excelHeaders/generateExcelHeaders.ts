@@ -5,6 +5,7 @@ import { dfHeaders } from "../../../../utils/constants/dfHeaders";
 import { FILTER_SEPARATOR, getFilterLables } from "../../../../utils/format/getFilterLables";
 import { enrollmentDateLabel } from "../../../../utils/format/enrollmentDateLabel";
 import { listAttributes, reportDataElements, showsListColumnsOnly } from "../../../../utils/common/listColumns";
+import { CLASS_RECORD_ROW, CLASS_RECORD_STATUSES } from "../../../../utils/common/classRecord";
 import { useRecoilValue } from "recoil";
 import { TranslationState } from "../../../../schemas/translationsSchema";
 import useGetSelectedKeys from "../../../../hooks/config/useGetSelectedKeys";
@@ -71,6 +72,8 @@ export function generateHeaders(props: GenerateHeaders) {
                     const attendanceStatus = dataStoreData?.attendance?.attendanceStatus?.allowAttendanceStatus
 
                     filters["Attendance"] = `${getFilterLables(statusDe.dataElement.optionSet.options, attendanceOptions)}${attendanceStatus ? `${FILTER_SEPARATOR}present` : ""}`
+                    // Values of the row "Class record status" (status of the class attendance record of each day).
+                    if (attendanceStatus) filters[CLASS_RECORD_ROW] = CLASS_RECORD_STATUSES.join(FILTER_SEPARATOR)
                 }
 
                 formatedHeaders.push(section)

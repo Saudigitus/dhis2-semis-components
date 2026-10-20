@@ -2,6 +2,8 @@ import { excelData, importData } from "../../../types/bulk/bulkOperations";
 import { selectedDataStoreKey, Modules } from 'dhis2-semis-types';
 import { generateAttendanceEventObjects, generateEnrollmentData, generateEventObjects, generateFinalResultData } from "./createEvents/createEventsObject";
 import { dataValuesOfStage } from "../../../utils/common/stageDataValues";
+import { classRecordStatusByDay } from "../../../utils/common/classRecord";
+import { postClassRecordValues } from "./postEvents/postClassRecords";
 import { postAttendanceValues } from "./postEvents/postAttendance";
 import { postEnrollmentData } from "./postEvents/postEnrollment";
 import { postValues } from "./postEvents/postEvents";
@@ -14,6 +16,7 @@ type CombinedTypes = importData & excelData & { importMode: "VALIDATE" | "COMMIT
 export function useImportData({ setProgress, onError, setStats, stats, setOpenProgress, }: { setOpenProgress: (args: boolean) => void, stats: any, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (rags: any) => void }) {
     const { postData } = postValues({ setProgress, onError, setOpenProgress })
     const { postAttendance } = postAttendanceValues({ setProgress, onError, setOpenProgress })
+    const { postClassRecords } = postClassRecordValues()
     const { postEnrollments } = postEnrollmentData({ setProgress, onError, setOpenProgress })
     const { urlParameters } = useUrlParams()
     const { school: orgUnit, academicYear } = urlParameters
@@ -54,18 +57,33 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     const attendanceStage = programConfig?.programStages.find(x => x.id === selectedSectionDataStore?.attendance?.programStage)
                     const rDataElements = dataValuesOfStage(useGetRegitrationDataElements(), attendanceStage)
 
-                    const { attendanceEvents } = generateAttendanceEventObjects(displayNames, studentsData, selectedSectionDataStore as unknown as selectedDataStoreKey, selectedSchoolCalendar, rDataElements)
+                    // The row "Class record status" is not a person: it gives the class record of each day.
+                    const personRows = studentsData.filter((x: any) => !x?.classRecord)
+                    const statusByDay = classRecordStatusByDay(studentsData.find((x: any) => x?.classRecord))
+
+                    const { attendanceEvents } = generateAttendanceEventObjects(displayNames, personRows, selectedSectionDataStore as unknown as selectedDataStoreKey, selectedSchoolCalendar, rDataElements)
                     const attendanceDisplayName = programConfig?.programStages.find(x => x.id === selectedSectionDataStore?.attendance?.programStage)?.displayName
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
-                    showStats(await postAttendance(
+                    const attendanceStats = await postAttendance(
                         attendanceEvents,
                         attendanceDisplayName as unknown as string,
                         selectedSectionDataStore,
-                        excelData?.mapping,
+                        personRows,
                         programConfig?.id,
-                        importMode
-                    ).finally(() => closeDialog()))
+                        importMode,
+                        Object.keys(statusByDay)
+                    )
+                    showStats(await postClassRecords({
+                        statusByDay,
+                        rows: personRows,
+                        section: attendanceDisplayName as unknown as string,
+                        dataStore: selectedSectionDataStore,
+                        orgUnit: orgUnit as unknown as string,
+                        classValues: useGetRegitrationDataElements(),
+                        importMode,
+                        stats: attendanceStats,
+                    }).finally(() => closeDialog()))
                     break;
 
                 case Modules.Enrollment:
