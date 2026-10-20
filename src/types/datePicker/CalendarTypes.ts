@@ -13,6 +13,8 @@ interface DropDownCalendarProps {
     config?: SchoolCalendar
     onCancel?: () => void
     showSelected?: boolean
+    academicYear?: string
+    academicYearPeriod?: ClassPeriodType
 }
 
 interface CalendarProps {
@@ -20,6 +22,8 @@ interface CalendarProps {
     dateDisabler?: (date: Date, config: SchoolCalendar) => boolean
     setValue: ({ selectedDate }: { selectedDate: Date }) => void
     config?: SchoolCalendar
+    minDate?: Date
+    maxDate?: Date
 }
 
 interface defaults {

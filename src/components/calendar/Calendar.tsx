@@ -4,12 +4,14 @@ import { CalendarProps } from '../../types/datePicker/CalendarTypes';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 export default function Calendar(props: CalendarProps) {
-  const { value, setValue, dateDisabler, config } = props
+  const { value, setValue, dateDisabler, config, minDate, maxDate } = props
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DateCalendar
         value={value.selectedDate}
+        minDate={minDate}
+        maxDate={maxDate}
         onChange={(e: any) => { setValue({ selectedDate: e as Date }) }}
         shouldDisableDate={(date: any) => {
           const today = new Date()
