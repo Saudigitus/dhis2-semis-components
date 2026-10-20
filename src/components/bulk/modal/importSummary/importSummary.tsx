@@ -12,6 +12,7 @@ import ErrorDetailsTable from "./ErrorDetailsTable";
 import { TranslationState } from "../../../../schemas/translationsSchema";
 import { useRecoilValue } from "recoil";
 import { TabBar, Tab } from '@dhis2/ui'
+import { summaryNotice } from "../../../../utils/common/summaryNotice";
 
 interface ModalContentProps {
     setOpen: (value: boolean) => void
@@ -56,23 +57,16 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
     }, [stats])
 
 
-    const hasErrors = ((stats?.stats?.ignored ?? 0) + invalidRecords?.length + (stats?.exceptions?.length ?? 0)) > 0
-
-    // The rows that failed the check of the file are never sent, so after a clean dry run the
-    // import can go on; the message says which rows will be left out.
-    const noticeMessage = doneProcessing.commit ?
-        ((stats?.stats?.ignored ?? 0) + (stats?.exceptions?.length ?? 0)) > 0 ?
-            `${i18n.t("Occurred errors during the import process, please review your file!")}` :
-            `${i18n.t("Data imported successfully!")}`
-        : doneProcessing.validate ?
-            dryRunFailed ?
-                `${i18n.t("Errors were found during the dry run. Correct the file and upload it again.")}` :
-                invalidRecords?.length > 0 ?
-                    `${i18n.t("No errors were found during the dry run. The invalid records of the file will not be imported.")}` :
-                    `${i18n.t("No errors were found during dry run process, you can proceed with the import.")}`
-            : (invalidRecords?.length > 0 || stats?.exceptions?.length > 0) ?
-                `${i18n.t("Invalid records were found, please review your file! Only the valid records will be sent.")}` :
-                `${i18n.t("No errors were found during file validation process, you can proceed with the dry run/import.")}`
+    // Title and message say the same thing for the step shown (check, dry run or import).
+    const { hasErrors, message } = summaryNotice({
+        validated: doneProcessing.validate,
+        committed: doneProcessing.commit,
+        dryRunFailed,
+        invalidRows: invalidRecords?.length ?? 0,
+        ignored: stats?.stats?.ignored ?? 0,
+        exceptions: stats?.exceptions?.length ?? 0,
+    })
+    const noticeMessage = `${i18n.t(message)}`
 
     const modalActions: ButtonActionProps[] = [
         {
