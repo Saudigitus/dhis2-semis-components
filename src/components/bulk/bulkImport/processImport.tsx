@@ -37,9 +37,11 @@ export default function ProcessImport(props: importData) {
 
     // Only the rows that passed the check are sent (dry run and import); the check adds
     // "warnings" / "errors" to each row, which are not part of the file and are removed.
+    // The persons of the whole file (also the invalid rows) are the total of the class records.
     const onSubmit = async (importMode: "VALIDATE" | "COMMIT") => await importData({
         ...props,
         excelData: { ...excelData, mapping: validRecords.map(({ warnings, errors, ...row }: any) => row) },
+        personsInFile: [...validRecords, ...invalidRecords].filter((row: any) => !row?.classRecord).length,
         importMode
     })
 

@@ -7,6 +7,8 @@ import { useGetFileName } from '../../../hooks/common/useGetFileName';
 import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey';
 import { TranslationState } from '../../../schemas/translationsSchema';
 import { useRecoilValue } from 'recoil';
+import { useSchoolCalendarKey } from '../../../hooks/dataStore/useSchoolCalendarKey';
+import { academicYearDates } from '../../../utils/common/academicYearDates';
 
 export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form }: { Form: any, onSubmit: (rows: any) => void, open: boolean, setOpen: (args: boolean) => void, module: "attendance" | "final-result" | "enrollment" | "performance" }) {
     const { urlParameters } = useUrlParams()
@@ -16,6 +18,9 @@ export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form
     const { getFileName } = useGetFileName()
     const fileName = getFileName(module)
     const i18n = useRecoilValue(TranslationState) as any
+    // The period of an export is limited to the dates of the selected academic year.
+    const { schoolCalendar } = useSchoolCalendarKey()
+    const yearDates = academicYearDates(schoolCalendar?.find((x: any) => x?.academicYear?.code == academicYear))
 
     return (
         <ModalComponent
@@ -41,9 +46,11 @@ export default function ModalExportEmpty({ open, setOpen, onSubmit, module, Form
                         {
                             "name": `${i18n.t("Details")}`,
                             "storyBook": false,
-                            "description": `${i18n.t("This file will allow the import of new student data into the system.")}`,
+                            "description": module === "attendance"
+                                ? `${i18n.t("Choose the period to export.")}`
+                                : `${i18n.t("This file will allow the import of new student data into the system.")}`,
                             "fields": [
-                                ...exportFields(module, filters)
+                                ...exportFields(module, filters).map((field: any) => field?.name === "dateRange" ? { ...field, ...yearDates } : field)
                             ]
                         },
                     ]}

@@ -10,6 +10,12 @@ import { generateValidationSheet } from '../../../../utils/common/generateValida
 import { FILTER_SEPARATOR } from '../../../../utils/format/getFilterLables';
 import { convertNumberToLetter } from '../../../../utils/common/convertNumberToLetter';
 import { SchoolCalendarType } from '../../../../types/dataStore/schoolCalendar';
+import { CLASS_RECORD_ROW } from '../../../../utils/common/classRecord';
+
+// Row "Class record status" of the attendance files (its text is in the "ref" column).
+const isClassRecordRow = (row: any) => {
+    try { return row?.getCell('ref')?.value === CLASS_RECORD_ROW } catch { return false }
+}
 
 export function generateFile({ unavailableDays, config }: { unavailableDays: (date: Date, config: SchoolCalendarType) => boolean, config: SchoolCalendarType }) {
     const password = '#saudigitus_SEMIS_Export#'
@@ -132,6 +138,14 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
 
                             cell.dataValidation = { ...dataValidation, formulae: [formula] };
                         }
+                    }
+
+                    // Row "Class record status": its days take only ACTIVE / COMPLETED.
+                    if (index > 3 && regex.test(columnHeader) && filters?.[CLASS_RECORD_ROW] && isClassRecordRow(row)) {
+                        const columnLetter = convertNumberToLetter(validationSheet.getColumn(CLASS_RECORD_ROW).number);
+                        const formula = `'${validationSheet.name}'!$${columnLetter}$2:$${columnLetter}$${filters[CLASS_RECORD_ROW].split(FILTER_SEPARATOR).length + 1}`;
+                        cell.dataValidation = { ...dataValidation, formulae: [formula] };
+                        cell.font = { bold: true };
                     }
                 });
             });

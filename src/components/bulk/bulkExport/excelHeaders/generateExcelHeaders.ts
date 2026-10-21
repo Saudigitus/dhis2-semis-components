@@ -4,6 +4,9 @@ import { Modules } from 'dhis2-semis-types';
 import { dfHeaders } from "../../../../utils/constants/dfHeaders";
 import { FILTER_SEPARATOR, getFilterLables } from "../../../../utils/format/getFilterLables";
 import { enrollmentDateLabel } from "../../../../utils/format/enrollmentDateLabel";
+import { listAttributes, reportDataElements, showsListColumnsOnly } from "../../../../utils/common/listColumns";
+import { CLASS_RECORD_ROW, CLASS_RECORD_STATUSES } from "../../../../utils/common/classRecord";
+import { absentCode, reasonCodes, withReason } from "../../../../utils/common/absenceReason";
 import { useRecoilValue } from "recoil";
 import { TranslationState } from "../../../../schemas/translationsSchema";
 import useGetSelectedKeys from "../../../../hooks/config/useGetSelectedKeys";
@@ -41,6 +44,7 @@ export function generateHeaders(props: GenerateHeaders) {
         }
 
         const attendanceStageId = selectedSectionDataStore?.attendance?.programStage
+        const listColumnsOnly = showsListColumnsOnly(module)
 
         for (const stageId of stageHeaders) {
             const currStage = programConfig?.programStages?.find(x => x.id == stageId)
@@ -68,7 +72,16 @@ export function generateHeaders(props: GenerateHeaders) {
                     const attendanceOptions = dataStoreData?.attendance?.statusOptions || []
                     const attendanceStatus = dataStoreData?.attendance?.attendanceStatus?.allowAttendanceStatus
 
-                    filters["Attendance"] = `${getFilterLables(statusDe.dataElement.optionSet.options, attendanceOptions)}${attendanceStatus ? `${FILTER_SEPARATOR}present` : ""}`
+                    // The absence can be chosen with each reason of absence ("absent | SICK").
+                    const absent = absentCode(dataStoreData?.attendance)
+                    const absenceWithReasons = absent ? reasonCodes(currStage, dataStoreData?.attendance?.absenceReason).map(reason => withReason(absent, reason)) : []
+                    filters["Attendance"] = [
+                        getFilterLables(statusDe.dataElement.optionSet.options, attendanceOptions),
+                        ...absenceWithReasons,
+                        ...(attendanceStatus ? ["present"] : [])
+                    ].join(FILTER_SEPARATOR)
+                    // Values of the row "Class record status" (status of the class attendance record of each day).
+                    if (attendanceStatus) filters[CLASS_RECORD_ROW] = CLASS_RECORD_STATUSES.join(FILTER_SEPARATOR)
                 }
 
                 formatedHeaders.push(section)
@@ -77,12 +90,13 @@ export function generateHeaders(props: GenerateHeaders) {
 
                 if (currStage?.id === selectedSectionDataStore.registration.programStage) {
                     defaultLockedHeaders.push(currStage?.displayName)
-                    const defaultHeaders = [
-                        {
-                            header: i18n.t('Ref'),
-                            key: 'ref',
-                            width: 5,
-                        },
+                    const refHeader = {
+                        header: i18n.t('Ref'),
+                        key: 'ref',
+                        width: 5,
+                    }
+                    const defaultHeaders = listColumnsOnly ? [refHeader] : [
+                        refHeader,
                         {
                             header: i18n.t('School'),
                             key: 'school',
@@ -104,7 +118,10 @@ export function generateHeaders(props: GenerateHeaders) {
                     fill: colors[(currStage as unknown as any)?.id]
                 }
 
-                currStage?.programStageDataElements.map((de) => {
+                const stageDataElements = listColumnsOnly && currStage?.id === selectedSectionDataStore.registration.programStage
+                    ? reportDataElements(currStage?.programStageDataElements)
+                    : currStage?.programStageDataElements ?? []
+                stageDataElements.map((de: any) => {
                     if (de?.dataElement?.optionSet?.options?.length > 0) filters[de.dataElement.id] = getFilterLables(de.dataElement.optionSet.options)
                     section = {
                         ...section, headers: [...section.headers, {
@@ -130,6 +147,8 @@ export function generateHeaders(props: GenerateHeaders) {
                 attributesToGenerate.push({ attributeID: x.trackedEntityAttribute.id, pattern: x.trackedEntityAttribute.pattern });
                 module == Modules.Enrollment && defaultLockedHeaders.push(x.trackedEntityAttribute.id);
             }
+
+            if (listColumnsOnly && !listAttributes([x]).length) continue
 
             att.push({
                 header: `${x.trackedEntityAttribute.displayName}${x.mandatory && empty ? "*" : ""}`,

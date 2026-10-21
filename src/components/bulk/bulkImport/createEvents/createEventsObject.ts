@@ -1,3 +1,4 @@
+import { absentCode, splitStatus } from "../../../../utils/common/absenceReason";
 import { format } from "date-fns"
 import { selectedDataStoreKey, ProgramConfig } from 'dhis2-semis-types';
 import { } from "dhis2-semis-functions";
@@ -34,12 +35,15 @@ export function generateEventObjects(programStages: string[], data: any, program
     return { events }
 }
 
-export function generateAttendanceEventObjects(programStages: string[], data: any, dataStore: selectedDataStoreKey, schoolCalendar: any, rDataElements: any[]) {
+// "reasonInStage": the attendance stage has the reason of absence of the configuration.
+export function generateAttendanceEventObjects(programStages: string[], data: any, dataStore: selectedDataStoreKey, schoolCalendar: any, rDataElements: any[], reasonInStage: boolean = false) {
     let attendanceEvents: any = []
     const holidays = schoolCalendar?.holidays?.map((x: any) => x.date) ?? []
     const { attendance } = dataStore
     const statusOptions = attendance?.statusOptions?.map((x: any) => x.code)
     const allowAttendanceStatus = attendance?.attendanceStatus?.allowAttendanceStatus
+    const absent = absentCode(attendance)
+    const reasonElement = (attendance as any)?.absenceReason
 
     for (const student of data) {
         if (!student?.Ids || !student?.Ids?.trackedEntity || !student?.Ids?.orgUnit) {
@@ -50,10 +54,12 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
         for (const programStage of programStages) {
 
             for (const key of Object.keys(student[programStage])) {
+                // "absent | SICK": the option and the reason of absence of the cell.
+                const { status, reason } = splitStatus(student[programStage][key])
 
-                if (student[programStage][key] && !holidays.includes(key) && (statusOptions.includes(student[programStage][key]) || allowAttendanceStatus)) {
+                if (status && !holidays.includes(key) && (statusOptions.includes(status) || allowAttendanceStatus)) {
                     attendanceEvents.push({
-                        status: student[programStage][key],
+                        status,
                         occurredAt: key,
                         trackedEntity,
                         ...rest,
@@ -63,8 +69,10 @@ export function generateAttendanceEventObjects(programStages: string[], data: an
                             ...(rDataElements ?? []),
                             {
                                 dataElement: dataStore.attendance.status,
-                                value: student[programStage][key]
-                            }
+                                value: status
+                            },
+                            // The file gives the reason: an absence without reason, or another option, has none.
+                            ...(reasonInStage && reasonElement ? [{ dataElement: reasonElement, value: status === absent ? (reason ?? null) : null }] : [])
                         ]
                     })
                 }
