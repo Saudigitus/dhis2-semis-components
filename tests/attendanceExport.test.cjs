@@ -20,7 +20,8 @@ test('attendance files keep only the list columns, from the program configuratio
 
     assert.equal(showsListColumnsOnly('attendance'), true);
     assert.equal(showsListColumnsOnly('enrollment'), false);
-    assert.equal(showsListColumnsOnly('performance'), false);
+    assert.equal(showsListColumnsOnly('performance'), true); // SEMIS-216
+    assert.equal(showsListColumnsOnly('final-result'), false);
     assert.deepEqual(listAttributes(attributes).map(x => x.trackedEntityAttribute.id), ['first']);
     assert.deepEqual(reportDataElements(dataElements).map(x => x.dataElement.id), ['grade']);
 });
