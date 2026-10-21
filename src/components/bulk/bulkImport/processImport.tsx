@@ -35,7 +35,13 @@ export default function ProcessImport(props: importData) {
         if (!open) setOpenProgress(false)
     }, [open])
 
-    const onSubmit = async (importMode: "VALIDATE" | "COMMIT") => await importData({ ...props, excelData: excelData, importMode })
+    // Only the rows that passed the check are sent (dry run and import); the check adds
+    // "warnings" / "errors" to each row, which are not part of the file and are removed.
+    const onSubmit = async (importMode: "VALIDATE" | "COMMIT") => await importData({
+        ...props,
+        excelData: { ...excelData, mapping: validRecords.map(({ warnings, errors, ...row }: any) => row) },
+        importMode
+    })
 
     const onValidation = async (file: File) => {
         UseValidation.setModule(module as unknown as any)
@@ -79,6 +85,7 @@ export default function ProcessImport(props: importData) {
                     <ModalSummaryContent
                         onSubmit={onSubmit}
                         module={module}
+                        updating={updating}
                         programConfig={programConfig}
                         setOpen={setOpenStats}
                         invalidRecords={invalidRecords}
@@ -93,6 +100,7 @@ export default function ProcessImport(props: importData) {
 
             {openPogress && <ModalProgress
                 progress={progress}
+                module={module}
                 open={openPogress}
                 setOpen={setOpenProgress}
             />}

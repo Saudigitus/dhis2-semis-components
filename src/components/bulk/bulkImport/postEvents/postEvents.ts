@@ -7,11 +7,10 @@ import { useGetEvents } from "dhis2-semis-functions";
 import { useRecoilValue } from "recoil";
 import { TranslationState } from "../../../../schemas/translationsSchema";
 
-export function postValues({ setStats, setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setStats: (args: any) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
+export function postValues({ setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { uploadValues } = useUploadEvents()
     const { getEvents } = useGetEvents()
     const i18n = useRecoilValue(TranslationState) as any
-    let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [], byType: [] }
 
     function updateProgressF(buffer: number, progressParam: number, denominador: number) {
         setProgress((progress: any) => ({
@@ -28,6 +27,8 @@ export function postValues({ setStats, setProgress, onError, setOpenProgress }: 
         programConfig: ProgramConfig,
         programStages: string[]
     ) {
+        // Stats of this run only: a dry run and the import that follows must not add up.
+        let updatedStats: any = { stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], warningDetails: [], exceptions: [], byType: [] }
         let copyData = [...data]
         for (const student of excelData.mapping as unknown as []) {
             const { enrollment, orgUnit, trackedEntity } = (student as unknown as any).Ids
@@ -74,7 +75,7 @@ export function postValues({ setStats, setProgress, onError, setOpenProgress }: 
             });
         }
 
-        setStats(updatedStats)
+        return updatedStats
     }
 
     return { postData }

@@ -4,8 +4,10 @@ import SummaryCard from "../../../card/SummaryCard";
 import { useRecoilValue } from "recoil";
 import { TranslationState } from "../../../../schemas/translationsSchema";
 
-function SummaryCards({ validRecs, invalidRecs, doneProcessing, stats, module }: { module: string, stats: any, validRecs: any, invalidRecs: any, doneProcessing: boolean }): React.ReactElement {
+function SummaryCards({ validRecs, invalidRecs, doneProcessing, dryRun = false, updating = false, stats, module }: { module: string, stats: any, validRecs: any, invalidRecs: any, doneProcessing: boolean, dryRun?: boolean, updating?: boolean }): React.ReactElement {
     const i18n = useRecoilValue(TranslationState) as any
+    // Label of the rows that passed the check: they are new only in "Enroll new students / staffs".
+    const validLabel = updating ? "Records to update" : module === "enrollment" ? "New Records" : "Valid Records"
 
     const getStats = (invalid = false) => {
         if (module === "attendance") {
@@ -36,16 +38,23 @@ function SummaryCards({ validRecs, invalidRecs, doneProcessing, stats, module }:
     return (
         <ButtonStrip>
             {!doneProcessing ? <>
-                <SummaryCard color="success" label={`${i18n.t("New Records")}`} value={getStats()} />
+                <SummaryCard color="success" label={`${i18n.t(validLabel)}`} value={getStats()} />
                 <SummaryCard color="warning" label={`${i18n.t("Invalid Records")}`} value={getStats(true)} />
             </>
+                : dryRun ?
+                // A dry run saves nothing: the server reports only the records it would refuse.
+                <>
+                    <SummaryCard color="secondary" label={`${i18n.t("Rows checked")}`} value={validRecs?.length ?? 0} />
+                    <SummaryCard color="error" label={`${i18n.t("Errors")}`} value={stats?.stats?.ignored?.toString()} />
+                    <SummaryCard color="warning" label={`${i18n.t("Warnings")}`} value={stats?.warningDetails?.length ?? 0} />
+                </>
                 :
                 <>
                     <SummaryCard color="success" label={`${i18n.t("Imported Records")}`} value={stats?.stats?.created?.toString()} />
                     <SummaryCard color="updated" label={`${i18n.t("Updated Records")}`} value={stats?.stats?.updated?.toString()} />
                     <SummaryCard color="error" label={`${i18n.t("Errors")}`} value={stats?.stats?.ignored?.toString()} />
                     <SummaryCard color="warning" label={`${i18n.t("Warnings")}`} value={stats?.warningDetails?.length ?? 0} />
-                    <SummaryCard color="secondary" label={`${i18n.t("Total rows")}`} value={validRecs?.length + invalidRecs?.length} />
+                    <SummaryCard color="secondary" label={`${i18n.t("Rows sent")}`} value={validRecs?.length ?? 0} />
                 </>
             }
         </ButtonStrip>
