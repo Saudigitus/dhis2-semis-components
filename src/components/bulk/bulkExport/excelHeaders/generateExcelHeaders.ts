@@ -3,6 +3,7 @@ import { GenerateHeaders } from "../../../../types/bulk/bulkOperations";
 import { Modules } from 'dhis2-semis-types';
 import { dfHeaders } from "../../../../utils/constants/dfHeaders";
 import { FILTER_SEPARATOR, getFilterLables } from "../../../../utils/format/getFilterLables";
+import { enrollmentDateLabel } from "../../../../utils/format/enrollmentDateLabel";
 import { useRecoilValue } from "recoil";
 import { TranslationState } from "../../../../schemas/translationsSchema";
 import useGetSelectedKeys from "../../../../hooks/config/useGetSelectedKeys";
@@ -88,7 +89,7 @@ export function generateHeaders(props: GenerateHeaders) {
                             width: 20,
                         },
                         {
-                            header: i18n.t('Enrollment_Date'),
+                            header: enrollmentDateLabel(programConfig, (key: string) => i18n.t(key)),
                             key: 'enrollmentDate',
                             width: 14
                         }
