@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil";
 import { useDataEngine } from "@dhis2/app-runtime";
 import { groupByEnrollment, readEventsByEnrollments, chunkList } from "../../../../utils/common/eventsByEnrollment";
 import { buildEnrollmentUpdate } from "../../../../utils/common/enrollmentUpdate";
+import { finalResultEnrollment } from "../../../../utils/common/finalResult";
 
 export function postEnrollmentData({ setProgress, onError, setOpenProgress }: { setOpenProgress: (args: boolean) => void, setProgress: (rags: any) => void, onError: (args: string) => void }) {
     const { getEvents } = useGetEvents()
@@ -82,7 +83,15 @@ export function postEnrollmentData({ setProgress, onError, setOpenProgress }: { 
                 return { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message ?? String(error) }] }
             }
         } else if (updatingFR) {
-            copyData = copyData.map(({ attributes, ...rest }: any) => ({ ...rest, events: [] }))
+            // Final result: the enrollment keeps its dates and school as saved on the server.
+            try {
+                const enrollmentsById = await readEnrollments(program, copyData.map((x: any) => x?.enrollment))
+                copyData = copyData.map(({ attributes, ...rest }: any) => finalResultEnrollment({ ...rest, events: [] }, enrollmentsById[rest?.enrollment]))
+            } catch (error: any) {
+                setOpenProgress(false)
+                onError(error)
+                return { ...updatedStats, exceptions: [{ [i18n.t("Error message")]: error?.message ?? String(error) }] }
+            }
             updateProgressF(updateProgress + 5, updateProgress, 1)
         } else {
             for (let index = 0; index < copyData.length; index++) {
