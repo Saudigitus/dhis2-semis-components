@@ -2,7 +2,7 @@ import { generateAttendanceDays } from "../../../../utils/attendance/generateAtt
 import { GenerateHeaders } from "../../../../types/bulk/bulkOperations";
 import { Modules } from 'dhis2-semis-types';
 import { dfHeaders } from "../../../../utils/constants/dfHeaders";
-import { getFilterLables } from "../../../../utils/format/getFilterLables";
+import { FILTER_SEPARATOR, getFilterLables } from "../../../../utils/format/getFilterLables";
 import { useRecoilValue } from "recoil";
 import { TranslationState } from "../../../../schemas/translationsSchema";
 import useGetSelectedKeys from "../../../../hooks/config/useGetSelectedKeys";
@@ -67,7 +67,7 @@ export function generateHeaders(props: GenerateHeaders) {
                     const attendanceOptions = dataStoreData?.attendance?.statusOptions || []
                     const attendanceStatus = dataStoreData?.attendance?.attendanceStatus?.allowAttendanceStatus
 
-                    filters["Attendance"] = `${getFilterLables(statusDe.dataElement.optionSet.options, attendanceOptions)}${attendanceStatus ? ',present' : ""}`
+                    filters["Attendance"] = `${getFilterLables(statusDe.dataElement.optionSet.options, attendanceOptions)}${attendanceStatus ? `${FILTER_SEPARATOR}present` : ""}`
                 }
 
                 formatedHeaders.push(section)

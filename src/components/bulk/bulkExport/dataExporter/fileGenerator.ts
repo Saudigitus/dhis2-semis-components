@@ -7,6 +7,7 @@ import { separateByMonth } from '../../../../utils/attendance/separateByMonth';
 import { dfHeaders } from '../../../../utils/constants/dfHeaders';
 import { Modules } from 'dhis2-semis-types';
 import { generateValidationSheet } from '../../../../utils/common/generateValidationSheet';
+import { FILTER_SEPARATOR } from '../../../../utils/format/getFilterLables';
 import { convertNumberToLetter } from '../../../../utils/common/convertNumberToLetter';
 import { SchoolCalendarType } from '../../../../types/dataStore/schoolCalendar';
 
@@ -127,7 +128,7 @@ export function generateFile({ unavailableDays, config }: { unavailableDays: (da
                         if (index > 2) {
                             const colFilter = filters?.[dataElementId[1]] ?? filters?.[dataElementId[0]] ?? filters["Attendance"]
                             const columnLetter = convertNumberToLetter(validationSheet.getColumn(regex.test(columnHeader) ? 'Attendance' : dataElementId?.[1] ?? dataElementId?.[0]).number);
-                            const formula = `'${validationSheet.name}'!$${columnLetter}$2:$${columnLetter}$${colFilter.split(',').length + 1}`;
+                            const formula = `'${validationSheet.name}'!$${columnLetter}$2:$${columnLetter}$${colFilter.split(FILTER_SEPARATOR).length + 1}`;
 
                             cell.dataValidation = { ...dataValidation, formulae: [formula] };
                         }

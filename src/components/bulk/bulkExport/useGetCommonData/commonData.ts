@@ -15,7 +15,8 @@ export function getCommonSheetData(props: ExportData) {
             events = await getEvents({
                 program: selectedSectionDataStore?.program as unknown as string,
                 programStage: selectedSectionDataStore?.registration.programStage,
-                fields: "trackedEntity,enrollment,orgUnit,program",
+                // The registration values are read here, once for the class (not again per person).
+                fields: "event,trackedEntity,enrollment,orgUnit,program,occurredAt,dataValues[dataElement,value]",
                 filter: eventFilters,
                 orgUnit,
                 pageSize,

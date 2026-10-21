@@ -1,3 +1,5 @@
+import { FILTER_SEPARATOR } from "../format/getFilterLables";
+
 export function generateValidationSheet(options: any) {
     const keys = Object.keys(options)
     let validationRows: any = []
@@ -5,7 +7,7 @@ export function generateValidationSheet(options: any) {
 
 
     for (const key of keys) {
-        const values = options[key].split(',').map((item: string) => item.trim())
+        const values = options[key].split(FILTER_SEPARATOR).map((item: string) => item.trim())
 
         headers.push({
             header: key,
