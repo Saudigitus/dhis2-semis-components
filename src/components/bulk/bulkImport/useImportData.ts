@@ -20,6 +20,9 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
     const { useGetRegitrationDataElements } = useGetRegitration()
 
     async function importData(props: CombinedTypes) {
+        // The stats of this run are also returned, so that "Import data" can check its dry run.
+        let runStats: any
+        const showStats = (value: any) => { runStats = value; setStats(value) }
         setProgress((prev: any) => ({ ...prev, progress: 1, buffer: 10 }))
         const { onError, excelData, importMode, updating = false, programConfig, selectedSectionDataStore, sectionType } = props
 
@@ -52,7 +55,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     const attendanceDisplayName = programConfig?.programStages.find(x => x.id === selectedSectionDataStore?.attendance?.programStage)?.displayName
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
-                    setStats(await postAttendance(
+                    showStats(await postAttendance(
                         attendanceEvents,
                         attendanceDisplayName as unknown as string,
                         selectedSectionDataStore,
@@ -89,7 +92,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     )
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
-                    setStats(await postEnrollments(
+                    showStats(await postEnrollments(
                         enrollments,
                         studentsData,
                         importMode,
@@ -126,7 +129,7 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     ).finally(() => closeDialog())
 
                     // Final result sends events and enrollments: show the stats of both.
-                    setStats(mergeImportStats(eventStats, enrollmentStats))
+                    showStats(mergeImportStats(eventStats, enrollmentStats))
                 }
                     break;
 
@@ -134,14 +137,15 @@ export function useImportData({ setProgress, onError, setStats, stats, setOpenPr
                     const { events } = generateEventObjects(displayNames, studentsData, programConfig)
                     setProgress((prev: any) => ({ ...prev, progress: 20, buffer: 25 }))
 
-                    setStats(await postData(events, excelData, importMode, programConfig, programStages).finally(() => closeDialog()))
+                    showStats(await postData(events, excelData, importMode, programConfig, programStages).finally(() => closeDialog()))
                     break;
             }
         } catch (error) {
             setOpenProgress(false)
-            setStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [{ "Error message": error?.message || error || 'Unkknown error' }], byType: [] })
+            showStats({ stats: { ignored: 0, created: 0, updated: 0, total: 0 }, errorDetails: [], exceptions: [{ "Error message": error?.message || error || 'Unkknown error' }], byType: [] })
             onError(error)
         }
+        return runStats
     }
 
     return { importData, stats }

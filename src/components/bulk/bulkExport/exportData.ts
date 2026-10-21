@@ -9,7 +9,7 @@ import { generateEmptyRows } from '../../../utils/common/generateData';
 import { generateAndReserveIds } from './generateIds/generateAndReserve';
 import { areParamsValid } from '../../../utils/common/validateRequiredParams';
 import { groupByEnrollment, readEventsByEnrollments } from '../../../utils/common/eventsByEnrollment';
-import { useGetEvents, useIncrementDays, useUrlParams } from "dhis2-semis-functions";
+import { useGetEvents, useGetRegitration, useIncrementDays, useUrlParams } from "dhis2-semis-functions";
 import { useSchoolCalendarKey } from "../../../hooks/dataStore/useSchoolCalendarKey";
 import { SchoolCalendarType } from "../../../types/dataStore/schoolCalendar";
 
@@ -45,6 +45,7 @@ export function useExportData(props: ExportData) {
     })
     const { msg, valid } = areParamsValid({ ...props })
     const { getDate } = useIncrementDays()
+    const { useGetRegitrationDataElements } = useGetRegitration()
 
     async function exportData({ fileName, numberOfEmptyRows, startDate, endDate }: { fileName?: string, startDate?: any, endDate?: any, numberOfEmptyRows?: number }) {
         if (!valid) onError(`Export error: ${msg}`)
@@ -118,7 +119,14 @@ export function useExportData(props: ExportData) {
                             })
                     }
 
-                    data = generateEmptyRows(numberOfEmptyRows, formatedHeaders, ids, orgUnitName)
+                    // The class selected on screen (academic year and the filters configured for this
+                    // section type) is written in every row of the registration stage.
+                    const registrationStage = selectedSectionDataStore?.registration?.programStage
+                    const prefilled = Object.fromEntries(useGetRegitrationDataElements()
+                        .filter(({ dataElement, value }: any) => registrationStage && dataElement && value)
+                        .map(({ dataElement, value }: any) => [`${registrationStage}.${dataElement}`, value]))
+
+                    data = generateEmptyRows(numberOfEmptyRows, formatedHeaders, ids, orgUnitName, prefilled)
                 }
 
                 try {

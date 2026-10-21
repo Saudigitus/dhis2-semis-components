@@ -35,11 +35,13 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
 
     const handleShowDetails = () => { setShowDetails(!showDetails); }
 
-    // A dry run that the server refused (ignored records, errors or an exception) blocks the
-    // import until a corrected file is uploaded (a new upload opens a new summary).
-    const dryRunFailed = doneProcessing.validate && (
-        (stats?.stats?.ignored ?? 0) > 0 || (stats?.errorDetails?.length ?? 0) > 0 || (stats?.exceptions?.length ?? 0) > 0
-    )
+    // The server refused something (ignored records, errors or an exception).
+    const refused = (runStats: any) =>
+        (runStats?.stats?.ignored ?? 0) > 0 || (runStats?.errorDetails?.length ?? 0) > 0 || (runStats?.exceptions?.length ?? 0) > 0
+
+    // A dry run that the server refused blocks the import until a corrected file is uploaded
+    // (a new upload opens a new summary).
+    const dryRunFailed = doneProcessing.validate && refused(stats)
 
     useEffect(() => {
         setDoneProcessing({ validate: false, commit: false })
@@ -89,7 +91,15 @@ const ModalSummaryContent = (props: ModalContentProps): React.ReactElement => {
             primary: true,
             loading: false,
             disabled: stats?.exceptions?.length > 0 || doneProcessing.commit || validRecords?.length === 0 || dryRunFailed,
-            onClick: () => {
+            onClick: async () => {
+                // Nothing is saved unless the server accepts every row: without a dry run, one runs
+                // first, and when the server refuses something the import stops and shows why.
+                // So a person is never saved without the enrollment that the server refused.
+                if (!doneProcessing.validate) {
+                    const dryRun = await onSubmit("VALIDATE")
+                    setDoneProcessing({ validate: true, commit: false })
+                    if (refused(dryRun)) return
+                }
                 onSubmit("COMMIT").then(() => {
                     setDoneProcessing((done: any) => ({ ...done, commit: true }))
                 })
