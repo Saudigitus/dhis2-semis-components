@@ -17,6 +17,7 @@ import { checkEnrolledAcademicYear } from '../../../utils/table/checkEnrolledAca
 import { Checkbox } from "@dhis2/ui"
 import { useUrlParams } from 'dhis2-semis-functions';
 import { useDataStoreKey } from '../../../hooks/dataStore/useDataStoreKey';
+import { useSchoolCalendarKey } from '../../../hooks/dataStore/useSchoolCalendarKey';
 import { deepEqual } from '../../../utils/table/objectComparison';
 import { VariablesTypes } from '../../../types/variables/AttributeColumns';
 import { CropOriginal } from '@mui/icons-material';
@@ -95,6 +96,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
     const { urlParameters } = useUrlParams()
     const { academicYear, sectionType, school } = urlParameters
     const { registration } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
+    const schoolAcademicYearId = useSchoolCalendarKey()?.academicYear
     const [showEnrollments, setShowEnrollments] = useState<string>()
     const { headerData, rowsData = [], pagination, searchActions, showRowIndex, loading, viewPortWidth,
         selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick,
@@ -247,7 +249,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                         (
                                             row?.registrationEvents,
                                             academicYear as unknown as string,
-                                            registration.academicYear,
+                                            registration?.academicYear || schoolAcademicYearId,
                                             school!,
                                             sectionType!
                                         )} onSelectTei={onRowClick ? () => onRowClick(row) : undefined} enrollmentsData={row.registrationEvents} />

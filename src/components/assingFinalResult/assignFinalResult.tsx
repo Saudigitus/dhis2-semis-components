@@ -61,7 +61,6 @@ export default function AsssignFinalResult({ selected, Form }: { selected: any[]
                             }
                             warning
                         >
-                            {i18n.t("No one will be able to access this program. Add some Organisation Units to the access list.")}
                         </NoticeBox>
                         <WithBorder type="all" >
                             <WithPadding>

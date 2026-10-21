@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { OuQueryString } from "../../../schemas/headerSearchInputSchema";
+import { useRecoilValue } from "recoil";
 import { useDataQuery } from "@dhis2/app-runtime";
 import { SearchOu } from "../../../types/header/ouQueryParams";
 import { Center, CircularLoader, Help, Input, Menu } from "@dhis2/ui";
@@ -9,7 +8,7 @@ import style from "../mainHeader.module.css"
 import { TranslationState } from "../../../schemas/translationsSchema";
 
 
-const OrgUnitTree = ({ onChange, stringQuery }) => {
+const OrgUnitTree = ({ onChange, stringQuery, searchAllOrgUnits }) => {
     const [key, setKey] = useState<any>(undefined);
 
     const { loading, data, error } = useDataQuery<{ orgUnits: { organisationUnits: [{ id: string, displayName: string }] } }>(
@@ -37,13 +36,14 @@ const OrgUnitTree = ({ onChange, stringQuery }) => {
                             'children[id,displayName,publicAccess,access,path,children::isNotEmpty]',
                         ].join(','),
                         query: currentSearchText,
-                        withinUserSearchHierarchy: true,
+                        // A transfer destination can be any school, not only those in the user search area
+                        ...(searchAllOrgUnits ? {} : { withinUserSearchHierarchy: true }),
                         pageSize: 15,
                     }),
 
                 },
             }),
-            [],
+            [searchAllOrgUnits],
         ),
         { lazy: true },
     );
@@ -104,8 +104,9 @@ const OrgUnitTree = ({ onChange, stringQuery }) => {
     )
 }
 
-const OrgUnitTreeSearch = ({ onChange }) => {
-    const [stringQuery, setStringQuery] = useRecoilState(OuQueryString)
+const OrgUnitTreeSearch = ({ onChange, searchAllOrgUnits = false }: { onChange: any, searchAllOrgUnits?: boolean }) => {
+    // Each picker keeps its own search text, so the header and a form field do not share it
+    const [stringQuery, setStringQuery] = useState<string>("")
     const i18n = useRecoilValue(TranslationState) as any
     const onChangeQuerySearch = (e: { value: string, name: string }) => {
         setStringQuery(e.value);
@@ -118,7 +119,7 @@ const OrgUnitTreeSearch = ({ onChange }) => {
                     <div className={style.SimpleSearcInputContainer} >
                         <Input onChange={onChangeQuerySearch} value={stringQuery} initialFocus placeholder={i18n.t("Search for a school")} name="input" />
                     </div>
-                    <OrgUnitTree onChange={onChange} stringQuery={stringQuery} />
+                    <OrgUnitTree onChange={onChange} stringQuery={stringQuery} searchAllOrgUnits={searchAllOrgUnits} />
                 </div>
             </Menu>
         </div>
