@@ -17,13 +17,13 @@ import { TranslationState } from "../../../../schemas/translationsSchema";
 export default function MobileRow(props: MobileRowsProps): React.ReactElement {
   const { imageUrl } = GetImageUrl()
   const { helperText, rowData, headerData, programConfig, rowActions, } = props;
-  const { rowIndex, checkBox, showAction, checkable, inactive } = props;
+  const { rowIndex, checkBox, showAction, checkable, inactive, apiVersion } = props;
   const i18n = useRecoilValue(TranslationState) as any
 
 
   return (
     <Box
-      className={classNames(style.cardContainer, inactive && style.disabledRow)}
+      className={classNames(style.cardContainer, rowData?.disabled && style.disabledRow, inactive && style.inactiveRow,)}
     >
       <div style={{ width: "100%" }}>
         <div className={style.cardActions}>
@@ -49,7 +49,7 @@ export default function MobileRow(props: MobileRowsProps): React.ReactElement {
                     column.type === VariablesTypes.Custom ?
                       rowData[column.id] :
                       formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
-                        <a href={imageUrl({ attribute: column.id, trackedEntity: rowData.trackedEntity })} target='_blank'>
+                        <a href={imageUrl({ attribute: column.id, trackedEntity: rowData.trackedEntity, program: programConfig?.id, apiVersion: apiVersion })} target='_blank'>
                           {rowData[column.id] &&
                             <Tooltip title={i18n.t("Click to open in new tab")} >
                               <IconButton> <CropOriginal /></IconButton>

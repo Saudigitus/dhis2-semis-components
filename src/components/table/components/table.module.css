@@ -18,21 +18,25 @@
     outline: none;
 }
 
-.disabledRow {
+
+
+.disabledRow,
+.disabledRowOwnershipOu {
+    background: rgba(207, 207, 207, .1) !important;
+    cursor: not-allowed !important;
+}
+
+.disabledRow .tableCell,
+.disabledRowOwnershipOu .tableCell {
+    color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.inactiveRow {
     background: rgba(218, 52, 77, .1) !important;
     cursor: not-allowed !important;
 }
 
-.disabledRow .tableCell {
-    color: rgba(0, 0, 0, 0.4) !important;
-}
-
-.disabledRowOwnershipOu {
-    background: rgba(207, 207, 207, .3) !important;
-    cursor: not-allowed !important;
-}
-
-.disabledRowOwnershipOu .tableCell {
+.inactiveRow .tableCell {
     color: rgba(0, 0, 0, 0.4) !important;
 }
 

@@ -11,8 +11,20 @@
 }
 
 .disabledRow {
-    background: rgba(218, 52, 77, .1) !important;
     cursor: not-allowed !important;
+    background: rgba(207, 207, 207, .1) !important;
+}
+
+.disabledRow .cell {
+    color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.inactiveRow {
+    cursor: not-allowed !important;
+    background: rgba(218, 52, 77, .1) !important;
+}
+
+.inactiveRow .cell{
     color: rgba(0, 0, 0, 0.4) !important;
 }
 

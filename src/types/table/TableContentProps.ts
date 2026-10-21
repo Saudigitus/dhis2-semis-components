@@ -32,8 +32,8 @@ interface RowProps {
     isOwnershipOu?: boolean
     title?: string
     disableHoverListener?: boolean
-    tooltip?: boolean
     style?: any
+    disabled?: boolean
 }
 
 interface RenderHeaderProps {
@@ -72,6 +72,7 @@ interface RenderRowsProps {
     indeterminate?: boolean
     selected?: any
     enableInactiveRowSelection?: boolean
+    disabledRowMessage?: string
 }
 
 interface MobileRowsProps {
@@ -88,6 +89,7 @@ interface MobileRowsProps {
     programConfig: ProgramConfig
     onRowClick?: (args: any) => void
     onChange?: (selected: any, all?: boolean) => void
+    apiVersion?: number
 }
 
 interface EnrollmentDetailsComponentProps {
@@ -145,6 +147,7 @@ interface TableRenderProps {
     showWorkingListsContainer?: boolean
     paginate?: boolean
     enableInactiveRowSelection?: boolean
+    disabledRowMessage?: string
 }
 
 

@@ -96,7 +96,9 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
     const { academicYear, sectionType, school } = urlParameters
     const { registration } = useDataStoreKey({ sectionType: sectionType as unknown as "student" | "staff" })
     const [showEnrollments, setShowEnrollments] = useState<string>()
-    const { headerData, rowsData = [], pagination, searchActions, showRowIndex, loading, viewPortWidth, selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick, indeterminate, isCheckbox, onChange, selected, enableInactiveRowSelection } = props;
+    const { headerData, rowsData = [], pagination, searchActions, showRowIndex, loading, viewPortWidth,
+        selectedOU, showRowActions, rowAction, displayType, programConfig, inactiveRowMessage, onRowClick,
+        indeterminate, isCheckbox, onChange, selected, enableInactiveRowSelection, disabledRowMessage } = props;
     const i18n = useRecoilValue(TranslationState) as any
 
     const isSelected = (row: any): boolean => selected?.find((item: any) => deepEqual(item, row));
@@ -121,7 +123,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
             <>
                 {isCheckbox &&
                     <RowCell
-                        style={{ ...classes.cell, ...classes.bodyCell }}
+                        style={{ ...classes.cell, ...classes.bodyCell, cursor: !disabled ? "pointer" : "not-allowed" }}
                     >
                         <Checkbox
                             disabled={disabled}
@@ -186,12 +188,13 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                         {viewPortWidth > 520 ?
                             <RowTable
                                 key={index}
-                                title={inactiveRowMessage}
+                                disabled={row?.disabled}
                                 inactive={checkCanceled(row.status)}
                                 isOwnershipOu={checkOwnershipOu(row.ownershipOu, selectedOU)}
+                                title={checkCanceled(row.status) ? inactiveRowMessage : row?.disabled ? disabledRowMessage : null}
                                 style={{ ...classes.row, ...classes.dataRow, ...((searchActions && showEnrollments) ? classes.dataRowCollapsed : {}) }}
                             >
-                                {renderRowCheckBox({ row, disabled: (checkCanceled(row.status) && !enableInactiveRowSelection) })}
+                                {renderRowCheckBox({ row, disabled: (checkCanceled(row.status) && !enableInactiveRowSelection) || row?.disabled })}
                                 {renderRowIndex({ index })}
                                 {
                                     headerData?.filter((x: any) => x.visible)?.map((column: any) => (
@@ -203,7 +206,7 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                             {
                                                 column.type === VariablesTypes.Custom ? row[column.id] :
                                                     formatKeyValueTypeHeader(headerData)[column.id] === Attribute.valueType.IMAGE ?
-                                                        <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity, program: programConfig.id , apiVersion: config.apiVersion })} target='_blank'>
+                                                        <a href={imageUrl({ attribute: column.id, trackedEntity: row.trackedEntity, program: programConfig.id, apiVersion: config.apiVersion })} target='_blank'>
                                                             {row[column.id] &&
                                                                 <Tooltip title={i18n.t("Click to open in new tab")} >
                                                                     <IconButton> <CropOriginal /></IconButton>
@@ -226,11 +229,11 @@ function RenderRows(props: RenderRowsProps): React.ReactElement {
                                 headerData={headerData}
                                 showAction={showRowActions}
                                 programConfig={programConfig}
-                                helperText={inactiveRowMessage}
                                 inactive={checkCanceled(row.status)}
                                 rowIndex={renderRowIndex({ index })}
                                 rowActions={renderRowAction({ row })}
-                                checkBox={renderRowCheckBox({ row, disabled: checkCanceled(row.status) })}
+                                helperText={checkCanceled(row.status) ? inactiveRowMessage : row?.disabled ? disabledRowMessage : null}
+                                checkBox={renderRowCheckBox({ row, disabled: checkCanceled(row.status) || row?.disabled })}
                             />
                         }
 
