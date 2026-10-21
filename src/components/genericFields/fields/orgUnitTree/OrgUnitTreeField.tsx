@@ -9,7 +9,7 @@ import { Close } from '@mui/icons-material';
 export default function OrgUnitTreeField(props: OuFieldProps): React.ReactElement {
     const [selectedOu, setSelectedOu] = useState<SelectedOuType>()
     const { input }: FieldRenderProps<any, HTMLElement> = useField(props.name);
-    const { onInputChange } = props;
+    const { onInputChange, searchAllOrgUnits } = props;
 
     const onOuChange = (event: SelectedOuType) => {
         setSelectedOu(event)
@@ -42,6 +42,7 @@ export default function OrgUnitTreeField(props: OuFieldProps): React.ReactElemen
                     </div>
                     : <OrgUnitTreeSearch
                         onChange={onOuChange}
+                        searchAllOrgUnits={searchAllOrgUnits}
                     />
                 }
             </div>

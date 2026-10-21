@@ -5,6 +5,7 @@ interface OrgUnitTreeComponentProps {
 interface OuFieldProps {
     name: string
     onInputChange?: (event: { value: any; name: string; field: any }) => void
+    searchAllOrgUnits?: boolean
 }
 
 interface SelectedOuType {

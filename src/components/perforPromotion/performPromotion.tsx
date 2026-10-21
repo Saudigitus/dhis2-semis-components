@@ -34,7 +34,6 @@ export default function PerformPromotion({ selected, Form, loading, onSubmit }: 
                 open && <ModalComponent
                     children={<WithPadding>
                         <NoticeBox title={`${i18n.t("WARNING")}! ${selected.length} ${i18n.t("rows will be affected")}`} warning>
-                            {i18n.t("No one will be able to access this program. Add some Organisation Units to the access list.")}
                         </NoticeBox>
                         <WithBorder type="all" >
                             <WithPadding>
