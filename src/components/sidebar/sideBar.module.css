@@ -52,6 +52,29 @@
 }
 
 
+/* With a footer, the menu takes the remaining height and scrolls, and the footer stays at the bottom. */
+.sideBarWithFooter {
+    display: flex;
+    flex-direction: column;
+}
+
+.sideBarWithFooter .sideBarMenu,
+.sideBarWithFooter .sideBarMenuSticked {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.sideBarFooter {
+    flex: 0 0 auto;
+    padding: 8px 25px;
+    border-top: 1px solid #e6e4e4;
+    color: #6e7a8a;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .sideBarMenu::-webkit-scrollbar,
 .sideBarMenuSticked::-webkit-scrollbar {
     display: none;
