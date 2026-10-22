@@ -18,6 +18,13 @@ interface SideBarProps {
     sideBarBtnPosition?: ButtonPosition
 
     stickLastItemToBottom?: boolean
+    /**
+     * Content shown at the bottom of the side bar, below the menu (e.g. the app version).
+     * Hidden when the side bar is collapsed.
+     * Optional
+     * @type {?ReactNode}
+     */
+    footer?: ReactNode
 }
 
 interface SideBarItemProps {
