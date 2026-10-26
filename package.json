@@ -12,8 +12,8 @@
     }
   },
   "repository": "https://github.com/Saudigitus/dhis2-semis-components.git",
-  "author": "EdsonNhancale <edsonnhancale97@gmail.com>",
-  "license": "MIT",
+  "author": "DHIS2 for Education Team",
+  "license": "BSD-3-Clause",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
