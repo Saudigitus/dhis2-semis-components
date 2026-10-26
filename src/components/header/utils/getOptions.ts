@@ -37,7 +37,9 @@ const getAcademicYearOptions = ({ schoolCalendar, program }: { schoolCalendar: s
         }
     });
 
-    return options
+    // chronological order: calendar start date, then the option code
+    const startDateOf = (option: any) => String(schoolCalendar?.schoolCalendar?.find((op) => op?.academicYear?.code == option?.value || op?.academicYear?.label == option?.label)?.academicYear?.startDate ?? "")
+    return options.sort((a: any, b: any) => startDateOf(a).localeCompare(startDateOf(b)) || String(a?.value ?? "").localeCompare(String(b?.value ?? ""), undefined, { numeric: true }))
 }
 
 export { getOptionsByDataElement, getAcademicYearOptions }
