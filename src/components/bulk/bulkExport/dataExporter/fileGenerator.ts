@@ -18,7 +18,7 @@ const isClassRecordRow = (row: any) => {
 }
 
 export function generateFile({ unavailableDays, config }: { unavailableDays: (date: Date, config: SchoolCalendarType) => boolean, config: SchoolCalendarType }) {
-    const password = '#saudigitus_SEMIS_Export#'
+    const password = '835a6fad2497dafe0744c1ae75ece3a4'
 
     async function excelGenerator(props: excelProps) {
         let sheet: any = {};
