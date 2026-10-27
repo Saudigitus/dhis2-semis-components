@@ -38,6 +38,8 @@ export function exportFields(module: "attendance" | "final-result" | "enrollment
             "name": "rows",
             "labelName": "Number of Rows",
             "valueType": "NUMBER" as unknown as CustomAttributeProps['valueType'],
+            // DHIS2 reserves at most 1000 generated IDs per request
+            "max": 1000,
             "disabled": false,
             "visible": true,
             "description": "label",
