@@ -124,6 +124,7 @@ export function useExportData(props: ExportData) {
                     }
                 } else if (empty && module == Modules.Enrollment) {
                     let ids: any = {}
+                    let idsFailed = false
 
                     for (const attr of attributesToGenerate) {
                         await generate({
@@ -137,10 +138,14 @@ export function useExportData(props: ExportData) {
                         })
                             .then(() => setProgress((progress: any) => ({ ...progress, progress: 80 / attributesToGenerate.length, buffer: 82 / attributesToGenerate.length })))
                             .catch((error) => {
+                                idsFailed = true
                                 onError(`Export error: ${error}`)
                                 setProgress((progress: any) => ({ ...progress, progress: 100, buffer: 100 }))
                             })
                     }
+
+                    // Without the reserved IDs the template cannot be imported: no file is made.
+                    if (idsFailed) return
 
                     // The class selected on screen (academic year and the filters configured for this
                     // section type) is written in every row of the registration stage.

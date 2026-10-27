@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
     ReactFinalForm,
     InputFieldFF,
@@ -16,13 +16,16 @@ const { Field } = ReactFinalForm
 const lowerbound = 1
 const upperbound = 100000000000000
 
-const VALIDATOR = composeValidators(
+// A field can set its own limits (e.g. the number of rows of an empty template)
+const validator = (min: number, max: number) => composeValidators(
     integer,
     hasValue,
-    createNumberRange(lowerbound, upperbound)
+    createNumberRange(min, max)
 )
 
 function InputNumber(props: FormFieldsProps) {
+    const { min = lowerbound, max = upperbound } = props as FormFieldsProps & { min?: number, max?: number }
+    const VALIDATOR = useMemo(() => validator(min, max), [min, max])
     return (
         <Field
             {...props}
